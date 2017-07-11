@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bitschool.bootstrap.SignUpMapper">
+	<insert id="insert" parameterType="com.bitschool.dto.MemberDTO">
+		<selectKey keyProperty="memberNo" order="BEFORE" resultType="Integer">
+			select member_seq.nextval from dual
+		</selectKey>
+		insert into signup(memberNo, email, nickname, pw) 
+			values(#{memberNo}, #{email}, #{nickname}, #{pw})
+	</insert>
+	
+	<select id="listAll" resultType="com.bitschool.dto.MemberDTO">
+		select * from signup
+	</select>
+	
+	<select id="listOne" resultType="com.bitschool.dto.MemberDTO">
+		select * from signup where email = #{email}
+	</select>
+	
+	<update id="updateInfo" parameterType="com.bitschool.dto.MemberDTO">
+		update signup set nickname = #{nickname} where email = #{email}
+	</update>
+	
+	<delete id="deleteInfo" parameterType="String">
+		delete signup where email = #{email}
+	</delete>
+	
+	<select id="idCheck" parameterType="java.util.HashMap" resultType="Integer">
+		select count(*) from signup where email = #{email} and pw = #{pw}
+	</select>
+</mapper>
