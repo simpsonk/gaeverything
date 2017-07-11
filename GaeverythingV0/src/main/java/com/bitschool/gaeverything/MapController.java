@@ -55,6 +55,7 @@ public class MapController {
 		data.put("places", list);
 		data.put("pList", map.get("pList"));
 		data.put("infoList", map.get("infoList"));
+		System.out.println("data2");
 		return data;
 	}
 	
