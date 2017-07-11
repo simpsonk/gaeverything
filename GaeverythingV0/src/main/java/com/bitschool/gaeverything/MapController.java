@@ -81,6 +81,7 @@ public class MapController {
 		data.put("pList", map.get("pList"));
 		data.put("infoList", map.get("infoList"));
 		System.out.println(locData+":"+page);
+		System.out.println(locData);
 		return data;
 	}
 	
