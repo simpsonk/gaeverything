@@ -35,6 +35,7 @@
 
 <!-- Banner
 ================================================== -->
+<form action="/map/homeSearchResult" method="post">
 <div class="main-search-container" data-background-image="/resources/images/main-search-background-02.jpg">
 	<div class="main-search-inner">
 		<div class="container">
@@ -44,54 +45,35 @@
 					<h4>Expolore top-rated attractions, activities and more</h4>
 
 					<div class="main-search-input">
-
 						<div class="main-search-input-item">
-							<input type="text" placeholder="What are you looking for?" value=""/>
+							<input type="text" placeholder="What are you looking for?" name = "searchWord" value=""/>
 						</div>
 						
-						
 						<div class="main-search-input-item">
-							<!-- Panel Dropdown / End -->
-							<div class="panel-dropdown">
-								<a href="#">Categories</a>
-								<div class="panel-dropdown-content checkboxes categories">
-									<!-- Checkboxes -->
-									<div class="row">
-										<div class="col-md-6">	
-											<input id="check-1" type="checkbox" name="check">
-											<label for="check-1">Shops</label>
-	
-											<input id="check-2" type="checkbox" name="check">
-											<label for="check-2">Hotels</label>
-											
-											<input id="check-3" type="checkbox" name="check" >
-											<label for="check-3">Eat & Drink</label>
-										</div>	
-									</div>
-								</div>
-							</div>
-							<!-- Panel Dropdown / End -->
-						</div>
-						<div class="main-search-input-item">
-							<select data-placeholder="All Categories" class="chosen-select" >
-								<option>All Categories</option>	
-								<option>Shops</option>
-								<option>Hotels</option>
-								<option>Restaurants</option>
-								<option>Fitness</option>
-								<option>Events</option>
+							<select data-placeholder="All Categories" class="chosen-select" name="searchOption">
+								<option value="1">shop name</option>
+								<option value="2">location</option>
 							</select>
 						</div>
 
-						<button class="button" onclick="window.location.href='listings-half-screen-map-list.html'">Search</button>
-
+						<button class="button">Search</button>
+					</div>
+					<div class="main-search-input" style="margin-top: 10px;width: 518px;">
+						<div class="panel-dropdown-content checkboxes categories" style="padding-top: 0px; padding-bottom: 0px; padding-left: 0px;font-size:16px;">
+							<span style="padding-right: 10px;padding-left: 20px;">Categories : </span>  
+							<input id="check-1" type="checkbox" name="check" checked="checked" value="5 449 776">
+							<label for="check-1">Hospital</label>
+	
+							<input id="check-2" type="checkbox" name="check">
+							<label for="check-2">Hotels</label>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
+</form>
 
 <!-- Content
 ================================================== -->
@@ -502,39 +484,6 @@
 <script type="text/javascript" src="<c:url value = '/resources/scripts/jquery-ui.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/tooltips.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/custom.js'/>"></script>
-
-
-<!-- Style Switcher
-================================================== -->
-<script src="<c:url value = '/resources/scripts/switcher.js'/>"></script> 
-
-<div id="style-switcher">
-	<h2>Color Switcher <a href="#"><i class="sl sl-icon-settings"></i></a></h2>
-	
-	<div>
-		<ul class="colors" id="color1">
-			<li><a href="#" class="main" title="Main"></a></li>
-			<li><a href="#" class="blue" title="Blue"></a></li>
-			<li><a href="#" class="green" title="Green"></a></li>
-			<li><a href="#" class="orange" title="Orange"></a></li>
-			<li><a href="#" class="navy" title="Navy"></a></li>
-			<li><a href="#" class="yellow" title="Yellow"></a></li>
-			<li><a href="#" class="peach" title="Peach"></a></li>
-			<li><a href="#" class="beige" title="Beige"></a></li>
-			<li><a href="#" class="purple" title="Purple"></a></li>
-			<li><a href="#" class="celadon" title="Celadon"></a></li>
-			<li><a href="#" class="red" title="Red"></a></li>
-			<li><a href="#" class="brown" title="Brown"></a></li>
-			<li><a href="#" class="cherry" title="Cherry"></a></li>
-			<li><a href="#" class="cyan" title="Cyan"></a></li>
-			<li><a href="#" class="gray" title="Gray"></a></li>
-			<li><a href="#" class="olive" title="Olive"></a></li>
-		</ul>
-	</div>
-		
-</div>
-<!-- Style Switcher / End -->
-
 
 </body>
 </html>

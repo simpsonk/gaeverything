@@ -61,14 +61,14 @@
 							<div class="col-fs-3">	
 								<select data-placeholder="Option" class="chosen-select" name="searchOption">
 									<option value="0" selected="selected">Option</option>
-									<option value="1">shop name</option>
-									<option value="2">location</option>
+									<option value="1" ${option==1?'selected="selected"':''}>shop name</option>
+									<option value="2" ${option==2?'selected="selected"':''}>location</option>
 								</select>
 							</div>
 							<div class="col-fs-6">
 								<div class="input-with-icon">
 									<i class="sl sl-icon-magnifier"></i>
-									<input type="text" placeholder="What are you looking for?" value=""/ id="seachword">
+									<input type="text" placeholder="What are you looking for?" value="${word}" id="seachword">
 								</div>
 							</div>
 							<div class="col-fs-3" style="text-align:center">
@@ -218,6 +218,9 @@
 			    latitude  = position.coords.latitude;
 			    longitude = position.coords.longitude;
 			    
+				searchWord = document.getElementById('seachword').value;
+				option = $("select[name=searchOption]").val();
+
 			 // 마커가 표시될 위치입니다 
 			    var markerPosition  = new daum.maps.LatLng(latitude, longitude); 
 				
@@ -228,7 +231,7 @@
 			    map.setCenter(new daum.maps.LatLng(latitude, longitude));
 			    marker.setMap(map);
 			    var level = map.getLevel();
-				url = '/map/getLocationData?level='+level+'&lat='+latitude+'&lon='+longitude;
+				url = '/map/getLocationData?searchWord='+searchWord+'&categories=5 449 776'+'&level='+level+'&lat='+latitude+'&lon='+longitude+"&option="+option;
 				
 				$.ajax({
 					url : url,

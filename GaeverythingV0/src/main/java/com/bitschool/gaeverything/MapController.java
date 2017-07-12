@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -85,5 +86,13 @@ public class MapController {
 		return data;
 	}
 	
+	@RequestMapping(value = "homeSearchResult", method = RequestMethod.POST)
+	public String homeSearchResult(@RequestParam(value = "searchWord") String word, @RequestParam(value = "searchOption") String option,
+			Model model){
+		String url = "map/map_list";
+		model.addAttribute("word", word);
+		model.addAttribute("option", option);
+		return url;
+	}
 	
 }
