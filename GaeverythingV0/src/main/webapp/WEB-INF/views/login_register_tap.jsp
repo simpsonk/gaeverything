@@ -36,6 +36,7 @@
 						<label for="remember-me">Remember Me</label>
 					</div>
 				</div>
+				<input type = "hidden" name = "uri" value = "${param.uri}">
 			</form>
 		</div>
 

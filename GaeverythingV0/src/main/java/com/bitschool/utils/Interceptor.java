@@ -13,10 +13,11 @@ public class Interceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 		// TODO Auto-generated method stub
 		MemberDTO member = (MemberDTO)request.getSession().getAttribute("member");
+		String requestURI = request.getRequestURI().toString();
 		boolean isLogin = member!=null?true:false;
 		if(!isLogin){
 			String url = "../viewLogin";
-			response.sendRedirect(url);
+			response.sendRedirect(url+"?uri="+requestURI);
 			return false;
 		}
 		return true;

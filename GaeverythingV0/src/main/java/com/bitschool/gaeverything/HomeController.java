@@ -43,12 +43,13 @@ public class HomeController {
 		return "home";
 	}
 	@RequestMapping(value = "login", method = {RequestMethod.POST, RequestMethod.GET})
-	public String login(@RequestParam("email") String email, @RequestParam("pw") String pw, HttpSession session){
+	public String login(@RequestParam("email") String email, @RequestParam("pw") String pw, 
+			HttpSession session, @RequestParam(value="uri", defaultValue="/") String uri){
 		String url = null;
 		boolean flag = logService.loginCheckService(email, pw);
 		if(flag){
 			MemberDTO member = sigService.getMemberInfo(email);
-			url = "redirect:/";
+			url = "redirect:"+uri;
 			session.setAttribute("member", member);
 		}
 		return url;
