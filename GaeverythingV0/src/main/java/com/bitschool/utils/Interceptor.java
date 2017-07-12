@@ -15,7 +15,7 @@ public class Interceptor extends HandlerInterceptorAdapter {
 		MemberDTO member = (MemberDTO)request.getSession().getAttribute("member");
 		boolean isLogin = member!=null?true:false;
 		if(!isLogin){
-			String url = "login_page";
+			String url = "../viewLogin";
 			response.sendRedirect(url);
 			return false;
 		}

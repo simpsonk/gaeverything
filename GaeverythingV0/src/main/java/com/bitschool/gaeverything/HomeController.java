@@ -60,4 +60,9 @@ public class HomeController {
 		session.invalidate();
 		return url;
 	}
+	@RequestMapping(value = "viewLogin", method = RequestMethod.GET)
+	public String viewLogin(){
+		String url = "login_page";
+		return url;
+	}
 }

@@ -20,15 +20,14 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-	
 	<context:component-scan base-package="com.bitschool.gaeverything" />
 	
-	<interceptors>
+	<beans:bean id="memberInterceptor" class="com.bitschool.utils.Interceptor">
+   	</beans:bean> 
+   	<interceptors>
         <interceptor>
-            <mapping path="/**/*" />
-            <exclude-mapping path="/main/*"/>
-            <exclude-mapping path="/login/*"/>
-            <beans:bean class="com.bitschool.utils.Interceptor"></beans:bean>            
-        </interceptor>        
-    </interceptors>	
+            <mapping path="/mypage/*"/>          
+            <beans:ref bean="memberInterceptor"/>
+        </interceptor>
+   	 </interceptors>
 </beans:beans>
