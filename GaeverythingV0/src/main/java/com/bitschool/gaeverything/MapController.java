@@ -95,4 +95,10 @@ public class MapController {
 		return url;
 	}
 	
+	@RequestMapping(value = "viewDetailpage", method = RequestMethod.GET)
+	public String viewDetailpage(){
+		String url = "map/map_detailpage";
+		return url;
+	}
+	
 }
