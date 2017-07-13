@@ -22,12 +22,12 @@
 <script type="text/javascript">
 
 function schedule(type){
-	var url = "/calendar/viewCalendar";
+	var url = "/mypage/calendar/viewCalendar";
 	var ds = document.getElementById("calendarAdd");
 	if(type==2){
-		url = "/calendar/modify";
+		url = "/mypage/calendar/modify";
 	}else if(type==3){
-		url = "/calendar/remove";
+		url = "/mypage/calendar/remove";
 	}
 	ds.action = url;
 	ds.submit();

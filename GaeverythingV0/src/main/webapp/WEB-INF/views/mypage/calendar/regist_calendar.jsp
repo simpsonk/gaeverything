@@ -249,14 +249,14 @@
 		
 <script type="text/javascript">
 	function schedule(type) {
-		var url = "/calendar/regist";
+		var url = "/mypage/calendar/regist";
 		var ds = document.getElementById("calendarAdd");
 		if (type == 2) {
-			url = "/calendar/modify";
+			url = "/mypage/calendar/modify";
 		} else if (type == 3) {
-			url = "/calendar/remove";
+			url = "/mypage/calendar/remove";
 		} else if (type == 1) {
-			url = "/calendar/regist";
+			url = "/mypage/calendar/regist";
 		}
 		ds.action = url;
 		ds.submit();

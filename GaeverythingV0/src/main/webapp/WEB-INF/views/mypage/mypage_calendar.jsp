@@ -187,7 +187,7 @@ body {
 			        type: "POST",
 			        contentType: "application/json",
 			        data: "{}",
-			        url: "/calendar/listAll",
+			        url: "/mypage/calendar/listAll",
 			        dataType: "json",
 			        success: function(data) {
 			            
@@ -209,7 +209,7 @@ body {
 									dayClick: function(date, allDay, jsEvent, view) {
 										var sdt = date.format();
 										var sdd = document.getElementById('startDate').value=date.format();
-										sd.action = "/calendar/viewRegistCalendar";
+										sd.action = "/mypage/calendar/viewRegistCalendar";
 										sd.submit();
 									},
 									
@@ -218,7 +218,7 @@ body {
 									events : data,
 									eventClick: function(calEvent, jsEvent, view) {
 										var sd = document.getElementById('seq').value=calEvent.seq;
-										submitSeq.action = "/calendar/viewDetailCalendar";
+										submitSeq.action = "/mypage/calendar/viewDetailCalendar";
 										submitSeq.submit();
 									}
 								});

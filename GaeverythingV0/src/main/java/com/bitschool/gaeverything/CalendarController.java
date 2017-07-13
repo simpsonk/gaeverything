@@ -23,7 +23,7 @@ import com.bitschool.dto.MemberDTO;
 import com.bitschool.service.CalendarService;
 import com.google.gson.Gson;
 
-@RequestMapping("/calendar")
+@RequestMapping("/mypage/calendar")
 @Controller
 public class CalendarController {
 	private static final Logger logger = LoggerFactory.getLogger(CalendarController.class);
@@ -34,26 +34,16 @@ public class CalendarController {
 	@RequestMapping(value="/viewCalendar", method={RequestMethod.GET,RequestMethod.POST})
 	public String viewCalendar(HttpSession session, Model model){
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		boolean isLogin = member != null? true : false;
 		String url = "mypage/mypage_calendar";
-		if(!isLogin){
-			url = "login_page";
-		}else{
-			model.addAttribute("member", member);
-		}
+		model.addAttribute("member", member);
 		return url;
 	}
 	
 	@RequestMapping(value="/viewRegistCalendar", method={RequestMethod.GET,RequestMethod.POST})
 	public String viewRegistCalendar(HttpSession session, Model model, @RequestParam("startDate") String sd){
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		boolean isLogin = member != null? true : false;
 		String url = "mypage/calendar/regist_calendar";
-		if(!isLogin){
-			url = "login_page";
-		}else{
-			model.addAttribute("member", member);
-		}
+		model.addAttribute("member", member);
 		model.addAttribute("sd",sd);
 		return url;
 	}
@@ -61,13 +51,8 @@ public class CalendarController {
 	@RequestMapping(value="/viewDetailCalendar", method={RequestMethod.GET,RequestMethod.POST})
 	public String viewDetailCalendar(HttpSession session, Model model, @RequestParam("seq") int seq){
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		boolean isLogin = member != null? true : false;
 		String url = "mypage/calendar/detail_calendar";
-		if(!isLogin){
-			url = "login_page";
-		}else{
-			model.addAttribute("member", member);
-		}
+		model.addAttribute("member", member);
 		CalendarDTO dto = service.readCalendar(seq);
 		model.addAttribute("dto",dto);
 		return url;
@@ -88,19 +73,14 @@ public class CalendarController {
 		String url = null;
 		System.out.println(dto);
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		boolean isLogin = member != null? true : false;
-		if(!isLogin){
-			url = "login_page";
-		}else{
-			model.addAttribute("member", member);
-		}
+		model.addAttribute("member", member);
 		dto.setId(member.getEmail());
 		System.out.println(dto);
 		boolean flag = service.registCalendar(dto);
 		System.out.println(dto.getId());
 		
 		if(flag){
-			url = "redirect:/calendar/viewCalendar";
+			url = "redirect:/mypage/calendar/viewCalendar";
 			System.out.println(dto.toString());
 			System.out.println(dto.getStart());
 			System.out.println(dto.getEnd());
@@ -112,7 +92,7 @@ public class CalendarController {
 		String url = null;
 		boolean flag = service.modifyCalendar(dto);
 		if(flag){
-			url = "redirect:/calendar/viewCalendar";
+			url = "redirect:/mypage/calendar/viewCalendar";
 		}
 		return url;
 	}
@@ -122,7 +102,7 @@ public class CalendarController {
 		String url = null;
 		boolean flag = service.removeCalendar(seq);
 		if(flag){
-			url = "redirect:/calendar/viewCalendar";
+			url = "redirect:/mypage/calendar/viewCalendar";
 		}
 		return url;
 	}
