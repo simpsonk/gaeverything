@@ -15,6 +15,67 @@
 ================================================== -->
 <link rel="stylesheet" href= "<c:url value = '/resources/css/style.css'/>">
 <link rel="stylesheet" href= "<c:url value = '/resources/css/colors/main.css'/>" id="colors">
+<link rel='stylesheet' href= "<c:url value = '/resources/css/fullcalendar.css'/>">
+<link rel='stylesheet' href= "<c:url value = '/resources/css/fullcalendar.print.css'/>" media='print'>
+
+
+<style>
+/* Remove the navbar's default margin-bottom and rounded borders */
+.navbar {
+	margin-bottom: 0;
+	border-radius: 0;
+}
+
+/* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+.row.content {
+	height: 450px
+}
+
+/* Set gray background color and 100% height */
+.sidenav {
+	padding-top: 20px;
+	background-color: #f1f1f1;
+	height: 100%;
+}
+
+/* Set black background color, white text and some padding */
+footer {
+	background-color: #555;
+	color: white;
+	padding: 15px;
+}
+
+/* On small screens, set height to 'auto' for sidenav and grid */
+@media screen and (max-width: 767px) {
+	.sidenav {
+		height: auto;
+		padding: 15px;
+	}
+	.row.content {
+		height: auto;
+	}
+}
+
+body {
+	margin: 40px 10px;
+	padding: 0;
+	font-family: "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
+	font-size: 14px;
+}
+
+#top {
+	background: #eee;
+	border-bottom: 1px solid #ddd;
+	padding: 0 10px;
+	line-height: 40px;
+	font-size: 12px;
+}
+
+#calendar {
+	max-width: 900px;
+	margin: 0 auto;
+}
+</style>
 
 </head>
 
@@ -73,64 +134,9 @@
 			<!-- Listings -->
 			<div class="col-lg-12 col-md-12">
 				<div class="dashboard-list-box margin-top-0">
-					<h4>Bookmarked Listings</h4>
-					<ul>
-
-						<li>
-							<div class="list-box-listing">
-								<div class="list-box-listing-img"><a href="#"><img src="/resources/images/listing-item-02.jpg" alt=""></a></div>
-								<div class="list-box-listing-content">
-									<div class="inner">
-										<h3>Sticky Band</h3>
-										<span>Bishop Avenue, New York</span>
-										<div class="star-rating" data-rating="5.0">
-											<div class="rating-counter">(23 reviews)</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="buttons-to-right">
-								<a href="#" class="button gray"><i class="sl sl-icon-close"></i> Delete</a>
-							</div>
-						</li>
-
-						<li>
-							<div class="list-box-listing">
-								<div class="list-box-listing-img"><a href="#"><img src="/resources/images/listing-item-04.jpg" alt=""></a></div>
-								<div class="list-box-listing-content">
-									<div class="inner">
-										<h3>Burger House</h3>
-										<span>2726 Shinn Street, New York</span>
-										<div class="star-rating" data-rating="5.0">
-											<div class="rating-counter">(31 reviews)</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="buttons-to-right">
-								<a href="#" class="button gray"><i class="sl sl-icon-close"></i> Delete</a>
-							</div>
-						</li>
-
-						<li>
-							<div class="list-box-listing">
-								<div class="list-box-listing-img"><a href="#"><img src="/resources/images/listing-item-06.jpg" alt=""></a></div>
-								<div class="list-box-listing-content">
-									<div class="inner">
-										<h3>Think Coffee</h3>
-										<span>215 Terry Lane, New York</span>
-										<div class="star-rating" data-rating="5.0">
-											<div class="rating-counter">(31 reviews)</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="buttons-to-right">
-								<a href="#" class="button gray"><i class="sl sl-icon-close"></i> Delete</a>
-							</div>
-						</li>
-
-					</ul>
+				
+					<div id='calendar'></div>
+					
 				</div>
 			</div>
 
@@ -166,6 +172,66 @@
 <script type="text/javascript" src="<c:url value = '/resources/scripts/jquery-ui.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/tooltips.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/custom.js'/>"></script>
+
+<script type="text/javascript" src="<c:url value = '/resources/scripts/moment.min.js' />"></script>
+<script type="text/javascript" src="<c:url value = '/resources/scripts/jquery.min.js' />"></script>
+<script type="text/javascript" src="<c:url value = '/resources/scripts/fullcalendar.js' />"></script>
+<script type="text/javascript" src="<c:url value = '/resources/scripts/locale-all.js' />"></script>
+<script>
+	$(document).ready(
+			
+			function() {
+				var initialLocaleCode = 'ko';
+
+				$.ajax({
+			        type: "POST",
+			        contentType: "application/json",
+			        data: "{}",
+			        url: "/mypage/calendar/listAll",
+			        dataType: "json",
+			        success: function(data) {
+			            
+			        	$('#calendar').fullCalendar(
+								{
+									header : {
+										left : 'prev,next today',
+										center : 'title',
+										right : 'month,basicWeek,basicDay'
+									},
+									defaultDate : moment(),
+									locale : initialLocaleCode,
+									buttonIcons : false, // show the prev/next text
+									weekNumbers : false,
+									navLinks : true, // can click day/week names to navigate views
+									selectable: true,
+									selectHelper: true,
+									
+									dayClick: function(date, allDay, jsEvent, view) {
+										var sdt = date.format();
+										var sdd = document.getElementById('startDate').value=date.format();
+										sd.action = "/mypage/calendar/viewRegistCalendar";
+										sd.submit();
+									},
+									
+									editable : true,
+									eventLimit : true, // allow "more" link when too many events
+									events : data,
+									eventClick: function(calEvent, jsEvent, view) {
+										var sd = document.getElementById('seq').value=calEvent.seq;
+										submitSeq.action = "/mypage/calendar/viewDetailCalendar";
+										submitSeq.submit();
+									}
+								});
+			      		  }
+				    });
+			});
+</script>
+<form method="post" id="sd">
+	<input type="hidden" name="startDate" id="startDate" value=''>
+</form>
+<form method="post" id="submitSeq">
+	<input type="hidden" name="seq" id="seq" value=''>
+</form>
 
 
 </body>
