@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bitschool.gaverything.CalendarMapper">
+	<insert id="insert" parameterType="com.bitschool.dto.CalendarDTO">
+		<selectKey keyProperty="seq" order="BEFORE" resultType="Integer">
+			select seq.nextval from dual
+		</selectKey>
+		insert into calendar(seq,id,dogid,title,place,message,startTime,
+		startDate,endTime,endDate) 
+		values (#{seq},#{id},#{dogid},#{title},#{place},#{message},#{startTime},
+		#{startDate},#{endTime},#{endDate})
+	</insert>
+	<select id="selectAll" resultType="com.bitschool.dto.CalendarDTO">
+		select * from calendar
+	</select>
+	<select id="select" parameterType="Integer" resultType="com.bitschool.dto.CalendarDTO">
+		select * from calendar where seq = #{seq}
+	</select>
+	<update id="modify" parameterType="CalendarDTO">
+		update calendar set dogid = #{dogid}, title = #{title}, place = #{place},
+		message = #{message}, startTime = #{startTime}, endTime = #{endTime},
+		endDate = #{endDate}
+		where seq = #{seq}
+	</update>
+	<delete id="delete" parameterType="Integer">
+		delete from calendar where seq = #{seq}
+	</delete>
+</mapper>
