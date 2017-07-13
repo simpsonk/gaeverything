@@ -95,8 +95,7 @@
 			</div>
 			<!-- regist photo / End -->
 			
-			<!-- regist photo test push case4-->
-			<!-- regist photo test push case3-->
+			
 			<div id="regist-review" class="listing-section margin-top-70 margin-bottom-30">
 				<div class="col-lg-12" style="padding-left: 0px;">
 					<div class="col-lg-2" style="padding-left: 0px;">
