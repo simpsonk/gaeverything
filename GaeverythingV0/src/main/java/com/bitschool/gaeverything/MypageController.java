@@ -17,7 +17,12 @@ public class MypageController {
 	public String viewMypageList(HttpSession session, Model model){
 		String url = "mypage/mypage_list";
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		model.addAttribute("member", member);
+		boolean isLogin = member!=null?true:false;
+		if(!isLogin){
+			url = "login_page";
+		}else{
+			model.addAttribute("member", member);
+		}
 		return url;
 	}
 	
@@ -25,7 +30,12 @@ public class MypageController {
 	public String viewDashBoard(HttpSession session, Model model){
 		String url = "mypage/mypage_dashboard";
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		model.addAttribute("member", member);
+		boolean isLogin = member!=null?true:false;
+		if(!isLogin){
+			url = "login_page";
+		}else{
+			model.addAttribute("member", member);
+		}
 		return url;
 	}
 	
@@ -33,7 +43,12 @@ public class MypageController {
 	public String viewMypageReviews(HttpSession session, Model model){
 		String url = "mypage/mypage_reviews";
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		model.addAttribute("member", member);
+		boolean isLogin = member!=null?true:false;
+		if(!isLogin){
+			url = "login_page";
+		}else{
+			model.addAttribute("member", member);
+		}
 		return url;
 	}
 	
@@ -41,7 +56,12 @@ public class MypageController {
 	public String viewMypageBookmarks(HttpSession session, Model model){
 		String url = "mypage/mypage_bookmarks";
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		model.addAttribute("member", member);
+		boolean isLogin = member!=null?true:false;
+		if(!isLogin){
+			url = "login_page";
+		}else{
+			model.addAttribute("member", member);
+		}
 		return url;
 	}
 	
@@ -49,7 +69,12 @@ public class MypageController {
 	public String viewMypageProfile(HttpSession session, Model model){
 		String url = "mypage/mypage_profile";
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		model.addAttribute("member", member);
+		boolean isLogin = member!=null?true:false;
+		if(!isLogin){
+			url = "login_page";
+		}else{
+			model.addAttribute("member", member);
+		}
 		return url;
 	}
 	
@@ -57,15 +82,25 @@ public class MypageController {
 	public String viewMypagePetProfile(HttpSession session, Model model){
 		String url = "mypage/mypage_pet_profile";
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		model.addAttribute("member", member);
+		boolean isLogin = member!=null?true:false;
+		if(!isLogin){
+			url = "login_page";
+		}else{
+			model.addAttribute("member", member);
+		}
 		return url;
 	}
 	
 	@RequestMapping(value = "/viewMypageCalendar", method = RequestMethod.GET)
 	public String viewMypageCalender(HttpSession session, Model model){
-		String url = "mypage/mypage_calendar";
+		String url = "redirect:/calendar/viewCalendar";
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		model.addAttribute("member", member);
+		boolean isLogin = member!=null?true:false;
+		if(!isLogin){
+			url = "login_page";
+		}else{
+			model.addAttribute("member", member);
+		}
 		return url;
 	}
 }
