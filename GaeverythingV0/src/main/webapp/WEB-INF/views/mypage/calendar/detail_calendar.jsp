@@ -6,7 +6,7 @@
 <html>
 <head>
 
-<!-- Basic Page Needs
+<!-- Page Needs
 ================================================== -->
 <title>Listeo</title>
 <meta charset="utf-8">
@@ -53,7 +53,7 @@ function schedule(type){
 
 </header>
 <div class="clearfix"></div>
-<!-- Header Container / End -->
+<!-- Header Container / End --> 
 
 
 <!-- Dashboard -->
