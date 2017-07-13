@@ -110,6 +110,12 @@
             						<div class="col-md-10">
 											<div><input id="resultValue" name="resultValue" value=""></div>
             						</div>
+            						<div class="col-md-2">
+											<div>히든 요약</div>
+            						</div>
+            						<div class="col-md-10">
+											<div><input id="resultHiddenValue" name="resultHiddenValue" value=""></div>
+            						</div>
 
 									<button class="button margin-top-15" onclick="schedule(1)">등록</button>
 								</form>
@@ -146,12 +152,12 @@
             						</div>
             						<div class="col-md-10">
 											<select id="repeatWeekCount" name="repeatWeekCount">
-												<option value="01" selected="selected">1주</option>
-												<option value="02">2주</option>
-												<option value="03">3주</option>
-												<option value="04">4주</option>
-												<option value="05">5주</option>
-												<option value="06">6주</option>
+												<option value="1" selected="selected">1주</option>
+												<option value="2">2주</option>
+												<option value="3">3주</option>
+												<option value="4">4주</option>
+												<option value="5">5주</option>
+												<option value="6">6주</option>
 											</select>
             						</div>
 									<div class="col-md-12">
@@ -159,11 +165,11 @@
 											<span style="padding-right: 10px;">반복일 : </span> 
 											<input id="check-1" type="checkbox" name="check" value="월" checked="checked">
 											<label for="check-1">월</label> 
-											<input id="check-2" type="checkbox" name="check" value="화"> 
+											<input id="check-2" type="checkbox" name="check" value="화">
 											<label for="check-2">화</label>
-											<input id="check-3" type="checkbox" name="check" value="수"> 
+											<input id="check-3" type="checkbox" name="check" value="수">
 											<label for="check-3">수</label>
-											<input id="check-4" type="checkbox" name="check" value="목"> 
+											<input id="check-4" type="checkbox" name="check" value="목">
 											<label for="check-4">목</label>
 											<input id="check-5" type="checkbox" name="check" value="금"> 
 											<label for="check-5">금</label>
@@ -191,7 +197,7 @@
             						</div>
             						<div class="col-md-10">
 											<div><input id="result" name="result" value="매주 월요일"></div>
-											<div><input type="hidden" id="resultHidden" name="resultHidden" value=""></div>
+											<div><input id="resultHidden" name="repeatdata" value="1,"></div>
             						</div>
 
 									<button class="button margin-top-15" onclick="repeatAdd()">적용</button>
@@ -263,6 +269,7 @@
 	}
 	function repeatAdd(){
 		var repeat = document.getElementById("resultValue").value = document.getElementById("result").value; 
+		var repeatHidden = document.getElementById("resultHiddenValue").value = document.getElementById("resultHidden").value; 
 		
 	}
 	function selectBox(){
@@ -272,7 +279,8 @@
 		
 	$(document).ready(function(){
 		var selData="매주 ";
-		var selCountData="매주 "
+		var selCountData="매주 ";
+		var selCountDataNum="1,";
 		var DATA="";
 		var data="월요일";
 		var dataNum="";
@@ -288,30 +296,33 @@
 	        	 selData += sel[0]+" ";
 	         }
 	      });
-	      document.getElementById("result").value = selData+data;
+	      document.getElementById("result").value = selCountData+data;
 		});
 		//반복 주기
 		$("#repeatWeekCount").on('change', function() {
 			selCountData="";
+			selCountDataNum="";
 	      $('#repeatWeekCount[name=repeatWeekCount]').each(function() {
 	         if($(this).prop("selected", true)){
 	        	 var sel = $(this).val();
 	        	 if(sel==1){
 	        		 selCountData = "매주 ";
+	        		 selCountDataNum = sel+",";
 	        	 }else{
 	        		 selCountData = sel+"주 마다 ";
+	        		 selCountDataNum = sel+",";
 	        	 }
 	         }
 	      });
 	      document.getElementById("result").value = selCountData+data;
+	      document.getElementById("resultHidden").value = selCountDataNum+dataNum;
 		});
 		//반복일
 		$("input:checkbox").on('click', function() {
 			DATA="";
 	      $('input:checkbox[name=check]').each(function() {
 	         if($(this).is(':checked')){
-	        	 //DATA += ","+($(this).val());
-	        	 DATA += ","+($(this).text());
+	        	 DATA += ","+($(this).val());
 	         }
 	      });
 	      data="";
@@ -323,11 +334,11 @@
 	            dataNum+=i;
 	         }else{
 	            data+=splitDATA[i]+", ";
-	            dataNum+=i+", ";
+	            dataNum+=i+",";
 	         } 
 	      } 
-	      document.getElementById("result").value = selData+data;
-	      document.getElementById("resultHidden").value = dataNum;
+	      document.getElementById("result").value = selCountData+data;
+	      document.getElementById("resultHidden").value = selCountDataNum+dataNum;
 		});
 	});
 	

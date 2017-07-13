@@ -16,8 +16,17 @@ public class CalendarDTO {
 	private String endDate;
 	private String start;
 	private String end;
+	private String repeatdata;
 	
 	
+
+	public String getRepeatdata() {
+		return repeatdata;
+	}
+
+	public void setRepeatdata(String repeatdata) {
+		this.repeatdata = repeatdata;
+	}
 
 	@Override
 	public String toString() {
