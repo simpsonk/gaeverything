@@ -146,12 +146,12 @@
             						</div>
             						<div class="col-md-10">
 											<select id="repeatWeekCount" name="repeatWeekCount">
-												<option value="1" selected="selected">1주</option>
-												<option value="2">2주</option>
-												<option value="3">3주</option>
-												<option value="4">4주</option>
-												<option value="5">5주</option>
-												<option value="6">6주</option>
+												<option value="01" selected="selected">1주</option>
+												<option value="02">2주</option>
+												<option value="03">3주</option>
+												<option value="04">4주</option>
+												<option value="05">5주</option>
+												<option value="06">6주</option>
 											</select>
             						</div>
 									<div class="col-md-12">
@@ -310,7 +310,8 @@
 			DATA="";
 	      $('input:checkbox[name=check]').each(function() {
 	         if($(this).is(':checked')){
-	        	 DATA += ","+($(this).val());
+	        	 //DATA += ","+($(this).val());
+	        	 DATA += ","+($(this).text());
 	         }
 	      });
 	      data="";
