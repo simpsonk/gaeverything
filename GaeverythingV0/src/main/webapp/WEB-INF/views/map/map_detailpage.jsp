@@ -101,8 +101,13 @@
 			</div>
 			<!-- regist photo / End -->
 			
+<<<<<<< HEAD
 			
 			<!-- write Review -->
+=======
+			<!-- regist photo test push case-->
+			<!-- regist photo test push case-->
+>>>>>>> origin/master
 			<div id="regist-review" class="listing-section margin-top-70 margin-bottom-30">
 				<div class="col-lg-12" style="padding-left: 0px;">
 					<div class="col-lg-2" style="padding-left: 0px;">
