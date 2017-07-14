@@ -19,7 +19,7 @@
 <link rel='stylesheet' href= "<c:url value = '/resources/css/fullcalendar.print.css'/>" media='print'>
 
 
-<style>
+<style type="text/css">
 /* Remove the navbar's default margin-bottom and rounded borders */
 .navbar {
 	margin-bottom: 0;
@@ -56,12 +56,6 @@ footer {
 	}
 }
 
-body {
-	margin: 40px 10px;
-	padding: 0;
-	font-family: "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
-	font-size: 14px;
-}
 
 #top {
 	background: #eee;
@@ -99,7 +93,6 @@ body {
 
 <!-- Dashboard -->
 <div id="dashboard">
-
 	<!-- Navigation
 	================================================== -->
 
@@ -134,9 +127,7 @@ body {
 			<!-- Listings -->
 			<div class="col-lg-12 col-md-12">
 				<div class="dashboard-list-box margin-top-0">
-				
 					<div id='calendar'></div>
-					
 				</div>
 			</div>
 
@@ -232,7 +223,6 @@ body {
 <form method="post" id="submitSeq">
 	<input type="hidden" name="seq" id="seq" value=''>
 </form>
-
 
 </body>
 </html>

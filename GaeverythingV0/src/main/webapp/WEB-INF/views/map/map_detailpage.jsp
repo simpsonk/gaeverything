@@ -77,26 +77,32 @@
 					<span><i class="fa fa-phone"></i></span>			
 				</div>			
 			</div>
-			
-			
+						
 			<!-- regist photo -->
-			<div id="regist-photo" class="listing-section">
-				<h3 class="listing-desc-headline margin-top-70 margin-bottom-30">Photo</h3>
-				<!-- Uplaod Photos -->
-				<div class="col-lg-12">
-					<span>이 장소의 사진을 첫 번째로 등록해주세요.</span>
-				
-					<div class="add-review-photos" style="position:static;">
-						<div class="photoUpload">
-							<span><i class="sl sl-icon-arrow-up-circle"></i> Upload Photos</span>
+			<div id="regist-photo" class="listing-section margin-top-70 margin-bottom-30">
+				<div class="col-lg-12" style="padding-left: 0px;">
+					<div class="col-lg-2" style="padding-left: 0px;">
+						<h3 class="listing-desc-headline ">Photo</h3>
+					</div>
+					<!-- Uplaod Photos -->
+					<div class="col-lg-10">
+						<div style="height: 50px;margin-top: 34px;">
+							<div class = "col-lg-8" style="padding-top: 8px;">
+								<span>이 장소의 사진을 첫 번째로 등록해주세요.</span>
+							</div>
+							<div class="add-review-photos col-lg-4" style="position:static;">
+								<div class="photoUpload">
+									<span><i class="sl sl-icon-arrow-up-circle"></i> Upload Photos</span>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<!-- regist photo / End -->
 			
-			<!-- regist photo test push case6-->
-			<!-- regist photo test push case5-->
+			
+			<!-- write Review -->
 			<div id="regist-review" class="listing-section margin-top-70 margin-bottom-30">
 				<div class="col-lg-12" style="padding-left: 0px;">
 					<div class="col-lg-2" style="padding-left: 0px;">
@@ -117,7 +123,7 @@
 					</div>
 				</div>
 			</div>
-			<!-- regist photo / End -->
+			<!-- write Review / End -->
 
 		
 			<!-- Location -->
