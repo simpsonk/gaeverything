@@ -146,5 +146,17 @@ public class LocationService {
 		return levelList;
 	}
 
+	public List<LocationDTO> getSearchData(MapInfomation info) {
+		// TODO Auto-generated method stub
+		List<LocationDTO> list = null;
+		try {
+			list = dao.selectShopName(info);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 
 }
