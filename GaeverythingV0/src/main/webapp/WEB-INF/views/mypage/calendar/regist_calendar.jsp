@@ -114,7 +114,7 @@
 											<div>히든 요약</div>
             						</div>
             						<div class="col-md-10">
-											<div><input id="resultHiddenValue" name="resultHiddenValue" value=""></div>
+											<div><input id="resultHiddenValue" name="repeatdata" value=""></div>
             						</div>
 
 									<button class="button margin-top-15" onclick="schedule(1)">등록</button>
@@ -197,7 +197,7 @@
             						</div>
             						<div class="col-md-10">
 											<div><input id="result" name="result" value="매주 월요일"></div>
-											<div><input id="resultHidden" name="repeatdata" value="1,"></div>
+											<div><input id="resultHidden" name="resultHidden" value="1,"></div>
             						</div>
 
 									<button class="button margin-top-15" onclick="repeatAdd()">적용</button>
@@ -331,10 +331,10 @@
 	      for (var i=1; i<splitDATA .length; i++) {
 	         if(i==(splitDATA.length-1)){
 	            data+=splitDATA[i]+"요일";
-	            dataNum+=i;
+	            dataNum+=splitDATA[i];
 	         }else{
 	            data+=splitDATA[i]+", ";
-	            dataNum+=i+",";
+	            dataNum+=splitDATA[i]+",";
 	         } 
 	      } 
 	      document.getElementById("result").value = selCountData+data;
