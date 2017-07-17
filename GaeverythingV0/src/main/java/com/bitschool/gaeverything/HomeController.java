@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MapInfomation;
 import com.bitschool.dto.MemberDTO;
+import com.bitschool.service.LocationService;
 import com.bitschool.service.LogService;
 import com.bitschool.service.SignUpService;
 import com.bitschool.utils.LoginFilter;
@@ -32,6 +33,9 @@ public class HomeController {
 	
 	@Inject
 	private SignUpService sigService;
+	
+	@Inject
+	private LocationService service;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -79,14 +83,31 @@ public class HomeController {
 		HashMap<String, Object> map = (HashMap<String, Object>)session.getAttribute("map");
 		if(map!=null){
 			List<LocationDTO> list = (List<LocationDTO>)map.get("list");
-			MapInfomation info = (MapInfomation)map.get("info");
+			HashMap<String, Object> searchData = (HashMap<String, Object>)map.get("searchData");
 			model.addAttribute("list", list);
-			model.addAttribute("searchWord", info.getSearchWord());
-			model.addAttribute("searchCategory",info.getCategories());
+			model.addAttribute("searchData", searchData);
 			session.removeAttribute("map");
 		}
 		return url;
 	}
 	
-	
+	@RequestMapping(value = "getSearhShopname", method = RequestMethod.POST)
+	public String getSearhShopname(@RequestParam(value = "searchWord") String searchWord, @RequestParam(value = "selectOp1") String selectOp1, 
+			@RequestParam(value = "selectOp2") String selectOp2, Model model,  HttpSession session){
+		String url = "redirect:/viewSearchShop";
+		HashMap<String, Object> searchData = new HashMap<String, Object>();
+		
+		searchData.put("searchWord", searchWord);
+		searchData.put("selectOp1", selectOp1);
+		searchData.put("selectOp2", selectOp2);
+		
+		List<LocationDTO> list = service.getSearchData(searchData);
+		System.out.println(list);
+		System.out.println(searchData);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("searchData", searchData);
+		session.setAttribute("map", map);
+		return url;
+	}
 }

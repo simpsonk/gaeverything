@@ -23,30 +23,36 @@
 <!--Tabs -->
 <div class="sign-in-form style-1" style="margin-top: 100px;margin-left: 100px;margin-right: 100px;">
 	<ul class="tabs-nav">
-		<li class=""><a href="#tab1">shop name</a></li>
-		<li><a href="#tab2">location</a></li>
+		<li><a href="#tab1">shop name</a></li>
 	</ul>
-	<div class="tabs-container alt">
+	<div class="tabs-container alt" style="margin-bottom: 100px;">
 		<!-- Login -->
 		<div class="tab-content" id="tab1" style="display: none;">
 			<div class="col-fs-12">
 				<form action="" method="post" id="dataset">
 					<div class="row with-forms">
-						<div class="col-fs-3">	
-							<select data-placeholder="Option" class="chosen-select" name="searchCategory">
-								<option value="0">Category</option>
-								<option value="5 449 776" ${searchCategory=='5 449 776'?'selected="selected"':''}>Hospital</option>
-								<option value="2">########</option>
+						<div class="col-fs-2">	
+							<select data-placeholder="Option" class="chosen-select" name="selectOp1" id = "selectOp1">
+								<option value="0" ${searchData['selectOp1']=='0'?'selected="selected"':''}>Option</option>
+								<option value="1" ${searchData['selectOp1']=='1'?'selected="selected"':''}>Shop Name</option>
+								<option value="2" ${searchData['selectOp1']=='2'?'selected="selected"':''}>Location</option>
 							</select>
 						</div>
-						<div class="col-fs-6">
+						<div id = "hiddenOption" class="col-fs-2">	
+							<select class="chosen-select" name="selectOp2" id = "selectOp2">
+								<option value="0" ${searchData['selectOp2']=='0'?'selected="selected"':''}>Category</option>
+								<option value="5 449 776" ${searchData['selectOp2']=='5 449 776'?'selected="selected"':''}>Hospital</option>
+								<option value="3">#######</option>
+							</select>
+						</div>
+						<div id = "textContainer" class="col-fs-6">
 							<div class="input-with-icon">
 								<i class="sl sl-icon-magnifier"></i>
-								<input type="text" placeholder="What are you looking for?" value="${searchWord}" id="searchWord" name = "searchWord">
+								<input type="text" placeholder="What are you looking for?" value="${searchData['searchWord']}" id="searchWord" name = "searchWord">
 							</div>
 						</div>
-						<div class="col-fs-3" style="text-align:center">
-							<button type = "button" class="button" id = "search"  style="margin: auto; width: 130px;">search</button>			
+						<div class="col-fs-2" style="text-align:center">
+							<button type = "button" class="button" id = "search"  style="margin: auto; width: 130px; float: left;" >search</button>			
 						</div>
 					</div>
 				</form>
@@ -56,49 +62,13 @@
 					<h4>Result Shopname(count:${list.size()})</h4>
 					<ul>
 					<c:forEach items="${list}" var="data">
-						<li>
+						<li class = "list">
 							<strong><span id="title">${data.title}</span></strong><span>(${data.address})</span>
 						</li>
 					</c:forEach>		
 					</ul>
 				</div>
 			</c:if>
-			
-
-		</div>
-
-		<!-- Register -->
-		<div class="tab-content" id="tab2" style="display: none;">
-			<form  action="/signUp/registMember" method="post" class="register">
-				<p class="form-row form-row-wide">
-					<label for="username2">Nickname:
-						<i class="im im-icon-Male"></i>
-						<input type="text" class="input-text" name="nickname" id="username2" value="" />
-					</label>
-				</p>
-					
-				<p class="form-row form-row-wide">
-					<label for="email2">Email Address:
-						<i class="im im-icon-Mail"></i>
-						<input type="text" class="input-text" name="email" id="email2" value="" />
-					</label>
-				</p>
-	
-				<p class="form-row form-row-wide">
-					<label for="password1">Password:
-						<i class="im im-icon-Lock-2"></i>
-						<input class="input-text" type="password" name="pw" id="password1"/>
-					</label>
-				</p>
-	
-				<p class="form-row form-row-wide">
-					<label for="password2">Repeat Password:
-						<i class="im im-icon-Lock-2"></i>
-						<input class="input-text" type="password" name="pw1" id="password2"/>
-					</label>
-				</p>
-				<input type="submit" class="button border fw margin-top-10" name="register" value="Register" />
-			</form>
 		</div>
 	</div>
 </div>
@@ -118,34 +88,38 @@
 <script type="text/javascript" src="<c:url value = '/resources/scripts/custom.js'/>"></script>
 <script type="text/javascript">
 
-$(document).ready(function() {
+$(document).ready(function() {	
 	$("#search").click(function() {
-		var word = document.getElementById('searchWord').value;
-		var category = $("select[name=searchCategory]").val();
+		var searchWord = document.getElementById('searchWord').value;
+		var selectOp1 = $("select[id='selectOp1']").val();
+		var selectOp2 = $("select[id='selectOp2']").val();
 		var formEle = document.getElementById('dataset');
 		
-		if(word===''){
+		if(searchWord===''){
 			alert('검색어를 입력하세요.');
+			return; 
+		}
+		
+		if(selectOp1==0){
+			alert('옵션을 선택하세요.');
 			return;
 		}
 		
-		if(category==0){
+		if(selectOp2==0){
 			alert('카테고리를 선택하세요.');
 			return;
 		}
 		
-		if((word!='')&&(category!=0)){
-			formEle.action = "map/getSearhShopname";
+		if((searchWord!='')&&(selectOp1!=0)&&(selectOp2!=0)){
+			formEle.action = "getSearhShopname";
 			formEle.submit();
 		}
 	});
 	
-	$("li").click(function(){
-		alert($(this).find("#title").text());
+	$("li").filter('.list').click(function(){
+		alert($(this).find("#title").text());	
 	});
 });
-	
-
 </script>
 
 </body>

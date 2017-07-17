@@ -146,14 +146,27 @@ public class LocationService {
 		return levelList;
 	}
 
-	public List<LocationDTO> getSearchData(MapInfomation info) {
+	public List<LocationDTO> getSearchData(HashMap<String, Object> searchData) {
 		// TODO Auto-generated method stub
 		List<LocationDTO> list = null;
-		try {
-			list = dao.selectShopName(info);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		MapInfomation info = new MapInfomation();
+		info.setCategories((String)searchData.get("selectOp2"));
+		info.setSearchWord((String)searchData.get("searchWord"));
+		System.out.println(info);
+		if(searchData.get("selectOp1").equals("1")){
+			try {
+				list = dao.selectShopName(info);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if(searchData.get("selectOp1").equals("2")){
+			try {
+				list = dao.selectLocation(info);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return list;
 	}
