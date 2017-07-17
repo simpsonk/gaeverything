@@ -35,16 +35,11 @@
 ================================================== -->
 <!-- Slider
 ================================================== -->
-<div class="listing-slider mfp-gallery-container margin-bottom-0">
-	<a href="/resources/images/single-listing-01.jpg" data-background-image="/resources/images/single-listing-01.jpg" class="item mfp-gallery" title="Title 1"></a>
-	<a href="/resources/images/single-listing-02.jpg" data-background-image="/resources/images/single-listing-02.jpg" class="item mfp-gallery" title="Title 3"></a>
-	<a href="/resources/images/single-listing-03.jpg" data-background-image="/resources/images/single-listing-03.jpg" class="item mfp-gallery" title="Title 2"></a>
-	<a href="/resources/images/single-listing-04.jpg" data-background-image="/resources/images/single-listing-04.jpg" class="item mfp-gallery" title="Title 4"></a>
-</div>
+
 
 
 <!-- Content
-================================================== -->
+===============================	=================== -->
 <div class="container">
 	<div class="row sticky-wrapper">
 		<div class="col-lg-12 col-md-12 padding-right-100 padding-left-100 ">
