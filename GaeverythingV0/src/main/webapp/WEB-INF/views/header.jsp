@@ -37,7 +37,7 @@
 						<li><a href="/mypage/viewMypageDashboard">MyPage</a>
 							<ul>
 								<li><a href="/mypage/viewMypageDashboard">Dashboard</a></li>
-								<li><a href="/mypage/viewMypageCalendar">Calendar</a></li>
+								<li><a href="/mypage/calendar/viewCalendar">Calendar</a></li>
 								<li><a href="/mypage/viewMypageList">My Listings</a></li>
 								<li><a href="/mypage/viewMypageReviews">Reviews</a></li>
 								<li><a href="/mypage/viewMypageBookmarks">Bookmarks</a></li>

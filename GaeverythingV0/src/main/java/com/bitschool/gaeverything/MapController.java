@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -98,6 +99,20 @@ public class MapController {
 	@RequestMapping(value = "viewDetailpage", method = RequestMethod.GET)
 	public String viewDetailpage(){
 		String url = "map/map_detailpage";
+		return url;
+	}
+	
+	@RequestMapping(value = "getSearhShopname", method = RequestMethod.POST)
+	public String getSearhShopname(@RequestParam(value = "searchWord") String word, @RequestParam(value = "searchCategory") String category, Model model,  HttpSession session){
+		String url = "redirect:/viewSearchShop";
+		MapInfomation info = new MapInfomation();
+		info.setSearchWord(word);
+		info.setCategories(category);
+		List<LocationDTO> list = service.getSearchData(info);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("info", info);
+		session.setAttribute("map", map);
 		return url;
 	}
 	

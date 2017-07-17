@@ -46,11 +46,9 @@ function schedule(type){
 <!-- Header Container
 ================================================== -->
 <header id="header-container" class="fixed fullwidth dashboard">
-
 	<!-- Header -->
 	<%@include file = "../../header.jsp" %>
 	<!-- Header / End -->
-
 </header>
 <div class="clearfix"></div>
 <!-- Header Container / End --> 

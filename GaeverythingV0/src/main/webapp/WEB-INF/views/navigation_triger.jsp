@@ -11,7 +11,7 @@
 			</ul>
 			
 			<ul data-submenu-title="Listings">
-				<li><a href="/mypage/viewMypageCalendar"><i class="fa fa-calendar"></i> Calendar</a></li>
+				<li><a href="/mypage/calendar/viewCalendar"><i class="fa fa-calendar"></i> Calendar</a></li>
 				<li class="active"><a><i class="sl sl-icon-layers"></i> My Listings</a>
 					<ul>
 						<li><a href="/mypage/viewMypageList">Active <span class="nav-tag green">6</span></a></li>

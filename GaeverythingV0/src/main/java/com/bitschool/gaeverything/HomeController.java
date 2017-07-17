@@ -1,6 +1,10 @@
-package com.bitschool.gaeverything;
+	package com.bitschool.gaeverything;
+
+import java.util.HashMap;
+import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -11,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bitschool.dto.LocationDTO;
+import com.bitschool.dto.MapInfomation;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.service.LogService;
 import com.bitschool.service.SignUpService;
@@ -66,4 +72,21 @@ public class HomeController {
 		String url = "login_page";
 		return url;
 	}
+	
+	@RequestMapping(value = "viewSearchShop", method = RequestMethod.GET)
+	public String viewSearchShop(HttpSession session, Model model){
+		String url = "search_shop";
+		HashMap<String, Object> map = (HashMap<String, Object>)session.getAttribute("map");
+		if(map!=null){
+			List<LocationDTO> list = (List<LocationDTO>)map.get("list");
+			MapInfomation info = (MapInfomation)map.get("info");
+			model.addAttribute("list", list);
+			model.addAttribute("searchWord", info.getSearchWord());
+			model.addAttribute("searchCategory",info.getCategories());
+			session.removeAttribute("map");
+		}
+		return url;
+	}
+	
+	
 }

@@ -60,12 +60,4 @@ public class MypageController {
 		model.addAttribute("member", member);
 		return url;
 	}
-	
-	@RequestMapping(value = "/viewMypageCalendar", method = RequestMethod.GET)
-	public String viewMypageCalender(HttpSession session, Model model){
-		String url = "mypage/mypage_calendar";
-		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		model.addAttribute("member", member);
-		return url;
-	}
 }

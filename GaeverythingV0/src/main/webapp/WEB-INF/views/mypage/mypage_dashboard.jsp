@@ -26,7 +26,7 @@
 <!-- Header Container
 ================================================== -->
 <header id="header-container" class="fixed fullwidth dashboard">
-<%@include file = "../header.jsp" %>
+	<%@include file = "../header.jsp" %>
 </header>
 <div class="clearfix"></div>
 <!-- Header Container / End -->
