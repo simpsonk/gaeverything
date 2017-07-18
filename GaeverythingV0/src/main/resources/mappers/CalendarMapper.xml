@@ -8,9 +8,9 @@
 			select seq.nextval from dual
 		</selectKey>
 		insert into calendar(seq,id,dogid,title,place,message,startTime,
-		startDate,endTime,endDate,repeatdata) 
+		startDate,endTime,endDate,repeatdata,repeatview) 
 		values (#{seq},#{id},#{dogid},#{title},#{place},#{message},#{startTime},
-		#{startDate},#{endTime},#{endDate},#{repeatdata})
+		#{startDate},#{endTime},#{endDate},#{repeatdata},#{repeatview})
 	</insert>
 	<select id="selectAll" resultType="com.bitschool.dto.CalendarDTO">
 		select * from calendar
@@ -21,7 +21,7 @@
 	<update id="modify" parameterType="CalendarDTO">
 		update calendar set dogid = #{dogid}, title = #{title}, place = #{place},
 		message = #{message}, startTime = #{startTime}, endTime = #{endTime},
-		endDate = #{endDate}
+		endDate = #{endDate}, repeatdata = #{repeatdata}, repeatview = #{repeatview}
 		where seq = #{seq}
 	</update>
 	<delete id="delete" parameterType="Integer">

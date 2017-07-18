@@ -47,7 +47,7 @@ function schedule(type){
 ================================================== -->
 <header id="header-container" class="fixed fullwidth dashboard">
 	<!-- Header -->
-	<%@include file = "../../header.jsp" %>
+	<%-- <%@include file = "../../header.jsp" %> --%>
 	<!-- Header / End -->
 </header>
 <div class="clearfix"></div>
@@ -61,7 +61,7 @@ function schedule(type){
 	================================================== -->
 
 	<!-- Responsive Navigation Trigger -->
-	<%@include file= "../../navigation_triger.jsp" %>
+	<%-- <%@include file= "../../navigation_triger.jsp" %> --%>
 	<!-- Navigation / End -->
 
 
@@ -100,52 +100,39 @@ function schedule(type){
 
 									<label>제목</label> 
 									<input type='text' id='title' size=30px
-										name='title' placeholder="예: 오후 7시에 멕시코 음식점에서 저녁식사" value='${dto.title }'>
+										name='title' placeholder="예: 오후 7시에 멕시코 음식점에서 저녁식사" value=''>
 
 									<label>강아지 선택</label> 
 									<select id='dogid' name='dogid'>
 										<option value="1" selected='selected'>1번개
 										<option value="2">2번개
 										<option value="3">3번개
-									</select>
-									 
-									<label>시작시간</label> 
-									<input type="time" id='startTime' name='startTime' value='00:00'> 
-									
-									<label>시작날짜</label> 
-									<input class='form-control startDate' type="date" id='startDate' 
-										readonly="readonly" name='startDate' value='${dto.startDate }'> 
-										
-									<label>종료시간</label>
-									<input class='' type="time" id='endTime' name='endTime' value='00:00'> 
-									
-									<label>종료날짜</label> 
-									<input class='form-control startDate' type="date" id='endDate'
-										name='endDate' value='${dto.endDate }'> 
-										
-									<label>장소</label> 
-									<input type='text' class='form-control' id='place' name='place'
-										placeholder="예: 강남구 서초동" value='${dto.place }'> 
-										
-									<label>내용</label>
-									<textarea name="message" id="" cols="30" rows="10">${dto.message }</textarea>
+									</select> <label>시작시간</label> <input type="time" id='startTime'
+										name='startTime' value='00:00'> <label>시작날짜</label> <input
+										class='form-control startDate' type="date" id='startDate'
+										readonly="readonly" name='startDate' value='${sd }'> <label>종료시간</label>
+									<input class='' type="time" id='endTime' name='endTime'
+										value='00:00'> <label>종료날짜</label> <input
+										class='form-control startDate' type="date" id='endDate'
+										name='endDate' value='${sd }'> <label>장소</label> <input
+										type='text' class='form-control' id='place' name='place'
+										placeholder="예: 강남구 서초동" value=''> <label>내용</label>
+									<textarea name="message" id="" cols="30" rows="10"></textarea>
 
 									<div class="col-md-2">
 											<div>요약</div>
             						</div>
             						<div class="col-md-10">
-											<div><input id="resultValue" name="resultValue" value="${dto.repeatview }"></div>
+											<div><input id="resultValue" name="resultValue" value=""></div>
             						</div>
             						<div class="col-md-2">
 											<div>히든 요약</div>
             						</div>
             						<div class="col-md-10">
-											<div><input id="resultHiddenValue" name="repeatdata" value="${dto.repeatdata }"></div>
+											<div><input id="resultHiddenValue" name="repeatdata" value=""></div>
             						</div>
 
-									<button class="button margin-top-15" onclick="schedule(2)">수정</button>
-									<button class="button margin-top-15" onclick="schedule(3)">삭제</button>
-									<button class="button margin-top-15" onclick="schedule(1)">확인</button>
+									<button class="button margin-top-15" onclick="schedule(1)">등록</button>
 								</form>
 
 							</div>
@@ -236,7 +223,46 @@ function schedule(type){
 						</div>
 					</div>
 			
+					<h4>일정등록</h4>
 					
+						<!-- Details -->
+						
+						<form action="" id="calendarAdd" method="post">
+						
+							<label>제목</label> 
+							<input type='text' id='title' size=30px name='title' 
+							placeholder="예: 오후 7시에 멕시코 음식점에서 저녁식사" value="${dto.title}">
+							
+							<label>강아지 선택</label> <select id='dogid' name='dogid' >
+							<option value="1" selected='selected'>1번개
+							<option value="2">2번개
+							<option value="3">3번개
+							</select>
+							
+							<label>시작시간</label> <input type="time"
+							id='startTime' name='startTime' value='${dto.startTime }'>
+							
+							<label>시작날짜</label> <input class='form-control startDate'
+							type="date" id='startDate'  name='startDate' value='${dto.startDate }'>
+							
+							<label>종료시간</label> <input class='' type="time"
+							id='endTime' name='endTime' value='${dto.endTime }'>
+							
+							<label>종료날짜</label> <input class='form-control startDate'
+							type="date" id='endDate' name='endDate' value='${dto.endDate }'>
+							
+							<label>장소</label> <input type='text' class='form-control'
+							id='place' name='place' placeholder="예: 강남구 서초동" value='${dto.place }'>
+														
+							<label>내용</label>
+							<textarea name="message" id="" cols="30" rows="10">${dto.message }</textarea>
+							
+							<input type="hidden" id="seq" name="seq" value="${dto.seq }">
+						
+						<button class="button margin-top-15" onclick="schedule(2)">수정</button>
+						<button class="button margin-top-15" onclick="schedule(3)">삭제</button>
+						<button class="button margin-top-15" onclick="schedule(1)">확인</button>
+						</form>	
 	
 						
 

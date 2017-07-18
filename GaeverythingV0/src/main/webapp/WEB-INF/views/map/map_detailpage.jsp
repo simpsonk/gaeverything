@@ -69,7 +69,10 @@
 					</span>
 				</div>
 				<div style="padding-bottom: 30px; padding-left: 30px;">
-					<span><i class="fa fa-phone"></i></span>			
+					<span>
+						<i class="fa fa-phone"></i>
+						010-2222-2222
+					</span>			
 				</div>			
 			</div>
 						

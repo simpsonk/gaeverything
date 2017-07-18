@@ -59,13 +59,13 @@
 				<div id="titlebar">
 					<div class="row">
 						<div class="col-md-12">
-							<h2>My Profile</h2>
+							<h2>Calendar</h2>
 							<!-- Breadcrumbs -->
 							<nav id="breadcrumbs">
 							<ul>
 								<li><a href="#">Home</a></li>
-								<li><a href="#">Dashboard</a></li>
-								<li>My Profile</li>
+								<li><a href="#">Calendar</a></li>
+								<li>Calendar</li>
 							</ul>
 							</nav>
 						</div>
@@ -108,7 +108,7 @@
 											<div>요약</div>
             						</div>
             						<div class="col-md-10">
-											<div><input id="resultValue" name="resultValue" value=""></div>
+											<div><input id="resultValue" name="repeatview" value=""></div>
             						</div>
             						<div class="col-md-2">
 											<div>히든 요약</div>
