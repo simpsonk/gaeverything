@@ -42,15 +42,15 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model, HttpSession session) {
 		logger.info("Welcome home! The client locale is {}.", "connect");
-/*		boolean islogin = new LoginFilter().isLogin(session, model);
-*/		
-		MemberDTO member = (MemberDTO)session.getAttribute("member"); 
+		boolean islogin = new LoginFilter().isLogin(session, model);
+		System.out.println(islogin);
+/*		MemberDTO member = (MemberDTO)session.getAttribute("member"); 
 		boolean isLogin = member!=null?true:false;
 		System.out.println(isLogin);
 		if(isLogin){
 			model.addAttribute("member", member);
 		}
-		return "home";
+*/		return "home";
 	}
 	@RequestMapping(value = "login", method = {RequestMethod.POST, RequestMethod.GET})
 	public String login(@RequestParam("email") String email, @RequestParam("pw") String pw, 

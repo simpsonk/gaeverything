@@ -11,7 +11,6 @@ public class LoginFilter {
 		boolean check = false;
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		check = member!=null?true:false;
-		System.out.println(check);
 		if(check){
 			model.addAttribute("member", member);
 		}
