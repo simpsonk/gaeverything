@@ -26,7 +26,8 @@
    	</beans:bean> 
    	<interceptors>
         <interceptor>
-            <mapping path="/mypage/*"/>          
+            <mapping path="/mypage/*"/>
+            <mapping path="/mypage/calendar/*"/>          
             <beans:ref bean="memberInterceptor"/>
         </interceptor>
    	 </interceptors>

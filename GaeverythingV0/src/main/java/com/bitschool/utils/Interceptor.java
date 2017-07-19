@@ -16,7 +16,7 @@ public class Interceptor extends HandlerInterceptorAdapter {
 		String requestURI = request.getRequestURI().toString();
 		boolean isLogin = member!=null?true:false;
 		if(!isLogin){
-			String url = "../viewLogin";
+			String url = "/viewLogin";
 			response.sendRedirect(url+"?uri="+requestURI);
 			return false;
 		}
