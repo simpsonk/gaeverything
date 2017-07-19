@@ -104,9 +104,10 @@ function schedule(type){
 
 									<label>강아지 선택</label> 
 									<select id='dogid' name='dogid'>
-										<option value="1" selected='selected'>1번개
-										<option value="2">2번개
-										<option value="3">3번개
+										<option value="1" ${dto.dogid=='1'?'selected="selected"':''}>1번개
+										<option value="2" ${dto.dogid=='2'?'selected="selected"':''}>2번개
+										<option value="3" ${dto.dogid=='3'?'selected="selected"':''}>3번개
+										
 									</select>
 									 
 									<label>시작시간</label> 

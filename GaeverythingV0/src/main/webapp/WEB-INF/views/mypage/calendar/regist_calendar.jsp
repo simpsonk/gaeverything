@@ -92,16 +92,29 @@
 										<option value="1" selected='selected'>1번개
 										<option value="2">2번개
 										<option value="3">3번개
-									</select> <label>시작시간</label> <input type="time" id='startTime'
-										name='startTime' value='00:00'> <label>시작날짜</label> <input
-										class='form-control startDate' type="date" id='startDate'
-										readonly="readonly" name='startDate' value='${sd }'> <label>종료시간</label>
+									</select> 
+									
+									<label>시작시간</label> 
+									<input type="time" id='startTime'
+										name='startTime' value='00:00'> 
+									
+									<label>시작날짜</label> 
+									<input class='form-control startDate' type="date" id='startDate'
+										readonly="readonly" name='startDate' value='${sd }'> 
+									
+									<label>종료시간</label>
 									<input class='' type="time" id='endTime' name='endTime'
-										value='00:00'> <label>종료날짜</label> <input
-										class='form-control startDate' type="date" id='endDate'
-										name='endDate' value='${sd }'> <label>장소</label> <input
-										type='text' class='form-control' id='place' name='place'
-										placeholder="예: 강남구 서초동" value=''> <label>내용</label>
+										value='00:00'> 
+									
+									<label>종료날짜</label>
+									<input class='form-control startDate' type="date" id='endDate'
+										name='endDate' value='${sd }'> 
+									
+									<label>장소</label> 
+									<input type='text' class='form-control' id='place' name='place'
+										placeholder="예: 강남구 서초동" value=''> 
+										
+									<label>내용</label>
 									<textarea name="message" id="" cols="30" rows="10"></textarea>
 
 									<div class="col-md-2">
@@ -289,7 +302,7 @@
 			selData="";
 	      $('#repeatWeek[name=repeatWeek]').each(function() {
 	         if($(this).prop("selected", true)){
-	        	 if(($(this).val())==2){
+	        	 $(this).val()==2
 	        		 
 	        	 }
 	        	 var sel = ($("#repeatWeek option:selected").text()).split("	");
