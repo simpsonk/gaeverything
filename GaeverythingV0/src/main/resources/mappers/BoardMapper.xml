@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bitschool.Board.BoardMapper">
+
+	<insert id="add" parameterType="BoardDTO">
+		<selectKey keyProperty="boardNo" resultType="Integer" order="BEFORE">
+			select board_seq.nextval from dual
+		</selectKey>
+		insert into
+		board(boardCategory,boardno,nickname,title,rating,address,uploadImg,message,onlytext,groupno)
+		values(#{boardCategory},#{boardNo},#{nickname},#{title},#{rating},#{address},#{uploadImg},#{message},#{onlyText},#{boardNo})
+	</insert>
+	
+	<select id="readAll" resultType="BoardDTO">
+		select * from board order by boardNo desc 
+	</select>
+	
+	<select id="perPage" parameterType="PageDTO" resultType="BoardDTO">
+		select * from 
+			(select rownum as num, temp.* from
+				(select * from board order by boardNo desc)temp) 
+		where num between #{firstNo} and #{lastNo}
+	</select>
+	
+	<select id="readOne" parameterType="Integer" resultType="BoardDTO">
+		select * from board where boardNo = #{boardNo}
+	</select>
+	
+	<update id="readCount" parameterType="Integer">
+		update board set readcount=readcount+1 where boardno=#{boardNo} 
+	</update>
+	
+	<update id="modify" parameterType="BoardDTO">
+		update board set title=#{title}, message=#{message}, rating=#{rating}, address=#{address} where boardno=#{boardNo}
+	</update>
+	
+	<delete id="remove" parameterType="Integer">
+		delete from board where boardno=#{boardNo}
+	</delete>
+	
+	<select id="getTotal" resultType="Integer">
+		select count(*) from board
+	</select>
+	
+	<select id="search" parameterType="SearchDTO" resultType="BoardDTO">
+		select * from 
+		(select rownum as num, temp.* from
+			(select * from board 
+				<if test="by==1">where title like '%'||#{search}||'%'</if>
+				<if test="by==2">where nickname like '%'||#{search}||'%'</if>
+				<if test="by==3">where message like '%'||#{search}||'%'</if>
+			order by boardno desc)temp) 
+		where num between #{pDTO.firstNo} and #{pDTO.lastNo}
+	</select>
+	
+	<select id="countSearch" parameterType="SearchDTO" resultType="Integer">
+		select count(*) from board 
+		<if test="by==1">where title like '%'||#{search}||'%'</if>
+		<if test="by==2">where nickname like '%'||#{search}||'%'</if>
+		<if test="by==3">where message like '%'||#{search}||'%'</if>	
+	</select>
+	
+	<insert id="insertCmt" parameterType="CommentDTO">
+	<selectKey keyProperty="commentNo" resultType="Integer" order="BEFORE">
+		select comment_seq.nextval from dual
+	</selectKey>
+		insert into commentbox(commentno, userid, nicknamecmt, commentbody, groupno, parentno, orderno, depth) 
+		values(#{commentNo},#{userId},#{nicknameCmt},#{commentBody},#{groupNo},#{parentNo},#{orderNo},#{depth})
+	</insert>
+	
+	<select id="allCmt" parameterType="Integer" resultType="CommentDTO">
+		select * from commentbox where groupno=#{boardNo} order by regidate
+	</select>
+	
+	
+	<select id="getOneCmt" parameterType="CommentDTO" resultType="Integer">
+	 	select commentno from 
+			(select rownum as num, temp.* from 
+				(select * from commentbox where groupno=#{groupNo} order by commentno )temp)A
+		where num=#{index}
+	</select>
+	
+	<update id="modifyCmt" parameterType="CommentDTO">
+		update commentbox set commentbody=#{commentBody} where commentno=#{commentNo}
+	</update>
+	
+	<delete id="deleteCmt" parameterType="Integer">
+		delete from commentbox where commentno=#{commentNo}
+	</delete>
+	
+	<select id="countCmt" parameterType="Integer" resultType="Integer">
+		select count(*) from commentbox where groupno=#{boardNo}
+	</select>
+	
+	<select id="totalNumOfCmt" parameterType="Integer" resultType="Integer">
+		select count(*) from board inner join commentbox 
+		on board.boardno=commentbox.groupno 
+		where boardno=#{boardNo}
+	</select>
+	
+	<update id="updateLike" parameterType="Integer">
+		update board set countLike=countLike+1 where boardNo=#{boardNo}
+	</update>
+	
+	<update id="updateDislike" parameterType="Integer">
+		update board set countLike=countLike-1 where boardNo=#{boardNo}
+	</update>
+	
+	<select id="getAllLike" parameterType="Integer" resultType="Integer">
+		select countLike from board where boardNo=#{boardNo}
+	</select>
+	
+	
+	
+</mapper>
