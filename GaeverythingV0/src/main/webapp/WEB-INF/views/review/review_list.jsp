@@ -1,15 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 
 <!-- Basic Page Needs
 ================================================== -->
-<title>Listeo</title>
+<title>Gaeverything</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+					
 
 <!-- CSS
 ================================================== -->
@@ -38,22 +40,18 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-
-				<h2>Review</h2><span>Latest News</span>
-
+				<h2>Review</h2><span>Latest Reviews</span>
 				<!-- Breadcrumbs -->
 				<nav id="breadcrumbs">
 					<ul>
-						<li><a href="#">Home</a></li>
+						<li><a href="/">Home</a></li>
 						<li>Review</li>
 					</ul>
 				</nav>
-
 			</div>
 		</div>
 	</div>
 </div>
-
 
 <!-- Content
 ================================================== -->
@@ -62,111 +60,65 @@
 	<!-- Blog Posts -->
 	<div class="blog-page">
 	<div class="row">
-		<div class="col-lg-9 col-md-8 padding-right-30">
+	<div class="col-lg-9 col-md-8 padding-right-30">
 
-			<!-- Blog Post -->
-			<div class="blog-post">
-				
-				<!-- Img -->
-				<a href="pages-blog-post.html" class="post-img">
-					<img src="/resources/images/blog-post-01.jpg" alt="">
+	<!-- Blog Post -->	
+	<c:forEach items="${list}" var="board">
+		
+		<div class="blog-post">	  
+		
+			<!-- Img -->
+			<c:if test="${board.uploadImg != null}">
+				<a href="/review/readPost?boardNo=${board.boardNo}&page=${page}&nickname=${board.encodeUTF}" class="post-img">
+				<img src="/resources/upload/${board.uploadImg}" alt="" style="width:100%; height:400px; object-fit:cover;">
 				</a>
+			</c:if>
+			
+			<!-- Content -->
+			<div class="post-content" id="wrapper">
+				<!-- title -->
+				<h3><a href = "/review/readPost?boardNo=${board.boardNo}&page=${page}&nickname=${board.encodeUTF}">${board.title}</a></h3>
 				
-				<!-- Content -->
-				<div class="post-content">
-					<h3><a href="pages-blog-post.html">Hotels for All Budgets </a></h3>
-
-					<ul class="post-meta">
-						<li>August 22, 2017</li>
-						<li><a href="#">Tips</a></li>
-						<li><a href="#">5 Comments</a></li>
-					</ul>
-
-					<p>Nam nisl lacus, dignissim ac tristique ut, scelerisque eu massa. Vestibulum ligula nunc, rutrum in malesuada vitae, tempus sed augue. Curabitur quis lectus quis augue dapibus facilisis.</p>
-
-					<a href="pages-blog-post.html" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
+				<!-- rating -->
+				<div class="star-rating col-md-12 " data-rating="${board.rating}" style="padding-left: 0px; padding-right: 0px; padding-top: 10px;padding-bottom: 10px;">${board.rating}</div> 
+				
+				<!-- nickname, comment, etc. -->	
+				<ul class="post-meta">
+					<li><strong>${board.nickname}</strong></li>
+					<c:if test="${board.boardCategory=='1'}">
+						<li><a href="#">병원, 뷰티</a></li>
+					</c:if>
+						
+					<c:if test="${board.boardCategory=='2'}">
+						<li><a href="#">애견동반 식당, 카페</a></li>
+					</c:if>
+						<li><i class="sl sl-icon-bubble"></i> ${board.numOfCmt}</li>
+						<li><i class="sl sl-icon-heart"></i> ${board.countLike}</li>
+						<li><i class="sl sl-icon-eye"></i> ${board.readCount}</li>
+						<li><fmt:formatDate value = "${board.regiDate}" pattern="YY/MM/dd hh:mm:ss"/></li>
+				</ul>
+				
+				<!-- content preview -->	
+				<div class="preview_box" id="preview" style="width: 100%; height:100px;">
+					<p>${board.onlyText}</p>
 				</div>
-
+				<a href="/review/readPost?boardNo=${board.boardNo}&page=${page}&nickname=${board.encodeUTF}" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
 			</div>
-			<!-- Blog Post / End -->
-
-
-			<!-- Blog Post -->
-			<div class="blog-post">
-				
-				<!-- Img -->
-				<a href="pages-blog-post.html" class="post-img">
-					<img src="/resources/images/blog-post-02.jpg" alt="">
-				</a>
-				
-				<!-- Content -->
-				<div class="post-content">
-					<h3><a href="pages-blog-post.html">The 50 Greatest Street Arts In London</a></h3>
-
-					<ul class="post-meta">
-						<li>August 18, 2017</li>
-						<li><a href="#">Tips</a></li>
-						<li><a href="#">7 Comments</a></li>
-					</ul>
-
-					<p>Nam nisl lacus, dignissim ac tristique ut, scelerisque eu massa. Vestibulum ligula nunc, rutrum in malesuada vitae, tempus sed augue. Curabitur quis lectus quis augue dapibus facilisis.</p>
-
-					<a href="pages-blog-post.html" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
-				</div>
-
-			</div>
-			<!-- Blog Post / End -->
-
-
-			<!-- Blog Post -->
-			<div class="blog-post">
-				
-				<!-- Img -->
-				<a href="pages-pages-blog-post.html" class="post-img">
-					<img src="/resources/images/blog-post-03.jpg" alt="">
-				</a>
-				
-				<!-- Content -->
-				<div class="post-content">
-					<h3><a href="pages-pages-blog-post.html">The Best Cofee Shops In Sydney Neighborhoods</a></h3>
-
-					<ul class="post-meta">
-						<li>August 10, 2017</li>
-						<li><a href="#">Tips</a></li>
-						<li><a href="#">12 Comments</a></li>
-					</ul>
-
-					<p>Nam nisl lacus, dignissim ac tristique ut, scelerisque eu massa. Vestibulum ligula nunc, rutrum in malesuada vitae, tempus sed augue. Curabitur quis lectus quis augue dapibus facilisis.</p>
-
-					<a href="pages-blog-post.html" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
-				</div>
-
-			</div>
-			<!-- Blog Post / End -->
-
-
-			<!-- Pagination -->
-			<div class="clearfix"></div>
-			<div class="row">
-				<div class="col-md-12">
-					<!-- Pagination -->
-					<div class="pagination-container margin-bottom-40">
-						<nav class="pagination">
-							<ul>
-								<li><a href="#" class="current-page">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
-							</ul>
-						</nav>
-					</div>
-				</div>
-			</div>
-			<!-- Pagination / End -->
-
 		</div>
+	</c:forEach>
+	<!-- Blog Post / End -->
 
-	<!-- Blog Posts / End -->
+	<!-- Pagination -->
+	<div class="clearfix"></div>
+		<div class="row">
+			<div class="col-md-12">
+				<!-- Pagination -->
+				<div class="pagination-container margin-bottom-40">${pList}</div>
+			</div>
+		</div>
+	<!-- Pagination / End -->
+</div>
+<!-- Blog Posts / End -->
 
 
 	<!-- Widgets -->
@@ -186,10 +138,10 @@
 
 			<!-- Widget -->
 			<div class="widget margin-top-40">
-				<h3>Got any questions?</h3>
+				<h3>Any recommendations?</h3>
 				<div class="info-box margin-bottom-10">
-					<p>Having any questions? Feel free to ask!</p>
-					<a href="/review/viewReviewRegist" class="button fullwidth margin-top-20">Write Review</a>
+					<p>Feel free to share your experience!</p>
+					<a href="/review/viewReviewRegist" class="button fullwidth margin-top-20">Write a Review</a>
 				</div>
 			</div>
 			<!-- Widget / End -->
@@ -304,40 +256,22 @@
 <script type="text/javascript" src="<c:url value = '/resources/scripts/jquery-ui.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/tooltips.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/custom.js'/>"></script>
+<script type="text/javascript" src="<c:url value = '/resources/jQuery.dotdotdot-master/src/jquery.dotdotdot.js'/>"></script>
 
-
-<!-- Style Switcher
-================================================== -->
-<script src="<c:url value = '/resources/scripts/switcher.js'/>"></script> 
-
-
-<div id="style-switcher">
-	<h2>Color Switcher <a href="#"><i class="sl sl-icon-settings"></i></a></h2>
-	
-	<div>
-		<ul class="colors" id="color1">
-			<li><a href="#" class="main" title="Main"></a></li>
-			<li><a href="#" class="blue" title="Blue"></a></li>
-			<li><a href="#" class="green" title="Green"></a></li>
-			<li><a href="#" class="orange" title="Orange"></a></li>
-			<li><a href="#" class="navy" title="Navy"></a></li>
-			<li><a href="#" class="yellow" title="Yellow"></a></li>
-			<li><a href="#" class="peach" title="Peach"></a></li>
-			<li><a href="#" class="beige" title="Beige"></a></li>
-			<li><a href="#" class="purple" title="Purple"></a></li>
-			<li><a href="#" class="celadon" title="Celadon"></a></li>
-			<li><a href="#" class="red" title="Red"></a></li>
-			<li><a href="#" class="brown" title="Brown"></a></li>
-			<li><a href="#" class="cherry" title="Cherry"></a></li>
-			<li><a href="#" class="cyan" title="Cyan"></a></li>
-			<li><a href="#" class="gray" title="Gray"></a></li>
-			<li><a href="#" class="olive" title="Olive"></a></li>
-		</ul>
-	</div>
-		
-</div>
-<!-- Style Switcher / End -->
-
+<script>
+	$(document).ready(function(){
+		$('.preview_box').dotdotdot({
+			ellipis : '...',
+			wrap    : 'word',
+			height  : '100px',
+			callback	: function( isTruncated, orgContent ) {},
+			lastCharacter : {
+				remove : ['','.',';','!','?'],
+				noEllipis: []
+			}
+		});
+	});
+</script>
 
 </body>
 </html>

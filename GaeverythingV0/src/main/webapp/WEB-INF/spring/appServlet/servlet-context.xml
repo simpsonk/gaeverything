@@ -27,9 +27,14 @@
    	<interceptors>
         <interceptor>
             <mapping path="/mypage/*"/>
-            <mapping path="/mypage/calendar/*"/> 
-            <mapping path="/mypage/calendar/viewCalendar"/>           
+            <mapping path="/mypage/calendar/*"/>
+            <mapping path="/review/viewReviewRegist"/>
+            <mapping path="/review/newCmt"/>
+			<mapping path="/review/updateLike"/>          
             <beans:ref bean="memberInterceptor"/>
         </interceptor>
    	 </interceptors>
+   	 
+   	 <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+   	 
 </beans:beans>
