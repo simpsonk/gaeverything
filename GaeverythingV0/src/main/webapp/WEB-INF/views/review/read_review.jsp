@@ -84,10 +84,10 @@
 		data.submit();
 	}
 
-	function box_clicked(){
+	function box_clicked(page){
 		alert("댓글작성은 회원만 가능합니다.");
 		var boardNo = document.getElementById("boardNo").value;
-		location.href = "/review/newCmt";
+		location.href = "/viewLogin?uri=/review/readPost?boardNo="+boardNo+"&page="+page;
 	}
 	
 	function like_clicked(){
@@ -117,9 +117,10 @@
          });
 	}
 	
-	function no_login_like(){
+	function no_login_like(page){
 		alert("로그인을 해주세요!");
-		location.href = "/review/updateLike";	
+		var boardNo = document.getElementById("boardNo").value;
+		location.href = "/viewLogin?uri=/review/readPost?boardNo="+boardNo+"&page="+page;
 	}
 	
 	
@@ -226,10 +227,10 @@
 				<div class="optin button col-md-10">
 					<!-- Like -->
 					<c:choose>
-						<c:when test="${memberNickname == null }">
+						<c:when test="${member.nickname == null }">
 							<div class="like col-md-3" style="width: 80px; height: 0px; padding-left: 0px; margin-top: 25px; padding-right: 0px;">
 								<div class="listing-item-container list-layout">
-									<span class="like-icon" id="like" onclick="no_login_like()"></span>
+									<span class="like-icon" id="like" onclick="no_login_like(${param.page})"></span>
 								</div>
 							</div>	
 						</c:when>
@@ -360,7 +361,7 @@
 						<label>Comment:</label>
 							<c:choose>
 								<c:when test="${member.nickname == null}">
-									<textarea cols="40" rows="3" name="commentBody" onclick="box_clicked()" placeholder="로그인 후 댓글작성이 가능합니다."></textarea>
+									<textarea cols="40" rows="3" name="commentBody" onclick="box_clicked(${param.page})" placeholder="로그인 후 댓글작성이 가능합니다."></textarea>
 								</c:when>
 								<c:otherwise>
 									<textarea cols="40" rows="3" name="commentBody" placeholder="댓글을 작성해주세요 :)"></textarea>
