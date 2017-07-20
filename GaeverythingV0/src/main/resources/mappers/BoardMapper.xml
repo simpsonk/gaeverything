@@ -2,14 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<<<<<<< HEAD
-<mapper namespace="com.bitschool.gaeverything.BoardMapper">	
-	<select id="selectStatus" parameterType="ActUserDTO" resultType="Integer">
-		select count(*) from act_user where email = #{email} and boardNo = #{boardNo} and actType = #{actType}
-	</select>
-=======
 <mapper namespace="com.bitschool.Board.BoardMapper">
-
 	<insert id="add" parameterType="BoardDTO">
 		<selectKey keyProperty="boardNo" resultType="Integer" order="BEFORE">
 			select board_seq.nextval from dual
@@ -118,7 +111,8 @@
 		select countLike from board where boardNo=#{boardNo}
 	</select>
 	
+	<select id="selectStatus" parameterType="ActUserDTO" resultType="Integer">
+		select count(*) from act_user where email = #{email} and boardNo = #{boardNo} and actType = #{actType}
+	</select>
 	
-	
->>>>>>> origin/master
 </mapper>

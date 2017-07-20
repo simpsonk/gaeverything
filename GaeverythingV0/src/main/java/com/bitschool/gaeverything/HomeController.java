@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -17,9 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.LocationDTO;
-import com.bitschool.dto.MapInfomation;
 import com.bitschool.dto.MemberDTO;
-import com.bitschool.service.BoardService;
+import com.bitschool.service.IBoardService;
 import com.bitschool.service.LocationService;
 import com.bitschool.service.LogService;
 import com.bitschool.service.SignUpService;
@@ -41,7 +39,7 @@ public class HomeController {
 	private LocationService service;
 	
 	@Inject
-	private BoardService bService;
+	private IBoardService bService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -50,7 +48,7 @@ public class HomeController {
 		logger.info("Welcome home! The client locale is {}.", "connect");
 		boolean islogin = new LoginFilter().isLogin(session, model);
 		
-		String likeStatus = new ActUserManager().checkLikeStatus(new ActUserDTO(1, "admin@naver.com", 10, "01"), bService);
+		String likeStatus = new ActUserManager().checkLikeStatus(new ActUserDTO("admin@naver.com", 10, "01"), bService);
 		System.out.println(islogin);
 		System.out.println(likeStatus);
 		model.addAttribute("likeStatus", likeStatus);

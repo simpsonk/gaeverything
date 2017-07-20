@@ -10,8 +10,7 @@ public class ActUserDTO {
 		
 	}
 	
-	public ActUserDTO(int actNo, String email, int boardNo, String actType) {
-		this.actNo = actNo;
+	public ActUserDTO(String email, int boardNo, String actType) {
 		this.email = email;
 		this.boardNo = boardNo;
 		this.actType = actType;

@@ -1,43 +1,23 @@
 package com.bitschool.service;
 
 import java.sql.SQLException;
-<<<<<<< HEAD
-
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import com.bitschool.dao.BoardDAO;
 import com.bitschool.dto.ActUserDTO;
-
-@Service
-public class BoardService {
-	
-	@Inject
-	private BoardDAO dao;
-	
-	public boolean getLikeStatus(ActUserDTO dto) {
-		// TODO Auto-generated method stub
-		boolean flag = false;
-		try {
-			flag = dao.searchStatus(dto);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-=======
 import java.util.List;
-import javax.inject.Inject;
-import org.springframework.stereotype.Service;
 import com.bitschool.dao.IBoardDAO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.PageDTO;
 import com.bitschool.dto.SearchDTO;
 
 @Service
-public class BoardService implements IBoardService{
+public class BoardService implements IBoardService {
 
 	@Inject
 	private IBoardDAO dao;
-	
+
 	@Override
 	public boolean insertPost(BoardDTO dto) {
 		System.out.println("insert service");
@@ -45,14 +25,10 @@ public class BoardService implements IBoardService{
 		try {
 			flag = dao.addNewPost(dto);
 		} catch (SQLException e) {
->>>>>>> origin/master
 			e.printStackTrace();
 		}
 		return flag;
 	}
-<<<<<<< HEAD
-	
-=======
 
 	@Override
 	public List<BoardDTO> getAllList() {
@@ -70,7 +46,7 @@ public class BoardService implements IBoardService{
 		BoardDTO dto = null;
 		try {
 			boolean flag = dao.updateReadCount(boardNo);
-			if(flag){
+			if (flag) {
 				dto = dao.readOnePost(boardNo);
 			}
 			System.out.println("boardno:" + boardNo);
@@ -88,7 +64,7 @@ public class BoardService implements IBoardService{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println("service:"+ flag);
+		System.out.println("service:" + flag);
 		return flag;
 	}
 
@@ -124,7 +100,7 @@ public class BoardService implements IBoardService{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return list;
 	}
 
@@ -145,8 +121,8 @@ public class BoardService implements IBoardService{
 		boolean flag = false;
 		try {
 			flag = dao.updateLike(boardNo);
-			if(flag){
-				numOfLike = dao.getTotalLike(boardNo);//토탈 라이크 수 가져오기
+			if (flag) {
+				numOfLike = dao.getTotalLike(boardNo);// �넗�깉 �씪�씠�겕 �닔 媛��졇�삤湲�
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -160,8 +136,8 @@ public class BoardService implements IBoardService{
 		boolean flag = false;
 		try {
 			flag = dao.updateDislike(boardNo);
-			if(flag){
-				numOfLike = dao.getTotalLike(boardNo);//토탈 라이크 수 가져오기
+			if (flag) {
+				numOfLike = dao.getTotalLike(boardNo);// �넗�깉 �씪�씠�겕 �닔 媛��졇�삤湲�
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -169,5 +145,15 @@ public class BoardService implements IBoardService{
 		return numOfLike;
 	}
 
->>>>>>> origin/master
+	public boolean getLikeStatus(ActUserDTO dto) {
+		// TODO Auto-generated method stub
+		boolean flag = false;
+		try {
+			flag = dao.searchStatus(dto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return flag;
+	}
 }

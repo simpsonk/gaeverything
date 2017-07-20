@@ -200,7 +200,9 @@ public class BoardDAO implements IBoardDAO{
 	public boolean searchStatus(ActUserDTO dto) throws SQLException{
 		// TODO Auto-generated method stub
 		boolean flag = false;
+		System.out.println(dto);
 		int count = session.selectOne(nameSpace+".selectStatus", dto);
+		
 		if(count!=0){
 			flag = true;
 		}

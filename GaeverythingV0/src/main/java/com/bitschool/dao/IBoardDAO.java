@@ -3,6 +3,7 @@ package com.bitschool.dao;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.CommentDTO;
 import com.bitschool.dto.PageDTO;
@@ -35,6 +36,7 @@ public interface IBoardDAO {
 	public boolean updateLike(int boardNo) throws SQLException;
 	public int getTotalLike(int boardNo) throws SQLException;
 	public boolean updateDislike(int boardNo)  throws SQLException;
+	public boolean searchStatus(ActUserDTO dto) throws SQLException;
 
 
 }

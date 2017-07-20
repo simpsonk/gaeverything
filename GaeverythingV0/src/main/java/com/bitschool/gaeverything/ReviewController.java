@@ -247,6 +247,7 @@ public class ReviewController {
 							@RequestParam(value="page", defaultValue="1") int page,
 							Model model, 
 							HttpSession session){
+		
 		System.out.println("수정댓글넘버:" + commentNo);
 		dto = service.selectToRead(boardNo);
 		int numOfCmt = cService.countCmt(boardNo);
