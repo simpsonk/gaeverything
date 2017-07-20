@@ -55,34 +55,21 @@ public class ReviewController {
 		model.addAttribute("pList", pList);
 		
 		//게시물 리스트
-		System.out.println("page "+ page);
 		List<BoardDTO> list = service.getPagedList(pDTO); 
-	
 		model.addAttribute("page", page);
-		
-		//int numOfCmt = cService.countCmt(boardNo);
-		//model.addAttribute("numOfCmt", numOfCmt);
-		
-		
+			
 		//로그인 유지
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		model.addAttribute("member", member);
 		
-		
 		//댓글수 받기
 		int countCmts = 0;
-		//수정한부분...
-		//BoardDTO dto = null;
 		for(int i=0; i<list.size(); i++){
 			BoardDTO dto = list.get(i);
 			countCmts = service.getNumOfCmts(dto.getBoardNo());
 			list.get(i).setNumOfCmt(countCmts);
-			//dto.setNumOfCmt(countCmts);
-//			list.add(dto);
 		}
 		model.addAttribute("list", list);
-		//model.addAttribute("encode", dto);
-	
 		String url = "review/review_list";
 		return url;
 	}
@@ -90,25 +77,16 @@ public class ReviewController {
 	@RequestMapping(value = "/viewReviewRegist", method = {RequestMethod.GET, RequestMethod.POST})
 	public String viewReviewRegist(HttpSession session, Model model){
 		String url = "review/review_regist";
-		
 		boolean isLogin = new LoginFilter().isLogin(session, model);
-		//System.out.println(isLogin);
-	
 		return url;
 	}
 	
 	@RequestMapping(value = "/newPost", method={RequestMethod.POST,RequestMethod.GET })
 	public String newPost(BoardDTO dto, ReviewFileBean filebean, HttpServletRequest request, Model model,
 						  @RequestParam("boardCategory") String boardCategory){
-		System.out.println("새글입력컨트롤러");
-		System.out.println("파일명: " + dto.getUploadImg());
-		//System.out.println("별점: " + dto.getRating());
-		//System.out.println("카데고리:" + boardCategory);
-		
 		String url = null;
 		System.out.println("글쓴이>>> " + dto.getNickname());
 		boolean flag = service.insertPost(dto);
-		
 		if(flag){
 			url = "redirect:/review/viewReviewList";
 		}
@@ -130,7 +108,6 @@ public class ReviewController {
 			filename = upload.getOriginalFilename();
 			filebean.setFilename(filename);
 			CKEditorFuncNum = filebean.getCKEditorFuncNum();
-			
 			try {
 				File file = new File(root_path + attach_path + filename);
 				upload.transferTo(file);
@@ -139,14 +116,11 @@ public class ReviewController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-	/*		BoardDTO dto = new BoardDTO();
-			dto.setUpload(filename);*/
 			String file_path = attach_path + filename;
 			System.out.println("파일명:" + filename);
 			model.addAttribute("file_path", file_path);
 			model.addAttribute("filename", filename);
 			model.addAttribute("CKEditorFuncNum", CKEditorFuncNum);
-			
 		}
 		return url;
 		
@@ -167,11 +141,8 @@ public class ReviewController {
 
 		model.addAttribute("numOfCmt", numOfCmt);
 		model.addAttribute("dto", dto);
-		
 		model.addAttribute("cList", cList);
-		//model.addAttribute("boardNo", boardNo);
-	
-		
+
 		System.out.println(cList);
 		System.out.println("댓글목록 받음");
 		url = "review/read_review";
@@ -231,7 +202,6 @@ public class ReviewController {
 		}
 		return url;	
 	}
-	
 
 	@RequestMapping(value="/modifyCmt", method={RequestMethod.GET, RequestMethod.POST})
 	public String modifyCmt(BoardDTO dto, CommentDTO cDTO,  
@@ -264,7 +234,6 @@ public class ReviewController {
 			@RequestParam(value="page", defaultValue="1") int page,
 			Model model, 
 			HttpSession session){
-		
 		boolean flag = cService.updateCmt(cDTO);
 		if(flag){
 			model.addAttribute("boardNo", boardNo);
@@ -305,9 +274,4 @@ public class ReviewController {
 		return data;
 	}
 
-	
-	
-	
-	
-	
 }
