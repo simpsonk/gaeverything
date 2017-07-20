@@ -43,7 +43,7 @@
 								<li><a href="/mypage/viewMypageBookmarks">Bookmarks</a></li>
 								<li><a href="#">Add Listing</a></li>
 								<li><a href="/mypage/viewMypageProfile">My Profile</a></li>
-								<li><a href="/mypage/viewMypagePetProfile">Pet Profile</a></li>
+								<li><a href="/mypage/viewPetList">Pet Profile</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -83,7 +83,7 @@
 							
 							<!-- User Menu -->
 							<div class="user-menu">
-								<div class="user-name"><span><img src="/resources/images/dashboard-avatar.jpg" alt=""></span>${member.nickname}</div>
+								<div class="user-name"><span><img src="/resources/upload/${member.photo}" alt=""></span>${member.nickname}</div>
 								<ul>
 									<li><a href="/mypage/viewMypageDashboard"><i class="sl sl-icon-settings"></i> Dashboard</a></li>
 									<li><a href="/mypage/viewMypageProfile"><i class="sl sl-icon-user"></i> My Profile</a></li>
