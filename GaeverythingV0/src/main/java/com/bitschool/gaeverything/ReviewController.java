@@ -27,6 +27,7 @@ import com.bitschool.dto.PageDTO;
 import com.bitschool.service.IBoardService;
 import com.bitschool.service.ICommentService;
 import com.bitschool.service.IPagerService;
+import com.bitschool.utils.LoginFilter;
 import com.fasterxml.jackson.core.JsonFactory;
 
 
@@ -89,12 +90,10 @@ public class ReviewController {
 	@RequestMapping(value = "/viewReviewRegist", method = {RequestMethod.GET, RequestMethod.POST})
 	public String viewReviewRegist(HttpSession session, Model model){
 		String url = "review/review_regist";
-		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		
+		boolean isLogin = new LoginFilter().isLogin(session, model);
 		//System.out.println(isLogin);
-		if(member!=null){
-			model.addAttribute("memberNickname", member.getNickname());
-			System.out.println(member.getNickname());
-		}
+	
 		return url;
 	}
 	
@@ -155,27 +154,20 @@ public class ReviewController {
 	
 	@RequestMapping(value = "/readPost", method={RequestMethod.GET, RequestMethod.POST})
 	public String readPost(@RequestParam("boardNo") int boardNo, 
-						   @RequestParam(value="page", defaultValue="1") int page,
-						   @RequestParam("nickname") String nickname,
 						   HttpSession session,
 						   Model model){
 		String url = null;
 		System.out.println("read post ");
-		System.out.println("read post page:" + page);
+		
 		BoardDTO dto = service.selectToRead(boardNo);
 		List<CommentDTO> cList = cService.getAllComment(boardNo);
 		int numOfCmt = cService.countCmt(boardNo);
 
-		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		//로그인 안했을 경우 이 메소드 널포인터.....
-		if(member!=null){
-			model.addAttribute("memberNickname", member.getNickname());
-			model.addAttribute("userId", member.getEmail());	
-		}
+		boolean isLogin = new LoginFilter().isLogin(session, model);
 
 		model.addAttribute("numOfCmt", numOfCmt);
 		model.addAttribute("dto", dto);
-		model.addAttribute("page", page);
+		
 		model.addAttribute("cList", cList);
 		//model.addAttribute("boardNo", boardNo);
 	
@@ -195,25 +187,26 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value = "/modify", method=RequestMethod.POST)
-	public String modify(BoardDTO dto, Model model){
+	public String modify(BoardDTO dto, Model model, @RequestParam("page") int page){
 		System.out.println("modify controller");
 		String url = null;
 		boolean flag = service.updatePost(dto);
 		System.out.println("dao result: "+ flag);
 		if(flag){
 			model.addAttribute("dto", dto);
-			url = "redirect:/review/viewReviewList";
+			model.addAttribute("boardNo", dto.getBoardNo());
+			url = "redirect:/review/readPost?page="+page;
 		}
 		return url;
 	}
 	
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
-	public String delete(@RequestParam("boardNo") int boardNo){
+	public String delete(@RequestParam("boardNo") int boardNo, @RequestParam("page") int page){
 		String url = null; 
 		System.out.println("delete controller");
 		boolean flag = service.remove(boardNo);
 		if(flag){
-			url = "redirect:/review/viewReviewList";
+			url = "redirect:/review/viewReviewList?page="+page;
 		}
 		return url;
 	}
@@ -233,7 +226,7 @@ public class ReviewController {
 			System.out.println("댓글추가결과 컨트롤러: " + flag);
 			model.addAttribute("boardNo", boardNo);
 			model.addAttribute("page", page);
-			model.addAttribute("nickname", cDTO.getNicknameCmt());
+			
 			url = "redirect:/review/readPost";
 		}
 		return url;	
@@ -252,22 +245,15 @@ public class ReviewController {
 		int numOfCmt = cService.countCmt(boardNo);
 		List<CommentDTO> cList = cService.getAllComment(boardNo);
 		
-		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		if(member!=null){
-			model.addAttribute("memberNickname", member.getNickname());
-			model.addAttribute("userId", member.getEmail());	
-		}
+		boolean isLogin = new LoginFilter().isLogin(session, model);
+	
 		model.addAttribute("cList", cList);
 		model.addAttribute("numOfCmt", numOfCmt);
 		model.addAttribute("dto", dto);
 		model.addAttribute("modifyNo", commentNo);
 		
 		String url = "review/cmt_modify";
-		//boolean flag = cService.updateCmt(cDTO);
-		//if(flag){
-		//	model.addAttribute(cDTO);
-			
-		//}
+
 		return url;
 	}
 	
@@ -283,7 +269,6 @@ public class ReviewController {
 		if(flag){
 			model.addAttribute("boardNo", boardNo);
 			model.addAttribute("page", page);
-			model.addAttribute("nickname", cDTO.getNicknameCmt());
 		}
 		String url = "redirect:/review/readPost";
 		return url;
@@ -292,7 +277,6 @@ public class ReviewController {
 	@RequestMapping(value="/deleteCmt", method=RequestMethod.POST)
 	public String deleteCmt(@RequestParam("commentNo") int commentNo,
 							@RequestParam("boardNo") int boardNo,
-							@RequestParam("nicknameCmt") String nickname,
 							@RequestParam(value="page", defaultValue="1") int page,
 							Model model){
 		String url = "";
@@ -300,7 +284,6 @@ public class ReviewController {
 		if(flag){
 			model.addAttribute("boardNo", boardNo);
 			model.addAttribute("page", page);
-			model.addAttribute("nickname", nickname );
 			url = "redirect:/review/readPost";
 		}
 		return url;

@@ -16,16 +16,17 @@
 
 <script type="text/javascript">
 	
-	function go_url(type){
+	function go_url(type, page){
 		var data = document.getElementById("postData");
 		var url = "/review/viewReviewList";
 		if(type == 1){
 			var check = confirm("게시물을 수정하시겠습니까?")
 			if(check==true){
 				alert("게시물이 수정되었습니다.");
-				url = "/review/modify";
+				url = "/review/modify?page="+page;
 			}else{
 				alert("수정이 취소되었습니다.");
+				return;
 			}
 			
 		}
@@ -177,7 +178,7 @@
 						</div>
 						
 					<div class="button col-md-12"> 	
-					<button type="button" id="edit" class="button border margin-top-5" onclick="go_url(1)" >save</button>
+					<button type="button" id="edit" class="button border margin-top-5" onclick="go_url(1, ${param.page})" >save</button>
 					<button type="button" class="button border margin-top-5" onclick="go_url(2)">back to list</button>
 					</div>
 					<div class="clearfix"></div>

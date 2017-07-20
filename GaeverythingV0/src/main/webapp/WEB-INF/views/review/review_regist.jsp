@@ -76,7 +76,7 @@
 				<!-- writer -->
 				<div class="about-author2 col-md-12">	
 					<img src="/resources/images/dashboard-avatar.jpg" alt="">
-						<input type="hidden" name="nickname" id="nickname" value="${memberNickname}">${memberNickname}
+						<input type="hidden" name="nickname" id="nickname" value="${member.nickname}">${member.nickname}
 				</div>
 						
 				<!-- category -->		
