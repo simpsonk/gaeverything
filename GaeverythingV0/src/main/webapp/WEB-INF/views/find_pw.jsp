@@ -44,7 +44,7 @@
 	<div class="row">
 		<div class="col-sm-4"></div>
 		<div class="col-sm-4">
-			<form action="/mypage/findPW" method="post" id="findform">			
+			<form action="/findPW" method="post" id="findform">			
 				<p>비밀번호를 찾고자 하는 계정의 닉네임과 이메일을 입력해 주세요.</p>			
 				
 				<p class="form-row form-row-wide">					
@@ -175,7 +175,7 @@ function chkEmail(){
 	     type : 'POST',  
 	     data: {email:email , nickname:nickname},
 	     dataType : 'json',
-	     url : '/mypage/checkPW',  //체크하는 컨트롤러주소
+	     url : '/checkPW',  //체크하는 컨트롤러주소
 	     success : function(chkPoint) {
 	      var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 	      var chkRst = chkPoint;

@@ -35,7 +35,7 @@
 						<input type="hidden" id="loginChk2" value="N" />	
 					</label>
 					<span class="lost_password">
-						<a href="/mypage/viewFindPW" >Lost Your Password?</a>
+						<a href="/viewFindPW" >Lost Your Password?</a>
 					</span>
 				</p>
 
