@@ -311,7 +311,6 @@ public class ReviewController {
 	public @ResponseBody int updateLike(
 							 @RequestParam("like") String like,
 							 @RequestParam("boardNo") int boardNo){
-		
 		int data = 0;
 		System.out.println("좋아요: "+ like);
 		System.out.println("좋아요글번호: " + boardNo);
@@ -322,4 +321,5 @@ public class ReviewController {
 		}
 		return data;
 	}	
+	
 }
