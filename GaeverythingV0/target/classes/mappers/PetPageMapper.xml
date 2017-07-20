@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bitschool.bootstrap.PetPageMapper">
+	
+	<!-- 펫 등록 -->
+	<insert id="insertPet" parameterType="PetPageDTO">
+		<selectKey keyProperty="petno" order="BEFORE" resultType="Integer">
+			select pet_seq.nextval from dual
+		</selectKey> -->
+		insert into petpage(petno,email,petname,photo,species,
+		age,gender,notes) 
+			values(#{petno}, #{email},#{petname},#{photo},
+			#{species},#{age},#{gender},#{notes}) 
+	</insert>
+		
+	<!-- 펫 등록 (photo없어도 가능)-->
+	<insert id="insertPet2" parameterType="PetPageDTO">
+		<selectKey keyProperty="petno" order="BEFORE" resultType="Integer">
+			select pet_seq.nextval from dual
+		</selectKey> -->
+		insert into petpage(petno,email,petname,species,
+		age,gender,notes) 
+			values(#{petno}, #{email},#{petname},
+			#{species},#{age},#{gender},#{notes}) 
+	</insert>
+	<!-- 등록된 모든 펫 개수 -->
+	<select id="countPet" parameterType="MemberDTO" resultType="Integer">
+		select count(*) from petpage 
+		where email=#{email}
+	</select>
+	
+	<!-- 등록된 펫 리스트로 받아오기 -->
+	<select id="selectPets" parameterType="MemberDTO" resultType="PetPageDTO">
+		select * from petpage 
+		where email = #{email}
+	</select>
+	
+	<!-- 등록된 펫 삭제 -->
+	<delete id="deletePet" parameterType="PetPageDTO">
+		delete from petpage
+		where email = #{email} and petno = #{petno}
+	</delete>
+	
+	<!-- 등록된 펫 수정 (photo 업로드시)-->
+	<update id="update" parameterType="PetPageDTO">
+		update petpage 
+		set petname=#{petname}, photo=#{photo}, species=#{species}, 
+			age=#{age}, gender=#{gender}, notes=#{notes} 
+			where email=#{email} and petno=#{petno}
+	</update> 
+	
+	<!-- 등록된 펫 수정 (photo 업로드 안 할시)-->
+	<update id="update2" parameterType="PetPageDTO">
+		update petpage 
+		set petname=#{petname}, species=#{species}, 
+			age=#{age}, gender=#{gender}, notes=#{notes} 
+			where email=#{email} and petno=#{petno}
+	</update> 
+	
+	<!-- 등록된 펫 한마리 읽어오기 -->
+	<select id="selectPet" parameterType="PetPageDTO" resultType="PetPageDTO">
+		select * from petpage 
+		where email = #{email} and petno=#{petno}
+	</select>
+	
+
+
+</mapper>
