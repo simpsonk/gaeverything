@@ -17,6 +17,35 @@ public class SignUpDAO {
 	private SqlSession session;
 	
 	private static final String namespace = "com.bitschool.bootstrap.SignUpMapper";
+		
+	//패스워드 찾기
+	public String findPW(MemberDTO member) throws SQLException{
+		String pw = null;
+		pw = session.selectOne(namespace+".findPW",member);				
+		return pw;
+	}
+	
+	//패스워드 체크
+	public int checkPW(MemberDTO member) throws SQLException{
+		int cnt = 0;
+		cnt = session.selectOne(namespace+".pwCheck",member);				
+		return cnt;
+	}
+	
+	//닉네임 체크 
+	public int checkNick(String nick) throws SQLException{
+		int cnt = 0;
+		cnt = session.selectOne(namespace+".nicknameCheck",nick);
+		return cnt;
+	}
+	
+	//이메일 체크
+	public int checkEmail(String email) throws SQLException{
+		int cnt = 0;
+		cnt = session.selectOne(namespace+".emailCheck",email);
+		return cnt;
+	}
+
 	
 	public boolean insertUserData(MemberDTO data)throws SQLException{
 		// TODO Auto-generated method stub

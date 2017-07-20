@@ -5,6 +5,7 @@ public class MemberDTO {
 	private String email;
 	private String nickname;
 	private String pw;
+	private String photo;	
 	
 	public int getMemberNo() {
 		return memberNo;
@@ -30,12 +31,17 @@ public class MemberDTO {
 	public void setPw(String pw) {
 		this.pw = pw;
 	}
+	public String getPhoto() {
+		return photo;
+	}
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
 	
 	@Override
 	public String toString() {
-		return "SignUpDTO [memberNo=" + memberNo + ", email=" + email + ", nickname=" + nickname + ", pw=" + pw + "]";
-	}
-	
-	
+		return "MemberDTO [memberNo=" + memberNo + ", email=" + email + ", nickname=" + nickname + ", pw=" + pw
+				+ ", photo=" + photo + "]";
+	}		
 	
 }

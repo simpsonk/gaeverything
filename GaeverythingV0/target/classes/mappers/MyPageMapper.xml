@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.bitschool.bootstrap.MyPageMapper">
+
+	
+	<!-- 회원가입 때 입력한 email을 mypage 테이블에 추가 -->
+   	<insert id="insert" parameterType="MemberDTO">
+		insert into mypage(email) values(#{email})
+	</insert>  
+	
+	<!-- 수정(photo제외) -->
+	<update id="update2" parameterType="MyPageDTO">
+		update mypage 
+		set name=#{name}, phone=#{phone},
+			notes=#{notes} where email=#{email}
+	</update> 
+	<!-- 수정 -->
+ 	<update id="update" parameterType="MyPageDTO">
+		update mypage 
+		set photo=#{photo}, name=#{name}, phone=#{phone},
+			notes=#{notes} where email=#{email}
+	</update> 
+	
+	<update id="updateMem" parameterType="MyPageDTO">
+		update signup 
+		set photo=#{photo} where email=#{email}
+	</update>
+
+	
+	<select id="selectOne" parameterType="MemberDTO" resultType="MyPageDTO">
+		select * from mypage 
+		where email = #{email}
+	</select>
+ </mapper>
