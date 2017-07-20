@@ -181,7 +181,7 @@
 				<div class="optin button col-md-12">
 					<!-- Like -->
 					<c:choose>
-						<c:when test="${memberNickname == null }">
+						<c:when test="${member.nickname == null }">
 							<div class="like col-md-3" style="width: 80px; height: 0px; padding-left: 0px; margin-top: 25px; padding-right: 0px;">
 								<div class="listing-item-container list-layout">
 									<span class="like-icon" id="like" onclick="no_login_like()"></span>
@@ -203,7 +203,7 @@
 					</div>
 						
 					<!-- edit, delete -->
-					<c:if test="${memberNickname == dto.nickname}">
+					<c:if test="${member.nickname == dto.nickname}">
 						<div class="option col-md-2" style="width: 135px;">
 							<a id="edit" href="#" onclick="go_url(1);" return false; class = "rate-review"><i class="sl sl-icon-note"></i>Edit</a>
 							<a id="delete" href="#" onclick="go_url(2);" return false; class = "rate-review" style="margin-top: 5px;"><i class="sl sl-icon-close"></i>Delete</a>
@@ -258,14 +258,14 @@
 						<span class="date"><fmt:formatDate value = "${dto.regiDate}" pattern="YY/MM/dd hh:mm:ss"/></span>	
 								<!-- 대댓글달기 버튼 삭제함 -->
 						<div class = "comment_option"></div>
-							<c:if test="${(memberNickname == cmt.nicknameCmt) && (modifyNo == cmt.commentNo)}">
+							<c:if test="${(member.nickname == cmt.nicknameCmt) && (modifyNo == cmt.commentNo)}">
 								<a href="#" class="reply" onclick="cmt_url(1, ${loop.index});" return false; ><i class="sl sl-icon-note"></i>Save</a>
 							</c:if>	
 						</div>
 				
 						<!-- 수정 텍스트박스 보여주기 -->	
 						<c:choose>
-							<c:when test="${(memberNickname == cmt.nicknameCmt) && (modifyNo == cmt.commentNo)}">
+							<c:when test="${(member.nickname == cmt.nicknameCmt) && (modifyNo == cmt.commentNo)}">
 								<textarea cols="40" rows="3" name="commentBody" id="commentBody">${cmt.commentBody}</textarea>
 							</c:when>
 							<c:otherwise>
@@ -294,17 +294,17 @@
 				<h3 class="listing-desc-headline margin-bottom-35">Add Comment</h3>
 					<div class="about-author2" style="height: 80px; margin-bottom: 10px;">	
 						<img src="/resources/upload/bom.jpg" alt="" style="margin-top:5px; margin-right:5px;margin-bottom: 5px;">
-						<input type="hidden" name="userId" value="${userId}">	
-						<input type="hidden" name="nicknameCmt" id="memberNickname" value="${memberNickname}">
+						<input type="hidden" name="userId" value="${member.email}">	
+						<input type="hidden" name="nicknameCmt" id="memberNickname" value="${member.nickname}">
 						<div class="nickname col-md-3" style="padding-left: 10px;padding-right: 10px;margin-top: 28px;">
-							${memberNickname}
+							${member.nickname}
 						</div>
 					</div>
 				<fieldset>
 					<div>
 						<label>Comment:</label>
 							<c:choose>
-								<c:when test="${memberNickname == null}">
+								<c:when test="${member.nickname == null}">
 									<textarea cols="40" rows="3" name="commentBody" onclick="box_clicked()" placeholder="로그인 후 댓글작성이 가능합니다."></textarea>
 								</c:when>
 								<c:otherwise>
