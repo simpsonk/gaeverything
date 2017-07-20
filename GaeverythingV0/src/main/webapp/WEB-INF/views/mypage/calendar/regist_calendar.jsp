@@ -258,7 +258,7 @@
             						</div>
             						<div class="col-md-10">
 											<div><input id="result" name="result" value="매주 월요일"></div>
-											<div><input id="resultHidden" name="resultHidden" value="1,"></div>
+											<div><input id="resultHidden" name="resultHidden" value="2, 1,"></div>
             						</div>
 
 									<button class="button margin-top-15" onclick="repeatAdd()">적용</button>
@@ -340,17 +340,17 @@
 		
 	$(document).ready(function(){
 		var selData="매주 ";
-		var selDataNum="2,";
+		var selDataNum="2, ";
 		var selCountData="매주 ";
-		var selCountDataNum="1,";
+		var selCountDataNum="1, ";
 		var DATA="";
-		var data="월요일";
+		var data="";
 		var dataNum="";
 		//반복 빈도
 		$("#repeatWeek").on('change', function() {
 			selData="";
 			selDataNum="";
-			selCountDataNum="1,";
+			selCountDataNum="1, ";
 	      $('#repeatWeek[name=repeatWeek]').each(function() {
 	         if($(this).prop("selected", true)){
 	        	 var select = $(this).val();
@@ -365,8 +365,21 @@
 	        	      }
 	        	      if(select==2){
 	        	    	   document.getElementById('weekCheck').style.display='block';
+	        	    	   data="월요일";
 	        	      }else{
 	        	           document.getElementById('weekCheck').style.display='none';
+	        	      }
+	        	      if(select==3||select==4){
+	        	    	  var dateForm = document.getElementById("repeatStartDate").value.split("-");
+	        	    	  var dateInt = parseInt(dateForm[2]);
+	        	    	  data = dateInt + "일";
+	        	    	  dataNum = dateInt;
+	        	      }else if(select==2){
+	        	    	  data = "월요일";
+	        	    	  dataNum = "월, ";
+	        	      }else{
+	        	    	  data = "";
+	        	    	  dataNum = "";
 	        	      }
 	        	 }
 	        	 
@@ -380,35 +393,35 @@
 		//반복 주기  [매일]
 		$("#repeatWeekCount1").on('change', function() {
 			selCountData="매일";
-			selCountDataNum="1,";
+			selCountDataNum="1, ";
 	      $('#repeatWeekCount1[name=repeatWeekCount1]').each(function() {
 	         if($(this).prop("selected", true)){
 	        	 var sel = $(this).val();
 	        	 if(sel==1){
 	        		 selCountData = "매일 ";
-	        		 selCountDataNum = sel+",";
+	        		 selCountDataNum = sel+", ";
 	        	 }else{
 	        		 selCountData = sel+"일 마다 ";
-	        		 selCountDataNum = sel+",";
+	        		 selCountDataNum = sel+", ";
 	        	 }
 	         }
 	      });
-	      document.getElementById("result").value = selCountData+data;
-	      document.getElementById("resultHidden").value = selDataNum+selCountDataNum+dataNum;
+	      document.getElementById("result").value = selCountData;
+	      document.getElementById("resultHidden").value = selDataNum+selCountDataNum;
 		});
 		//반복 주기  [매주]
 		$("#repeatWeekCount2").on('change', function() {
-			selCountData="매주";
-			selCountDataNum="2,";
+			selCountData="매주 월요일";
+			selCountDataNum="2, ";
 	      $('#repeatWeekCount2[name=repeatWeekCount2]').each(function() {
 	         if($(this).prop("selected", true)){
 	        	 var sel = $(this).val();
 	        	 if(sel==1){
 	        		 selCountData = "매주 ";
-	        		 selCountDataNum = sel+",";
+	        		 selCountDataNum = sel+", ";
 	        	 }else{
 	        		 selCountData = sel+"주 마다 ";
-	        		 selCountDataNum = sel+",";
+	        		 selCountDataNum = sel+", ";
 	        	 }
 	         }
 	      });
@@ -419,15 +432,16 @@
 		$("#repeatWeekCount3").on('change', function() {
 			selCountData="";
 			selCountDataNum="";
+			
 	      $('#repeatWeekCount3[name=repeatWeekCount3]').each(function() {
 	         if($(this).prop("selected", true)){
 	        	 var sel = $(this).val();
 	        	 if(sel==1){
 	        		 selCountData = "매월 ";
-	        		 selCountDataNum = sel+",";
+	        		 selCountDataNum = sel+", ";
 	        	 }else{
 	        		 selCountData = sel+"개월 마다 ";
-	        		 selCountDataNum = sel+",";
+	        		 selCountDataNum = sel+", ";
 	        	 }
 	         }
 	      });
@@ -443,10 +457,10 @@
 	        	 var sel = $(this).val();
 	        	 if(sel==1){
 	        		 selCountData = "매년 ";
-	        		 selCountDataNum = sel+",";
+	        		 selCountDataNum = sel+", ";
 	        	 }else{
 	        		 selCountData = sel+"년 마다 ";
-	        		 selCountDataNum = sel+",";
+	        		 selCountDataNum = sel+", ";
 	        	 }
 	         }
 	      });
@@ -470,7 +484,7 @@
 	            dataNum+=splitDATA[i];
 	         }else{
 	            data+=splitDATA[i]+", ";
-	            dataNum+=splitDATA[i]+",";
+	            dataNum+=splitDATA[i]+", ";
 	         } 
 	      } 
 	      document.getElementById("result").value = selCountData+data;
