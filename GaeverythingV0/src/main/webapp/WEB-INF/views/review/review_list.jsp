@@ -69,7 +69,7 @@
 		
 			<!-- Img -->
 			<c:if test="${board.uploadImg != null}">
-				<a href="/review/readPost?boardNo=${board.boardNo}&page=${page}&nickname=${board.encodeUTF}" class="post-img">
+				<a href="/review/readPost?boardNo=${board.boardNo}&page=${page}" class="post-img">
 				<img src="/resources/upload/${board.uploadImg}" alt="" style="width:100%; height:400px; object-fit:cover;">
 				</a>
 			</c:if>
@@ -77,7 +77,7 @@
 			<!-- Content -->
 			<div class="post-content" id="wrapper">
 				<!-- title -->
-				<h3><a href = "/review/readPost?boardNo=${board.boardNo}&page=${page}&nickname=${board.encodeUTF}">${board.title}</a></h3>
+				<h3><a href = "/review/readPost?boardNo=${board.boardNo}&page=${page}">${board.title}</a></h3>
 				
 				<!-- rating -->
 				<div class="star-rating col-md-12 " data-rating="${board.rating}" style="padding-left: 0px; padding-right: 0px; padding-top: 10px;padding-bottom: 10px;">${board.rating}</div> 

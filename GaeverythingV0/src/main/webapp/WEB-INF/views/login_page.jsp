@@ -27,7 +27,6 @@
 <!-- Header Container
 ================================================== -->
 <header id="header-container">
-	<%@include file = 'header.jsp' %>
 </header>
 <div class="clearfix"></div>
 <!-- Header Container / End -->

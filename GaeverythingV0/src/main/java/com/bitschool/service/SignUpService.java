@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import com.bitschool.dao.MyPageDAO;
 import com.bitschool.dao.SignUpDAO;
 import com.bitschool.dto.MemberDTO;
 
@@ -16,16 +17,69 @@ public class SignUpService {
 	@Inject
 	private SignUpDAO dao;
 	
-	public boolean registUserData(MemberDTO data) {
-		// TODO Auto-generated method stub
-		boolean flag = false;
+	@Inject
+	private MyPageDAO mdao;
+	
+	//패스워드 찾기
+	public String findPW(MemberDTO member){
+		String pw = null;
 		try {
-			flag = dao.insertUserData(data);
+			pw = dao.findPW(member);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}	
-		return flag;
+		}		
+		return pw;
+	}
+	
+	//패스워드 체크
+	public int checkPW(MemberDTO member){
+		int cnt = 0;
+		try {
+			cnt = dao.checkPW(member);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		return cnt;
+	}
+	
+	//닉네임 중복체크 
+	public int checkNickname(String nick){
+		int cnt = 0;
+		try {
+			cnt = dao.checkNick(nick);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cnt;
+	}
+	//이메일 중복체크 
+	public int checkEmail(String email){
+		int cnt = 0;
+		try {
+			cnt = dao.checkEmail(email);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cnt;
+	}
+	
+	public boolean registUserData(MemberDTO data) {
+		// TODO Auto-generated method stub
+		boolean flag = false;
+		boolean flag2= false;
+		try {
+			flag = dao.insertUserData(data);
+			if(flag){
+				flag2 = mdao.insertData(data);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		return flag2;
 	}
 
 	public List<MemberDTO> getMemberList() {

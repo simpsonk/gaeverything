@@ -4,6 +4,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<style>
+#nameMsg,#speciesMsg,#genderMsg,#ageMsg{
+	font-size : 10px;
+	float: right;
+}
+</style>
 
 <!-- Basic Page Needs
 ================================================== -->
@@ -61,88 +67,71 @@
 						<ul>
 							<li><a href="#">Home</a></li>
 							<li><a href="#">Dashboard</a></li>
-							<li>My Profile</li>
+							<li>Pet Profile</li>
 						</ul>
 					</nav>
 				</div>
 			</div>
 		</div>
 
-		<div class="row">
-
-			<!-- Profile -->
-			<div class="col-lg-6 col-md-12">
+<form method="post" action="/mypage/registNewPet" id="addform" enctype="multipart/form-data">	 
+		 <div class="row">
+               	<!-- Profile -->
+			<div class="col-lg-3 col-md-12">
 				<div class="dashboard-list-box margin-top-0">
 					<h4 class="gray">Profile Details</h4>
 					<div class="dashboard-list-box-static">
-						
+					
+					
 						<!-- Avatar -->
 						<div class="edit-profile-photo">
-							<img src="/resources/images/user-avatar.jpg" alt="">
+						
+						
+			
+						<c:choose>	
+						<c:when test="${petpage.photo==null}">
+							<img id="photoImage" src="/resources/upload/dog_icon.png" alt="">
+						</c:when>
+						<c:otherwise>
+							<img id="photoImage" src="/resources/upload/${petpage.photo}" alt="">
+						</c:otherwise>
+						</c:choose>
+						
+						
 							<div class="change-photo-btn">
 								<div class="photoUpload">
 								    <span><i class="fa fa-upload"></i> Upload Photo</span>
-								    <input type="file" class="upload" />
+								    <input name="photo" type="file" onchange="readURL(this);" class="upload" />
 								</div>
 							</div>
 						</div>
 	
 						<!-- Details -->
 						<div class="my-profile">
+						<input name="email" value="${member.email}" hidden="hidden">
+							<input name="petno" value="${petpage.petno}" hidden="hidden">
+							<label>Name <span id="nameMsg"></span></label>
+							<input name="petname" id="petname" placeholder="Enter your pet's name" value="${petpage.petname}" type="text" >
 
-							<label>Your Name</label>
-							<input value="Tom Perrin" type="text">
-
-							<label>Phone</label>
-							<input value="(123) 123-456" type="text">
-
-							<label>Email</label>
-							<input value="tom@example.com" type="text">
-
+							<label>Species <span id="speciesMsg"></span></label>
+							<input name="species" id="species" placeholder="Enter your pet's species" value="${petpage.species}" type="text">
+							
+							<label>Gender <span id="genderMsg"></span></label>
+							<input type="radio" name="gender" value="female" ${gender=='female'?'checked="checked"':''}>female
+                			<input type="radio" name="gender" value="male" ${gender=='male'?'checked="checked"':''}>male 
+											
+							<label>Age <span id="ageMsg"></span> </label>
+							<input name="age" id="age" placeholder="Enter your pet's age" value="${petpage.age}" type="text">
+				
 							<label>Notes</label>
-							<textarea name="notes" id="notes" cols="30" rows="10">Maecenas quis consequat libero, a feugiat eros. Nunc ut lacinia tortor morbi ultricies laoreet ullamcorper phasellus semper</textarea>
-
-							<label><i class="fa fa-twitter"></i> Twitter</label>
-							<input placeholder="https://www.twitter.com/" type="text">
-
-							<label><i class="fa fa-facebook-square"></i> Facebook</label>
-							<input placeholder="https://www.facebook.com/" type="text">
-
-							<label><i class="fa fa-google-plus"></i> Google+</label>
-							<input placeholder="https://www.google.com/" type="text">
-						</div>
-	
-						<button class="button margin-top-15">Save Changes</button>
-
-					</div>
-				</div>
-			</div>
-
-			<!-- Change Password -->
-			<div class="col-lg-6 col-md-12">
-				<div class="dashboard-list-box margin-top-0">
-					<h4 class="gray">Change Password</h4>
-					<div class="dashboard-list-box-static">
-
-						<!-- Change Password -->
-						<div class="my-profile">
-							<label class="margin-top-0">Current Password</label>
-							<input type="password">
-
-							<label>New Password</label>
-							<input type="password">
-
-							<label>Confirm New Password</label>
-							<input type="password">
-
-							<button class="button margin-top-15">Change Password</button>
-						</div>
-
-					</div>
-				</div>
-			</div>
-
-
+							<textarea name="notes" placeholder="Notes" id="notes" cols="30" rows="10">${petpage.notes}</textarea>
+						<input type="button" id="register" name="register" value="Register" class="button border fw margin-top-10"/>
+					
+ 					   </div>
+       				 </div>
+       				 </div>  				 </div>
+       				 </div>
+	</form>		
 			<!-- Copyrights -->
 			<div class="col-md-12">
 				<div class="copyrights">© 2017 Listeo. All Rights Reserved.</div>
@@ -176,6 +165,78 @@
 <script type="text/javascript" src="<c:url value = '/resources/scripts/tooltips.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/custom.js'/>"></script>
 
+<script type="text/javascript">
+<!-- Function -->
+//등록 버튼 누를시
+$("#register").click(function(){
+	checkMessage();
+	var petname = document.getElementById("petname").value;
+	var species = document.getElementById("species").value;
+	if($("#petname").val()!='' && $("#species").val()!='' && 
+			$('input:radio[name="gender"]').is(":checked") && $("#age").val()!=''){
+		var f = confirm("펫 등록을 완료하시겠습니까?");
+		if(f){
+			$('#addform').submit();
+		}else{
+			return false;
+		}
+	}else{
+		return;
+	}		
+	
+});
+
+//등록시 필수항목 체크
+function checkMessage(){ 	  
+	  var nameMsg = document.getElementById("nameMsg");
+	  var speciesMsg = document.getElementById("speciesMsg");
+	  var genderMsg = document.getElementById("genderMsg");
+	  var ageMsg = document.getElementById("ageMsg");
+	  if($("#petname").val()==''){
+		  nameMsg.style.color = "#f91942";
+		  nameMsg.innerHTML="필수 입력 항목입니다.";
+	  }else{
+		  nameMsg.innerHTML="";
+	  }
+	  if($("#species").val()==''){
+		  speciesMsg.style.color = "#f91942";
+		  speciesMsg.innerHTML="필수 입력 항목입니다.";
+	  }else{
+		  speciesMsg.innerHTML="";
+	  }
+	  if($('input:radio[name="gender"]').is(":checked")==false){
+		  genderMsg.style.color = "#f91942";
+		  genderMsg.innerHTML="필수 입력 항목입니다.";
+	  }else{
+		  genderMsg.innerHTML="";
+	  }
+	  if($("#age").val()==''){
+		  ageMsg.style.color = "#f91942";
+		  ageMsg.innerHTML="필수 입력 항목입니다.";
+	  }else{
+		  ageMsg.innerHTML="";
+	  }
+}
+
+
+
+</script>
+
+<!-- 이미지 미리보기 -->
+<script type="text/javascript" src="../common/js/jquery-1.9.1.min.js" charset="euc-kr"></script>
+<script type="text/javascript">
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('#photoImage').attr('src', e.target.result); // '#photoImage는 이미지가 보여질 곳'
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+
+</script>
 
 
 </body>

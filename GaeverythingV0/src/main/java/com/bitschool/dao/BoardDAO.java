@@ -7,7 +7,7 @@ import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
-
+import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.CommentDTO;
 import com.bitschool.dto.PageDTO;
@@ -109,7 +109,7 @@ public class BoardDAO implements IBoardDAO{
 		int affected = session.insert(nameSpace+".insertCmt", cDTO);
 		if(affected>0){
 			flag = true;
-			System.out.println("댓글입력dao:" + flag);
+			System.out.println("�뙎湲��엯�젰dao:" + flag);
 		}
 		return flag;
 	}
@@ -128,7 +128,7 @@ public class BoardDAO implements IBoardDAO{
 		boolean flag = false;
 		commentNo = session.selectOne(nameSpace+".getOneCmt", cDTO);
 		
-		System.out.println("수정댓글번호 다오:" + commentNo);
+		System.out.println("�닔�젙�뙎湲�踰덊샇 �떎�삤:" + commentNo);
 		if(commentNo>0){
 			//cDTO.setCommentNo(commentNo);
 			flag = this.updateCmt(cDTO);
@@ -196,10 +196,16 @@ public class BoardDAO implements IBoardDAO{
 		return flag;
 		
 	}
-
 	
-	
-	
-
-	
+	public boolean searchStatus(ActUserDTO dto) throws SQLException{
+		// TODO Auto-generated method stub
+		boolean flag = false;
+		System.out.println(dto);
+		int count = session.selectOne(nameSpace+".selectStatus", dto);
+		
+		if(count!=0){
+			flag = true;
+		}
+		return flag;
+	}
 }

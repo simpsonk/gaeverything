@@ -225,8 +225,8 @@ img { max-width: 100%; }
 ------------------------------------- */
 #logo { display: inline-block; margin-top: 3px; }
 
-#logo img { max-height: 38px; width: auto; transform: translate3d(0,0,0); }
-img.footer-logo { max-height: 38px; width: auto; }
+#logo img { max-height: 50px; width: auto; transform: translate3d(0,0,0); }
+img.footer-logo { max-height: 50px; width: auto; }
 
 #header {
 	position: relative;
@@ -1000,7 +1000,7 @@ body #jPanelMenu-menu li li li a:before {
 	height: 100%;
 	width: 100%;
 	display: block;
-	
+	background: linear-gradient(to right, rgba(255,255,255,0.99) 20%, rgba(255,255,255,0.7) 70%, rgba(255,255,255,0) 95%);
 }
 
 .main-search-container h2 {
@@ -3313,7 +3313,7 @@ body .comment-content p { padding: 5px 0; font-size: 15px; }
 	padding: 36px;
 	padding-bottom: 40px;
 	margin-bottom: 55px;
-	margin-top: 00px;
+	margin-top: 70px;
 	display: inline-block;
 	width: 100%;
 	position: relative;
@@ -3746,15 +3746,13 @@ section.fullwidth .blog-post { margin: 5px 0 0 0; }
 
 .post-img {
 	position: relative;
-	height:400px;
+	height: 100%;
 	width: 100%;
-	overflow: hidden;
 	display: block;
 }
 
 .post-img img {
 	width: 100%;
-	height: auto;
 	border-radius: 3px 3px 0 0;
 }
 
@@ -3849,7 +3847,6 @@ a.read-more i {
 }
 
 
-
 /* Post Meta */
 .post-meta {
 	list-style: none;
@@ -3882,9 +3879,6 @@ a.read-more i {
 	color: #66676b;
 }
 
-div#preview{
-	word-wrap: break-word;
-}
 
 /* Blog Page Common Style */
 .blog-page .blog-post {
@@ -4031,7 +4025,7 @@ div#preview{
 
 .blog-page .blog-post .post-content,
 .single-post .post-content {
-	padding: 25px 35px;
+	padding: 36px 43px;
 }
 
 
@@ -4067,41 +4061,6 @@ div#preview{
 .about-description {
 	margin: 2px 0 0 150px;
 }
-
-
-/* About Author by meee
-------------------------------------- */
-.about-author2 {
-    margin: 0px 0 0px 0;
-    padding: 0px 0px;
-	background: #f8f8f8;
-	border-radius: 4px;
-}
-
-.about-author2 p { margin: 5px 0 5px 0; }
-
-.about-author2 a {
-	position: relative;
-	top: -7px;
-	color: #66676b;
-}
-
-.about-author2 h4 {
-	letter-spacing: 0;
-}
-
-.about-author2 img {
-	float: left;
-	margin: 7px 10px 10px 5px;
-	width: 70px;
-	height: 70px;
-	border-radius: 50%;
-}
-
-.about-description {
-	margin: 2px 0 0 150px;
-}
-
 
 
 /* ---------------------------------- */
@@ -11934,9 +11893,9 @@ img.mfp-img {
 	    border-radius: 4px;
 	    background-color: #f9f9f9;
 	    padding: 36px;
-	    padding-bottom: 0px;
+	    padding-bottom: 40px;
 	    margin-bottom: 55px;
-	    margin-top: 00px;
+	    margin-top: 70px;
 	    display: inline-block;
 	    width: 100%;
 	    position: relative;
@@ -12344,106 +12303,3 @@ img.mfp-img {
 	#reset a.button:hover { color: #333; background-color: #fff; }
 	
 	@media only screen and (max-width: 1024px) {#style-switcher {display: none;}}
-	
-	
-fieldset, label { margin: 0; padding: 0; }
-body{ margin: 20px; }
-h1 { font-size: 1.5em; margin: 10px; }
-
-
-
-
-/****** Style Star Rating Widget *****/
-
-.rating { 
-  border: none;
-  float: left;
-}
-
-.rating > input { display: none; } 
-.rating > label:before { 
-  margin: 5px;
-  font-size: 1.25em;
-  font-family: FontAwesome;
-  display: inline-block;
-  content: "\f005";
-}
-
-.rating > .half:before { 
-  content: "\f089";
-  position: absolute;
-}
-
-.rating > label { 
-  color: #ddd; 
- float: right; 
-}
-
-
-
-/***** CSS Magic to Highlight Stars on Hover *****/
-
-.rating > input:checked ~ label, /* show gold star when clicked */
-.rating:not(:checked) > label:hover, /* hover current star */
-.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
-
-.rating > input:checked + label:hover, /* hover current star when changing rating */
-.rating > input:checked ~ label:hover,
-.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
-.rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 	
-
-
-
-
-/**** Like *****/
-.like-content {
-    display: inline-block;
-    width: 100%;
-    margin: 00px 0 0;
-    padding: 40px 0 0;
-    font-size: 18px;
-    border-top: 0px dashed #eee;
-    text-align: center;
-}
-.like-content span {
-	color: #9d9da4;
-	font-family: monospace;
-}
-.like-content .btn-secondary {
-	  display: block;
-	  margin: 40px auto 0px;
-    text-align: center;
-    background: #f91842;
-    border-radius: 3px;
-  /*  box-shadow: 0 10px 20px -8px rgb(240, 75, 113);*/
-    padding: 10px 17px;
-    font-size: 18px;
-    cursor: pointer;
-    border: none;
-    outline: none;
-    color: #ffffff;
-    text-decoration: none;
-    -webkit-transition: 0.3s ease;
-    transition: 0.3s ease;
-}
-.like-content .btn-secondary:hover {
-	  transform: translateY(-3px);
-}
-.like-content .btn-secondary .fa {
-	  margin-right: 5px;
-}
-.animate-like {
-	animation-name: likeAnimation;
-	animation-iteration-count: 1;
-	animation-fill-mode: forwards;
-	animation-duration: 0.65s;
-}
-@keyframes likeAnimation {
-  0%   { transform: scale(30); }
-  100% { transform: scale(1); }
-}
-
-.content{
-	word-wrap: break-word;
-}
-

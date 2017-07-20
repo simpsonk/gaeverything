@@ -2,6 +2,7 @@ package com.bitschool.service;
 
 import java.util.List;
 
+import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.PageDTO;
 import com.bitschool.dto.SearchDTO;
@@ -18,5 +19,6 @@ public interface IBoardService {
 	public int getNumOfCmts(int boardNo);
 	public int updateLike(int boardNo);
 	public int dislike(int boardNo);
+	public boolean getLikeStatus(ActUserDTO dto);
 
 }

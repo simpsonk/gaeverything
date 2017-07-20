@@ -7,9 +7,31 @@
 		<selectKey keyProperty="memberNo" order="BEFORE" resultType="Integer">
 			select member_seq.nextval from dual
 		</selectKey>
-		insert into signup(memberNo, email, nickname, pw) 
-			values(#{memberNo}, #{email}, #{nickname}, #{pw})
+		insert into signup(memberNo, email, nickname, pw, photo) 
+			values(#{memberNo}, #{email}, #{nickname}, #{pw}, 'user_icon.png')
 	</insert>
+	
+	<!-- 패스워드찾기 -->
+	<select id="findPW" parameterType="MemberDTO" resultType="String">
+		select pw from signup 
+		where email = #{email} and nickname = #{nickname}
+	</select>
+	<!-- 로그인 패스워드체크 -->
+	<select id="pwCheck" parameterType="MemberDTO" resultType="Integer">
+		select count(*) from signup 
+		where email = #{email} and pw = #{pw}
+	</select>
+
+	<!-- 닉네임 체크 -->	
+	<select id="nicknameCheck" parameterType="String" resultType="Integer">
+		select count(*) from signup S 
+		where 1=1 and S.nickname = #{nickname}
+	</select>
+	<!-- 이메일 체크 -->
+	<select id="emailCheck" parameterType="String" resultType="Integer">
+		select count(*) from signup S 
+		where 1=1 and S.email = #{email}
+	</select>
 	
 	<select id="listAll" resultType="com.bitschool.dto.MemberDTO">
 		select * from signup

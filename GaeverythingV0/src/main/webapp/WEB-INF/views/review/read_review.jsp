@@ -34,16 +34,16 @@
 		}
 	}
 	
-	function go_url(type){
+	function go_url(type, page){
 		var data = document.getElementById("postData");
-		var url = "/review/viewReviewList";
+		var url = "/review/viewReviewList?page="+page;
 		if(type == 1){
-			url = "/review/clickModify";
+			url = "/review/clickModify?page="+page;
 		}else if(type == 2){
 			var check = confirm("삭제된 게시글은 복구가 불가능합니다. 삭제하시겠습니까?")
 			if(check == true){
 				alert("게시글이 삭제되었습니다.");
-				url = "/review/delete";
+				url = "/review/delete?page="+page;
 			}else{
 				alert("삭제가 취소되었습니다.")
 			}
@@ -52,16 +52,16 @@
 		data.submit();
 	}
 	
-	function cmt_url(type, index){
+	function cmt_url(type, index, page){
 		var data = document.getElementById("listOfComment"+index);
 		var url = "/review/readPost";
 		if(type == 1){
-			url = "/review/modifyCmt";
+			url = "/review/modifyCmt?page="+page;
 		}else if(type == 2){
 			var check = confirm("삭제된 댓글은 복구가 불가능합니다. 삭제하시겠습니까?")
 			if(check == true){
 				alert("댓글이 삭제되었습니다.");
-				url = "/review/deleteCmt";
+				url = "/review/deleteCmt?page="+page;
 			}else{
 				alert("삭제가 취소되었습니다.")
 			}
@@ -70,13 +70,13 @@
 		data.submit();
 	}
 
-	function add_cmt(){
+	function add_cmt(page){
 		var data = document.getElementById("newComment");
 		var url = "/review/readPost";
 		var check = confirm("댓글을 등록하시겠습니까?");
 		if(check==true){
 			alert("댓글이 등록되었습니다.");
-			url = "/review/newCmt";
+			url = "/review/newCmt?page="+page;
 		}else{
 			alert("댓글 등록이 취소되었습니다.");
 		}
@@ -84,10 +84,10 @@
 		data.submit();
 	}
 
-	function box_clicked(){
+	function box_clicked(page){
 		alert("댓글작성은 회원만 가능합니다.");
 		var boardNo = document.getElementById("boardNo").value;
-		location.href = "/review/newCmt";
+		location.href = "/viewLogin?uri=/review/readPost?boardNo="+boardNo+"&page="+page;
 	}
 	
 	function like_clicked(){
@@ -117,9 +117,10 @@
          });
 	}
 	
-	function no_login_like(){
+	function no_login_like(page){
 		alert("로그인을 해주세요!");
-		location.href = "/review/updateLike";	
+		var boardNo = document.getElementById("boardNo").value;
+		location.href = "/viewLogin?uri=/review/readPost?boardNo="+boardNo+"&page="+page;
 	}
 	
 	
@@ -226,10 +227,10 @@
 				<div class="optin button col-md-10">
 					<!-- Like -->
 					<c:choose>
-						<c:when test="${memberNickname == null }">
+						<c:when test="${member.nickname == null }">
 							<div class="like col-md-3" style="width: 80px; height: 0px; padding-left: 0px; margin-top: 25px; padding-right: 0px;">
 								<div class="listing-item-container list-layout">
-									<span class="like-icon" id="like" onclick="no_login_like()"></span>
+									<span class="like-icon" id="like" onclick="no_login_like(${param.page})"></span>
 								</div>
 							</div>	
 						</c:when>
@@ -244,7 +245,7 @@
 					
 					<!-- back to list -->
 					<div class="list col-md-8">
-							<button type="button" class="button border margin-top-5" onclick="go_url(3)">back to list</button>
+							<button type="button" class="button border margin-top-5" onclick="go_url(3, ${param.page})">back to list</button>
 						</div>
 						
 					<!-- edit, delete -->
@@ -252,10 +253,10 @@
 					
 				</div>
 				
-				<c:if test="${memberNickname == dto.nickname}">
+				<c:if test="${member.nickname == dto.nickname}">
 						<div class="comment-by col-md-2" style="width: 135px;" align="right">
-							<div><a id="edit" href="#" onclick="go_url(1);" return false; class = "reply"><i class="sl sl-icon-note"></i>Edit</a></div>
-							<div><a id="delete" href="#" onclick="go_url(2);" return false; class = "reply" style="margin-top: 36px;""><i class="sl sl-icon-close"></i>Delete</a></div>
+							<div><a id="edit" href="#" onclick="go_url(1, ${param.page});" return false; class = "reply"><i class="sl sl-icon-note"></i>Edit</a></div>
+							<div><a id="delete" href="#" onclick="go_url(2, ${param.page});" return false; class = "reply" style="margin-top: 36px;""><i class="sl sl-icon-close"></i>Delete</a></div>
 							
 							<!-- return false will prevent browser from following the link -->
 						</div>					
@@ -299,7 +300,7 @@
 			<c:forEach items = "${cList}" var ="cmt"  varStatus="loop">
 				<form action="" method="post" id="listOfComment${loop.index}">
 					<input type="hidden" name = "boardNo" value = "${dto.boardNo}">
-					<input type="hidden" name = "page" value = "${param.page}">
+					
 					<input type="hidden" name = "nickname" value= "${dto.nickname}">
 	
 					<ul> <!-- 댓글전체 -->
@@ -315,12 +316,12 @@
 								<div class="comment-by" style="height: 70px;padding-bottom: 5px;">${cmt.nicknameCmt}
 								<span class="date" id="date" style="font-size: 8px;">등록일 <fmt:formatDate value = "${dto.regiDate}" pattern="YY/MM/dd hh:mm:ss"/></span>	
 									
-									<c:if test="${memberNickname == cmt.nicknameCmt}">
+									<c:if test="${member.nickname == cmt.nicknameCmt}">
 										<div class="comment-by">
-											<a href="#" class="reply" " onclick="cmt_url(1, ${loop.index});" return false; ><i class="sl sl-icon-note"></i> Edit</a>
+											<a href="#" class="reply" " onclick="cmt_url(1, ${loop.index}, ${param.page});" return false; ><i class="sl sl-icon-note"></i> Edit</a>
 										</div>
 										<div class="comment-by">
-											<a href="#" class="reply" style="margin-top: 36px;" onclick="cmt_url(2, ${loop.index});" return false; ><i class="sl sl-icon-close"></i> Delete</a>
+											<a href="#" class="reply" style="margin-top: 36px;" onclick="cmt_url(2, ${loop.index}, ${param.page});" return false; ><i class="sl sl-icon-close"></i> Delete</a>
 										</div>
 									</c:if>	
 								</div>
@@ -348,10 +349,10 @@
 				<h3 class="listing-desc-headline margin-bottom-35">Add Comment</h3>
 					<div class="about-author2" style="height: 80px; margin-bottom: 10px;">	
 						<img src="/resources/upload/bom.jpg" alt="" style="margin-top:5px; margin-right:5px;margin-bottom: 5px;">
-						<input type="hidden" name="userId" value="${userId}">	
-						<input type="hidden" name="nicknameCmt" id="memberNickname" value="${memberNickname}">
+						<input type="hidden" name="userId" value="${member.email}">	
+						<input type="hidden" name="nicknameCmt" id="memberNickname" value="${member.nickname}">
 						<div class="nickname col-md-3" style="padding-left: 10px;padding-right: 10px;margin-top: 28px;">
-							${memberNickname}
+							${member.nickname}
 						</div>
 					</div>
 
@@ -359,8 +360,8 @@
 					<div>
 						<label>Comment:</label>
 							<c:choose>
-								<c:when test="${memberNickname == null}">
-									<textarea cols="40" rows="3" name="commentBody" onclick="box_clicked()" placeholder="로그인 후 댓글작성이 가능합니다."></textarea>
+								<c:when test="${member.nickname == null}">
+									<textarea cols="40" rows="3" name="commentBody" onclick="box_clicked(${param.page})" placeholder="로그인 후 댓글작성이 가능합니다."></textarea>
 								</c:when>
 								<c:otherwise>
 									<textarea cols="40" rows="3" name="commentBody" placeholder="댓글을 작성해주세요 :)"></textarea>
@@ -370,7 +371,7 @@
 				</fieldset>
 				<div class="clearfix col-md-9" style="margin-right: 26px;"></div>
 				<div class ="submit-cmt">
-					<button class="button" onclick="add_cmt()">Submit Comment</button>
+					<button class="button" onclick="add_cmt(${param.page})">Submit Comment</button>
 				</div>
 				
 				<div class="clearfix"></div>

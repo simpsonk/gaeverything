@@ -230,7 +230,7 @@
 								<h3>Sticky Band</h3>
 								<span>Bishop Avenue, New York</span>
 							</div>
-							<span class="like-icon"></span>
+							<span class="${likeStatus}"></span>
 						</div>
 						<div class="star-rating" data-rating="5.0">
 							<div class="rating-counter">(23 reviews)</div>
