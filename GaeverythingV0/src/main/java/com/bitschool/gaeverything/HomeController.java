@@ -15,12 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MapInfomation;
 import com.bitschool.dto.MemberDTO;
+import com.bitschool.service.BoardService;
 import com.bitschool.service.LocationService;
 import com.bitschool.service.LogService;
 import com.bitschool.service.SignUpService;
+import com.bitschool.utils.ActUserManager;
 import com.bitschool.utils.LoginFilter;
 
 /**
@@ -37,13 +40,20 @@ public class HomeController {
 	@Inject
 	private LocationService service;
 	
+	@Inject
+	private BoardService bService;
+	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model, HttpSession session) {
 		logger.info("Welcome home! The client locale is {}.", "connect");
 		boolean islogin = new LoginFilter().isLogin(session, model);
+		
+		String likeStatus = new ActUserManager().checkLikeStatus(new ActUserDTO(1, "admin@naver.com", 10, "01"), bService);
 		System.out.println(islogin);
+		System.out.println(likeStatus);
+		model.addAttribute("likeStatus", likeStatus);
 		return "home";
 	}
 	@RequestMapping(value = "login", method = {RequestMethod.POST, RequestMethod.GET})

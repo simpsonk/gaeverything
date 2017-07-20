@@ -19,4 +19,6 @@ public class ReviewController {
 		String url = "review/review_regist";
 		return url;
 	}
+	
+	
 }
