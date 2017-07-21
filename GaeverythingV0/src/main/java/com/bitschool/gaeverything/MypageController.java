@@ -44,57 +44,10 @@ public class MypageController {
 	@Inject
 	private PetPageService pservice;
 	
-	@Autowired
-	private EmailSender emailSender;
-	 
-	@Autowired
-	private Email email;
+
 	   
 	   
-	/*비밀번호 찾기창 열기*/
-	@RequestMapping(value = "/viewFindPW", method = RequestMethod.GET)
-	public String viewFindPW(HttpSession session){
-		String url = "find_pw";		
-		return url;
-	}
-	
-	/*비밀번호 찾기*/
-	@RequestMapping(value = "/findPW", method = RequestMethod.POST)
-	    public ModelAndView findPW(@RequestParam("email") String e_mail,
-	    		@RequestParam("nickname") String nickname,
-	    		ModelMap model) throws Exception {
-		 	System.out.println("findPW 에 옴");
-	        ModelAndView mav;
-	        MemberDTO member = new MemberDTO();
-	        member.setEmail(e_mail);
-	        member.setNickname(nickname);
-	        String pw = sservice.findPW(member);	        
-	        System.out.println(pw);
-	        if(pw!=null) {
-	            email.setContent(nickname+"님, 안녕하세요. [Gaeverything]입니다. "
-	            		+ e_mail+" 계정의 비밀번호는 "+pw+" 입니다.");
-	            email.setReceiver(e_mail);
-	            email.setSubject("[Gaeverything] "+nickname+"님 비밀번호 찾기 메일입니다.");
-	            emailSender.SendEmail(email);
-	            mav= new ModelAndView("find_pw_result");
-	            return mav;
-	        }else {
-	            mav=new ModelAndView("find_pw");
-	            return mav;
-	        }
-	    }	 
-		//비밀번호 찾기할때 입력한 닉네임과 이메일이 한 계정으로 일치하는지 체크 
-		@RequestMapping(value="/checkPW", method=RequestMethod.POST)
-		public @ResponseBody boolean checkPW(@RequestParam(value = "email") String email,
-				@RequestParam("nickname") String nickname) throws Exception{
-			MemberDTO member = new MemberDTO();
-			member.setEmail(email);
-			member.setNickname(nickname);
-			System.out.println("member :"+member);
-			boolean chkPoint = sservice.findPW(member)==null;	
-			System.out.println("chkPoint :"+chkPoint);
-			return chkPoint;
-		}
+
 	
 	/*마이페이지 열기*/
 	@RequestMapping(value = "/viewMypageProfile", method = RequestMethod.GET)

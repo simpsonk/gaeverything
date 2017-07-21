@@ -144,7 +144,7 @@ function chkEmail(){
 	     type : 'POST',  
 	     data: {email:email , nickname:nickname},
 	     dataType : 'json',
-	     url : '/mypage/checkPW',  //체크하는 컨트롤러주소
+	     url : '/checkPW',  //체크하는 컨트롤러주소
 	     success : function(chkPoint) {
 	      var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 	      var chkRst = chkPoint;

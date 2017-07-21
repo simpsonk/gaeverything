@@ -26,7 +26,7 @@
    	</beans:bean> 
    	<interceptors>
         <interceptor>
-            <mapping path="/mypage/*"/>
+            <mapping path="	"/>
             <mapping path="/mypage/calendar/*"/>
             <mapping path="/review/viewReviewRegist"/>
             <mapping path="/review/newCmt"/>
