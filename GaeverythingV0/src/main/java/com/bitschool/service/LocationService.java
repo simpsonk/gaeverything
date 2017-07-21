@@ -171,17 +171,5 @@ public class LocationService {
 		return list;
 	}
 
-	//locationSeq로 한 장소의 DTO 받아오기 
-	public LocationDTO selectOne(int seq){
-		// TODO Auto-generated method stub
-		LocationDTO dto = null;
-		try {
-			dto = dao.selectOne(seq);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return dto;
-	}
 
 }

@@ -10,13 +10,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bitschool.dto.LocationDTO;
-import com.bitschool.service.LocationService;
+import com.bitschool.service.LocationDetailService;
+
 @RequestMapping(value = "map/detail")
 @Controller
-public class DetailController {
+public class LocationDetailController {
 	
 	@Inject
-	LocationService service;
+	LocationDetailService service;
 
 	@RequestMapping(value = "/viewDetailPage", method = RequestMethod.GET)
 	public String viewDetailPage(HttpServletRequest request, @RequestParam(value="locationSeq") int locationSeq,
