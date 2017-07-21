@@ -7,6 +7,7 @@
 	    
 	    closeOverlay();
 	    
+	    var url = '/map/detail/viewDetailPage?locationSeq=';
 	    //지도에 마커표시하기
 	    for ( var i=0; i<places.length; i++ ) {
 	        // 마커를 생성하고 지도에 표시합니다
@@ -18,9 +19,9 @@
 	        // mouseout 했을 때는 인포윈도우를 닫습니다
 	        (function(marker, title, imageUrl, address, placeUrl, radius) {
 	            daum.maps.event.addListener(marker, 'click', function() {
-	            	setOverlay(map, makeContent(title, imageUrl, address, placeUrl, radius), marker.getPosition());
+	            	setOverlay(map, makeContent(title, imageUrl, address, url+places.locationSeq, radius), marker.getPosition());
 	            });
-	        })(marker, places[i].title, places[i].imageUrl, places[i].address, places[i].placeUrl , places[i].radius);
+	        })(marker, places[i].title, places[i].imageUrl, places[i].address, url+places[i].locationSeq , places[i].radius);
 	    }
 	}
 	
