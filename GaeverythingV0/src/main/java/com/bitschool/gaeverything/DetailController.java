@@ -25,6 +25,7 @@ public class DetailController {
 		LocationDTO dto = new LocationDTO();
 		dto = service.selectOne(locationSeq);
 		model.addAttribute("detail", dto);		
+		System.out.println("detail : "+dto);
 		return url;
 	}
 	
