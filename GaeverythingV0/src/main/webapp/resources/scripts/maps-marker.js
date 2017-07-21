@@ -21,7 +21,7 @@
 	        // mouseout 했을 때는 인포윈도우를 닫습니다
 	        (function(marker, title, imageUrl, address, detailUrl, radius) {
 	            daum.maps.event.addListener(marker, 'click', function() {
-	            	setOverlay(map, makeContent(title, imageUrl, address, url+places.locationSeq, radius), marker.getPosition());
+	            	setOverlay(map, makeContent(title, imageUrl, address, detailUrl, radius), marker.getPosition());
 	            });
 	        })(marker, places[i].title, places[i].imageUrl, places[i].address, url+places[i].locationSeq , places[i].radius);
 	    }
