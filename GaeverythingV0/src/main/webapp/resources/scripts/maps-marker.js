@@ -13,11 +13,13 @@
 	        // 마커를 생성하고 지도에 표시합니다
 	        var placePosition = new daum.maps.LatLng(places[i].latitude, places[i].longitude),
 	            marker = addMarker(placePosition, i); 
+	        
+	        var detailUrl = url+places[i].locationSeq;
 
 	        // 마커와 검색결과 항목에 mouseover 했을때
 	        // 해당 장소에 인포윈도우에 장소명을 표시합니다
 	        // mouseout 했을 때는 인포윈도우를 닫습니다
-	        (function(marker, title, imageUrl, address, placeUrl, radius) {
+	        (function(marker, title, imageUrl, address, detailUrl, radius) {
 	            daum.maps.event.addListener(marker, 'click', function() {
 	            	setOverlay(map, makeContent(title, imageUrl, address, url+places.locationSeq, radius), marker.getPosition());
 	            });
