@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class DetailController {
 
 	@RequestMapping(value = "/viewDetailPage", method = RequestMethod.GET)
-	public String viewDetailPage(HttpServletRequest request, @RequestParam(value="locationSeq") String locationSeq){
+	public String viewDetailPage(HttpServletRequest request, @RequestParam(value="locationSeq") int locationSeq){
 		String url = "map/map_detailpage";
 		
 		return url;
