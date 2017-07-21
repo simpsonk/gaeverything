@@ -40,4 +40,12 @@ public class LocationDAO {
 		list = session.selectList(namespace+".selectLocation", info);
 		return list;
 	}
+	
+	//locationSeq로 한 장소의 DTO 받아오기 
+	public LocationDTO selectOne(int seq) throws SQLException{
+		// TODO Auto-generated method stub
+		LocationDTO dto = null;
+		dto = session.selectOne(namespace+".selectOne",seq);
+		return dto;
+	}
 }

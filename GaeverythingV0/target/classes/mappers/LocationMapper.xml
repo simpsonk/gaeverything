@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bitschool.bootstrap.LocationMapper">
+	<insert id="insert" parameterType="LocationDTO">
+		<selectKey resultType="Integer" order="BEFORE" keyProperty="locationSeq">
+			select location_seq.nextval from dual
+		</selectKey>
+		insert into location(
+		locationSeq,
+		relatedPlaceCount,
+		zipcode,
+		relatedplace,
+		distance,
+		direction,
+		placeUrl,
+		categoryCode,
+		loccategory,
+		newAddress,
+		title,
+		locid,
+		phone,
+		imageUrl,
+		address,
+		addressBCode,
+		longitude,
+		latitude
+		) values(#{locationSeq},
+		#{relatedPlaceCount},
+		#{zipcode},
+		#{replacePlace},
+		#{distance},
+		#{direction},
+		#{placeUrl},
+		#{categoryCode},
+		#{locCategory},
+		#{newAddress},
+		#{title},
+		#{locId},
+		#{phone},
+		#{imageUrl},
+		#{address},
+		#{addressBCode},
+		#{longitude},
+		#{latitude})
+	</insert>
+	
+	<select id="selectAll" resultType="LocationDTO">
+		select * from location 
+	</select>
+	
+	<select id="selectShopName" resultType="LocationDTO">
+		select * from location where categoryCode = #{categories} and title like '%'||#{searchWord}||'%'
+	</select>
+	
+	<select id="selectLocation" resultType="LocationDTO">
+		select * from location where categoryCode = #{categories} and address like '%'||#{searchWord}||'%'
+	</select>
+	
+	<!-- locationSeq로 한 장소의 DTO 받아오기 -->
+	<select id="selectOne" parameterType="Integer" resultType="LocationDTO">
+		select * from location 
+		where locationseq = #{locationSeq} 
+	</select>
+</mapper>

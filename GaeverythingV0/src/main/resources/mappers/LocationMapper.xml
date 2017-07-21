@@ -57,4 +57,10 @@
 	<select id="selectLocation" resultType="LocationDTO">
 		select * from location where categoryCode = #{categories} and address like '%'||#{searchWord}||'%'
 	</select>
+	
+	<!-- locationSeq로 한 장소의 DTO 받아오기 -->
+	<select id="selectOne" parameterType="Integer" resultType="LocationDTO">
+		select * from location 
+		where locationseq = #{locationSeq} 
+	</select>
 </mapper>
