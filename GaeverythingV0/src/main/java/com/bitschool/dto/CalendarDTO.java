@@ -17,8 +17,17 @@ public class CalendarDTO {
 	private String start;
 	private String end;
 	private String repeatdata;
+	private String repeatview;
 	
 	
+
+	public String getRepeatview() {
+		return repeatview;
+	}
+
+	public void setRepeatview(String repeatview) {
+		this.repeatview = repeatview;
+	}
 
 	public String getRepeatdata() {
 		return repeatdata;

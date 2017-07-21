@@ -7,7 +7,25 @@
 
 <!-- Basic Page Needs
 ================================================== -->
-<title>Listeo</title>
+<title>Gaverything</title>
+<style type="text/css">
+    .wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
+    .wrap * {padding: 0;margin: 0;}
+    .wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
+    .wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
+    .info .title {padding: 5px 0 0 10px;height: 30px;background: #eee;border-bottom: 1px solid #ddd;font-size: 18px;font-weight: bold;}
+    .info .close {position: absolute;top: 10px;right: 10px;color: #888;width: 17px;height: 17px;background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
+    .info .close:hover {cursor: pointer;}
+    .info .body {position: relative;overflow: hidden;}
+    .info .desc {position: relative;margin: 13px 0 0 90px;height: 75px;}
+    .desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+    .desc .jibun {font-size: 11px;color: #888;margin-top: -2px;}
+    .info .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
+    .info:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
+    .info .link {color: #5085BB;}
+</style>
+
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -217,119 +235,6 @@
 					</a>
 				</div>
 				<!-- Listing Item / End -->
-
-				<!-- Listing Item -->
-				<div class="col-lg-6 col-md-12">
-					<a href="listings-single-page.html" class="listing-item-container" data-marker-id="2">
-						<div class="listing-item">
-							<img src="/resources/images/listing-item-02.jpg" alt="">
-							<div class="listing-item-details">
-								<ul>
-									<li>Friday, August 10</li>
-								</ul>
-							</div>
-							<div class="listing-item-content">
-								<span class="tag">Events</span>
-								<h3>Sticky Band</h3>
-								<span>Bishop Avenue, New York</span>
-							</div>
-							<span class="like-icon"></span>
-						</div>
-						<div class="star-rating" data-rating="5.0">
-							<div class="rating-counter">(23 reviews)</div>
-						</div>
-					</a>
-				</div>
-				<!-- Listing Item / End -->		
-
-				<!-- Listing Item -->
-				<div class="col-lg-6 col-md-12">
-					<a href="listings-single-page.html" class="listing-item-container" data-marker-id="3">
-						<div class="listing-item">
-							<img src="/resources/images/listing-item-03.jpg" alt="">
-							<div class="listing-item-details">
-								<ul>
-									<li>Starting from $59 per night</li>
-								</ul>
-							</div>
-							<div class="listing-item-content">
-								<span class="tag">Hotels</span>
-								<h3>Hotel Govendor</h3>
-								<span>778 Country Street, New York</span>
-							</div>
-							<span class="like-icon"></span>
-						</div>
-						<div class="star-rating" data-rating="2.0">
-							<div class="rating-counter">(17 reviews)</div>
-						</div>
-					</a>
-				</div>
-				<!-- Listing Item / End -->
-
-				<!-- Listing Item -->
-				<div class="col-lg-6 col-md-12">
-					<a href="listings-single-page.html" class="listing-item-container" data-marker-id="4">
-						<div class="listing-item">
-							<img src="/resources/images/listing-item-04.jpg" alt="">
-
-							<div class="listing-badge now-open">Now Open</div>
-
-							<div class="listing-item-content">
-								<span class="tag">Eat & Drink</span>
-								<h3>Burger House</h3>
-								<span>2726 Shinn Street, New York</span>
-							</div>
-							<span class="like-icon"></span>
-						</div>
-						<div class="star-rating" data-rating="5.0">
-							<div class="rating-counter">(31 reviews)</div>
-						</div>
-					</a>
-				</div>
-				<!-- Listing Item / End -->
-
-				<!-- Listing Item -->
-				<div class="col-lg-6 col-md-12">
-					<a href="listings-single-page.html" class="listing-item-container" data-marker-id="5">
-						<div class="listing-item">
-							<img src="/resources/images/listing-item-05.jpg" alt="">
-							<div class="listing-item-content">
-								<span class="tag">Other</span>
-								<h3>Airport</h3>
-								<span>1512 Duncan Avenue, New York</span>
-							</div>
-							<span class="like-icon"></span>
-						</div>
-						<div class="star-rating" data-rating="3.5">
-							<div class="rating-counter">(46 reviews)</div>
-						</div>
-					</a>
-				</div>
-				<!-- Listing Item / End -->
-
-				<!-- Listing Item -->
-				<div class="col-lg-6 col-md-12">
-					<a href="listings-single-page.html" class="listing-item-container" data-marker-id="6">
-						<div class="listing-item">
-							<img src="/resources/images/listing-item-06.jpg" alt="">
-
-							<div class="listing-badge now-closed">Now Closed</div>
-
-							<div class="listing-item-content">
-								<span class="tag">Eat & Drink</span>
-								<h3>Think Coffee</h3>
-								<span>215 Terry Lane, New York</span>
-							</div>
-							<span class="like-icon"></span>
-						</div>
-						<div class="star-rating" data-rating="4.5">
-							<div class="rating-counter">(15 reviews)</div>
-						</div>
-					</a>
-				</div>
-				<!-- Listing Item / End -->
-
-
 			</div>
 			<!-- Listings Container / End -->
 
@@ -400,10 +305,77 @@
 <script type="text/javascript" src="<c:url value = '/resources/scripts/custom.js'/>"></script>
 
 <!-- Maps -->
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&amp;language=en"></script>
-<script type="text/javascript" src="<c:url value = '/resources/scripts/infobox.min.js'/>"></script>
-<script type="text/javascript" src="<c:url value = '/resources/scripts/markerclusterer.js'/>"></script>
-<script type="text/javascript" src="<c:url value = '/resources/scripts/maps.js'/>"></script>
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=fa1e9654d15cae4c8c5f39d8b36f7984&libraries=clusterer"></script>
+<script>
+
+	//1. 지도띄우기
+	var container = document.getElementById("map"), //지도띄울 div
+		options = {
+			center :  new daum.maps.LatLng(37.6646797, 126.7421222), //지도 시작 시 좌표
+			level  : 3 //확대, 축소정도
+		};
+	var map = new daum.maps.Map(container, options)
+	
+	//2. 마커찍기
+	//2-1. 마커이미지 설정
+	var imgSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
+		imgSize = new daum.maps.Size(24, 36),
+		imgOption = {offset: new daum.maps.Point(27,69)};
+	
+	//2-2. 설정한 이미지로 마커 생성, 찍을 좌표 설정
+	var markerImg = new daum.maps.MarkerImage(imgSrc, imgSize, imgOption),
+		markerPostion = new daum.maps.LatLng(37.6646797, 126.7421222) //이벤트 장소 좌표
+	
+	//2-3. 좌표에 마커 생성
+	var marker = new daum.maps.Marker({
+		position: markerPostion, 
+		map		: map,
+		image	: markerImg,
+		clickable: true
+	});	
+	
+	//2-4. 오버레이 내용
+	var content = '<div class="wrap">'+
+					'	<div class="info">' + 
+					'		<div class="title">' + '2017 케이펫페어 일산' + 
+					'			<div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
+					'		</div>	' + 
+					'		<div class="body">' + 
+					'			<div class="img">' + 
+					'				<img src="http://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70">' +
+					'				</div>' + 
+					'			<div class="desc">' + 
+					'				<div class="ellipsis">경기 고양시 일산서구 킨텍스로 217-59</div>' +
+					'				<div><a href="http://www.k-pet.co.kr/" target="_blank" class="link">홈페이지</a></div>' +
+					'			</div>'+
+					'		</div>'+
+					'	</div>' + 
+					'</div>';
+	
+	//마커에 오버레이 표시
+	var overlay = new daum.maps.CustomOverlay({
+		content	 : content,
+		map 	 : map,
+		position : marker.getPosition()
+	});
+	
+	//마커에 클릭이벤트 등록
+	daum.maps.event.addListener(marker, 'click', function(){
+		overlay.setMap(map);
+	});
+	
+	function closeOverlay(){
+		overlay.setMap(null);
+	}
+	
+	
+	//리스트 10개 넣어야 함
+	
+
+	
+	
+	
+</script>
 
 
 </body>
