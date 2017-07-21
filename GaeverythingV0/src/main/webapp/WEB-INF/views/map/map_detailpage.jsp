@@ -139,7 +139,6 @@
 			<div id="listing-reviews" class="listing-section">
 				<h3 class="listing-desc-headline margin-top-75 margin-bottom-20">Comment <span>(12)</span></h3>
 
-				<div class="clearfix"></div>
 				<!-- Add Review Box -->
 				<div id="add-review" class="add-review-box" style="margin-top: 0px;">
 	
@@ -149,10 +148,14 @@
 					<span class="leave-rating-title">Your rating for this listing</span>
 					
 					<!-- Rating / Upload Button -->
+					<form id="add-comment" action="/map/detail/addComment" class="add-comment" method="post">
+						<input type="hidden" id="locationSeq" name="locationSeq" value="${locationSeq}">
+					
 					<div class="row">
 						<div class="col-md-6">
 							<!-- Leave Rating -->
 							<div class="clearfix"></div>
+											   		
 							<div class="leave-rating margin-bottom-30">
 								<input type="radio" name="rating" id="rating-1" value="1"/>
 								<label for="rating-1" class="fa fa-star"></label>
@@ -171,16 +174,15 @@
 					</div>
 		
 					<!-- Review Comment -->
-					<form id="add-comment" class="add-comment">
+					
 						<fieldset>
 							<div>
 								<label>Comment:</label>
-								<textarea cols="40" rows="3"></textarea>
+								<textarea name="message" cols="40" rows="3"></textarea>
 							</div>
 	
-						</fieldset>
-	
-						<button class="button">Submit Comment</button>
+						</fieldset>	
+						<input type="button" id="registComment" value="Submit Comment">
 						<div class="clearfix"></div>
 					</form>
 	
@@ -299,6 +301,14 @@
 	});
 	map.setCenter(new daum.maps.LatLng(latitude, longitude));
 	marker.setMap(map);
+	
+
+//댓글 등록 버튼 클릭시
+$('#registComment').click(function(){
+	$('#add-comment').submit();
+});
+	
+	
 </script>
 
 </body>
