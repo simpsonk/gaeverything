@@ -14,7 +14,7 @@
 	        var placePosition = new daum.maps.LatLng(places[i].latitude, places[i].longitude),
 	            marker = addMarker(placePosition, i); 
 	        
-	        var detailUrl = url+places[i].locationSeq;
+	        var detailUrl = url+places[i].locationSeq; //마커에 상세정보 클릭시 이동할 Url
 
 	        // 마커와 검색결과 항목에 mouseover 했을때
 	        // 해당 장소에 인포윈도우에 장소명을 표시합니다
