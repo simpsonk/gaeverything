@@ -175,7 +175,6 @@ public class LocationDTO {
 	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
-	
 	@Override
 	public String toString() {
 		return "LocationDTO [locationSeq=" + locationSeq + ", related_place_count=" + related_place_count + ", zipcode="
@@ -184,21 +183,7 @@ public class LocationDTO {
 				+ ", newAddress=" + newAddress + ", title=" + title + ", id=" + id + ", phone=" + phone + ", imageUrl="
 				+ imageUrl + ", address=" + address + ", addressBCode=" + addressBCode + ", longitude=" + longitude
 				+ ", latitude=" + latitude + ", radius=" + radius + ", relatedPlaceCount=" + relatedPlaceCount
-				+ ", locId=" + locId + ", locCategory=" + locCategory + ", replacePlace=" + replacePlace
-				+ ", getRadius()=" + getRadius() + ", getReplacePlace()=" + getReplacePlace()
-				+ ", getRelatedPlaceCount()=" + getRelatedPlaceCount() + ", getLocId()=" + getLocId()
-				+ ", getLocCategory()=" + getLocCategory() + ", getLocationSeq()=" + getLocationSeq()
-				+ ", getRelated_place_count()=" + getRelated_place_count() + ", getZipcode()=" + getZipcode()
-				+ ", getRelated_place()=" + getRelated_place() + ", getDistance()=" + getDistance()
-				+ ", getDirection()=" + getDirection() + ", getPlaceUrl()=" + getPlaceUrl() + ", getCategoryCode()="
-				+ getCategoryCode() + ", getCategory()=" + getCategory() + ", getNewAddress()=" + getNewAddress()
-				+ ", getTitle()=" + getTitle() + ", getId()=" + getId() + ", getPhone()=" + getPhone()
-				+ ", getImageUrl()=" + getImageUrl() + ", getAddress()=" + getAddress() + ", getAddressBCode()="
-				+ getAddressBCode() + ", getLongitude()=" + getLongitude() + ", getLatitude()=" + getLatitude()
-				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
-				+ "]";
+				+ ", locId=" + locId + ", locCategory=" + locCategory + ", replacePlace=" + replacePlace + "]";
 	}
-	
-
 	
 }
