@@ -153,7 +153,7 @@ public class ReviewController {
 	public String clickModify(@RequestParam("boardNo") int boardNo, Model model){
 		BoardDTO dto = service.selectToRead(boardNo);
 		model.addAttribute("dto", dto);
-		String url = "review/modify_content";
+		String url = "review/review_regist";
 		return url;
 	}
 	

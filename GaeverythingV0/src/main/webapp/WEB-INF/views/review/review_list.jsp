@@ -102,7 +102,7 @@
 				<div class="preview_box" id="preview" style="width: 100%; height:100px;">
 					<p>${board.onlyText}</p>
 				</div>
-				<a href="/review/readPost?boardNo=${board.boardNo}&page=${page}&nickname=${board.encodeUTF}" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
+				<a href="/review/readPost?boardNo=${board.boardNo}&page=${page}" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
 			</div>
 		</div>
 	</c:forEach>
