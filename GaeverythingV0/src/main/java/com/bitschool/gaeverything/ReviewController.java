@@ -2,6 +2,7 @@ package com.bitschool.gaeverything;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -22,11 +23,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bitschool.dao.ReviewFileBean;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.CommentDTO;
+import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.dto.PageDTO;
 import com.bitschool.service.IBoardService;
 import com.bitschool.service.ICommentService;
 import com.bitschool.service.IPagerService;
+import com.bitschool.service.LocationService;
 import com.bitschool.utils.LoginFilter;
 import com.fasterxml.jackson.core.JsonFactory;
 
@@ -43,6 +46,10 @@ public class ReviewController {
 	
 	@Inject
 	private ICommentService cService;
+	
+	@Inject
+	private LocationService locService;
+
 	
 	
 	@RequestMapping(value = "/viewReviewList", method = {RequestMethod.GET, RequestMethod.POST})
@@ -81,16 +88,35 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value = "/newPost", method={RequestMethod.POST, RequestMethod.GET})
-	public String newPost(BoardDTO dto){
+	public String newPost(BoardDTO dto, HttpSession session){
 		String url = null;
 		System.out.println(dto);
-		System.out.println("±Û¾´ÀÌ>>> " + dto.getNickname());
+		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		dto.setNickname(member.getNickname());
 		boolean flag = service.insertPost(dto);
 		if(flag){
 			url = "redirect:/review/viewReviewList";
 		}
 		return url;
 	}
+	
+	@RequestMapping(value = "/modify", method=RequestMethod.POST)
+	public String modify(BoardDTO dto, Model model, @RequestParam("page") int page, @RequestParam("boardNo") int boardNo){
+		System.out.println("modify controller");
+		System.out.println("check:"+dto);
+		String url = null;
+		dto.setBoardNo(boardNo);
+		boolean flag = service.updatePost(dto);
+		System.out.println("dao result: "+ flag);
+		if(flag){
+			model.addAttribute("dto", dto);
+			model.addAttribute("boardNo", dto.getBoardNo());
+			url = "redirect:/review/readPost?page="+page;
+		}
+		return url;
+	}
+
+	
 	
 	@RequestMapping(value="/fileUpload", method=RequestMethod.POST)
 	public String fileUpload(ReviewFileBean filebean, HttpServletRequest request, Model model){
@@ -158,20 +184,6 @@ public class ReviewController {
 		return url;
 	}
 	
-	@RequestMapping(value = "/modify", method=RequestMethod.POST)
-	public String modify(BoardDTO dto, Model model, @RequestParam("page") int page){
-		System.out.println("modify controller");
-		System.out.println("check:"+dto);
-		String url = null;
-		boolean flag = service.updatePost(dto);
-		System.out.println("dao result: "+ flag);
-		if(flag){
-			model.addAttribute("dto", dto);
-			model.addAttribute("boardNo", dto.getBoardNo());
-			url = "redirect:/review/readPost?page="+page;
-		}
-		return url;
-	}
 	
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
 	public String delete(@RequestParam("boardNo") int boardNo, @RequestParam("page") int page){
@@ -275,4 +287,38 @@ public class ReviewController {
 		}
 		return data;
 	}	
+	
+	@RequestMapping(value = "viewSearchShop", method = RequestMethod.GET)
+	public String viewSearchShop(HttpSession session, Model model){
+		String url = "review/search_shop";
+		HashMap<String, Object> map = (HashMap<String, Object>)session.getAttribute("map");
+		if(map!=null){
+			List<LocationDTO> list = (List<LocationDTO>)map.get("list");
+			HashMap<String, Object> searchData = (HashMap<String, Object>)map.get("searchData");
+			model.addAttribute("list", list);
+			model.addAttribute("searchData", searchData);
+			session.removeAttribute("map");
+		}
+		return url;
+	}
+	
+	@RequestMapping(value = "getSearhShopname", method = RequestMethod.POST)
+	public String getSearhShopname(@RequestParam(value = "searchWord") String searchWord, @RequestParam(value = "selectOp1") String selectOp1, 
+			@RequestParam(value = "selectOp2") String selectOp2, Model model,  HttpSession session){
+		String url = "redirect:/review/viewSearchShop";
+		HashMap<String, Object> searchData = new HashMap<String, Object>();
+		
+		searchData.put("searchWord", searchWord);
+		searchData.put("selectOp1", selectOp1);
+		searchData.put("selectOp2", selectOp2);
+		
+		List<LocationDTO> list = locService.getSearchData(searchData);
+		System.out.println(list);
+		System.out.println(searchData);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("searchData", searchData);
+		session.setAttribute("map", map);
+		return url;
+	}
 }

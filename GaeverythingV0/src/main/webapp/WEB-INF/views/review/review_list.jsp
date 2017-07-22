@@ -77,10 +77,16 @@
 			<!-- Content -->
 			<div class="post-content" id="wrapper">
 				<!-- title -->
-				<h3><a href = "/review/readPost?boardNo=${board.boardNo}&page=${page}">${board.title}</a></h3>
-				
-				<!-- rating -->
-				<div class="star-rating col-md-12 " data-rating="${board.rating}" style="padding-left: 0px; padding-right: 0px; padding-top: 10px;padding-bottom: 10px;">${board.rating}</div> 
+				<div id="titlebar" class="listing-titlebar  col-md-12" style="padding-top: 0px;padding-bottom: 0px; margin-bottom: 10px;">
+					<!-- title -->	
+					<div class="listing-titlebar-title">
+						<h3><a href = "/review/readPost?boardNo=${board.boardNo}&page=${page}">${board.title}</a>
+							<c:if test="${board.boardCategory=='1'}">
+								<span class = "listing-tag">Hospital & Beauty</span>
+							</c:if>
+						</h3>
+					</div>	
+				</div>
 				
 				<!-- nickname, comment, etc. -->	
 				<ul class="post-meta">
@@ -97,6 +103,12 @@
 						<li><i class="sl sl-icon-eye"></i> ${board.readCount}</li>
 						<li><fmt:formatDate value = "${board.regiDate}" pattern="YY/MM/dd hh:mm:ss"/></li>
 				</ul>
+				
+								
+				
+				<!-- rating -->
+				<div class="star-rating col-md-12 " data-rating="${board.rating}" style="padding-left: 0px; padding-right: 0px; padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;">${board.rating}</div> 
+				
 				
 				<!-- content preview -->	
 				<div class="preview_box" id="preview" style="width: 100%; height:100px;">

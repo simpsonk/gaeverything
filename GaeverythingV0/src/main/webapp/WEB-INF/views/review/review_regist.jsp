@@ -68,15 +68,16 @@
 	
 	<!-- Post Content -->
 	<div class="col-lg-9 col-md-8" style="padding-left:20px; padding-right:20px;">
+		
 		<form action="" method="post" id="postData">
 			<!-- Blog Post -->
 			<div class="blog-post">
-					<input type="hidden" name = "boardNo" value = "${dto.boardNo}">
 					<!-- writer -->
 					
 							
 					<!-- category -->		
-					<div class="review-category col-md-4">
+					<div class="col-md-4">
+						<h5>Category</h5>
 						<select class="chosen-select" name = "boardCategory">
 							<option value ="0">Categories</option>
 							<option value ="1" ${dto.boardCategory == '1'?'selected="selected"':''}>병원, 뷰티</option>
@@ -85,24 +86,26 @@
 					</div>
 							
 					<!-- title -->
-					<div class = "title col-md-12">
-						<p class="form-row form-row-wide">
-							<label for="title">		
-								<h4>Title</h4>
-								<input class="input-text" type="text" name="title" id="title" value="${dto.title}"/>
-							</label>
-						</p>
+					<div class = "col-md-6">
+						<h5>Title</h5>
+						<input class="input-text" type="text" name="title" id="title" value="${dto.title}"/>
 					</div>
 						
 					<!-- location -->			
-					<div class = "location col-md-12">
-						<h4>Location</h4>
-						<input type="text" placeholder="장소를 선택해주세요.(**지도연동 구현예정**)" name="address" id="address" value="${dto.address}">						
-					</div> 
+					<div class 	= "location col-md-8">
+						<h5>Location</h5>
+						<input type="text" placeholder="장소를 선택해주세요." name="address" id="address" value="${dto.address}" readonly="readonly">
+					</div>
+					<div class = "location col-md-4" >
+						<div style="padding-top: 30px;">
+							<button type="button" class="button border margin-top-5" onclick="search_shop()" style="width: 110px;">Search</button>
+						</div>
+					</div>
+					<input type="hidden" name="locationSeq" id="locationSeq" value="">
 									
 					<!-- rating -->
 						<div class = "rating col-md-12" style="padding-bottom: 10px;">	
-							<h4>Rating</h4>							
+							<h5>Rating</h5>							
 								
 							<fieldset class="rating">
   								<input type="radio" id="star5" name="rating" value="5" ${dto.rating== '5'?'checked="checked"':''} />
@@ -138,34 +141,35 @@
 						</div>
 	
 						<!-- content -->
-						<div class = "content col-md-12" style="padding-bottom:15px">
-							<h4>Review</h4>
+						<!-- content -->
+					<div class = "content col-md-12" style="padding-bottom:15px">
+						<h4>Review</h4>
 							<textarea name="message" id="editor1">${dto.message}</textarea>		
-							<script type="text/javascript">
-								CKEDITOR.replace('editor1',{
-									filebrowserImageUploadUrl :'/review/fileUpload'
-								});
-								
-								CKEDITOR.on('dialogDefinition', function (ev) {
-						            var dialogName = ev.data.name;
-						            var dialog = ev.data.definition.dialog;
-						            var dialogDefinition = ev.data.definition;
-						            if (dialogName == 'image') {
-						                dialog.on('show', function (obj) {
-						                    this.selectPage('Upload'); //업로드텝으로 시작
-						                });
-						                dialogDefinition.removeContents('Link'); // 링크탭 제거
-						            }
-						        });
-							</script>
-							<input type="hidden" id="upload" name="uploadImg" value="">		
-							<input type="hidden" id="onlyText" name="onlyText" value="">
-						</div>
+								<script type="text/javascript">
+									CKEDITOR.replace('editor1',{
+										filebrowserImageUploadUrl : '/review/fileUpload'
+									});
+									
+									CKEDITOR.on('dialogDefinition', function (ev) {
+							            var dialogName = ev.data.name;
+							            var dialog = ev.data.definition.dialog;
+							            var dialogDefinition = ev.data.definition;
+							            if (dialogName == 'image') {
+							                dialog.on('show', function (obj) {
+							                    this.selectPage('Upload'); //업로드텝으로 시작
+							                });
+							                dialogDefinition.removeContents('Link'); // 링크탭 제거
+							            }
+							        });
+								</script>
+						<input type="hidden" id="upload" name="uploadImg" value="">		
+						<input type="hidden" id="onlyText" name="onlyText" value="">
+					</div>
 						<c:choose>
 							<c:when test="${empty dto}">
 								<!-- publish -->	
 								<div class="button col-md-12"> 
-									<button type="button" class="button border margin-top-5" onclick="go_url(2)" style="margin-left: 15px;">publish</button>
+									<button type="button" class="button border margin-top-5" onclick="go_url(2, 0)" style="margin-left: 15px;">publish</button>
 								</div>
 							</c:when>
 							
@@ -173,12 +177,15 @@
 								<!-- modify button -->
 								<div class="button col-md-12"> 	
 									<button type="button" class="button border margin-top-5" onclick="go_url(1, ${param.page})" >save</button>
-									<button type="button" class="button border margin-top-5" onclick="go_url(0)">back to list</button>
+									<button type="button" class="button border margin-top-5" onclick="go_url(0, ${param.page})">back to list</button>
 								</div>
 							</c:otherwise>
 						</c:choose>
 					</div>
 				</form>
+				
+				<input type="hidden" name = "boardNo" id = "boardNo"value = "${dto.boardNo}">
+				
 			<!-- Blog Post / End -->
 		</div>
 		<!-- Content / End -->
@@ -350,10 +357,16 @@
 ================================================== -->
 
 
-	<script type="text/javascript">		
-		
+	<script type="text/javascript">
+		function search_shop(){
+			window.open("/review/viewSearchShop", "myWindow", "width=1600,height=600");
+		}
+	
+	
 		function go_url(type, page){
 			var data = document.getElementById("postData");
+			var boardNo = document.getElementById("boardNo").value;
+
 			var url = "/review/viewReviewList";
 			var text = CKEDITOR.instances.editor1.document.getBody().getText();
 			document.getElementById("onlyText").value = text;
@@ -362,7 +375,7 @@
 				var check = confirm("게시물을 수정하시겠습니까?")
 				if(check==true){
 					alert("게시물이 수정되었습니다.");
-					url = "/review/modify?page="+page;
+					url = "/review/modify?page="+page+"&boardNo="+boardNo;
 				}else {
 					alert("수정이 취소되었습니다.");
 					return;

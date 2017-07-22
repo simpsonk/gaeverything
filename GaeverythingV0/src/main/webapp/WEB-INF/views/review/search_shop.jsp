@@ -63,7 +63,7 @@
 					<ul>
 					<c:forEach items="${list}" var="data">
 						<li class = "list">
-							<strong><span id="title">${data.title}</span></strong><span>(${data.address})</span>
+							<strong><span id="title">${data.title}</span></strong><span>(${data.address})</span><span id="locationSeq" style="visibility: hidden;">${data.locationSeq}</span>
 						</li>
 					</c:forEach>		
 					</ul>
@@ -111,13 +111,15 @@ $(document).ready(function() {
 		}
 		
 		if((searchWord!='')&&(selectOp1!=0)&&(selectOp2!=0)){
-			formEle.action = "getSearhShopname";
+			formEle.action = "/review/getSearhShopname";
 			formEle.submit();
 		}
 	});
 	
 	$("li").filter('.list').click(function(){
-		alert($(this).find("#title").text());	
+		window.opener.document.getElementById('address').value = $(this).find("#title").text();
+		window.opener.document.getElementById('locationSeq').value = $(this).find("#locationSeq").text(); 
+		self.close();	
 	});
 });
 </script>

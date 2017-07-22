@@ -30,6 +30,7 @@
 				reviewData.submit();
 			}else{
 				alert("등록이 취소되었습니다.")
+				return;
 			}
 		}
 	}
@@ -47,6 +48,7 @@
 				url = "/review/delete?page="+page;
 			}else{
 				alert("삭제가 취소되었습니다.")
+				return;
 			}
 		}
 		data.action = url;
@@ -65,6 +67,7 @@
 				url = "/review/deleteCmt?page="+page;
 			}else{
 				alert("삭제가 취소되었습니다.")
+				return;
 			}
 		}
 		data.action = url;
@@ -80,6 +83,7 @@
 			url = "/review/newCmt?page="+page;
 		}else{
 			alert("댓글 등록이 취소되었습니다.");
+			return;
 		}
 		data.action = url;
 		data.submit();
@@ -149,7 +153,7 @@
 
 		<!-- Titlebar
 ================================================== -->
-		<div id="titlebar" class="gradient">
+		<div id="titlebar" class="gradient"  style="margin-bottom: 0px;">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
@@ -190,18 +194,17 @@
 				<div class="post-content">
 					<input type = "hidden" name = "boardCategory" value = "병원,뷰티">
 					<input type = "hidden" id= "boardNo" name = "boardNo" value="${dto.boardNo}" readonly="readonly"><br>
-				
-				<!-- title -->	
-				<div class="title col-md-8">
-					<h3>${dto.title} 
-						<c:if test="${dto.boardCategory=='1'}">
-							<span class = "listing-tag">Hospital</span>
-						</c:if>
-					</h3>
-				</div>	
-				
-				
-				<div class="optin button col-md-4">
+					<div id="titlebar" class="listing-titlebar  col-md-8" style="padding-top: 0px;padding-bottom: 0px;padding-left: 15px;">
+					<!-- title -->	
+						<div class="listing-titlebar-title">
+							<h3>${dto.title} 
+								<c:if test="${dto.boardCategory=='1'}">
+									<span class = "listing-tag">Hospital & Beauty</span>
+								</c:if>
+							</h3>
+						</div>	
+					</div>
+					<div class="optin button col-md-4">
 						<!-- Like -->
 						<c:choose>
 							<c:when test="${member.nickname == null }">
@@ -214,37 +217,36 @@
 							<c:otherwise>
 								<div class="like col-md-3" style="width: 80px; height: 0px; padding-left: 0px; margin-top: 25px; padding-right: 0px; float: right;">
 									<div class="listing-item-container list-layout">
-										<span class="like-icon" id="like" onclick="like_clicked()"></span>
+										<span style="" class="like-icon" id="like" onclick="like_clicked()"></span>
 									</div>
 								</div>	
 							</c:otherwise>
 						</c:choose>						
 					</div>
-
-				<!-- rating -->
-				<div class="star-rating col-md-12 " data-rating="${dto.rating}" style="padding-left: 15px; padding-right: 15px; padding-top: 10px;padding-bottom: 10px;">
-					${dto.rating}
-				</div> 
-
+					
+					<!-- nickname, comment, likes.. -->
+					<div class="post-info col-md-12" style="padding-left: 15px;padding-right: 15px;">
+						<ul class="post-meta">
+							<c:if test="${dto.boardCategory=='1'}">
+								<li><a href="#">병원, 뷰티</a></li>
+							</c:if>
+							<c:if test="${dto.boardCategory=='2'}">
+								<li><a href="#">애견동반 식당, 카페</a></li>
+							</c:if>
+							
+								<li><i class="sl sl-icon-bubble"></i> ${numOfCmt}</li>
+								<li id="numOflike"><i class="sl sl-icon-heart"></i> ${dto.countLike}</li>
+								<li><i class="sl sl-icon-eye"></i> ${dto.readCount}</li>
+								<li><fmt:formatDate value = "${dto.regiDate}" pattern="YY/MM/dd hh:mm:ss"/></li>
+						</ul>
+					</div>
+					
+					<!-- rating -->
+					<div class="star-rating col-md-12 " data-rating="${dto.rating}" style="padding-left: 15px; padding-right: 15px; padding-top: 10px;padding-bottom: 10px;">
+						${dto.rating}
+					</div> 
+					
 				
-				
-				<!-- nickname, comment, likes.. -->
-				<div class="post-info col-md-12" style="padding-left: 15px;padding-right: 15px;">
-					<ul class="post-meta">
-						<c:if test="${dto.boardCategory=='1'}">
-							<li><a href="#">병원, 뷰티</a></li>
-						</c:if>
-						<c:if test="${dto.boardCategory=='2'}">
-							<li><a href="#">애견동반 식당, 카페</a></li>
-						</c:if>
-						
-							<li><i class="sl sl-icon-bubble"></i> ${numOfCmt}</li>
-							<li id="numOflike"><i class="sl sl-icon-heart"></i> ${dto.countLike}</li>
-							<li><i class="sl sl-icon-eye"></i> ${dto.readCount}</li>
-							<li><fmt:formatDate value = "${dto.regiDate}" pattern="YY/MM/dd hh:mm:ss"/></li>
-					</ul>
-				</div>
-
 				<!-- content -->
 				<div class = "content col-md-12" style="padding-bottom:15px">
 					<p>${dto.message}</p>
@@ -253,16 +255,15 @@
 				<!-- option -->
 	
 					<!-- back to list -->
-						<div class="list col-md-12">
-							<button type="button" class="button border margin-top-5" onclick="go_url(3, ${param.page})">back to list</button>
-						</div>
+					<div class="list col-md-5">
+						<button type="button" class="button border margin-top-5" onclick="go_url(3, ${param.page})">back to list</button>
+					</div>
 							
 					<!-- edit, delete -->
 					<c:if test="${member.nickname == dto.nickname}">
-						<div class="comment-by col-md-2" style="width: 135px;" align="right">
-							<div><a id="edit" onclick="go_url(1, ${param.page});" return false; class = "reply"><i class="sl sl-icon-note"></i>Edit</a></div>
-							<div><a id="delete" onclick="go_url(2, ${param.page});" return false; class = "reply" style="margin-top: 36px;""><i class="sl sl-icon-close"></i>Delete</a></div>
-							<!-- return false will prevent browser from following the link -->
+						<div class="col-md-5" align="right">
+							<button type="button" class="button border margin-top-5" onclick="go_url(1, ${param.page})"><i class="sl sl-icon-note"></i>Edit</button>
+							<button type="button" class="button border margin-top-5" onclick="go_url(2, ${param.page})"><i class="sl sl-icon-close"></i>Delete</button>
 						</div>					
 					</c:if>
 			
