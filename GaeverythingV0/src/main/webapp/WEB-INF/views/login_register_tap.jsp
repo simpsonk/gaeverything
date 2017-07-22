@@ -46,6 +46,7 @@
 						<label for="remember-me">Remember Me</label>
 					</div>
 				</div>
+				<input type="hidden" name ="uri" value=" ${param.uri}">
 			</form>
 		</div>
 
@@ -89,7 +90,7 @@
 						<i class="im im-icon-Lock-2"></i>	
 						<input class="input-text" type="password"  name="pw1" id="password2" onchange="javascript:checkPwd();"/>							
 					</label>		
-					
+				
 				</p>
 				<input type="button" class="button border fw margin-top-10" id="register" name="register" value="Register" />
 			</form>
