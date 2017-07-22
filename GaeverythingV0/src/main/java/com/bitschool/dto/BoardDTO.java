@@ -174,6 +174,18 @@ public class BoardDTO {
 
 
 
+	@Override
+	public String toString() {
+		return "BoardDTO [boardCategory=" + boardCategory + ", boardNo=" + boardNo + ", nickname=" + nickname
+				+ ", title=" + title + ", rating=" + rating + ", countLike=" + countLike + ", message=" + message
+				+ ", onlyText=" + onlyText + ", uploadImg=" + uploadImg + ", regiDate=" + regiDate + ", readCount="
+				+ readCount + ", groupNo=" + groupNo + ", parentNo=" + parentNo + ", orderNo=" + orderNo + ", depth="
+				+ depth + ", numOfCmt=" + numOfCmt + ", address=" + address + ", encodeUTF=" + encodeUTF + "]";
+	}
+
+
+
+
 	
 	
 	

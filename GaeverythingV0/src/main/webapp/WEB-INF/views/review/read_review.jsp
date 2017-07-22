@@ -36,9 +36,10 @@
 	
 	function go_url(type, page){
 		var data = document.getElementById("postData");
+		var boardNo = document.getElementById("boardNo").value;
 		var url = "/review/viewReviewList?page="+page;
 		if(type == 1){
-			url = "/review/clickModify?page="+page;
+			url = "/review/clickModify?page="+page+"&boardNo="+boardNo;
 		}else if(type == 2){
 			var check = confirm("삭제된 게시글은 복구가 불가능합니다. 삭제하시겠습니까?")
 			if(check == true){
@@ -191,17 +192,44 @@
 					<input type = "hidden" id= "boardNo" name = "boardNo" value="${dto.boardNo}" readonly="readonly"><br>
 				
 				<!-- title -->	
-				<div class="title col-md-12">
-					<h3>${dto.title}</h3> 
+				<div class="title col-md-8">
+					<h3>${dto.title} 
+						<c:if test="${dto.boardCategory=='1'}">
+							<span class = "listing-tag">Hospital</span>
+						</c:if>
+					</h3>
 				</div>	
 				
+				
+				<div class="optin button col-md-4">
+						<!-- Like -->
+						<c:choose>
+							<c:when test="${member.nickname == null }">
+								<div class="like col-md-3" style="width: 80px; height: 0px; padding-left: 0px; margin-top: 25px; padding-right: 0px ; float: right;">
+									<div class="listing-item-container list-layout">
+										<span class="like-icon" id="like" onclick="no_login_like(${param.page})"></span>
+									</div>
+								</div>	
+							</c:when>
+							<c:otherwise>
+								<div class="like col-md-3" style="width: 80px; height: 0px; padding-left: 0px; margin-top: 25px; padding-right: 0px; float: right;">
+									<div class="listing-item-container list-layout">
+										<span class="like-icon" id="like" onclick="like_clicked()"></span>
+									</div>
+								</div>	
+							</c:otherwise>
+						</c:choose>						
+					</div>
+
 				<!-- rating -->
 				<div class="star-rating col-md-12 " data-rating="${dto.rating}" style="padding-left: 15px; padding-right: 15px; padding-top: 10px;padding-bottom: 10px;">
 					${dto.rating}
 				</div> 
+
+				
 				
 				<!-- nickname, comment, likes.. -->
-				<div class="post-info" style="padding-left: 15px;padding-right: 15px;">
+				<div class="post-info col-md-12" style="padding-left: 15px;padding-right: 15px;">
 					<ul class="post-meta">
 						<c:if test="${dto.boardCategory=='1'}">
 							<li><a href="#">병원, 뷰티</a></li>
@@ -215,7 +243,7 @@
 							<li><i class="sl sl-icon-eye"></i> ${dto.readCount}</li>
 							<li><fmt:formatDate value = "${dto.regiDate}" pattern="YY/MM/dd hh:mm:ss"/></li>
 					</ul>
-				</div>	
+				</div>
 
 				<!-- content -->
 				<div class = "content col-md-12" style="padding-bottom:15px">
@@ -223,45 +251,21 @@
 				</div>
 				
 				<!-- option -->
-				<div class="row">
-				<div class="optin button col-md-10">
-					<!-- Like -->
-					<c:choose>
-						<c:when test="${member.nickname == null }">
-							<div class="like col-md-3" style="width: 80px; height: 0px; padding-left: 0px; margin-top: 25px; padding-right: 0px;">
-								<div class="listing-item-container list-layout">
-									<span class="like-icon" id="like" onclick="no_login_like(${param.page})"></span>
-								</div>
-							</div>	
-						</c:when>
-						<c:otherwise>
-							<div class="like col-md-3" style="width: 80px; height: 0px; padding-left: 0px; margin-top: 25px; padding-right: 0px;">
-								<div class="listing-item-container list-layout">
-									<span class="like-icon" id="like" onclick="like_clicked()"></span>
-								</div>
-							</div>	
-						</c:otherwise>
-					</c:choose>
-					
+	
 					<!-- back to list -->
-					<div class="list col-md-8">
+						<div class="list col-md-12">
 							<button type="button" class="button border margin-top-5" onclick="go_url(3, ${param.page})">back to list</button>
 						</div>
-						
-					<!-- edit, delete -->
-					
-					
-				</div>
-				
-				<c:if test="${member.nickname == dto.nickname}">
-						<div class="comment-by col-md-2" style="width: 135px;" align="right">
-							<div><a id="edit" href="#" onclick="go_url(1, ${param.page});" return false; class = "reply"><i class="sl sl-icon-note"></i>Edit</a></div>
-							<div><a id="delete" href="#" onclick="go_url(2, ${param.page});" return false; class = "reply" style="margin-top: 36px;""><i class="sl sl-icon-close"></i>Delete</a></div>
 							
+					<!-- edit, delete -->
+					<c:if test="${member.nickname == dto.nickname}">
+						<div class="comment-by col-md-2" style="width: 135px;" align="right">
+							<div><a id="edit" onclick="go_url(1, ${param.page});" return false; class = "reply"><i class="sl sl-icon-note"></i>Edit</a></div>
+							<div><a id="delete" onclick="go_url(2, ${param.page});" return false; class = "reply" style="margin-top: 36px;""><i class="sl sl-icon-close"></i>Delete</a></div>
 							<!-- return false will prevent browser from following the link -->
 						</div>					
 					</c:if>
-				</div>	
+			
 				<div class="clearfix"></div>
 			
 			</div> <!-- Content ends-->
@@ -290,6 +294,46 @@
 		<!-- 작성자프로필, 코멘트 사이 공백 -->
 		<div class="margin-top-50"></div>
 
+
+				<!-- Add Comment -->
+		<div id="add-review" class="add-review-box" style="margin-top: 0px;">
+
+			<!-- Review Comment -->
+			<form action="" method="post" id="newComment" class="add-comment">
+				<input type="hidden" name = "boardNo" id = "boardNo" value = "${dto.boardNo}">
+				
+				<!-- commentbox -->
+				<h3 class="listing-desc-headline margin-bottom-35">Add Comment</h3>
+					<div class="about-author2"">	
+						<input type="hidden" name="userId" value="${member.email}">	
+						<input type="hidden" name="nicknameCmt" id="memberNickname" value="${member.nickname}">
+					</div>
+
+				<fieldset>
+					<div>
+						<label>Comment:</label>
+						<c:choose>
+							<c:when test="${member.nickname == null}">
+								<textarea cols="40" rows="3" name="commentBody" onclick="box_clicked(${param.page})" placeholder="로그인 후 댓글작성이 가능합니다."></textarea>
+							</c:when>
+							<c:otherwise>
+								<textarea cols="40" rows="3" name="commentBody" placeholder="댓글을 작성해주세요 :)"></textarea>
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</fieldset>
+				<div class="clearfix col-md-9" style="margin-right: 26px;"></div>
+				<div class ="submit-cmt">
+					<button class="button" onclick="add_cmt(${param.page})">Submit Comment</button>
+				</div>
+				
+				<div class="clearfix"></div>
+				
+			</form>
+		</div>
+		<!-- Add Review Box / End -->
+		
+		
 		<!-- comments -->
 		<section class="comments">
 			
@@ -337,49 +381,6 @@
 		</section>
 			
 		<div class="clearfix"></div>
-		
-		<!-- Add Comment -->
-		<div id="add-review" class="add-review-box">
-
-			<!-- Review Comment -->
-			<form action="" method="post" id="newComment" class="add-comment">
-				<input type="hidden" name = "boardNo" id = "boardNo" value = "${dto.boardNo}">
-				
-				<!-- commentbox -->
-				<h3 class="listing-desc-headline margin-bottom-35">Add Comment</h3>
-					<div class="about-author2" style="height: 80px; margin-bottom: 10px;">	
-						<img src="/resources/upload/bom.jpg" alt="" style="margin-top:5px; margin-right:5px;margin-bottom: 5px;">
-						<input type="hidden" name="userId" value="${member.email}">	
-						<input type="hidden" name="nicknameCmt" id="memberNickname" value="${member.nickname}">
-						<div class="nickname col-md-3" style="padding-left: 10px;padding-right: 10px;margin-top: 28px;">
-							${member.nickname}
-						</div>
-					</div>
-
-				<fieldset>
-					<div>
-						<label>Comment:</label>
-							<c:choose>
-								<c:when test="${member.nickname == null}">
-									<textarea cols="40" rows="3" name="commentBody" onclick="box_clicked(${param.page})" placeholder="로그인 후 댓글작성이 가능합니다."></textarea>
-								</c:when>
-								<c:otherwise>
-									<textarea cols="40" rows="3" name="commentBody" placeholder="댓글을 작성해주세요 :)"></textarea>
-								</c:otherwise>
-							</c:choose>
-					</div>
-				</fieldset>
-				<div class="clearfix col-md-9" style="margin-right: 26px;"></div>
-				<div class ="submit-cmt">
-					<button class="button" onclick="add_cmt(${param.page})">Submit Comment</button>
-				</div>
-				
-				<div class="clearfix"></div>
-				
-			</form>
-
-			</div>
-			<!-- Add Review Box / End -->
 			
 			<!-- Post Navigation -->
 			<ul id="posts-nav" class="margin-top-0 margin-bottom-45">
@@ -592,41 +593,5 @@
 		src="<c:url value = '/resources/scripts/tooltips.min.js'/>"></script>
 	<script type="text/javascript"
 		src="<c:url value = '/resources/scripts/custom.js'/>"></script>
-
-
-	<!-- Style Switcher
-================================================== -->
-	<script src="<c:url value = '/resources/scripts/switcher.js'/>"></script>
-
-
-	<div id="style-switcher">
-		<h2>
-			Color Switcher <a href="#"><i class="sl sl-icon-settings"></i></a>
-		</h2>
-
-		<div>
-			<ul class="colors" id="color1">
-				<li><a href="#" class="main" title="Main"></a></li>
-				<li><a href="#" class="blue" title="Blue"></a></li>
-				<li><a href="#" class="green" title="Green"></a></li>
-				<li><a href="#" class="orange" title="Orange"></a></li>
-				<li><a href="#" class="navy" title="Navy"></a></li>
-				<li><a href="#" class="yellow" title="Yellow"></a></li>
-				<li><a href="#" class="peach" title="Peach"></a></li>
-				<li><a href="#" class="beige" title="Beige"></a></li>
-				<li><a href="#" class="purple" title="Purple"></a></li>
-				<li><a href="#" class="celadon" title="Celadon"></a></li>
-				<li><a href="#" class="red" title="Red"></a></li>
-				<li><a href="#" class="brown" title="Brown"></a></li>
-				<li><a href="#" class="cherry" title="Cherry"></a></li>
-				<li><a href="#" class="cyan" title="Cyan"></a></li>
-				<li><a href="#" class="gray" title="Gray"></a></li>
-				<li><a href="#" class="olive" title="Olive"></a></li>
-			</ul>
-		</div>
-
-	</div>
-	<!-- Style Switcher / End -->
-
 </body>
 </html>		

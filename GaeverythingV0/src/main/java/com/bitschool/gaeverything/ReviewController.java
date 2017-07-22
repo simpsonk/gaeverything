@@ -48,6 +48,9 @@ public class ReviewController {
 	@RequestMapping(value = "/viewReviewList", method = {RequestMethod.GET, RequestMethod.POST})
 	public String viewReviewList(Model model, HttpSession session, @RequestParam(value="page", defaultValue="1") int page){
 		
+		//로그인 유지
+		boolean islogin = new LoginFilter().isLogin(session, model);
+
 		//페이지 리스트
 		int amount = 5;
 		PageDTO pDTO = new PageDTO(page, amount);
@@ -57,10 +60,6 @@ public class ReviewController {
 		//게시물 리스트
 		List<BoardDTO> list = service.getPagedList(pDTO); 
 		model.addAttribute("page", page);
-			
-		//로그인 유지
-		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		model.addAttribute("member", member);
 		
 		//댓글수 받기
 		int countCmts = 0;
@@ -76,15 +75,15 @@ public class ReviewController {
 	
 	@RequestMapping(value = "/viewReviewRegist", method = {RequestMethod.GET, RequestMethod.POST})
 	public String viewReviewRegist(HttpSession session, Model model){
-		String url = "review/review_regist";
 		boolean isLogin = new LoginFilter().isLogin(session, model);
+		String url = "review/review_regist";
 		return url;
 	}
 	
-	@RequestMapping(value = "/newPost", method={RequestMethod.POST,RequestMethod.GET })
-	public String newPost(BoardDTO dto, ReviewFileBean filebean, HttpServletRequest request, Model model,
-						  @RequestParam("boardCategory") String boardCategory){
+	@RequestMapping(value = "/newPost", method={RequestMethod.POST, RequestMethod.GET})
+	public String newPost(BoardDTO dto){
 		String url = null;
+		System.out.println(dto);
 		System.out.println("글쓴이>>> " + dto.getNickname());
 		boolean flag = service.insertPost(dto);
 		if(flag){
@@ -130,14 +129,15 @@ public class ReviewController {
 	public String readPost(@RequestParam("boardNo") int boardNo, 
 						   HttpSession session,
 						   Model model){
+		boolean isLogin = new LoginFilter().isLogin(session, model);
 		String url = null;
+		
 		System.out.println("read post ");
 		
 		BoardDTO dto = service.selectToRead(boardNo);
 		List<CommentDTO> cList = cService.getAllComment(boardNo);
 		int numOfCmt = cService.countCmt(boardNo);
 
-		boolean isLogin = new LoginFilter().isLogin(session, model);
 
 		model.addAttribute("numOfCmt", numOfCmt);
 		model.addAttribute("dto", dto);
@@ -149,8 +149,9 @@ public class ReviewController {
 		return url;
 	}
 	
-	@RequestMapping(value="/clickModify", method=RequestMethod.POST)
-	public String clickModify(@RequestParam("boardNo") int boardNo, Model model){
+	@RequestMapping(value="/clickModify", method={RequestMethod.POST, RequestMethod.GET})
+	public String clickModify(@RequestParam("boardNo") int boardNo, Model model, HttpSession session){
+		boolean isLogin = new LoginFilter().isLogin(session, model);
 		BoardDTO dto = service.selectToRead(boardNo);
 		model.addAttribute("dto", dto);
 		String url = "review/review_regist";
@@ -160,6 +161,7 @@ public class ReviewController {
 	@RequestMapping(value = "/modify", method=RequestMethod.POST)
 	public String modify(BoardDTO dto, Model model, @RequestParam("page") int page){
 		System.out.println("modify controller");
+		System.out.println("check:"+dto);
 		String url = null;
 		boolean flag = service.updatePost(dto);
 		System.out.println("dao result: "+ flag);

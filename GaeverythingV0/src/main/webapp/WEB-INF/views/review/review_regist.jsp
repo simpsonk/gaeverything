@@ -68,15 +68,12 @@
 	
 	<!-- Post Content -->
 	<div class="col-lg-9 col-md-8" style="padding-left:20px; padding-right:20px;">
-		<form action="" method="post" id="reviewData" name="reviewForm">
+		<form action="" method="post" id="postData">
 			<!-- Blog Post -->
 			<div class="blog-post">
-				
+					<input type="hidden" name = "boardNo" value = "${dto.boardNo}">
 					<!-- writer -->
-					<div class="about-author2 col-md-12">	
-						<img src="/resources/images/dashboard-avatar.jpg" alt="">
-						<input type="hidden" name="nickname" id="nickname" value="${member.nickname}">${member.nickname}
-					</div>
+					
 							
 					<!-- category -->		
 					<div class="review-category col-md-4">
@@ -105,58 +102,39 @@
 									
 					<!-- rating -->
 						<div class = "rating col-md-12" style="padding-bottom: 10px;">	
-							<h4>Rating</h4>	
+							<h4>Rating</h4>							
 								
-								<div class="leave-rating margin-bottom-30">
-									<input type="radio" name="rating" id="rating-0.5" value="0.5" ${dto.rating== '0.5'?'checked="checked"':''}/>
-									<label for="rating-0.5" class="fa fa-star-half"></label>
-									<input type="radio" name="rating" id="rating-1" value="1" ${dto.rating== '1'?'checked="checked"':''}/>
-									<label for="rating-1" class="fa fa-star"></label>
-									<input type="radio" name="rating" id="rating-1.5" value="1.5" ${dto.rating== '1.5'?'checked="checked"':''}/>
-									<label for="rating-1.5" class="fa fa-star-half"></label>
-									<input type="radio" name="rating" id="rating-2" value="2" ${dto.rating== '2'?'checked="checked"':''}/>
-									<label for="rating-2" class="fa fa-star"></label>
-									<input type="radio" name="rating" id="rating-2.5" value="2.5" ${dto.rating== '2.5'?'checked="checked"':''}/>
-									<label for="rating-2.5" class="fa fa-star-half"></label>
-									<input type="radio" name="rating" id="rating-3" value="3"/>
-									<label for="rating-3" class="fa fa-star"></label>
-									<input type="radio" name="rating" id="rating-3.5" value="3.5"/>
-									<label for="rating-3.5" class="fa fa-star-half"></label>
-									<input type="radio" name="rating" id="rating-4" value="4"/>
-									<label for="rating-4" class="fa fa-star"></label>
-									<input type="radio" name="rating" id="rating-4.5" value="4.5"/>
-									<label for="rating-4.5" class="fa fa-star-half"></label>
-									<input type="radio" name="rating" id="rating-5" value="5"/>
-									<label for="rating-5" class="fa fa-star"></label>
-								</div>
-								
-								
-								
-	<!-- 							<fieldset class="rating" id="rating">
-								
-	   								<input type="radio" id="star5" name="rating" value="5" />
-	   								<label class = "full" for="star5" title="강!력!추천!"></label>
-	    							<input type="radio" id="star4half" name="rating" value="4.5" />
-	    							<label class="half" for="star4half" title="추천합니다!"></label>
-	   								<input type="radio" id="star4" name="rating" value="4" />
-	   								<label class ="full" for="star4" title="좋아요!"></label>
-	    							<input type="radio" id="star3half" name="rating" value="3.5" />
-	    							<label class="half" for="star3half" title="괜찮아요"></label>
-	    							<input type="radio" id="star3" name="rating" value="3" />
-	    							<label class = "full" for="star3" title="보통 쏘쏘"></label>
-	    							<input type="radio" id="star2half" name="rating" value="2.5" />
-	    							<label class="half" for="star2half" title="그저 그래요"></label>
-	   		 						<input type="radio" id="star2" name="rating" value="2" />
-	   		 						<label class = "full" for="star2" title="별로예요"></label>
-	    							<input type="radio" id="star1half" name="rating" value="1.5" />
-	    							<label class="half" for="star1half" title="추천하지않아요"></label>
-	    							<input type="radio" id="star1" name="rating" value="1" />
-	    							<label class = "full" for="star1" title="비추천"></label>
-	    							<input type="radio" id="starhalf" name="rating" value="0.5" />
-	    							<label class="half" for="starhalf" title="댓츠노노"></label>
-	    						
-								</fieldset>
-	 -->							
+							<fieldset class="rating">
+  								<input type="radio" id="star5" name="rating" value="5" ${dto.rating== '5'?'checked="checked"':''} />
+  								<label class = "full" for="star5" title="Awesome - 5 stars"></label>
+	  								
+	   							<input type="radio" id="star4half" name="rating" value="4.5" ${dto.rating== '4.5'?'checked="checked"':''}/>
+	   							<label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+   							
+  								<input type="radio" id="star4" name="rating" value="4"  ${dto.rating== '4'?'checked="checked"':''}/>
+  								<label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+	  								
+	   							<input type="radio" id="star3half" name="rating" value="3.5" ${dto.rating== '3.5'?'checked="checked"':''}/>
+	   							<label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+	   							
+	   							<input type="radio" id="star3" name="rating" value="3" ${dto.rating== '3'?'checked="checked"':''}/>
+	   							<label class = "full" for="star3" title="Meh - 3 stars"></label>
+	   							
+	   							<input type="radio" id="star2half" name="rating" value="2.5" ${dto.rating== '2.5'?'checked="checked"':''}/>
+	   							<label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+	   							
+  		 						<input type="radio" id="star2" name="rating" value="2" ${dto.rating== '2'?'checked="checked"':''}/>
+  		 						<label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+	  		 						
+	   							<input type="radio" id="star1half" name="rating" value="1.5" ${dto.rating== '1.5'?'checked="checked"':''}/>
+	   							<label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+	   							
+	   							<input type="radio" id="star1" name="rating" value="1" ${dto.rating== '1'?'checked="checked"':''}/>
+	   							<label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+	   							
+	   							<input type="radio" id="starhalf" name="rating" value="0.5" ${dto.rating== '0.5'?'checked="checked"':''}/>
+	   							<label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+							</fieldset>						
 						</div>
 	
 						<!-- content -->
@@ -165,7 +143,7 @@
 							<textarea name="message" id="editor1">${dto.message}</textarea>		
 							<script type="text/javascript">
 								CKEDITOR.replace('editor1',{
-									filebrowserImageUploadUrl : '/review/fileUpload'
+									filebrowserImageUploadUrl :'/review/fileUpload'
 								});
 								
 								CKEDITOR.on('dialogDefinition', function (ev) {
@@ -187,15 +165,15 @@
 							<c:when test="${empty dto}">
 								<!-- publish -->	
 								<div class="button col-md-12"> 
-									<button type="button" class="button border margin-top-5" id="publish" onclick="insert_review()" style="margin-left: 15px;">publish</button>
+									<button type="button" class="button border margin-top-5" onclick="go_url(2)" style="margin-left: 15px;">publish</button>
 								</div>
 							</c:when>
 							
 							<c:otherwise>
 								<!-- modify button -->
 								<div class="button col-md-12"> 	
-									<button type="button" id="edit" class="button border margin-top-5" onclick="go_url(1, ${param.page})" >save</button>
-									<button type="button" class="button border margin-top-5" onclick="go_url(2)">back to list</button>
+									<button type="button" class="button border margin-top-5" onclick="go_url(1, ${param.page})" >save</button>
+									<button type="button" class="button border margin-top-5" onclick="go_url(0)">back to list</button>
 								</div>
 							</c:otherwise>
 						</c:choose>
@@ -372,67 +350,61 @@
 ================================================== -->
 
 
-	<script type="text/javascript">
-	
-		function insert_review(){	
-			
-/* 			var file = document.getElementById("upload").value;
-			
-			alert(file);
- */			//카테고리, 제목, 장소, 별점, 내용
-			//var category = document.getElementById("category").value;
-			var title = document.getElementById("title").value;
-			var rating = $('input[name="rating"]:checked').val();
-			var content = CKEDITOR.instances.editor1.getData();
-			var text = CKEDITOR.instances.editor1.document.getBody().getText();
-			//alert('글내용::' + text);
-			document.getElementById("onlyText").value = text;
-			//alert(rating);
-			/* if(category ===''){
-				alert("카테고리를 선택해주세요.")
-			} */
-			
-			
-			
-			if(title === ''){
-				alert("제목을 입력하세요.");
-			}
-			
-			if(rating == null){
-				alert("별점을 입력해 주세요.");
-			}
-			
-			if (content ===''){
-				alert("내용을 입력해주세요.");
-			}
-			
-			if((title!='')&&(rating!=null)&&(content!='')){
-				//alert(rating);
-				var check = confirm("작성한 게시글을 등록하시겠습니까?");
-				if(check == true){
-					alert("게시글이 등록되었습니다.");
-					reviewData.action = "/review/newPost";
-					reviewData.submit();
-				}else{
-					alert("등록이 취소되었습니다.");
-				}
-			}
-		}
-		
+	<script type="text/javascript">		
 		
 		function go_url(type, page){
 			var data = document.getElementById("postData");
 			var url = "/review/viewReviewList";
+			var text = CKEDITOR.instances.editor1.document.getBody().getText();
+			document.getElementById("onlyText").value = text;
+
 			if(type == 1){
 				var check = confirm("게시물을 수정하시겠습니까?")
 				if(check==true){
 					alert("게시물이 수정되었습니다.");
 					url = "/review/modify?page="+page;
-				}else{
+				}else {
 					alert("수정이 취소되었습니다.");
 					return;
 				}
 				
+			}else if(type == 2){
+				/* 			var file = document.getElementById("upload").value;
+				
+				alert(file);
+	 */			//카테고리, 제목, 장소, 별점, 내용
+				//var category = document.getElementById("category").value;
+				var title = document.getElementById("title").value;
+				var rating = $('input[name="rating"]:checked').val();
+				var content = CKEDITOR.instances.editor1.getData();
+				//alert('글내용::' + text);
+				//alert(rating);
+				/* if(category ===''){
+					alert("카테고리를 선택해주세요.")
+				} */
+
+				if(title === ''){
+					alert("제목을 입력하세요.");
+				}
+				
+				if(rating == null){
+					alert("별점을 입력해 주세요.");
+				}
+				
+				if (content ===''){
+					alert("내용을 입력해주세요.");
+				}
+				
+				if((title!='')&&(rating!=null)&&(content!='')){
+					var check = confirm("작성한 게시글을 등록하시겠습니까?");
+					if(check == true){
+						alert("게시글이 등록되었습니다.");
+						url = "/review/newPost";
+					}else{
+						alert("등록이 취소되었습니다.");
+						return;
+					}
+				}
 			}
 			data.action = url;
 			data.submit();
