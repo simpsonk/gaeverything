@@ -1,6 +1,7 @@
 package com.bitschool.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -36,5 +37,20 @@ public class LocationDetailDAO {
 		}
 		return flag;
 	}	
+
+	// 디테일페이지 댓글 리스팅 
+	public List<DetailCommentDTO> commentList(int locseq) throws SQLException{
+		// TODO Auto-generated method stub
+		List<DetailCommentDTO> dto = null;
+		dto = session.selectList(namespace+".commentList",locseq);
+		return dto;
+	}
+
+/*	// 닉네임으로 포토 불러오기 
+	public String getPhoto(String nickname) throws SQLException{
+		String photo = null;
+		photo = session.selectOne(namespace+".getPhoto",nickname);
+		return photo;
+	}*/
 
 }

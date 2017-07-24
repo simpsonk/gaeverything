@@ -1,5 +1,7 @@
 package com.bitschool.gaeverything;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -26,9 +28,12 @@ public class LocationDetailController {
 	public String viewDetailPage(HttpServletRequest request, @RequestParam(value="locationSeq") int locationSeq,
 			Model model){
 		String url = "map/map_detailpage";
-		LocationDTO dto = new LocationDTO();
-		dto = service.selectOne(locationSeq);
-		model.addAttribute("detail", dto);		
+		LocationDTO dto = new LocationDTO();	
+		dto = service.selectOne(locationSeq);		
+		List<DetailCommentDTO> list = service.commentList(locationSeq);		
+		model.addAttribute("commentlist",list);
+		model.addAttribute("detail", dto);	
+		System.out.println("´ñ±Û ¸®½ºÆ® : "+list);
 		System.out.println("detail : "+dto);
 		return url;
 	}
@@ -41,6 +46,7 @@ public class LocationDetailController {
 		System.out.println("addComment·Î µé¾î¿È");
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		dto.setNickname(member.getNickname());
+		dto.setPhoto(member.getPhoto());
 		System.out.println("dto : "+dto);
 		boolean flag = service.commentAdd(dto);
 		if(flag){
@@ -51,5 +57,5 @@ public class LocationDetailController {
 		return url;
 	}
 	
-	
+
 }
