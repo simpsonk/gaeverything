@@ -40,4 +40,6 @@ public class LocationDAO {
 		list = session.selectList(namespace+".selectLocation", info);
 		return list;
 	}
+	
+
 }

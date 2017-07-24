@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bitschool.bootstrap.LocationDetailMapper">
+	
+	<!-- locationSeq로 한 장소의 DTO 받아오기 -->
+	<select id="selectOne" parameterType="Integer" resultType="LocationDTO">
+		select * from location 
+		where locationseq = #{locationSeq} 
+	</select>
+	
+	<!-- 디테일페이지 댓글 작성 -->
+	<insert id="commentAdd" parameterType="DetailCommentDTO">
+		<selectKey resultType="Integer" order="BEFORE" keyProperty="commentSeq">
+			select comment_seq.nextval from dual
+		</selectKey>
+		insert into detailcomment (locationseq,commentseq,nickname,message,rating) 
+		values(#{locationSeq},#{commentSeq},#{nickname},#{message},#{rating})
+	</insert>
+
+</mapper>

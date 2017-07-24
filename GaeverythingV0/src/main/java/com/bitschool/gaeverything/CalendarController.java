@@ -71,19 +71,14 @@ public class CalendarController {
 			 @RequestParam(value="dogid",defaultValue="1") int dogid,
 			 HttpSession session, Model model){
 		String url = null;
-		System.out.println(dto);
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		model.addAttribute("member", member);
 		dto.setId(member.getEmail());
-		System.out.println(dto);
 		boolean flag = service.registCalendar(dto);
 		System.out.println(dto.getId());
 		
 		if(flag){
 			url = "redirect:/mypage/calendar/viewCalendar";
-			System.out.println(dto.toString());
-			System.out.println(dto.getStart());
-			System.out.println(dto.getEnd());
 		}
 		return url;
 	}

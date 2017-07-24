@@ -47,7 +47,7 @@
 			<!-- Titlebar -->
 			<div id="titlebar" class="listing-titlebar " style="padding-bottom: 30px;">
 				<div class="listing-titlebar-title">
-					<h2>Burger House <span class="listing-tag">Eat & Drink</span></h2>
+					<h2>${detail.title} <span class="listing-tag"> Hospital </span></h2>
 					<div>
 						<span>average rating: 0 (0)</span><span style="margin-left: 20px;">12 Reviews</span><span style="margin-left: 20px;">159 people bookmarked this place</span>
 					</div>					
@@ -64,12 +64,15 @@
 					<span style="font-size: 16px;">
 						<a href="#location" class="listing-address">
 							<i class="fa fa-map-marker"></i>
-							2726 Shinn Street, New York
+							${detail.address}
 						</a>
 					</span>
 				</div>
 				<div style="padding-bottom: 30px; padding-left: 30px;">
-					<span><i class="fa fa-phone"></i></span>			
+					<span>
+						<i class="fa fa-phone"></i>
+						${detail.phone}
+					</span>			
 				</div>			
 			</div>
 						
@@ -121,9 +124,12 @@
 
 		
 			<!-- Location -->
+			<input type="hidden" id="longitude" value="${detail.longitude}">
+			<input type="hidden" id="latitude" value="${detail.latitude}">
+			
 			<div id="Location" class="listing-section">
 				<h3 class="listing-desc-headline margin-top-60 margin-bottom-30">Location</h3>
-
+	
 				<div id="singleListingMap-container" align="center">
 					<div id="singleListingMap" style="width: 750px; "></div>
 				</div>
@@ -133,7 +139,6 @@
 			<div id="listing-reviews" class="listing-section">
 				<h3 class="listing-desc-headline margin-top-75 margin-bottom-20">Comment <span>(12)</span></h3>
 
-				<div class="clearfix"></div>
 				<!-- Add Review Box -->
 				<div id="add-review" class="add-review-box" style="margin-top: 0px;">
 	
@@ -143,10 +148,14 @@
 					<span class="leave-rating-title">Your rating for this listing</span>
 					
 					<!-- Rating / Upload Button -->
+					<form id="add-comment" action="/map/detail/addComment" class="add-comment" method="post">
+						<input type="hidden" id="locationSeq" name="locationSeq" value="${detail.locationSeq}">
+					
 					<div class="row">
 						<div class="col-md-6">
 							<!-- Leave Rating -->
 							<div class="clearfix"></div>
+											   		
 							<div class="leave-rating margin-bottom-30">
 								<input type="radio" name="rating" id="rating-1" value="1"/>
 								<label for="rating-1" class="fa fa-star"></label>
@@ -165,16 +174,15 @@
 					</div>
 		
 					<!-- Review Comment -->
-					<form id="add-comment" class="add-comment">
+					
 						<fieldset>
 							<div>
 								<label>Comment:</label>
-								<textarea cols="40" rows="3"></textarea>
+								<textarea name="message" cols="40" rows="3"></textarea>
 							</div>
 	
-						</fieldset>
-	
-						<button class="button">Submit Comment</button>
+						</fieldset>	
+						<input type="button" id="registComment" value="Submit Comment">
 						<div class="clearfix"></div>
 					</form>
 	
@@ -272,14 +280,35 @@
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=fa1e9654d15cae4c8c5f39d8b36f7984"></script>
 
 <script type="text/javascript">
+	var longitude = document.getElementById('longitude').value;
+	var latitude = document.getElementById('latitude').value;
+	
 	var mapContainer = document.getElementById('singleListingMap'), // 지도를 표시할 div
 		mapOption = { 
-			center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-			level: 4 // 지도의 확대 레벨
+			center: new daum.maps.LatLng(latitude, longitude), // 지도의 중심좌표
+			
+			level: 3 // 지도의 확대 레벨
 		};
 	
 	// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
 	var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+	
+	var markerPosition  = new daum.maps.LatLng(latitude, longitude); 
+		
+	    // 마커를 생성합니다
+	var marker = new daum.maps.Marker({
+		position: markerPosition
+	});
+	map.setCenter(new daum.maps.LatLng(latitude, longitude));
+	marker.setMap(map);
+	
+
+//댓글 등록 버튼 클릭시
+$('#registComment').click(function(){
+	$('#add-comment').submit();
+});
+	
+	
 </script>
 
 </body>

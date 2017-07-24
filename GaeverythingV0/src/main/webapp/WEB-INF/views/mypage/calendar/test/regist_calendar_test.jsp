@@ -47,7 +47,7 @@ function schedule(type){
 <header id="header-container" class="fixed fullwidth dashboard">
 
 	<!-- Header -->
-	<%@include file = "../../header.jsp" %>
+	<%-- <%@include file = "../../header.jsp" %> --%>
 	<!-- Header / End -->
 
 </header>
@@ -62,7 +62,7 @@ function schedule(type){
 	================================================== -->
 
 	<!-- Responsive Navigation Trigger -->
-	<%@include file= "../../navigation_triger.jsp" %>
+	<%-- <%@include file= "../../navigation_triger.jsp" %> --%>
 	<!-- Navigation / End -->
 
 
