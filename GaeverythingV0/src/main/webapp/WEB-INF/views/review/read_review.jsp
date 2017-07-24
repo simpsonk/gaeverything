@@ -194,7 +194,7 @@
 				<div class="post-content">
 					<input type = "hidden" name = "boardCategory" value = "병원,뷰티">
 					<input type = "hidden" id= "boardNo" name = "boardNo" value="${dto.boardNo}" readonly="readonly"><br>
-					<div id="titlebar" class="listing-titlebar  col-md-8" style="padding-top: 0px;padding-bottom: 0px;padding-left: 15px;">
+					<div id="titlebar" class="listing-titlebar  col-md-12" style="padding-top: 0px;padding-bottom: 0px;padding-left: 15px;">
 					<!-- title -->	
 						<div class="listing-titlebar-title">
 							<h3>${dto.title} 
@@ -204,25 +204,7 @@
 							</h3>
 						</div>	
 					</div>
-					<div class="optin button col-md-4">
-						<!-- Like -->
-						<c:choose>
-							<c:when test="${member.nickname == null }">
-								<div class="like col-md-3" style="width: 80px; height: 0px; padding-left: 0px; margin-top: 25px; padding-right: 0px ; float: right;">
-									<div class="listing-item-container list-layout">
-										<span class="like-icon" id="like" onclick="no_login_like(${param.page})"></span>
-									</div>
-								</div>	
-							</c:when>
-							<c:otherwise>
-								<div class="like col-md-3" style="width: 80px; height: 0px; padding-left: 0px; margin-top: 25px; padding-right: 0px; float: right;">
-									<div class="listing-item-container list-layout">
-										<span style="" class="like-icon" id="like" onclick="like_clicked()"></span>
-									</div>
-								</div>	
-							</c:otherwise>
-						</c:choose>						
-					</div>
+					
 					
 					<!-- nickname, comment, likes.. -->
 					<div class="post-info col-md-12" style="padding-left: 15px;padding-right: 15px;">
@@ -255,16 +237,36 @@
 				<!-- option -->
 	
 					<!-- back to list -->
-					<div class="list col-md-5">
-						<button type="button" class="button border margin-top-5" onclick="go_url(3, ${param.page})">back to list</button>
+					<div class="list col-md-2" style="margin-top: 5px;">
+						<button type="button" class="button border margin-top-5" onclick="go_url(3, ${param.page})" style="height: 48px;width: 125px;">back to list</button>
+					</div>
+					
+					<div class="optin button col-md-2" style="margin-top: 6px;">
+						<!-- Like -->
+						<c:choose>
+							<c:when test="${member.nickname == null }">
+								<div class="like col-md-3" style="width: 80px; height: 0px; padding-left: 0px; margin-top: 25px; padding-right: 0px ; float: right;">
+									<div class="listing-item-container list-layout">
+										<span class="like-icon" id="like" onclick="no_login_like(${param.page})"></span>
+									</div>
+								</div>	
+							</c:when>
+							<c:otherwise>
+								<div class="like col-md-3" style="width: 80px; height: 0px; padding-left: 0px; margin-top: 25px; padding-right: 0px; float: right;">
+									<div class="listing-item-container list-layout">
+										<span style="" class="like-icon" id="like" onclick="like_clicked()"></span>
+									</div>
+								</div>	
+							</c:otherwise>
+						</c:choose>						
 					</div>
 							
 					<!-- edit, delete -->
 					<c:if test="${member.nickname == dto.nickname}">
-						<div class="col-md-5" align="right">
-							<button type="button" class="button border margin-top-5" onclick="go_url(1, ${param.page})"><i class="sl sl-icon-note"></i>Edit</button>
-							<button type="button" class="button border margin-top-5" onclick="go_url(2, ${param.page})"><i class="sl sl-icon-close"></i>Delete</button>
-						</div>					
+						<div class="col-md-8 centered-content" >
+							<a onclick="go_url(1, ${param.page})" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-note"></i>Edit</a>
+							<a onclick="go_url(2, ${param.page})" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-close"></i>Delete</a>
+						</div>
 					</c:if>
 			
 				<div class="clearfix"></div>
