@@ -9,6 +9,7 @@ public class DetailCommentDTO {
 	private String message;
 	private double rating;
 	private Timestamp regiDate;
+	
 	public int getLocationSeq() {
 		return locationSeq;
 	}

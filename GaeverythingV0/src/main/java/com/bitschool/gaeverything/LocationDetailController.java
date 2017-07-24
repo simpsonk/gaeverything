@@ -36,16 +36,15 @@ public class LocationDetailController {
 	//´ñ±Û µî·Ï
 	@RequestMapping(value="/addComment",method=RequestMethod.POST)
 	public String addComment(HttpSession session,Model model,
-			@RequestParam(value="locationSeq") int locationSeq,DetailCommentDTO dto){
+			DetailCommentDTO dto){
 		String url = null;
 		System.out.println("addComment·Î µé¾î¿È");
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		dto.setLocationSeq(locationSeq);
 		dto.setNickname(member.getNickname());
 		System.out.println("dto : "+dto);
 		boolean flag = service.commentAdd(dto);
 		if(flag){
-			url = "redirect:viewDetailPage";
+			url = "redirect:viewDetailPage?locationSeq="+dto.getLocationSeq();
 			System.out.println("addComment ¼º°ø");
 			System.out.println("´ñ±Ûdto : "+dto);
 		}

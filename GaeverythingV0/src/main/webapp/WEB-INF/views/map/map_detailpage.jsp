@@ -149,7 +149,7 @@
 					
 					<!-- Rating / Upload Button -->
 					<form id="add-comment" action="/map/detail/addComment" class="add-comment" method="post">
-						<input type="hidden" id="locationSeq" name="locationSeq" value="${locationSeq}">
+						<input type="hidden" id="locationSeq" name="locationSeq" value="${detail.locationSeq}">
 					
 					<div class="row">
 						<div class="col-md-6">
