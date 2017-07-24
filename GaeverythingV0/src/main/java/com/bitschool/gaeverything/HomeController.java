@@ -72,6 +72,7 @@ public class HomeController {
 			HttpSession session, @RequestParam(value="uri", defaultValue="/") String uri){
 		String url = null;
 		boolean flag = logService.loginCheckService(email, pw);
+		System.out.println(flag+"/"+uri);
 		if(flag){
 			MemberDTO member = sigService.getMemberInfo(email);
 			url = "redirect:"+uri;
