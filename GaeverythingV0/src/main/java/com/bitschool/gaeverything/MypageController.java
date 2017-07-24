@@ -110,15 +110,14 @@ public class MypageController {
 			flag2 = service.updateMemData(dto); //memberDTO도 photo셋팅 해주기
 			flag3 = lservice.updatePhoto(member); //맵 디테일페이지에 photo 업데이트
 		}
+		member = sservice.getMemberInfo(email);
 		System.out.println("flag : "+flag+"flag2 : "+flag2+"flag3 : "+flag3);
 		System.out.println("MyPageDTO : "+dto);		
-		req.getSession().setAttribute("member", member);
 		System.out.println("MemberDTO : "+member);
 		if(flag){
 			url = "redirect:viewMypageProfile";	
 			model.addAttribute("member", member);
 			model.addAttribute("mypage", dto);
-
 		}
 		
 		return url;

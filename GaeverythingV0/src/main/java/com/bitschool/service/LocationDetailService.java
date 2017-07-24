@@ -69,5 +69,17 @@ public class LocationDetailService {
 		}
 		return flag;
 	}
+	
+	// 디테일페이지 댓글 수정  
+	public boolean commentEdit(DetailCommentDTO dto){
+		boolean flag = false;
+		try {
+			flag = dao.commentEdit(dto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return flag;
+	}
 
 }

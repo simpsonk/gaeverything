@@ -31,4 +31,12 @@
 		update detailcomment set photo = #{photo} 
 		where nickname = #{nickname}
 	</update>
+	
+	<!-- 디테일페이지 댓글 수정  -->
+	<update id="commentEdit" parameterType="DetailCommentDTO">
+		update detailcomment 
+		set message = #{message}, rating = #{rating} 
+		where commentseq = #{commentSeq}
+	</update>
+	
 </mapper>
