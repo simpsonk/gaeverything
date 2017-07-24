@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.bitschool.dto.DetailCommentDTO;
 import com.bitschool.dto.LocationDTO;
+import com.bitschool.dto.MemberDTO;
 @Repository
 public class LocationDetailDAO {
 	
@@ -46,11 +47,14 @@ public class LocationDetailDAO {
 		return dto;
 	}
 
-/*	// 닉네임으로 포토 불러오기 
-	public String getPhoto(String nickname) throws SQLException{
-		String photo = null;
-		photo = session.selectOne(namespace+".getPhoto",nickname);
-		return photo;
-	}*/
+	// 마이페이지에서 포토 수정시 댓글리스팅의 포토도 수정
+	public boolean updatePhoto(MemberDTO member) throws SQLException{
+		boolean flag = false;
+		int aCnt = session.update(namespace+".updatePhoto",member);
+		if(aCnt>0){
+			flag = true;
+		}
+		return flag;
+	}
 
 }

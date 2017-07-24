@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.bitschool.dao.LocationDetailDAO;
 import com.bitschool.dto.DetailCommentDTO;
 import com.bitschool.dto.LocationDTO;
+import com.bitschool.dto.MemberDTO;
 @Service
 public class LocationDetailService {
 
@@ -55,6 +56,18 @@ public class LocationDetailService {
 			e.printStackTrace();
 		}
 		return dto;
+	}
+	
+	// 마이페이지에서 포토 수정시 댓글리스팅의 포토도 수정
+	public boolean updatePhoto(MemberDTO member){
+		boolean flag = false;
+		try {
+			flag = dao.updatePhoto(member);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return flag;
 	}
 
 }

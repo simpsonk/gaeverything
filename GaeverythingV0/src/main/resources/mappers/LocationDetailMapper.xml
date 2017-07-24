@@ -26,9 +26,9 @@
 		order by commentSeq desc
 	</select>
 	
-	<!-- 닉네임으로 포토 불러오기 -->
-	<select id="getPhoto" parameterType="String" resultType="String">
-		select photo from mypage 
+	<!-- 마이페이지에서 포토 수정시 댓글리스팅의 포토도 수정-->
+	<update id="updatePhoto" parameterType="MemberDTO">
+		update detailcomment set photo = #{photo} 
 		where nickname = #{nickname}
-	</select>
+	</update>
 </mapper>
