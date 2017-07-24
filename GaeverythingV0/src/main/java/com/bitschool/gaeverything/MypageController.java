@@ -10,25 +10,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
+
 
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.dto.MyPageDTO;
 import com.bitschool.dto.PetPageDTO;
+import com.bitschool.service.LocationDetailService;
 import com.bitschool.service.MyPageService;
 import com.bitschool.service.PetPageService;
 import com.bitschool.service.SignUpService;
-import com.bitschool.utils.Email;
-import com.bitschool.utils.EmailSender;
+
 
 
 @RequestMapping(value = "mypage")
@@ -44,7 +44,8 @@ public class MypageController {
 	@Inject
 	private PetPageService pservice;
 	
-
+	@Inject
+	private LocationDetailService lservice;
 	   
 	   
 
@@ -100,16 +101,17 @@ public class MypageController {
 		}
 		boolean flag = false;
 		boolean flag2 = false;
+		boolean flag3 = false;		
+		MemberDTO member = sservice.getMemberInfo(email);
 		if(photos.equals("")){//새로운 사진 선택 안할 경우
 			flag = service.updateData2(dto);
 		}else{//새로 입력한 포토로 셋팅
 			flag = service.updateData(dto);
 			flag2 = service.updateMemData(dto); //memberDTO도 photo셋팅 해주기
+			flag3 = lservice.updatePhoto(member); //맵 디테일페이지에 photo 업데이트
 		}
-		System.out.println("flag : "+flag);
-		System.out.println("flag2 : "+flag2);
-		System.out.println("MyPageDTO : "+dto);
-		MemberDTO member = sservice.getMemberInfo(email);
+		System.out.println("flag : "+flag+"flag2 : "+flag2+"flag3 : "+flag3);
+		System.out.println("MyPageDTO : "+dto);		
 		req.getSession().setAttribute("member", member);
 		System.out.println("MemberDTO : "+member);
 		if(flag){

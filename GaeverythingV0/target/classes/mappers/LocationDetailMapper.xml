@@ -15,8 +15,20 @@
 		<selectKey resultType="Integer" order="BEFORE" keyProperty="commentSeq">
 			select comment_seq.nextval from dual
 		</selectKey>
-		insert into detailcomment (locationseq,commentseq,nickname,message,rating) 
-		values(#{locationSeq},#{commentSeq},#{nickname},#{message},#{rating})
+		insert into detailcomment (locationseq,commentseq,nickname,message,rating,photo) 
+		values(#{locationSeq},#{commentSeq},#{nickname},#{message},#{rating},#{photo})
 	</insert>
 
+	<!-- 디테일페이지 댓글 리스팅 -->
+	<select id="commentList" parameterType="Integer" resultType="DetailCommentDTO">
+		select * from detailcomment 
+		where locationSeq = #{locationSeq} 
+		order by commentSeq desc
+	</select>
+	
+	<!-- 마이페이지에서 포토 수정시 댓글리스팅의 포토도 수정-->
+	<update id="updatePhoto" parameterType="MemberDTO">
+		update detailcomment set photo = #{photo} 
+		where nickname = #{nickname}
+	</update>
 </mapper>
