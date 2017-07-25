@@ -63,10 +63,11 @@ public class ReviewController {
 		
 		//로그인 유지
 		boolean islogin = new LoginFilter().isLogin(session, model);
-
+		
 		//페이지 리스트
 		int amount = 5;
 		PageDTO pDTO = new PageDTO(page, amount);
+		
 		String pList = pService.pageList(pDTO);
 		model.addAttribute("pList", pList);
 		
@@ -165,8 +166,20 @@ public class ReviewController {
 		String url = null;
 		
 		System.out.println("read post ");
-		
 		BoardDTO dto = service.selectToRead(boardNo);
+
+		
+		
+		
+		if(isLogin){
+			//user like status like
+			MemberDTO member = (MemberDTO)session.getAttribute("member");
+			ActUserDTO acDTO = new ActUserDTO(member.getEmail(), boardNo, "00");
+			String userLikeStatus = new ActUserManager().checkLikeStatus(acDTO, aService);
+			dto.setUserLikeStatus(userLikeStatus);
+		}
+		
+
 		List<CommentDTO> cList = cService.getAllComment(boardNo);
 		int numOfCmt = cService.countCmt(boardNo);
 

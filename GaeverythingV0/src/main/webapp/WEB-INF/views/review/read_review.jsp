@@ -266,7 +266,7 @@
 							<c:otherwise>
 								<div class="like col-md-3" style="width: 80px; height: 0px; padding-left: 0px; margin-top: 25px; padding-right: 0px; float: right;">
 									<div class="listing-item-container list-layout">
-										<span style="" class="like-icon" id="like" onclick="like_clicked()"></span>
+										<span style="" class="${dto.userLikeStatus}" id="like" onclick="like_clicked()"></span>
 									</div>
 								</div>	
 							</c:otherwise>

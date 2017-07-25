@@ -5,12 +5,12 @@ import com.bitschool.service.ActUserService;
 
 public class ActUserManager {
 	public String checkLikeStatus(ActUserDTO dto, ActUserService service){
-		String status = "like-icon";
+		String userLikeStatus = "like-icon";
 		boolean flag = service.getLikeStatus(dto);
 		if(flag){
-			status = "like-icon liked";
+			userLikeStatus = "like-icon liked";
 		}
-		return status;
+		return userLikeStatus;
 	}
 	
 	public boolean registLikeStatus(ActUserDTO dto, ActUserService service){
