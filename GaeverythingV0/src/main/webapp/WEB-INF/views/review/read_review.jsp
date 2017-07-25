@@ -82,17 +82,22 @@
 			var boardNo = document.getElementById("boardNo").value;
 			location.href = "/viewLogin?uri=/review/readPost?boardNo="+boardNo+"&page="+page;
 		}else{
-			var url = "/review/readPost";
-			var check = confirm("댓글을 등록하시겠습니까?");
-			if(check==true){
-				alert("댓글이 등록되었습니다.");
-				url = "/review/newCmt?page="+page;
+			if($("#textChk").val()!=''){
+				var url = "/review/readPost";
+				var check = confirm("댓글을 등록하시겠습니까?");
+				if(check==true){
+					alert("댓글이 등록되었습니다.");
+					url = "/review/newCmt?page="+page;
+				}else{
+					alert("댓글 등록이 취소되었습니다.");
+					return;
+				}
+				data.action = url;
+				data.submit();
 			}else{
-				alert("댓글 등록이 취소되었습니다.");
+				alert("내용을 입력해주세요.");
 				return;
-			}
-			data.action = url;
-			data.submit();
+			}			
 		}
 	}
 
@@ -327,12 +332,12 @@
 								<textarea cols="40" rows="3" name="commentBody" onclick="box_clicked(${param.page})" placeholder="로그인 후 댓글작성이 가능합니다."></textarea>
 							</c:when>
 							<c:otherwise>
-								<textarea cols="40" rows="3" name="commentBody" placeholder="댓글을 작성해주세요 :)"></textarea>
+								<textarea cols="40" rows="3" id="textChk" name="commentBody" placeholder="댓글을 작성해주세요 :)"></textarea>
 							</c:otherwise>
 						</c:choose>
 					</div>
 				</fieldset>
-				<input type="hidden" id="isLogin" value="${memeber.nickname}">
+				<input type="hidden" id="isLogin" value="${member.nickname}">
 				<div class="clearfix col-md-9" style="margin-right: 26px;"></div>
 				<div class ="submit-cmt">
 					<button class="button" onclick="add_cmt(${param.page})">Submit Comment</button>
