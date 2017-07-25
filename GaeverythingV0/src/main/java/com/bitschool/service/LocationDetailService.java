@@ -82,4 +82,15 @@ public class LocationDetailService {
 		return flag;
 	}
 
+	// 디테일페이지 댓글 삭제  
+	public boolean commentDelete(DetailCommentDTO dto){
+		boolean flag = false;
+		try {
+			flag = dao.commentDelete(dto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return flag;
+	}
 }

@@ -39,4 +39,10 @@
 		where commentseq = #{commentSeq}
 	</update>
 	
+	<!-- 디테일페이지 댓글 삭제  -->
+	<delete id="commentDelete" parameterType="DetailCommentDTO">
+		delete from detailcomment 
+		where nickname = #{nickname} and commentseq = #{commentSeq}
+	</delete>
+	
 </mapper>
