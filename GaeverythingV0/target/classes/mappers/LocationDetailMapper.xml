@@ -45,4 +45,30 @@
 		where nickname = #{nickname} and commentseq = #{commentSeq}
 	</delete>
 	
+	<!-- 게시판에서 작성한 리뷰 개수 가져오기 -->
+	<select id="countReviews" parameterType="Integer" resultType="Integer">
+		select count(*) from board 
+		where locationSeq = #{locationSeq}
+	</select>
+	
+	<!-- 게시판에서 작성한 리뷰의 별점 가져오기 -->
+	<select id="getRatings" parameterType="Integer" resultType="Double">
+		select rating from board 
+		where locationSeq = #{locationSeq}
+	</select>
+	
+	<!-- 디테일페이지 댓글에서 작성한 별졈 가져오기 -->
+	<select id="getReplyRatings" parameterType="Integer" resultType="Double">
+		select rating from detailcomment 
+		where locationSeq = #{locationSeq}
+	</select>	
+	
+	<!-- 디테일페이지 댓글 개수 가져오기 -->
+	<select id="countReplies" parameterType="Integer" resultType="Integer">
+		select count(*) from detailcomment 
+		where locationSeq = #{locationSeq}
+	</select>	
+	
+	
+
 </mapper>

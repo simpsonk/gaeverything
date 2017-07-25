@@ -76,5 +76,34 @@ public class LocationDetailDAO {
 		}
 		return flag;
 	}
+	
+	// 게시판에서 작성한 리뷰 개수 가져오기 
+	public int countReviews(int locationSeq) throws SQLException{
+		int count = 0;
+		count = session.selectOne(namespace+".countReviews",locationSeq);
+		return count;
+	}
+	
+	// 게시판에서 작성한 리뷰의 별점 가져오기 
+	public List<Double> getRatings(int locationSeq) throws SQLException{
+		List<Double> ratings = null;
+		ratings = session.selectList(namespace+".getRatings",locationSeq);
+		return ratings;
+	}
+	
+	// 디테일페이지 댓글에서 작성한 별졈 가져오기 
+	public List<Double> getReplyRatings(int locationSeq) throws SQLException{
+		List<Double> ratings = null;
+		ratings = session.selectList(namespace+".getReplyRatings",locationSeq);
+		return ratings;
+	}
+	
+	// 디테일페이지 댓글 개수 가져오기 
+	public int countReplies(int locationSeq) throws SQLException{
+		int count = 0;
+		count = session.selectOne(namespace+".countReplies",locationSeq);
+		return count;
+	}
+
 
 }

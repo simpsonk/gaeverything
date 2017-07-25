@@ -28,13 +28,21 @@ public class LocationDetailController {
 	public String viewDetailPage(HttpServletRequest request, @RequestParam(value="locationSeq") int locationSeq,
 			Model model){
 		String url = "map/map_detailpage";
-		LocationDTO dto = new LocationDTO();	
+		LocationDTO dto = new LocationDTO();
+		int countReview = service.countReviews(locationSeq);	
+		double averageRatings = service.getAverageRatings(service.getRatings(locationSeq),service.getReplyRatings(locationSeq));
+		int countRatings = service.getRatings(locationSeq).size()+service.getReplyRatings(locationSeq).size();
+		int countReplies = service.countReplies(locationSeq);
 		MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
 		dto = service.selectOne(locationSeq);		
 		List<DetailCommentDTO> list = service.commentList(locationSeq);		
 		model.addAttribute("commentlist",list);
 		model.addAttribute("detail", dto);	
 		model.addAttribute("member",member);
+		model.addAttribute("countReview",countReview);
+		model.addAttribute("averageRatings",averageRatings);
+		model.addAttribute("countRatings",countRatings);
+		model.addAttribute("countReplies",countReplies);
 		System.out.println("´ñ±Û ¸®½ºÆ® : "+list);
 		System.out.println("detail : "+dto);
 		return url;
@@ -111,6 +119,8 @@ public class LocationDetailController {
 		}
 		return url;
 	}
+	
+	
 	
 
 }
