@@ -216,10 +216,10 @@
 								<li><a href="#">애견동반 식당, 카페</a></li>
 							</c:if>
 							
-								<li><i class="sl sl-icon-bubble"></i> ${numOfCmt}</li>
-								<li id="numOflike"><i class="sl sl-icon-heart"></i> ${dto.countLike}</li>
-								<li><i class="sl sl-icon-eye"></i> ${dto.readCount}</li>
-								<li><fmt:formatDate value = "${dto.regiDate}" pattern="YY/MM/dd hh:mm:ss"/></li>
+							<li><i class="sl sl-icon-bubble"></i> ${numOfCmt}</li>
+							<li id="numOflike"><i class="sl sl-icon-heart"></i> ${dto.countLike}</li>
+							<li><i class="sl sl-icon-eye"></i> ${dto.readCount}</li>
+							<li><fmt:formatDate value = "${dto.regiDate}" pattern="YY/MM/dd hh:mm:ss"/></li>
 						</ul>
 					</div>
 					

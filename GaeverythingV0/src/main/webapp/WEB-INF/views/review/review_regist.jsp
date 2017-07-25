@@ -72,73 +72,71 @@
 		<form action="" method="post" id="postData">
 			<!-- Blog Post -->
 			<div class="blog-post">
-					<!-- writer -->
-					
-							
-					<!-- category -->		
-					<div class="col-md-4">
-						<h5>Category</h5>
-						<select class="chosen-select" name = "boardCategory">
-							<option value ="0">Categories</option>
-							<option value ="1" ${dto.boardCategory == '1'?'selected="selected"':''}>병원, 뷰티</option>
-							<option value ="2" ${dto.boardCategory == '2'?'selected="selected"':''}>애견동반 식당, 카페</option>
-						</select>		
-					</div>
-							
-					<!-- title -->
-					<div class = "col-md-6">
-						<h5>Title</h5>
-						<input class="input-text" type="text" name="title" id="title" value="${dto.title}"/>
-					</div>
+				<input type="hidden" id = "locationSeq" name = "locationSeq">		
+				<!-- category -->		
+				<div class="col-md-4">
+					<h5>Category</h5>
+					<select class="chosen-select" name = "boardCategory">
+						<option value ="0">Categories</option>
+						<option value ="1" ${dto.boardCategory == '1'?'selected="selected"':''}>병원, 뷰티</option>
+						<option value ="2" ${dto.boardCategory == '2'?'selected="selected"':''}>애견동반 식당, 카페</option>
+					</select>		
+				</div>
 						
-					<!-- location -->			
-					<div class 	= "location col-md-8">
-						<h5>Location</h5>
-						<input type="text" placeholder="장소를 선택해주세요." name="address" id="address" value="${dto.address}" readonly="readonly">
+				<!-- title -->
+				<div class = "col-md-6">
+					<h5>Title</h5>
+					<input class="input-text" type="text" name="title" id="title" value="${dto.title}"/>
+				</div>
+					
+				<!-- location -->			
+				<div class 	= "location col-md-8">
+					<h5>Location</h5>
+					<input type="text" placeholder="장소를 선택해주세요." name="address" id="address" value="${dto.address}" readonly="readonly">
+				</div>
+				<div class = "location col-md-4" >
+					<div style="padding-top: 30px;">
+						<button type="button" class="button border margin-top-5" onclick="search_shop()" style="width: 110px;">Search</button>
 					</div>
-					<div class = "location col-md-4" >
-						<div style="padding-top: 30px;">
-							<button type="button" class="button border margin-top-5" onclick="search_shop()" style="width: 110px;">Search</button>
-						</div>
-					</div>
-					<input type="hidden" name="locationSeq" id="locationSeq" value="">
-									
-					<!-- rating -->
-						<div class = "rating col-md-12" style="padding-bottom: 10px;">	
-							<h5>Rating</h5>							
+				</div>
+				<input type="hidden" name="locationSeq" id="locationSeq" value="">
 								
-							<fieldset class="rating">
-  								<input type="radio" id="star5" name="rating" value="5" ${dto.rating== '5'?'checked="checked"':''} />
-  								<label class = "full" for="star5" title="Awesome - 5 stars"></label>
-	  								
-	   							<input type="radio" id="star4half" name="rating" value="4.5" ${dto.rating== '4.5'?'checked="checked"':''}/>
-	   							<label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+				<!-- rating -->
+					<div class = "rating col-md-12" style="padding-bottom: 10px;">	
+						<h5>Rating</h5>							
+							
+						<fieldset class="rating">
+ 								<input type="radio" id="star5" name="rating" value="5" ${dto.rating== '5'?'checked="checked"':''} />
+ 								<label class = "full" for="star5" title="Awesome - 5 stars"></label>
+  								
+   							<input type="radio" id="star4half" name="rating" value="4.5" ${dto.rating== '4.5'?'checked="checked"':''}/>
+   							<label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+  							
+ 								<input type="radio" id="star4" name="rating" value="4"  ${dto.rating== '4'?'checked="checked"':''}/>
+ 								<label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+  								
+   							<input type="radio" id="star3half" name="rating" value="3.5" ${dto.rating== '3.5'?'checked="checked"':''}/>
+   							<label class="half" for="star3half" title="Meh - 3.5 stars"></label>
    							
-  								<input type="radio" id="star4" name="rating" value="4"  ${dto.rating== '4'?'checked="checked"':''}/>
-  								<label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-	  								
-	   							<input type="radio" id="star3half" name="rating" value="3.5" ${dto.rating== '3.5'?'checked="checked"':''}/>
-	   							<label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-	   							
-	   							<input type="radio" id="star3" name="rating" value="3" ${dto.rating== '3'?'checked="checked"':''}/>
-	   							<label class = "full" for="star3" title="Meh - 3 stars"></label>
-	   							
-	   							<input type="radio" id="star2half" name="rating" value="2.5" ${dto.rating== '2.5'?'checked="checked"':''}/>
-	   							<label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-	   							
-  		 						<input type="radio" id="star2" name="rating" value="2" ${dto.rating== '2'?'checked="checked"':''}/>
-  		 						<label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-	  		 						
-	   							<input type="radio" id="star1half" name="rating" value="1.5" ${dto.rating== '1.5'?'checked="checked"':''}/>
-	   							<label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-	   							
-	   							<input type="radio" id="star1" name="rating" value="1" ${dto.rating== '1'?'checked="checked"':''}/>
-	   							<label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-	   							
-	   							<input type="radio" id="starhalf" name="rating" value="0.5" ${dto.rating== '0.5'?'checked="checked"':''}/>
-	   							<label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
-							</fieldset>						
-						</div>
+   							<input type="radio" id="star3" name="rating" value="3" ${dto.rating== '3'?'checked="checked"':''}/>
+   							<label class = "full" for="star3" title="Meh - 3 stars"></label>
+   							
+   							<input type="radio" id="star2half" name="rating" value="2.5" ${dto.rating== '2.5'?'checked="checked"':''}/>
+   							<label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+   							
+ 		 						<input type="radio" id="star2" name="rating" value="2" ${dto.rating== '2'?'checked="checked"':''}/>
+ 		 						<label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+  		 						
+   							<input type="radio" id="star1half" name="rating" value="1.5" ${dto.rating== '1.5'?'checked="checked"':''}/>
+   							<label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+   							
+   							<input type="radio" id="star1" name="rating" value="1" ${dto.rating== '1'?'checked="checked"':''}/>
+   							<label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+   							
+   							<input type="radio" id="starhalf" name="rating" value="0.5" ${dto.rating== '0.5'?'checked="checked"':''}/>
+   							<label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+						</fieldset>						
+					</div>
 	
 						<!-- content -->
 						<!-- content -->

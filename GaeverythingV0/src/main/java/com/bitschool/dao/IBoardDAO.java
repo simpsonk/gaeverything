@@ -36,7 +36,6 @@ public interface IBoardDAO {
 	public boolean updateLike(int boardNo) throws SQLException;
 	public int getTotalLike(int boardNo) throws SQLException;
 	public boolean updateDislike(int boardNo)  throws SQLException;
-	public boolean searchStatus(ActUserDTO dto) throws SQLException;
 
 
 }

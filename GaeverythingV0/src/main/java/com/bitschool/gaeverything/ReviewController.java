@@ -21,15 +21,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bitschool.dao.ReviewFileBean;
+import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.CommentDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.dto.PageDTO;
+import com.bitschool.service.ActUserService;
 import com.bitschool.service.IBoardService;
 import com.bitschool.service.ICommentService;
 import com.bitschool.service.IPagerService;
 import com.bitschool.service.LocationService;
+import com.bitschool.utils.ActUserManager;
 import com.bitschool.utils.LoginFilter;
 import com.fasterxml.jackson.core.JsonFactory;
 
@@ -49,6 +52,9 @@ public class ReviewController {
 	
 	@Inject
 	private LocationService locService;
+	
+	@Inject
+	private ActUserService aService;
 
 	
 	
@@ -276,13 +282,16 @@ public class ReviewController {
 	@RequestMapping(value="/updateLike", method={RequestMethod.GET, RequestMethod.POST})
 	public @ResponseBody int updateLike(
 							 @RequestParam("like") String like,
-							 @RequestParam("boardNo") int boardNo){
+							 @RequestParam("boardNo") int boardNo,
+							 HttpSession session){
 		int data = 0;
-		System.out.println("좋아요: "+ like);
-		System.out.println("좋아요글번호: " + boardNo);
+		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		ActUserDTO dto = new ActUserDTO(member.getEmail(), boardNo, "00");
 		if(like.equals("like-icon")){
+			new ActUserManager().registLikeStatus(dto, aService);
 			data = service.updateLike(boardNo);
 		}else if(like.equals("like-icon liked")){
+			new ActUserManager().dropLikeStatus(dto, aService);
 			data = service.dislike(boardNo);
 		}
 		return data;

@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 public class BoardDTO {
 	
 	private String boardCategory;
+	private int locationSeq;
 	private int boardNo;
 	private String nickname;
 	private String title;
@@ -25,6 +26,14 @@ public class BoardDTO {
 	private String address;
 	private String encodeUTF;
 	
+	public int getLocationSeq() {
+		return locationSeq;
+	}
+
+	public void setLocationSeq(int locationSeq) {
+		this.locationSeq = locationSeq;
+	}
+
 	public String getEncodeUTF() {
 	      try {
 	         this.encodeUTF = URLEncoder.encode(nickname, "UTF-8");

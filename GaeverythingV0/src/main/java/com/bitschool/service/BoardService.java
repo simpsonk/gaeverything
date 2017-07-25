@@ -144,16 +144,4 @@ public class BoardService implements IBoardService {
 		}
 		return numOfLike;
 	}
-
-	public boolean getLikeStatus(ActUserDTO dto) {
-		// TODO Auto-generated method stub
-		boolean flag = false;
-		try {
-			flag = dao.searchStatus(dto);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return flag;
-	}
 }

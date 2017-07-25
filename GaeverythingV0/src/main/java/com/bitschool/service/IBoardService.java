@@ -19,6 +19,5 @@ public interface IBoardService {
 	public int getNumOfCmts(int boardNo);
 	public int updateLike(int boardNo);
 	public int dislike(int boardNo);
-	public boolean getLikeStatus(ActUserDTO dto);
 
 }

@@ -60,11 +60,7 @@ public class HomeController {
 	public String home(Model model, HttpSession session) {
 		logger.info("Welcome home! The client locale is {}.", "connect");
 		boolean islogin = new LoginFilter().isLogin(session, model);
-		
-		String likeStatus = new ActUserManager().checkLikeStatus(new ActUserDTO("admin@naver.com", 10, "01"), bService);
 		System.out.println(islogin);
-		System.out.println(likeStatus);
-		model.addAttribute("likeStatus", likeStatus);
 		return "home";
 	}
 	@RequestMapping(value = "login", method = {RequestMethod.POST, RequestMethod.GET})

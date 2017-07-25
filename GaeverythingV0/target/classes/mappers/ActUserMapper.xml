@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bitschool.gaeverything.ActUserMapper">
+	<select id="selectStatus" parameterType="ActUserDTO" resultType="Integer">
+		select count(*) from act_user where email = #{email} and boardNo = #{boardNo} and actType = #{actType}
+	</select>
+	<insert id="insertLikeStatus" parameterType="ActUserDTO">
+		<selectKey order="BEFORE" resultType="Integer" keyProperty="actNo">
+			select act_seq.nextval from dual
+		</selectKey>
+		insert into act_user values(#{actNo}, #{email}, #{boardNo}, #{actType})
+	</insert>
+	<delete id="deleteLikeStatus" parameterType="ActUserDTO">
+		delete from act_user where email = #{email} and boardNo = #{boardNo} and actType = #{actType}
+	</delete>
+</mapper>

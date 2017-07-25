@@ -296,9 +296,9 @@ function chkDupEmail(){
 	    	  $("#emailChk").val('N');
 	      }
 	     },
-	     error : function(xhr, status, e) {  
-	      	  alert(e);
-	     }     
+	     error : function(request, status, error) {
+			 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+       }    
 	  });
 }
 

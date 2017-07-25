@@ -8,8 +8,8 @@
 			select board_seq.nextval from dual
 		</selectKey>
 		insert into
-		board(boardCategory,boardno,nickname,title,rating,address,uploadImg,message,onlytext,groupno)
-		values(#{boardCategory},#{boardNo},#{nickname},#{title},#{rating},#{address},#{uploadImg},#{message},#{onlyText},#{boardNo})
+		board(boardCategory,boardno,nickname,title,rating,address,uploadImg,message,onlytext,groupno,locationSeq)
+		values(#{boardCategory},#{boardNo},#{nickname},#{title},#{rating},#{address},#{uploadImg},#{message},#{onlyText},#{boardNo},#{locationSeq})
 	</insert>
 	
 	<select id="readAll" resultType="BoardDTO">

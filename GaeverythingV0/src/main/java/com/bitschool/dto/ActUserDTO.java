@@ -9,7 +9,6 @@ public class ActUserDTO {
 	public ActUserDTO(){
 		
 	}
-	
 	public ActUserDTO(String email, int boardNo, String actType) {
 		this.email = email;
 		this.boardNo = boardNo;
