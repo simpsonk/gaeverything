@@ -94,5 +94,23 @@ public class LocationDetailController {
 		return url;
 	}
 	
+	//´ñ±Û »èÁ¦
+	@RequestMapping(value="/deleteComment",method=RequestMethod.POST)
+	public String deleteComment(HttpSession session,Model model,
+			@RequestParam(value="commentSeq") int commentSeq,@RequestParam(value="locationSeq") int locationSeq){
+		String url = null;
+		System.out.println("deleteComment·Î µé¾î¿È");
+		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		DetailCommentDTO dto = new DetailCommentDTO();
+		dto.setNickname(member.getNickname());
+		dto.setCommentSeq(commentSeq);
+		boolean flag = service.commentDelete(dto);
+		if(flag){
+			url = "redirect:viewDetailPage?locationSeq="+locationSeq;
+			System.out.println("deleteComment ¼º°ø");
+		}
+		return url;
+	}
+	
 
 }

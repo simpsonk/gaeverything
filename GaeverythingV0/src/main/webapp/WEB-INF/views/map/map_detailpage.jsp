@@ -243,7 +243,7 @@
 						 
 							  <div class="col-md-8 centered-content" >								
 								<a onclick="go_url(1, ${comm.commentSeq});" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-note"></i>Edit</a>
-								<a onclick="/map/detail/viewDeleteComment" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-close"></i>Delete</a>
+								<a onclick="go_url(2, ${comm.commentSeq});" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-close"></i>Delete</a>
 							</div>  
 						 </c:if> 
 						</li>
@@ -340,6 +340,11 @@ $('#modifyComment').click(function(){
 });
 
 
+/* function go_url(type, commSeq){
+ 	var url = "/map/detail/viewDeleteComment";
+ 	
+}  */
+
 function go_url(type, commSeq){	
 	var commentSeq = document.getElementById("commentSeq");
 	var commMsg = document.getElementById("commMsg");
@@ -374,6 +379,11 @@ function go_url(type, commSeq){
  		$('#modifyComment').show();
 		$('#registComment').hide();
 		ment.innerHTML = 'Edit Comment';
+	}else if(type==2){
+		var ds = document.getElementById("add-comment");
+		var url = "/map/detail/deleteComment?commentSeq="+commSeq;
+		ds.action = url;
+		ds.submit();
 	}
 }
 
