@@ -114,25 +114,34 @@
 					<c:if test="${reviewList == null}">
 							 	<span>이 장소의 리뷰를 첫 번째로 등록해주세요.</span> 
 					</c:if>
+					<div class="row">
 							<c:forEach var="reviews" items="${reviewList}">
-							<div class="row">
+							
 								<!-- Listing Item -->
 								<div class="col-lg-6 col-md-12">
 									<a href="/review/readPost?boardNo=${reviews.boardNo}&page=1" class="listing-item-container">
 										<div class="listing-item">
-											<img src="/resources/upload/${reviews.uploadImg}" alt="">							
+											<c:choose>
+											<c:when test="${reviews.uploadImg!=null}">
+											<img src="/resources/upload/${reviews.uploadImg}" alt="">	
+											</c:when>	
+											<c:otherwise>
+											<img src="/resources/images/hospital.jpg" alt="">	
+											</c:otherwise>	
+											</c:choose>				
 											<div class="listing-item-content">							
 												<h3>${reviews.title}</h3>
-												<span>${reviews.onlyText}</span>
-												<span>${reviews.nickname}</span> 
+												<span>${reviews.onlyText}</span><br>
+												<span>${reviews.nickname}</span><br>
 												<span>${reviews.regiDate}</span>
 											</div>
 										</div>
 										<span class="star-rating" data-rating="${reviews.rating}">${reviews.rating}</span>															
 									</a>
 								</div>
-							</div>
-							</c:forEach>							
+						
+							</c:forEach>	
+								</div>						
 							</div>
 							<div class="add-review-photos col-lg-4" style="position:static;">
 								<div class="photoUpload">
