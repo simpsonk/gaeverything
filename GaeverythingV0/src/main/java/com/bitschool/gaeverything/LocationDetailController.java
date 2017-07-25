@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.DetailCommentDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
@@ -28,21 +29,25 @@ public class LocationDetailController {
 	public String viewDetailPage(HttpServletRequest request, @RequestParam(value="locationSeq") int locationSeq,
 			Model model){
 		String url = "map/map_detailpage";
-		LocationDTO dto = new LocationDTO();
+		LocationDTO dto = new LocationDTO();		
 		int countReview = service.countReviews(locationSeq);	
 		double averageRatings = service.getAverageRatings(service.getRatings(locationSeq),service.getReplyRatings(locationSeq));
+		averageRatings=(Double.isNaN(averageRatings))?0:averageRatings;
+		String temp = String.format("%.2f", averageRatings);
 		int countRatings = service.getRatings(locationSeq).size()+service.getReplyRatings(locationSeq).size();
 		int countReplies = service.countReplies(locationSeq);
 		MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
 		dto = service.selectOne(locationSeq);		
+		List<BoardDTO> reviewList = service.getReviews(locationSeq);
 		List<DetailCommentDTO> list = service.commentList(locationSeq);		
 		model.addAttribute("commentlist",list);
 		model.addAttribute("detail", dto);	
 		model.addAttribute("member",member);
 		model.addAttribute("countReview",countReview);
-		model.addAttribute("averageRatings",averageRatings);
+		model.addAttribute("averageRatings",temp);
 		model.addAttribute("countRatings",countRatings);
 		model.addAttribute("countReplies",countReplies);
+		model.addAttribute("reviewList",reviewList);
 		System.out.println("´ñ±Û ¸®½ºÆ® : "+list);
 		System.out.println("detail : "+dto);
 		return url;
