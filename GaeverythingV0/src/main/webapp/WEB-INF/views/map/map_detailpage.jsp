@@ -201,10 +201,19 @@
 						<fieldset>
 							<div>
 								<label>Comment:	</label>
-								<textarea id="commMsg" name="message" cols="40" rows="3"></textarea>
+								<c:choose>
+										<c:when test="${member.nickname == null}">
+											<textarea cols="40" rows="3" id="commMsg" name="message" onclick="box_clicked(${detail.locationSeq})" placeholder="로그인 후 댓글작성이 가능합니다."></textarea>
+										</c:when>
+										<c:otherwise>
+											<textarea cols="40" rows="3" id="commMsg" name="message" placeholder="댓글을 작성해주세요 :)"></textarea>
+										</c:otherwise>
+								</c:choose>
+						
 							</div>
 	
-						</fieldset>						
+						</fieldset>					
+						<input type="hidden" id="isLogin" value="${member.nickname}">	
 						<input type="button" id="registComment" value="Submit Comment">
 						<input type="button" id="modifyComment" value="Modify Comment" style="display: none;">
 						<div class="clearfix"></div>
@@ -323,7 +332,8 @@
 
 //댓글 등록 버튼 클릭시
 $('#registComment').click(function(){
-	checkMessage();
+	var locationSeq = document.getElementById("locationSeq").value;
+	checkMessage(locationSeq);
 	var ds = document.getElementById("add-comment");
 	var url = "/map/detail/addComment";
 	ds.action = url;
@@ -388,16 +398,25 @@ function go_url(type, commSeq){
 }
 
 //등록시 필수항목 체크
-function checkMessage(){ 	  
-	  if($('input:radio[name="rating"]').is(":checked")==false){
-		  alert('별점을 표시해주세요.');
-	  }
-	  if($("#commMsg").val()==''){
-		  alert('코멘트를 입력해주세요.');
+function checkMessage(locationSeq){
+	  var isLogin = document.getElementById("isLogin");
+	  if(isLogin.value==''){
+		  alert("댓글작성은 회원만 가능합니다.");	
+		  location.href = "/viewLogin?uri=/map/detail/viewDetailPage?locationSeq="+locationSeq;
+	  }else{
+		  if($('input:radio[name="rating"]').is(":checked")==false){
+			  alert('별점을 표시해주세요.');
+		  }
+		  if($("#commMsg").val()==''){
+			  alert('코멘트를 입력해주세요.');
+		  }	
 	  }
 }
 
-
+function box_clicked(locationSeq){
+	alert("댓글작성은 회원만 가능합니다.");	
+	location.href = "/viewLogin?uri=/map/detail/viewDetailPage?locationSeq="+locationSeq;
+}
 
 </script>
 
