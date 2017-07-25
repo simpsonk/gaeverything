@@ -4,16 +4,29 @@ public class ActUserDTO {
 	private int actNo;
 	private String email;
 	private int boardNo;
+	private int locationSeq;
 	private String actType;
 	
 	public ActUserDTO(){
 		
 	}
-	public ActUserDTO(String email, int boardNo, String actType) {
+	
+	public ActUserDTO(String email, String actType, int boardNo,  int locationSeq) {
 		this.email = email;
-		this.boardNo = boardNo;
 		this.actType = actType;
+		this.boardNo = boardNo;
+		this.locationSeq = locationSeq;
 	}
+	
+	
+	public int getLocationSeq() {
+		return locationSeq;
+	}
+
+	public void setLocationSeq(int locationSeq) {
+		this.locationSeq = locationSeq;
+	}
+
 	public int getActNo() {
 		return actNo;
 	}
@@ -38,10 +51,11 @@ public class ActUserDTO {
 	public void setActType(String actType) {
 		this.actType = actType;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "ActUserDTO [actNo=" + actNo + ", email=" + email + ", boardNo=" + boardNo + ", actType=" + actType
-				+ "]";
+		return "ActUserDTO [actNo=" + actNo + ", email=" + email + ", boardNo=" + boardNo + ", locationSeq="
+				+ locationSeq + ", actType=" + actType + "]";
 	}
+	
 }

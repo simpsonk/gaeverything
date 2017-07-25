@@ -18,7 +18,9 @@ public class ActUserDAO {
 	public boolean searchStatus(ActUserDTO dto) throws SQLException{
 		// TODO Auto-generated method stub
 		boolean flag = false;
+		System.out.println(dto);
 		int count = session.selectOne(nameSpace+".selectStatus", dto);
+		System.out.println(count);
 		if(count!=0){
 			flag = true;
 		}
@@ -39,6 +41,26 @@ public class ActUserDAO {
 		// TODO Auto-generated method stub
 		boolean flag = false;
 		int aCnt = session.delete(nameSpace+".deleteLikeStatus", dto);
+		if(aCnt>0){
+			flag = true;
+		}
+		return flag;
+	}
+
+	public boolean insertDetailPageLikeStatus(ActUserDTO aDTO) throws SQLException{
+		// TODO Auto-generated method stub
+		boolean flag = false;
+		int aCnt = session.update(nameSpace+".insertDetailPageLikeStatus", aDTO);
+		if(aCnt>0){
+			flag = true;
+		}
+		return flag;
+	}
+
+	public boolean deleteDetailPageLikeStatus(ActUserDTO aDTO) throws SQLException{
+		// TODO Auto-generated method stub
+		boolean flag = false;
+		int aCnt = session.update(nameSpace+".deleteDetailPageLikeStatus", aDTO);
 		if(aCnt>0){
 			flag = true;
 		}

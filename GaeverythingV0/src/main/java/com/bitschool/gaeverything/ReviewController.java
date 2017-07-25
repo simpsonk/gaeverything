@@ -77,7 +77,7 @@ public class ReviewController {
 		
 		//user like status like
 		if(isLogin){
-			list= new ActUserManager().checkLikeStatus(session, aService, list);
+			list= new ActUserManager(aService).checkLikeStatus(session, list);
 		}
 		
 		//´ñ±Û¼ö ¹Þ±â
@@ -176,7 +176,7 @@ public class ReviewController {
 
 		//user like status like
 		if(isLogin){
-			dto= new ActUserManager().checkLikeStatus(session, aService, dto);
+			dto= new ActUserManager(aService).checkLikeStatus(session, dto);
 		}
 		
 
@@ -300,16 +300,38 @@ public class ReviewController {
 							 HttpSession session){
 		int data = 0;
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		ActUserDTO dto = new ActUserDTO(member.getEmail(), boardNo, "00");
+		ActUserDTO dto = new ActUserDTO(member.getEmail(), "00", boardNo, 0);
 		if(like.equals("like-icon")){
-			new ActUserManager().registLikeStatus(dto, aService);
+			new ActUserManager(aService).registLikeStatus(dto);
 			data = service.updateLike(boardNo);
 		}else if(like.equals("like-icon liked")){
-			new ActUserManager().dropLikeStatus(dto, aService);
+			new ActUserManager(aService).dropLikeStatus(dto);
 			data = service.dislike(boardNo);
 		}
 		return data;
-	}	
+	}
+	
+	@RequestMapping(value="/updateDetailPageLike", method={RequestMethod.GET, RequestMethod.POST})
+	public @ResponseBody int updateDetailPageLike(
+							 @RequestParam("like") String like,
+							 @RequestParam("locationSeq") int locationSeq,
+							 HttpSession session){
+		boolean flag = false;
+		int data = 0;
+		if(like.equals("like-icon")){
+			flag = new ActUserManager(aService).registDetailPageLikeStatus(session, locationSeq);
+			if(!flag){
+				System.out.println("insert fail: DetailPageLike");
+			}
+		}else if(like.equals("like-icon liked")){
+			flag = new ActUserManager(aService).dropDetailPageLikeStatus(session, locationSeq);
+			if(!flag){
+				System.out.println("delete fail: DetailPageLike");
+			}
+		}
+		data = new ActUserManager(aService).LikeStatusCount("10");
+		return data;
+	}
 	
 	@RequestMapping(value = "viewSearchShop", method = RequestMethod.GET)
 	public String viewSearchShop(HttpSession session, Model model){

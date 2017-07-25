@@ -15,4 +15,15 @@
 	<delete id="deleteLikeStatus" parameterType="ActUserDTO">
 		delete from act_user where email = #{email} and boardNo = #{boardNo} and actType = #{actType}
 	</delete>
+	
+	<insert id="insertDetailPageLikeStatus" parameterType="ActUserDTO">
+		<selectKey order="BEFORE" resultType="Integer" keyProperty="actNo">
+			select act_seq.nextval from dual
+		</selectKey>
+		insert into act_user values(#{actNo}, #{email}, #{locationSeq}, #{actType})
+	</insert>
+	
+	<delete id="deleteDetailPageLikeStatus" parameterType="ActUserDTO">
+		delete from act_user where email = #{email} and boardNo = #{locationSeq} and actType = #{actType}
+	</delete>
 </mapper>

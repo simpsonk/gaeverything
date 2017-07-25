@@ -54,10 +54,19 @@
 					</div>					
 				</div>
 			</div>
-			<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
-				<button class="like-button"><span class="like-icon"></span> Bookmark this listing</button> 
-			</div>
-		
+			
+			<c:choose>
+				<c:when test="${member.nickname == null }">
+					<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
+						<button type="button" class="like-button" onclick="no_login_like()"><span class="like-icon"></span> Bookmark this listing</button> 
+					</div>	
+				</c:when>
+				<c:otherwise>
+					<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
+						<button type="button" class="like-button" onclick="like_clicked()"><span id = "like" class="like-icon"></span> Bookmark this listing</button> 
+					</div>	
+				</c:otherwise>
+			</c:choose>								
 			
 			<!-- Overview -->
 			<div id="detail-Info" class="listing-section">
@@ -447,6 +456,38 @@ function checkMessage(locationSeq){
 
 function box_clicked(locationSeq){
 	alert("댓글작성은 회원만 가능합니다.");	
+	location.href = "/viewLogin?uri=/map/detail/viewDetailPage?locationSeq="+locationSeq;
+}
+
+function like_clicked(){
+	var class_name = document.getElementById("like").className;
+	var locationSeq = document.getElementById("locationSeq").value;
+	var url = '/review/updateDetailPageLike?like='+class_name+'&locationSeq='+locationSeq;
+	var id = document.getElementById("numOflike");
+	
+	var icon = document.createElement('i');
+	icon.className = 'sl sl-icon-heart';
+	var span = document.createElement('span');
+	
+	$.ajax({
+        url : url,
+        dataType : 'json',
+        type:"POST",
+        success : function(data) {
+        	id.innerHTML=""; //상위태그. 
+        	span.innerHTML = " "+data ; //1) 상위태그 안에 들어갈 "내용" 먼저 셋팅
+        	id.appendChild(icon); //	  2) 상위태그 안에 포함되어 "하위 태그"
+        	id.appendChild(span); //	       append함.
+        },
+        error : function(request, status, error) {
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+          }
+     });
+}
+
+function no_login_like(locationSeq){
+	alert("로그인을 해주세요!");
+	var locationSeq = document.getElementById("locationSeq").value;
 	location.href = "/viewLogin?uri=/map/detail/viewDetailPage?locationSeq="+locationSeq;
 }
 
