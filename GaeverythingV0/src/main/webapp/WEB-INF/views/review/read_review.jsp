@@ -76,17 +76,24 @@
 
 	function add_cmt(page){
 		var data = document.getElementById("newComment");
-		var url = "/review/readPost";
-		var check = confirm("댓글을 등록하시겠습니까?");
-		if(check==true){
-			alert("댓글이 등록되었습니다.");
-			url = "/review/newCmt?page="+page;
+		var isLogin = document.getElementById("isLogin").value;
+		if(isLogin==''){
+			alert("댓글작성은 회원만 가능합니다.");
+			var boardNo = document.getElementById("boardNo").value;
+			location.href = "/viewLogin?uri=/review/readPost?boardNo="+boardNo+"&page="+page;
 		}else{
-			alert("댓글 등록이 취소되었습니다.");
-			return;
+			var url = "/review/readPost";
+			var check = confirm("댓글을 등록하시겠습니까?");
+			if(check==true){
+				alert("댓글이 등록되었습니다.");
+				url = "/review/newCmt?page="+page;
+			}else{
+				alert("댓글 등록이 취소되었습니다.");
+				return;
+			}
+			data.action = url;
+			data.submit();
 		}
-		data.action = url;
-		data.submit();
 	}
 
 	function box_clicked(page){
@@ -325,6 +332,7 @@
 						</c:choose>
 					</div>
 				</fieldset>
+				<input type="hidden" id="isLogin" value="${memeber.nickname}">
 				<div class="clearfix col-md-9" style="margin-right: 26px;"></div>
 				<div class ="submit-cmt">
 					<button class="button" onclick="add_cmt(${param.page})">Submit Comment</button>
