@@ -23,16 +23,18 @@ public class LocationDetailController {
 	
 	@Inject
 	LocationDetailService service;
-
+	//디테일 페이지 연결
 	@RequestMapping(value = "/viewDetailPage", method = RequestMethod.GET)
 	public String viewDetailPage(HttpServletRequest request, @RequestParam(value="locationSeq") int locationSeq,
 			Model model){
 		String url = "map/map_detailpage";
 		LocationDTO dto = new LocationDTO();	
+		MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
 		dto = service.selectOne(locationSeq);		
 		List<DetailCommentDTO> list = service.commentList(locationSeq);		
 		model.addAttribute("commentlist",list);
 		model.addAttribute("detail", dto);	
+		model.addAttribute("member",member);
 		System.out.println("댓글 리스트 : "+list);
 		System.out.println("detail : "+dto);
 		return url;
@@ -52,6 +54,41 @@ public class LocationDetailController {
 		if(flag){
 			url = "redirect:viewDetailPage?locationSeq="+dto.getLocationSeq();
 			System.out.println("addComment 성공");
+			System.out.println("댓글dto : "+dto);
+		}
+		return url;
+	}
+	
+	//댓글 수정하는 페이지
+	@RequestMapping(value="/viewEditComment",method={RequestMethod.GET,RequestMethod.POST})
+	public String viewEditComment(HttpSession session,Model model,@RequestParam(value="locationSeq2") int locationSeq){
+		String url = null;
+		url = "map/map_detailpage2";
+		LocationDTO dto = new LocationDTO();	
+		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		dto = service.selectOne(locationSeq);		
+		List<DetailCommentDTO> list = service.commentList(locationSeq);		
+		model.addAttribute("commentlist",list);
+		model.addAttribute("detail", dto);	
+		model.addAttribute("member",member);
+		return url;
+	}
+	
+	
+	//댓글 수정	
+	@RequestMapping(value="/editComment",method=RequestMethod.POST)
+	public String editComment(HttpSession session,Model model,
+			DetailCommentDTO dto){
+		String url = null;
+		System.out.println("editComment로 들어옴");
+		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		dto.setNickname(member.getNickname());
+		dto.setPhoto(member.getPhoto());
+		System.out.println("수정된 댓글 dto : "+dto);
+		boolean flag = service.commentEdit(dto);
+		if(flag){
+			url = "redirect:viewDetailPage?locationSeq="+dto.getLocationSeq();
+			System.out.println("editComment 성공");
 			System.out.println("댓글dto : "+dto);
 		}
 		return url;

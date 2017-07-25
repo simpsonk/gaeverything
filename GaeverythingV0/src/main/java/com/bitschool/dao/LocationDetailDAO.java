@@ -56,5 +56,15 @@ public class LocationDetailDAO {
 		}
 		return flag;
 	}
+	
+	// 디테일페이지 댓글 수정  
+	public boolean commentEdit(DetailCommentDTO dto) throws SQLException{
+		boolean flag = false;
+		int aCnt = session.update(namespace+".commentEdit",dto);
+		if(aCnt>0){
+			flag = true;
+		}
+		return flag;
+	}
 
 }

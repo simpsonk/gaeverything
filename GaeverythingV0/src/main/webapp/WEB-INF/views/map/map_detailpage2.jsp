@@ -144,54 +144,32 @@
 				<div id="add-review" class="add-review-box" style="margin-top: 0px;">
 	
 					<!-- Add Review -->
-					<h3 id="ment" class="listing-desc-headline margin-bottom-20">Add Comment</h3>
+					<h3 class="listing-desc-headline margin-bottom-20">Add Comment</h3>
 					
 					<span class="leave-rating-title">Your rating for this listing</span>
 					
 					<!-- Rating / Upload Button -->
-					<form id="add-comment" action="" class="add-comment" method="post">
+					<form id="add-comment" action="/map/detail/addComment" class="add-comment" method="post">
 						<input type="hidden" id="locationSeq" name="locationSeq" value="${detail.locationSeq}">
-						<input type="hidden" id="commentSeq" name = "commentSeq" value = "0" >
 					
 					<div class="row">
 						<div class="col-md-6">
 							<!-- Leave Rating -->
-								<!-- rating -->
-						<div class = "rating col-md-12" style="padding-bottom: 10px;">	
-							<h5>Rating</h5>							
-								
-							<fieldset class="rating">
-  								<input type="radio" id="star5" name="rating" value="5" ${dto.rating== '5'?'checked="checked"':''} />
-  								<label class = "full" for="star5" title="Awesome - 5 stars"></label>
-	  								
-	   							<input type="radio" id="star4half" name="rating" value="4.5" ${dto.rating== '4.5'?'checked="checked"':''}/>
-	   							<label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-   							
-  								<input type="radio" id="star4" name="rating" value="4"  ${dto.rating== '4'?'checked="checked"':''}/>
-  								<label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-	  								
-	   							<input type="radio" id="star3half" name="rating" value="3.5" ${dto.rating== '3.5'?'checked="checked"':''}/>
-	   							<label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-	   							
-	   							<input type="radio" id="star3" name="rating" value="3" ${dto.rating== '3'?'checked="checked"':''}/>
-	   							<label class = "full" for="star3" title="Meh - 3 stars"></label>
-	   							
-	   							<input type="radio" id="star2half" name="rating" value="2.5" ${dto.rating== '2.5'?'checked="checked"':''}/>
-	   							<label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-	   							
-  		 						<input type="radio" id="star2" name="rating" value="2" ${dto.rating== '2'?'checked="checked"':''}/>
-  		 						<label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-	  		 						
-	   							<input type="radio" id="star1half" name="rating" value="1.5" ${dto.rating== '1.5'?'checked="checked"':''}/>
-	   							<label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-	   							
-	   							<input type="radio" id="star1" name="rating" value="1" ${dto.rating== '1'?'checked="checked"':''}/>
-	   							<label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-	   							
-	   							<input type="radio" id="starhalf" name="rating" value="0.5" ${dto.rating== '0.5'?'checked="checked"':''}/>
-	   							<label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
-							</fieldset>						
-						</div>
+							<div class="clearfix"></div>
+											   		
+							<div class="leave-rating margin-bottom-30">
+								<input type="radio" name="rating" id="rating-1" value="1"/>
+								<label for="rating-1" class="fa fa-star"></label>
+								<input type="radio" name="rating" id="rating-2" value="2"/>
+								<label for="rating-2" class="fa fa-star"></label>
+								<input type="radio" name="rating" id="rating-3" value="3"/>
+								<label for="rating-3" class="fa fa-star"></label>
+								<input type="radio" name="rating" id="rating-4" value="4"/>
+								<label for="rating-4" class="fa fa-star"></label>
+								<input type="radio" name="rating" id="rating-5" value="5"/>
+								<label for="rating-5" class="fa fa-star"></label>
+							</div>
+							<div class="clearfix"></div>
 						</div>
 	
 					</div>
@@ -201,50 +179,61 @@
 						<fieldset>
 							<div>
 								<label>Comment:</label>
-								<textarea id="commMsg" name="message" cols="40" rows="3"></textarea>
+								<textarea name="message" cols="40" rows="3"></textarea>
 							</div>
 	
 						</fieldset>						
 						<input type="button" id="registComment" value="Submit Comment">
-						<input type="button" id="modifyComment" value="Modify Comment" style="display: none;">
 						<div class="clearfix"></div>
 					</form>
 	
 				</div>
 				<!-- Add Review Box / End -->
 				<!-- Reviews -->
-			<form id="commentData" method="post">
-				<input type="hidden" id="locationSeq2" name="locationSeq2" value="${detail.locationSeq}">
+
 				<section class="comments listing-reviews">
- 					
+ 				
 					 <ul>
 					  <c:forEach var="comm" items="${commentlist}">
-					  	<input type="hidden" id="ratingVal${comm.commentSeq}" value="${comm.rating}">
-					  	<li>
-							<div class="avatar"><img src="/resources/upload/${comm.photo}" alt="" /></div> 
+						<li>
+							 <div class="avatar"><img src="/resources/upload/${comm.photo}" alt="" /></div> 
 							<div class="comment-content"><div class="arrow-comment"></div>
-								<div class="comment-by">
-									${comm.nickname}<span class="date">${comm.regiDate}</span>
+							<div class="comment-by">${comm.nickname}<span class="date">${comm.regiDate}</span>												
+						<!-- 수정 -->	
+						<%-- <c:choose>
+							<c:when test="${comm.nickname==member.nickname}">								
+									<div class="star-rating" data-rating="${comm.rating}"></div>
+								</div>		
+								<textarea cols="40" rows="3" name="message">${comm.message}</textarea>
+							</c:when>
+							<c:otherwise>
 									<div class="star-rating" data-rating="${comm.rating}"></div>
 								</div>
-								<p id="changeMsg${comm.commentSeq}">${comm.message}</p>							
+								<p>${comm.message}</p>
+							</div>
+							</c:otherwise>						
+						</c:choose>	 --%>
+								
 							</div>
 							
 							
 							<!-- edit, delete -->
 						 <c:if test="${member.nickname == comm.nickname}"> 
 							<div class="col-md-8 centered-content" >
-								<a onclick="go_url(1, ${comm.commentSeq})" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-note"></i>Edit</a>
-								<a onclick="/map/detail/viewDeleteComment" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-close"></i>Delete</a>
+								<a onclick="/map/detail/editComment" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-note"></i>Edit</a>
+								<a onclick="/map/detail/deleteComment" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-close"></i>Delete</a>
 							</div>
 						 </c:if> 
 						</li>
-				  	</c:forEach>	  
+				  	</c:forEach>
+				  	
+				  
+				  	
 						
 					 </ul>
 			 
 				</section> 
-			</form>
+
 				<!-- Pagination -->
 				<div class="clearfix"></div>
 				<div class="row">
@@ -315,60 +304,8 @@
 
 //댓글 등록 버튼 클릭시
 $('#registComment').click(function(){
-	var ds = document.getElementById("add-comment");
-	var url = "/map/detail/addComment";
-	ds.action = url;
-	ds.submit();
+	$('#add-comment').submit();
 });
-
-
-
-//댓글 수정 버튼 클릭시
-$('#modifyComment').click(function(){
-	var ds = document.getElementById("add-comment");
-	var url = "/map/detail/editComment";
-	ds.action = url;
-	ds.submit();
-});
-
-
-function go_url(type, commSeq){	
-	var commentSeq = document.getElementById("commentSeq");
-	var commMsg = document.getElementById("commMsg");
-	var changeMsg = document.getElementById("changeMsg"+commSeq);
-	var ratingVal = document.getElementById("ratingVal"+commSeq);
-	var ment = document.getElementById("ment");
-	if(type==1){		
-		commentSeq.value = commSeq;
-		commMsg.innerHTML = changeMsg.innerHTML;
-		if(ratingVal.value==0.5){
-			$('input:radio[name=rating]:input[value="0.5"]').attr("checked", true);			
-		}else if(ratingVal.value==1.0){
-			$('input:radio[name=rating]:input[value="1.0"]').attr("checked", true);		
-		}else if(ratingVal.value==1.5){
-			$('input:radio[name=rating]:input[value="1.5"]').attr("checked", true);		
-		}else if(ratingVal.value==2.0){
-			$('input:radio[name=rating]:input[value="2.0"]').attr("checked", true);		
-		}else if(ratingVal.value==2.5){
-			$('input:radio[name=rating]:input[value="2.5"]').attr("checked", true);		
-		}else if(ratingVal.value==3.0){
-			$('input:radio[name=rating]:input[value="3.0"]').attr("checked", true);		
-		}else if(ratingVal.value==3.5){
-			$('input:radio[name=rating]:input[value="3.5"]').attr("checked", true);		
-		}else if(ratingVal.value==4.0){
-			$('input:radio[name=rating]:input[value="4.0"]').attr("checked", true);		
-		}else if(ratingVal.value==4.5){
-			$('input:radio[name=rating]:input[value="4.5"]').attr("checked", true);		
-		}else if(ratingVal.value==5.0){
-			$('input:radio[name=rating]:input[value="5.0"]').attr("checked", true);		
-		}		
-		commMsg.focus();
- 		$('#modifyComment').show();
-		$('#registComment').hide();
-		ment.innerHTML = 'Edit Comment';
-
-	}
-}
 	
 	
 </script>
