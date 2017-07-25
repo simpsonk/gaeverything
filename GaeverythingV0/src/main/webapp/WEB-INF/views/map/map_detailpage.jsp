@@ -161,34 +161,34 @@
 							<h5>Rating</h5>							
 								
 							<fieldset class="rating">
-  								<input type="radio" id="star5" name="rating" value="5" ${dto.rating== '5'?'checked="checked"':''} />
+  								<input type="radio" id="star5" name="rating" value="5.0"  />
   								<label class = "full" for="star5" title="Awesome - 5 stars"></label>
 	  								
-	   							<input type="radio" id="star4half" name="rating" value="4.5" ${dto.rating== '4.5'?'checked="checked"':''}/>
+	   							<input type="radio" id="star4half" name="rating" value="4.5"/>
 	   							<label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
    							
-  								<input type="radio" id="star4" name="rating" value="4"  ${dto.rating== '4'?'checked="checked"':''}/>
+  								<input type="radio" id="star4" name="rating" value="4.0"  />
   								<label class = "full" for="star4" title="Pretty good - 4 stars"></label>
 	  								
-	   							<input type="radio" id="star3half" name="rating" value="3.5" ${dto.rating== '3.5'?'checked="checked"':''}/>
+	   							<input type="radio" id="star3half" name="rating" value="3.5" />
 	   							<label class="half" for="star3half" title="Meh - 3.5 stars"></label>
 	   							
-	   							<input type="radio" id="star3" name="rating" value="3" ${dto.rating== '3'?'checked="checked"':''}/>
+	   							<input type="radio" id="star3" name="rating" value="3.0" />
 	   							<label class = "full" for="star3" title="Meh - 3 stars"></label>
 	   							
-	   							<input type="radio" id="star2half" name="rating" value="2.5" ${dto.rating== '2.5'?'checked="checked"':''}/>
+	   							<input type="radio" id="star2half" name="rating" value="2.5" }/>
 	   							<label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
 	   							
-  		 						<input type="radio" id="star2" name="rating" value="2" ${dto.rating== '2'?'checked="checked"':''}/>
+  		 						<input type="radio" id="star2" name="rating" value="2.0" />
   		 						<label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
 	  		 						
-	   							<input type="radio" id="star1half" name="rating" value="1.5" ${dto.rating== '1.5'?'checked="checked"':''}/>
+	   							<input type="radio" id="star1half" name="rating" value="1.5" />
 	   							<label class="half" for="star1half" title="Meh - 1.5 stars"></label>
 	   							
-	   							<input type="radio" id="star1" name="rating" value="1" ${dto.rating== '1'?'checked="checked"':''}/>
+	   							<input type="radio" id="star1" name="rating" value="1.0"/>
 	   							<label class = "full" for="star1" title="Sucks big time - 1 star"></label>
 	   							
-	   							<input type="radio" id="starhalf" name="rating" value="0.5" ${dto.rating== '0.5'?'checked="checked"':''}/>
+	   							<input type="radio" id="starhalf" name="rating" value="0.5" />
 	   							<label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
 							</fieldset>						
 						</div>
@@ -233,10 +233,18 @@
 							
 							<!-- edit, delete -->
 						 <c:if test="${member.nickname == comm.nickname}"> 
-							<div class="col-md-8 centered-content" >
-								<a onclick="go_url(1, ${comm.commentSeq})" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-note"></i>Edit</a>
-								<a onclick="/map/detail/viewDeleteComment" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-close"></i>Delete</a>
+		 					<%-- <div class="comment-by">
+								<a class="reply" onclick="go_url(1, ${comm.commentSeq})" return false; ><i class="sl sl-icon-note"></i> Edit</a>
 							</div>
+							<div class="comment-by">
+								<a class="reply" style="margin-top: 36px;" onclick="/map/detail/viewDeleteComment" return false; ><i class="sl sl-icon-close"></i> Delete</a>
+							</div> --%>
+						  
+						 
+							  <div class="col-md-8 centered-content" >								
+								<a onclick="go_url(1, ${comm.commentSeq});" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-note"></i>Edit</a>
+								<a onclick="/map/detail/viewDeleteComment" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-close"></i>Delete</a>
+							</div>  
 						 </c:if> 
 						</li>
 				  	</c:forEach>	  
@@ -366,11 +374,9 @@ function go_url(type, commSeq){
  		$('#modifyComment').show();
 		$('#registComment').hide();
 		ment.innerHTML = 'Edit Comment';
-
 	}
 }
-	
-	
+
 </script>
 
 </body>
