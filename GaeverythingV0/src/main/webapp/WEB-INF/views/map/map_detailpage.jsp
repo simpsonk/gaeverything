@@ -110,7 +110,10 @@
 					<div class="col-lg-10">
 						<div style="height: 50px;margin-top: 34px;">
 							<div class = "col-lg-8" style="padding-top: 8px;">
+						
+					<c:if test="${reviewList == null}">
 							 	<span>이 장소의 리뷰를 첫 번째로 등록해주세요.</span> 
+					</c:if>
 							<c:forEach var="reviews" items="${reviewList}">
 							<div class="row">
 								<!-- Listing Item -->
