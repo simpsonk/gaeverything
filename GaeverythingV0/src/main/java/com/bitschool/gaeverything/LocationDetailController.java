@@ -31,6 +31,8 @@ public class LocationDetailController {
 		LocationDTO dto = new LocationDTO();
 		int countReview = service.countReviews(locationSeq);	
 		double averageRatings = service.getAverageRatings(service.getRatings(locationSeq),service.getReplyRatings(locationSeq));
+		String temp = String.format("%.2f", averageRatings);
+		
 		int countRatings = service.getRatings(locationSeq).size()+service.getReplyRatings(locationSeq).size();
 		int countReplies = service.countReplies(locationSeq);
 		MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
@@ -40,7 +42,7 @@ public class LocationDetailController {
 		model.addAttribute("detail", dto);	
 		model.addAttribute("member",member);
 		model.addAttribute("countReview",countReview);
-		model.addAttribute("averageRatings",averageRatings);
+		model.addAttribute("averageRatings",temp);
 		model.addAttribute("countRatings",countRatings);
 		model.addAttribute("countReplies",countReplies);
 		System.out.println("´ñ±Û ¸®½ºÆ® : "+list);
