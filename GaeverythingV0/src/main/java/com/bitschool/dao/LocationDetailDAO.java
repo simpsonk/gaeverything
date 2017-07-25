@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.DetailCommentDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
@@ -103,6 +104,13 @@ public class LocationDetailDAO {
 		int count = 0;
 		count = session.selectOne(namespace+".countReplies",locationSeq);
 		return count;
+	}
+	
+	// 게시판에서 작성한 리뷰 가져오기
+	public List<BoardDTO> getReviews(int locationSeq) throws SQLException{
+		List<BoardDTO> dto = null;
+		dto = session.selectList(namespace+".getReviews",locationSeq);
+		return dto;
 	}
 
 
