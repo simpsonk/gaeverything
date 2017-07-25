@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -367,13 +368,13 @@
 		daum.maps.event.addListener(marker, 'click', function(){
 			overlay.setMap(map);
 		});
+		
 	}
 	
-	function closeOverlay(){
-		for(var i=0; i<overlays.length; i++){
-			overlays[i].setMap(null);
-		}
+	function closeOverlay(overlay){
+		overlay.setMap(null);
 	}
+
 	
 	function createOverlays(data){
 		//1) 오버레이 콘텐츠 셋팅
@@ -389,11 +390,13 @@
 			'				</div>' + 
 			'			<div class="desc">' + 
 			'				<div class="ellipsis">'+data[i].address+'</div>' +
-			'				<div><a href="'+data[i].link+ '" target="_blank" class="link">홈페이지</a></div>' +
+			'				<div><span>'+"날짜: "+data[i].startDate+'</span></div>'+
+			'				<div><a href="'+data[i].link+ '" target="_blank" class="link">홈페이지 확인</a></div>' +
 			'			</div>'+
 			'		</div>'+
 			'	</div>' + 
 			'</div>';
+			
 			//2)오버레이 찍을 위치
 			var overlayPosition =new daum.maps.LatLng(data[i].latitude, data[i].longitude);
 			//3) 마커에 오버레이 표시
@@ -414,7 +417,7 @@
 	    }            
 	}	
 
-	
+
 </script>
 
 
