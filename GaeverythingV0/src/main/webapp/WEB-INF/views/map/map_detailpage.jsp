@@ -49,7 +49,8 @@
 				<div class="listing-titlebar-title">
 					<h2>${detail.title} <span class="listing-tag"> Hospital </span></h2>
 					<div>
-						<span>average rating: 0 (0)</span><span style="margin-left: 20px;">12 Reviews</span><span style="margin-left: 20px;">159 people bookmarked this place</span>
+						<span>average rating: ${averageRatings} (${countRatings})</span><span style="margin-left: 20px;">${countReview} Reviews</span>
+						<span>   ${countReplies} Comments</span><span style="margin-left: 20px;">159 people bookmarked this place</span>
 					</div>					
 				</div>
 			</div>
@@ -137,7 +138,7 @@
 				
 			<!-- Comment -->
 			<div id="listing-reviews" class="listing-section">
-				<h3 class="listing-desc-headline margin-top-75 margin-bottom-20">Comment <span>(12)</span></h3>
+				<h3 class="listing-desc-headline margin-top-75 margin-bottom-20">Comment <span>(${countReplies})</span></h3>
 
 				<!-- Add Review Box -->
 				<div id="add-review" class="add-review-box" style="margin-top: 0px;">
