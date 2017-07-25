@@ -23,9 +23,22 @@ public class BoardDTO {
 	private int orderNo;
 	private int depth;
 	private int numOfCmt;
+	private String userLikeStatus;
 	private String address;
 	private String encodeUTF;
 	
+	
+	
+	
+
+	public String getUserLikeStatus() {
+		return userLikeStatus;
+	}
+
+	public void setUserLikeStatus(String userLikeStatus) {
+		this.userLikeStatus = userLikeStatus;
+	}
+
 	public int getLocationSeq() {
 		return locationSeq;
 	}

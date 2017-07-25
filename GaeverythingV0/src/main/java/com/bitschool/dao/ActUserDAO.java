@@ -35,10 +35,10 @@ public class ActUserDAO {
 		return flag;
 	}
 
-	public boolean deleteLikeStatus(ActUserDTO dto) {
+	public boolean deleteLikeStatus(ActUserDTO dto) throws SQLException{
 		// TODO Auto-generated method stub
 		boolean flag = false;
-		int aCnt = session.delete(nameSpace+"deleteLikeStatus", dto);
+		int aCnt = session.delete(nameSpace+".deleteLikeStatus", dto);
 		if(aCnt>0){
 			flag = true;
 		}

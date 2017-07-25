@@ -41,7 +41,12 @@ public class ActUserService {
 	public boolean deleteLikeStatus(ActUserDTO dto) {
 		// TODO Auto-generated method stub
 		boolean flag = false;
-		flag = dao.deleteLikeStatus(dto);
+		try {
+			flag = dao.deleteLikeStatus(dto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return flag;
 	}
 
