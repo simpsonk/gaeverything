@@ -37,9 +37,9 @@ public class ActUserManager {
 
 	public List<BoardDTO> checkLikeStatus(HttpSession session, ActUserService aService, List<BoardDTO> list) {
 		// TODO Auto-generated method stub
-		String userLikeStatus = "like-icon";
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		for(int i=0;i<list.size();i++){
+			String userLikeStatus = "like-icon";
 			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), list.get(i).getBoardNo(), "00");
 			boolean flag = aService.getLikeStatus(aDTO);
 			if(flag){

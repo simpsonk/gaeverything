@@ -93,7 +93,7 @@
 						<c:when test="${member.nickname == null }">
 							<div class="like col-md-3" style="width: 80px; height: 0px; padding-left: 0px; margin-top: 25px; padding-right: 0px ; float: right;">
 								<div class="listing-item-container list-layout">
-									<span class="like-icon" id="like" onclick="no_login_like(${param.page})"></span>
+									<span class="like-icon" id="like" onclick="no_login_like()"></span>
 								</div>
 							</div>	
 						</c:when>
@@ -328,6 +328,11 @@
                 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
               }
          });
+	}
+	
+	function no_login_like(){
+		alert("로그인을 해주세요!");
+		location.href = "/viewLogin?uri=/review/viewReviewList";
 	}
 	
 </script>
