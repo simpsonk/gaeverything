@@ -69,6 +69,11 @@
 		where locationSeq = #{locationSeq}
 	</select>	
 	
+	<!-- 게시판에서 작성한 리뷰 가져오기 -->
+	<select id="getReviews" parameterType="Integer" resultType="BoardDTO">
+		select * from board 
+		where locationSeq = #{locationSeq}
+	</select>
 	
 
 </mapper>

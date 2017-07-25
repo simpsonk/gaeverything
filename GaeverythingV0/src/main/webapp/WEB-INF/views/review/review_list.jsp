@@ -77,7 +77,7 @@
 			<!-- Content -->
 			<div class="post-content" id="wrapper">
 				<!-- title -->
-				<div id="titlebar" class="listing-titlebar  col-md-12" style="padding-top: 0px;padding-bottom: 0px; margin-bottom: 10px;">
+				<div id="titlebar" class="listing-titlebar  col-md-9" style="padding-top: 0px;padding-bottom: 0px; margin-bottom: 10px;">
 					<!-- title -->	
 					<div class="listing-titlebar-title">
 						<h3><a href = "/review/readPost?boardNo=${board.boardNo}&page=${page}">${board.title}</a>
@@ -87,6 +87,27 @@
 						</h3>
 					</div>	
 				</div>
+				<div class="optin button col-md-3" style="margin-top: 0px;margin-bottom: 12px;height: 40px;">
+					<!-- Like -->
+					<c:choose>
+						<c:when test="${member.nickname == null }">
+							<div class="like col-md-3" style="width: 80px; height: 0px; padding-left: 0px; margin-top: 25px; padding-right: 0px ; float: right;">
+								<div class="listing-item-container list-layout">
+									<span class="like-icon" id="like" onclick="no_login_like()"></span>
+								</div>
+							</div>	
+						</c:when>
+						<c:otherwise>
+							<div class="like col-md-3" style="width: 80px; height: 0px; padding-left: 0px; margin-top: 25px; padding-right: 0px; float: right;">
+								<div class="listing-item-container list-layout">
+									<span style="" class="${board.userLikeStatus}" id="like${board.boardNo}" onclick="like_clicked(${board.boardNo})"></span>
+								</div>
+							</div>	
+						</c:otherwise>
+					</c:choose>						
+				</div>
+				
+				
 				
 				<!-- nickname, comment, etc. -->	
 				<ul class="post-meta">
@@ -99,7 +120,7 @@
 						<li><a href="#">애견동반 식당, 카페</a></li>
 					</c:if>
 						<li><i class="sl sl-icon-bubble"></i> ${board.numOfCmt}</li>
-						<li><i class="sl sl-icon-heart"></i> ${board.countLike}</li>
+						<li id="numOflike${board.boardNo}"><i class="sl sl-icon-heart"></i> ${board.countLike}</li>
 						<li><i class="sl sl-icon-eye"></i> ${board.readCount}</li>
 						<li><fmt:formatDate value = "${board.regiDate}" pattern="YY/MM/dd hh:mm:ss"/></li>
 				</ul>
@@ -270,7 +291,7 @@
 <script type="text/javascript" src="<c:url value = '/resources/scripts/custom.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/jQuery.dotdotdot-master/src/jquery.dotdotdot.js'/>"></script>
 
-<script>
+<script type="text/javascript">
 	$(document).ready(function(){
 		$('.preview_box').dotdotdot({
 			ellipis : '...',
@@ -283,6 +304,37 @@
 			}
 		});
 	});
+	
+	function like_clicked(boardNo){
+		var class_name = document.getElementById("like"+boardNo).className;
+		var url = '/review/updateLike?like='+class_name+'&boardNo='+boardNo;
+		var id = document.getElementById("numOflike"+boardNo);
+		
+		var icon = document.createElement('i');
+		icon.className = 'sl sl-icon-heart';
+		var span = document.createElement('span');
+		
+		$.ajax({
+            url : url,
+            dataType : 'json',
+            type:"POST",
+            success : function(data) {
+             	id.innerHTML=""; //상위태그. 
+            	span.innerHTML = " "+data ; //1) 상위태그 안에 들어갈 "내용" 먼저 셋팅
+            	id.appendChild(icon); //	  2) 상위태그 안에 포함되어 "하위 태그"
+            	id.appendChild(span); //	       append함.
+             },
+            error : function(request, status, error) {
+                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+              }
+         });
+	}
+	
+	function no_login_like(){
+		alert("로그인을 해주세요!");
+		location.href = "/viewLogin?uri=/review/viewReviewList";
+	}
+	
 </script>
 
 </body>

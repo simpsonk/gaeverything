@@ -159,8 +159,8 @@
 							            }
 							        });
 								</script>
-						<input type="hidden" id="upload" name="uploadImg" value="">		
-						<input type="hidden" id="onlyText" name="onlyText" value="">
+						<input type="hidden" id="upload" name="uploadImg" value="${dto.uploadImg}">		
+						<input type="hidden" id="onlyText" name="onlyText" value="${dto.onlyText}">
 					</div>
 						<c:choose>
 							<c:when test="${empty dto}">

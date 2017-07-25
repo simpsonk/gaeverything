@@ -62,7 +62,7 @@ public class ReviewController {
 	public String viewReviewList(Model model, HttpSession session, @RequestParam(value="page", defaultValue="1") int page){
 		
 		//로그인 유지
-		boolean islogin = new LoginFilter().isLogin(session, model);
+		boolean isLogin = new LoginFilter().isLogin(session, model);
 		
 		//페이지 리스트
 		int amount = 5;
@@ -75,6 +75,11 @@ public class ReviewController {
 		List<BoardDTO> list = service.getPagedList(pDTO); 
 		model.addAttribute("page", page);
 		
+		//user like status like
+		if(isLogin){
+			list= new ActUserManager().checkLikeStatus(session, aService, list);
+		}
+		
 		//댓글수 받기
 		int countCmts = 0;
 		for(int i=0; i<list.size(); i++){
@@ -84,6 +89,7 @@ public class ReviewController {
 		}
 		model.addAttribute("list", list);
 		String url = "review/review_list";
+
 		return url;
 	}
 	
@@ -170,9 +176,7 @@ public class ReviewController {
 
 		//user like status like
 		if(isLogin){
-			MemberDTO member = (MemberDTO)session.getAttribute("member");
-			ActUserDTO acDTO = new ActUserDTO(member.getEmail(), boardNo, "00");
-			dto= new ActUserManager().checkLikeStatus(acDTO, aService, dto);
+			dto= new ActUserManager().checkLikeStatus(session, aService, dto);
 		}
 		
 

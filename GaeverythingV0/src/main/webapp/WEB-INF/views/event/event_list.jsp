@@ -307,7 +307,7 @@
 <script type="text/javascript" src="<c:url value = '/resources/scripts/custom.js'/>"></script>
 
 <!-- Maps -->
-<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=fa1e9654d15cae4c8c5f39d8b36f7984&libraries=clusterer"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ebfbfbd7a5ec71c10c63936dd90beb22&libraries=clusterer"></script>
 <script>
 	
 	//1. 기본 지도 보이기

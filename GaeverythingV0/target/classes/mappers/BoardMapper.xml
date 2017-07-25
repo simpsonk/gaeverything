@@ -32,7 +32,7 @@
 	</update>
 	
 	<update id="modify" parameterType="BoardDTO">
-		update board set title=#{title}, message=#{message}, rating=#{rating}, address=#{address}, boardCategory = #{boardCategory}, onlyText = #{onlyText} where boardno=#{boardNo}
+		update board set title=#{title}, message=#{message}, rating=#{rating}, address=#{address}, boardCategory = #{boardCategory}, onlyText = #{onlyText}, uploadImg = #{uploadImg} where boardno=#{boardNo}
 	</update>
 	
 	<delete id="remove" parameterType="Integer">

@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.bitschool.dao.LocationDetailDAO;
+import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.DetailCommentDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
@@ -156,4 +157,17 @@ public class LocationDetailService {
 		}
 		return count;
 	}
+	
+	// 게시판에서 작성한 리뷰 가져오기
+	public List<BoardDTO> getReviews(int locationSeq){
+		List<BoardDTO> dto = null;
+		try {
+			dto = dao.getReviews(locationSeq);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dto;
+	}
+
 }

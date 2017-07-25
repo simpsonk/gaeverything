@@ -50,12 +50,12 @@
 					<h2>${detail.title} <span class="listing-tag"> Hospital </span></h2>
 					<div>
 						<span>average rating: ${averageRatings} (${countRatings})</span><span style="margin-left: 20px;">${countReview} Reviews</span>
-						<span>   ${countReplies} Comments</span><span style="margin-left: 20px;">159 people bookmarked this place</span>
+						<span>${countReplies} Comments</span><span style="margin-left: 20px;">159 people bookmarked this place</span>
 					</div>					
 				</div>
 			</div>
 			<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
-					<button class="like-button"><span class="like-icon"></span> Bookmark this listing</button> 
+				<button class="like-button"><span class="like-icon"></span> Bookmark this listing</button> 
 			</div>
 		
 			
@@ -110,7 +110,29 @@
 					<div class="col-lg-10">
 						<div style="height: 50px;margin-top: 34px;">
 							<div class = "col-lg-8" style="padding-top: 8px;">
-								<span>이 장소의 사진을 첫 번째로 등록해주세요.</span>
+						
+					<c:if test="${reviewList == null}">
+							 	<span>이 장소의 리뷰를 첫 번째로 등록해주세요.</span> 
+					</c:if>
+							<c:forEach var="reviews" items="${reviewList}">
+							<div class="row">
+								<!-- Listing Item -->
+								<div class="col-lg-6 col-md-12">
+									<a href="/review/readPost?boardNo=${reviews.boardNo}&page=1" class="listing-item-container">
+										<div class="listing-item">
+											<img src="/resources/upload/${reviews.uploadImg}" alt="">							
+											<div class="listing-item-content">							
+												<h3>${reviews.title}</h3>
+												<span>${reviews.onlyText}</span>
+												<span>${reviews.nickname}</span> 
+												<span>${reviews.regiDate}</span>
+											</div>
+										</div>
+										<span class="star-rating" data-rating="${reviews.rating}">${reviews.rating}</span>															
+									</a>
+								</div>
+							</div>
+							</c:forEach>							
 							</div>
 							<div class="add-review-photos col-lg-4" style="position:static;">
 								<div class="photoUpload">
@@ -305,7 +327,7 @@
 <script type="text/javascript" src="<c:url value = '/resources/scripts/jquery-ui.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/tooltips.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/custom.js'/>"></script>
-<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=fa1e9654d15cae4c8c5f39d8b36f7984"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ebfbfbd7a5ec71c10c63936dd90beb22"></script>
 
 <script type="text/javascript">
 	var longitude = document.getElementById('longitude').value;
