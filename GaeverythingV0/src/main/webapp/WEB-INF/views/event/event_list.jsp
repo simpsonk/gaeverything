@@ -316,11 +316,12 @@
 			level  : 11 //확대, 축소정도
 		};
 	var map = new daum.maps.Map(container, options);
-	/////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////
 		
 	var markers = [];
 	var makerPostions = [];
 	var overlays = [];
+	
 		
 	$(document).ready(function() {
 		$.ajax ({
@@ -329,41 +330,54 @@
 			type : 'post',
 			success : function(data){
  				createMarkers(data);
- 				createOverlays(data);
  				setMarkers(map);
- 				
 			},
 			error : function(request, status, error) {
 				 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-          }
+          	}
 		});
-		
 	});
 		
 	function createMarkers(data){
-		for(i=0; i<data.length; i++){
+		createOverlays(data);
+		for(var i=0; i<data.length; i++){
 			//1) 마커위치
+			var overlay = overlays[i];
 			var markerPostion = new daum.maps.LatLng(data[i].latitude, data[i].longitude);
+			makerPostions.push(markerPostion);
 			//2) 마커이미지 셋팅
 			var imgSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
 				imgSize = new daum.maps.Size(24, 36),
 				imgOption = {offset: new daum.maps.Point(27,69)};
-			
 			//3) 마커이미지 셋팅값 넣어주기
 			var markerImg = new daum.maps.MarkerImage(imgSrc, imgSize, imgOption);
 			//4) 마커만들기(이미지, 위치)
 			var marker = new daum.maps.Marker({
 				position: markerPostion,
 				image : markerImg
-			});	
-			//만든 마커를 배열에 추가
-			markers.push(marker);
-		}//for문 끝
-		
-	 }
+			});
+			//5)마커+오버레이에 클릭이벤트 등록
+ 			addEvent(marker, overlay);
+ 			//6)만든 마커를 배열에 추가
+			markers.push(marker);			
+		}//for문
+	}
+	
+	function addEvent(marker, overlay){
+		daum.maps.event.addListener(marker, 'click', function(){
+			overlay.setMap(map);
+		});
+	}
+	
+	function closeOverlay(){
+		for(var i=0; i<overlays.length; i++){
+			overlays[i].setMap(null);
+		}
+	}
 	
 	function createOverlays(data){
-		for(i=0; i<data.length; i++){
+		//1) 오버레이 콘텐츠 셋팅
+		for(var i=0; i<data.length; i++){
 			var content = '<div class="wrap">'+
 			'	<div class="info">' + 
 			'		<div class="title">' + data[i].eventName + 
@@ -380,108 +394,26 @@
 			'		</div>'+
 			'	</div>' + 
 			'</div>';
-			
+			//2)오버레이 찍을 위치
 			var overlayPosition =new daum.maps.LatLng(data[i].latitude, data[i].longitude);
 			//3) 마커에 오버레이 표시
 			var overlay = new daum.maps.CustomOverlay({
 				content	 : content, //보여줄 내용 
-				map 	 : map, 	//뿌릴 맵
+				//map 	 : map, 	//뿌릴 맵
 				position : overlayPosition
 			});
-		}
-		overlays.push(overlay);
+			//4)만든 오버레이 배열에 추가
+			overlays.push(overlay);
 		}//for
+	}
 		
 	// 배열에 추가된 마커들을 지도에 표시
 	function setMarkers(map) {
-	    for(i= 0; i<markers.length; i++) {
+	    for(var i= 0; i<markers.length; i++) {
 	        markers[i].setMap(map);
 	    }            
 	}	
 
-		
-		
-	/* //3) 마커에 오버레이 표시
-	var overlay = new daum.maps.CustomOverlay({
-		content	 : content,
-		map 	 : map,
-		position : marker[i].getPosition()
-	});
-	
-	//마커에 클릭이벤트 등록
-	daum.maps.event.addListener(marker, 'click', function(){
-		overlay.setMap(map);
-	});
-	
-	function closeOverlay(){
-		overlay.setMap(null);
-	}
-	 */
-			
-
-
-	
-	//마커 뿌릴 데이터 가져오기
-		/* $.ajax ({
-			url : "event/getAllEvents",
-			dataType : "json",
-			type : 'post',
-			success : function(data){
-				//data: 10개 이벤트의 리스트가 옴 
-				//마커 10개 생성(1개당 : 마커위치, 오버레이, 마커에 오버레이 셋팅 * 10번)
-				var markers = [];
-		
-				for(i=0; i<data.length; i++){
-					
-					//1) 마커위치
-					markerPostion = new daum.maps.LatLng(data[i].latitude, data[i].longtitude);
-					marker = new daum.maps.Marker({
-						position: markerPostion, 
-						map		: map,
-						image	: markerImg,
-						clickable: true
-					});	
-				
-					//2) 오버레이 내용
-					var content = '<div class="wrap">'+
-									'	<div class="info">' + 
-									'		<div class="title">' + data.eventName + 
-									'			<div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
-									'		</div>	' + 
-									'		<div class="body">' + 
-									'			<div class="img">' + 
-									'				<img src="http://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70">' +
-									'				</div>' + 
-									'			<div class="desc">' + 
-									'				<div class="ellipsis">'+data.address+'</div>' +
-									'				<div><a href="'+data.link+'" target="_blank" class="link">홈페이지</a></div>' +
-									'			</div>'+
-									'		</div>'+
-									'	</div>' + 
-									'</div>';
-								
-					//3) 마커에 오버레이 표시
-					var overlay = new daum.maps.CustomOverlay({
-						content	 : content,
-						map 	 : map,
-						position : marker[i].getPosition()
-					});
-					
-					//마커에 클릭이벤트 등록
-					daum.maps.event.addListener(marker, 'click', function(){
-						overlay.setMap(map);
-					});
-					
-					function closeOverlay(){
-						overlay.setMap(null);
-					}
-				add.markers[marker];
-				}//for문
-			}//success
-		}) */
-		
-
-	
 	
 </script>
 
