@@ -5,7 +5,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-
 <!-- Basic Page Needs
 ================================================== -->
 <title>Listeo</title>
@@ -158,7 +157,7 @@
 							<!-- Leave Rating -->
 								<!-- rating -->
 						<div class = "rating col-md-12" style="padding-bottom: 10px;">	
-							<h5>Rating</h5>							
+							<h5>Rating</h5>					
 								
 							<fieldset class="rating">
   								<input type="radio" id="star5" name="rating" value="5.0"  />
@@ -190,7 +189,8 @@
 	   							
 	   							<input type="radio" id="starhalf" name="rating" value="0.5" />
 	   							<label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
-							</fieldset>						
+							</fieldset>
+													
 						</div>
 						</div>
 	
@@ -200,7 +200,7 @@
 					
 						<fieldset>
 							<div>
-								<label>Comment:</label>
+								<label>Comment:	</label>
 								<textarea id="commMsg" name="message" cols="40" rows="3"></textarea>
 							</div>
 	
@@ -323,13 +323,17 @@
 
 //댓글 등록 버튼 클릭시
 $('#registComment').click(function(){
+	checkMessage();
 	var ds = document.getElementById("add-comment");
 	var url = "/map/detail/addComment";
 	ds.action = url;
-	ds.submit();
+	if($("#commMsg").val()!='' && 
+			$('input:radio[name="rating"]').is(":checked")){
+		ds.submit();
+	}else{
+		return;
+	}			
 });
-
-
 
 //댓글 수정 버튼 클릭시
 $('#modifyComment').click(function(){
@@ -340,11 +344,7 @@ $('#modifyComment').click(function(){
 });
 
 
-/* function go_url(type, commSeq){
- 	var url = "/map/detail/viewDeleteComment";
- 	
-}  */
-
+//댓글  Edit, Delete
 function go_url(type, commSeq){	
 	var commentSeq = document.getElementById("commentSeq");
 	var commMsg = document.getElementById("commMsg");
@@ -386,6 +386,18 @@ function go_url(type, commSeq){
 		ds.submit();
 	}
 }
+
+//등록시 필수항목 체크
+function checkMessage(){ 	  
+	  if($('input:radio[name="rating"]').is(":checked")==false){
+		  alert('별점을 표시해주세요.');
+	  }
+	  if($("#commMsg").val()==''){
+		  alert('코멘트를 입력해주세요.');
+	  }
+}
+
+
 
 </script>
 
