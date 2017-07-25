@@ -50,12 +50,12 @@
 					<h2>${detail.title} <span class="listing-tag"> Hospital </span></h2>
 					<div>
 						<span>average rating: ${averageRatings} (${countRatings})</span><span style="margin-left: 20px;">${countReview} Reviews</span>
-						<span>   ${countReplies} Comments</span><span style="margin-left: 20px;">159 people bookmarked this place</span>
+						<span>${countReplies} Comments</span><span style="margin-left: 20px;">159 people bookmarked this place</span>
 					</div>					
 				</div>
 			</div>
 			<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
-					<button class="like-button"><span class="like-icon"></span> Bookmark this listing</button> 
+				<button class="like-button"><span class="like-icon"></span> Bookmark this listing</button> 
 			</div>
 		
 			

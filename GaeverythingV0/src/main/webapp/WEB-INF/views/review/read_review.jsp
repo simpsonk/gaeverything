@@ -79,9 +79,9 @@
 		var isLogin = document.getElementById("isLogin").value;
 		if(isLogin==''){
 			alert("댓글작성은 회원만 가능합니다.");
-			var boardNo = document.getElementById("boardNo").value;
+ 			var boardNo = document.getElementById("boardNo").value;
 			location.href = "/viewLogin?uri=/review/readPost?boardNo="+boardNo+"&page="+page;
-		}else{
+ 		}else{
 			if($("#textChk").val()!=''){
 				var url = "/review/readPost";
 				var check = confirm("댓글을 등록하시겠습니까?");
@@ -340,7 +340,7 @@
 				<input type="hidden" id="isLogin" value="${member.nickname}">
 				<div class="clearfix col-md-9" style="margin-right: 26px;"></div>
 				<div class ="submit-cmt">
-					<button class="button" onclick="add_cmt(${param.page})">Submit Comment</button>
+					<button type = "button" class="button" onclick="add_cmt(${param.page})">Submit Comment</button>
 				</div>
 				
 				<div class="clearfix"></div>
@@ -376,14 +376,14 @@
 								<div class="comment-by" style="height: 70px;padding-bottom: 5px;">${cmt.nicknameCmt}
 								<span class="date" id="date" style="font-size: 8px;">등록일 <fmt:formatDate value = "${dto.regiDate}" pattern="YY/MM/dd hh:mm:ss"/></span>	
 									
-									<c:if test="${member.nickname == cmt.nicknameCmt}">
-										<div class="comment-by">
-											<a href="#" class="reply" " onclick="cmt_url(1, ${loop.index}, ${param.page});" return false; ><i class="sl sl-icon-note"></i> Edit</a>
-										</div>
-										<div class="comment-by">
-											<a href="#" class="reply" style="margin-top: 36px;" onclick="cmt_url(2, ${loop.index}, ${param.page});" return false; ><i class="sl sl-icon-close"></i> Delete</a>
-										</div>
-									</c:if>	
+								<c:if test="${member.nickname == cmt.nicknameCmt}">
+									<div class="comment-by">
+										<a href="#" class="reply" " onclick="cmt_url(1, ${loop.index}, ${param.page});" return false; ><i class="sl sl-icon-note"></i> Edit</a>
+									</div>
+									<div class="comment-by">
+										<a href="#" class="reply" style="margin-top: 36px;" onclick="cmt_url(2, ${loop.index}, ${param.page});" return false; ><i class="sl sl-icon-close"></i> Delete</a>
+									</div>
+								</c:if>	
 								</div>
 								<div class="comment-body">
 									<p name="commentBody" id="commentBody">${cmt.commentBody}</p>
