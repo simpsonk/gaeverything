@@ -110,16 +110,25 @@
 					<div class="col-lg-10">
 						<div style="height: 50px;margin-top: 34px;">
 							<div class = "col-lg-8" style="padding-top: 8px;">
-							<!-- 	<span>이 장소의 사진을 첫 번째로 등록해주세요.</span> -->
-							<span style="padding-right: 200px;">글 제목</span>
-							<span style="padding-right: 50px;">작성자</span>
-							<span>별점</span>
+							 	<span>이 장소의 리뷰를 첫 번째로 등록해주세요.</span> 
 							<c:forEach var="reviews" items="${reviewList}">
-								<div>
-									<span style="padding-right: 200px;"><a href="/review/readPost?boardNo=${reviews.boardNo}&page=${param.page}">${reviews.title}</a></span>
-									<span style="padding-right: 50px;">${reviews.nickname}</span>
-									<span>${reviews.rating}</span>
+							<div class="row">
+								<!-- Listing Item -->
+								<div class="col-lg-6 col-md-12">
+									<a href="/review/readPost?boardNo=${reviews.boardNo}&page=1" class="listing-item-container">
+										<div class="listing-item">
+											<img src="/resources/upload/${reviews.uploadImg}" alt="">							
+											<div class="listing-item-content">							
+												<h3>${reviews.title}</h3>
+												<span>${reviews.onlyText}</span>
+												<span>${reviews.nickname}</span> 
+												<span>${reviews.regiDate}</span>
+											</div>
+										</div>
+										<span class="star-rating" data-rating="${reviews.rating}">${reviews.rating}</span>															
+									</a>
 								</div>
+							</div>
 							</c:forEach>							
 							</div>
 							<div class="add-review-photos col-lg-4" style="position:static;">
