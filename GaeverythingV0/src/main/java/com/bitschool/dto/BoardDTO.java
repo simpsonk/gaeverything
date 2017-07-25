@@ -193,22 +193,16 @@ public class BoardDTO {
 		this.onlyText = onlyText;
 	}
 
-
-
-
 	@Override
 	public String toString() {
-		return "BoardDTO [boardCategory=" + boardCategory + ", boardNo=" + boardNo + ", nickname=" + nickname
-				+ ", title=" + title + ", rating=" + rating + ", countLike=" + countLike + ", message=" + message
-				+ ", onlyText=" + onlyText + ", uploadImg=" + uploadImg + ", regiDate=" + regiDate + ", readCount="
-				+ readCount + ", groupNo=" + groupNo + ", parentNo=" + parentNo + ", orderNo=" + orderNo + ", depth="
-				+ depth + ", numOfCmt=" + numOfCmt + ", address=" + address + ", encodeUTF=" + encodeUTF + "]";
+		return "BoardDTO [boardCategory=" + boardCategory + ", locationSeq=" + locationSeq + ", boardNo=" + boardNo
+				+ ", nickname=" + nickname + ", title=" + title + ", rating=" + rating + ", countLike=" + countLike
+				+ ", message=" + message + ", onlyText=" + onlyText + ", uploadImg=" + uploadImg + ", regiDate="
+				+ regiDate + ", readCount=" + readCount + ", groupNo=" + groupNo + ", parentNo=" + parentNo
+				+ ", orderNo=" + orderNo + ", depth=" + depth + ", numOfCmt=" + numOfCmt + ", userLikeStatus="
+				+ userLikeStatus + ", address=" + address + ", encodeUTF=" + encodeUTF + "]";
 	}
 
-
-
-
-	
 	
 	
 

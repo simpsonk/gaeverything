@@ -72,7 +72,7 @@
 		<form action="" method="post" id="postData">
 			<!-- Blog Post -->
 			<div class="blog-post">
-				<input type="hidden" id = "locationSeq" name = "locationSeq">		
+				<input type="hidden" id = "locationSeq" name = "locationSeq" value = "${dto.locationSeq}">		
 				<!-- category -->		
 				<div class="col-md-4">
 					<h5>Category</h5>
@@ -99,7 +99,6 @@
 						<button type="button" class="button border margin-top-5" onclick="search_shop()" style="width: 110px;">Search</button>
 					</div>
 				</div>
-				<input type="hidden" name="locationSeq" id="locationSeq" value="">
 								
 				<!-- rating -->
 					<div class = "rating col-md-12" style="padding-bottom: 10px;">	

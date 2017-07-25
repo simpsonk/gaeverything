@@ -1,16 +1,18 @@
 package com.bitschool.utils;
 
 import com.bitschool.dto.ActUserDTO;
+import com.bitschool.dto.BoardDTO;
 import com.bitschool.service.ActUserService;
 
 public class ActUserManager {
-	public String checkLikeStatus(ActUserDTO dto, ActUserService service){
+	public BoardDTO checkLikeStatus(ActUserDTO dto, ActUserService service, BoardDTO dto2){
 		String userLikeStatus = "like-icon";
 		boolean flag = service.getLikeStatus(dto);
 		if(flag){
 			userLikeStatus = "like-icon liked";
 		}
-		return userLikeStatus;
+		dto2.setUserLikeStatus(userLikeStatus);
+		return dto2;
 	}
 	
 	public boolean registLikeStatus(ActUserDTO dto, ActUserService service){

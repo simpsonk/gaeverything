@@ -168,15 +168,11 @@ public class ReviewController {
 		System.out.println("read post ");
 		BoardDTO dto = service.selectToRead(boardNo);
 
-		
-		
-		
+		//user like status like
 		if(isLogin){
-			//user like status like
 			MemberDTO member = (MemberDTO)session.getAttribute("member");
 			ActUserDTO acDTO = new ActUserDTO(member.getEmail(), boardNo, "00");
-			String userLikeStatus = new ActUserManager().checkLikeStatus(acDTO, aService);
-			dto.setUserLikeStatus(userLikeStatus);
+			dto= new ActUserManager().checkLikeStatus(acDTO, aService, dto);
 		}
 		
 
@@ -199,6 +195,7 @@ public class ReviewController {
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		BoardDTO dto = service.selectToRead(boardNo);
 		model.addAttribute("dto", dto);
+		System.out.println(dto);
 		String url = "review/review_regist";
 		return url;
 	}
