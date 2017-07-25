@@ -30,7 +30,7 @@ public class EventController {
 	@RequestMapping(value="/getAllEvents", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody List<EventDTO> getAllEvents(){
 		List<EventDTO> data = service.getAllLists();
-		System.out.println(data.size());
+		System.out.println("리스트개수:" + data.size());
 		return data;
 		
 	}

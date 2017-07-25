@@ -20,6 +20,7 @@ public class EventDAO {
 
 	public List<EventDTO> readAll()  throws SQLException {
 		List<EventDTO> list = session.selectList(namespace+".readAll");		
+		System.out.println("다오결과:" + list.size());
 		return list;
 	}
 	

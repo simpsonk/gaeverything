@@ -19,6 +19,7 @@ public class EventService {
 		List<EventDTO> list = null;
 		try {
 			list = eDAO.readAll();
+			System.out.println("서비스 리스트개수:" + list.size());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

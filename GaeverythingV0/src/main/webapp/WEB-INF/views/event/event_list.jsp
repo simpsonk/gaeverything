@@ -359,6 +359,7 @@
 			});
 			//5)마커+오버레이에 클릭이벤트 등록
  			addEvent(marker, overlay);
+ 			
  			//6)만든 마커를 배열에 추가
 			markers.push(marker);			
 		}//for문
@@ -370,23 +371,18 @@
 		});
 		
 	}
-	
-	function closeOverlay(overlay){
-		overlay.setMap(null);
-	}
 
-	
 	function createOverlays(data){
 		//1) 오버레이 콘텐츠 셋팅
 		for(var i=0; i<data.length; i++){
 			var content = '<div class="wrap">'+
 			'	<div class="info">' + 
 			'		<div class="title">' + data[i].eventName + 
-			'			<div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
+			'			<div class="close" onclick="closeOverlay('+i+')" title="닫기"></div>' + 
 			'		</div>	' + 
 			'		<div class="body">' + 
 			'			<div class="img">' + 
-			'				<img src="http://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70">' +
+			'				<img src="/resources/images/event/'+data[i].thumbnail+'" width="73" height="70">' +
 			'				</div>' + 
 			'			<div class="desc">' + 
 			'				<div class="ellipsis">'+data[i].address+'</div>' +
@@ -408,6 +404,10 @@
 			//4)만든 오버레이 배열에 추가
 			overlays.push(overlay);
 		}//for
+	}
+	
+	function closeOverlay(i){
+		overlays[i].setMap(null);
 	}
 		
 	// 배열에 추가된 마커들을 지도에 표시

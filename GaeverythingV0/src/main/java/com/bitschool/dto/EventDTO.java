@@ -18,6 +18,7 @@ public class EventDTO {
 	private String fee;
 	private String discountInfo;
 	private String regist;
+	private String thumbnail;
 	
 	public int getEventNo() {
 		return eventNo;
@@ -102,6 +103,12 @@ public class EventDTO {
 	}
 	public void setRegist(String regist) {
 		this.regist = regist;
+	}
+	public String getThumbnail() {
+		return thumbnail;
+	}
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
 	}
 	
 	
