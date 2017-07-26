@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -111,23 +112,30 @@
 			
 			<!-- regist photo test push case-->
 			<div id="regist-review" class="listing-section margin-top-70 margin-bottom-30">
-				<div class="col-lg-12" style="padding-left: 0px;">
-					<div class="col-lg-2" style="padding-left: 0px;">
-						<h3 class="listing-desc-headline ">Review</h3>
+				<div class="col-lg-2" style="padding-left: 0px;">				
+					<h3 class="listing-desc-headline ">Review <span>(${countReview})</span></h3>							
+				</div>
+				<div class="col-lg-10">
+					<div style="height: 50px;margin-top: 34px;">
+						<c:if test="${empty reviewList}">
+						<div class = "col-lg-8" style="padding-top: 8px;">							
+						 	<span>이 장소의 리뷰를 첫 번째로 등록해주세요.</span> 							
+						</div>
+						</c:if>	
+						<div class="add-review-photos col-lg-4" style="position:static;">		
+							<div class="photoUpload">
+								<span><i class="im im-icon-Pencil"></i> Write Review</span>
+							</div>
+						</div>	
 					</div>
-					<!-- Uplaod Photos -->
-					<div class="col-lg-10">
-						<div style="height: 50px;margin-top: 34px;">
-							<div class = "col-lg-8" style="padding-top: 8px;">
-						
-					<c:if test="${reviewList == null}">
-							 	<span>이 장소의 리뷰를 첫 번째로 등록해주세요.</span> 
-					</c:if>
+				</div>
+			<div class="col-lg-12" style="padding-left: 0px;">
 					<div class="row">
-							<c:forEach var="reviews" items="${reviewList}">
-							
+							<c:forEach var="reviews" items="${reviewList}" varStatus="status">
+								<c:if test="${status.index<3}">							
+
 								<!-- Listing Item -->
-								<div class="col-lg-6 col-md-12">
+								<div class="col-md-4">
 									<a href="/review/readPost?boardNo=${reviews.boardNo}&page=1" class="listing-item-container">
 										<div class="listing-item">
 											<c:choose>
@@ -139,8 +147,7 @@
 											</c:otherwise>	
 											</c:choose>				
 											<div class="listing-item-content">							
-												<h3>${reviews.title}</h3>
-												<span>${reviews.onlyText}</span><br>
+												<h3>${reviews.title}</h3>												
 												<span>${reviews.nickname}</span><br>
 												<span>${reviews.regiDate}</span>
 											</div>
@@ -148,19 +155,15 @@
 										<span class="star-rating" data-rating="${reviews.rating}">${reviews.rating}</span>															
 									</a>
 								</div>
-						
+								</c:if>
 							</c:forEach>	
-								</div>						
-							</div>
-							<div class="add-review-photos col-lg-4" style="position:static;">
-								<div class="photoUpload">
-									<span><i class="im im-icon-Pencil"></i> Write Review</span>
-								</div>
-							</div>
-						</div>
 					</div>
-				</div>
-			</div>
+					<c:if test="${fn:length(reviewList) > 3}">
+					<div class="row">
+							<a href="/review/viewDetailReviews?locationSeq=${detail.locationSeq}&page=1" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
+					</div>
+					</c:if>
+					</div>
 			<!-- write Review / End -->
 
 		

@@ -31,6 +31,7 @@ import com.bitschool.service.ActUserService;
 import com.bitschool.service.IBoardService;
 import com.bitschool.service.ICommentService;
 import com.bitschool.service.IPagerService;
+import com.bitschool.service.LocationDetailService;
 import com.bitschool.service.LocationService;
 import com.bitschool.utils.ActUserManager;
 import com.bitschool.utils.LoginFilter;
@@ -55,8 +56,20 @@ public class ReviewController {
 	
 	@Inject
 	private ActUserService aService;
-
 	
+	@Inject
+	private LocationDetailService dService; 
+
+	//디테일페이지에서 리뷰 더보기로 게시판 연결
+	@RequestMapping(value = "/viewDetailReviews", method = RequestMethod.GET)
+	public String viewDetailReviews(HttpSession session,  @RequestParam(value="locationSeq") int locationSeq,
+			@RequestParam(value="page", defaultValue="1") int page,Model model){
+		String url = "review/review_list";
+		List<BoardDTO> reviewList = dService.getReviews(locationSeq);		
+		model.addAttribute("list",reviewList);
+		model.addAttribute("page",page);
+		return url;
+	}
 	
 	@RequestMapping(value = "/viewReviewList", method = {RequestMethod.GET, RequestMethod.POST})
 	public String viewReviewList(Model model, HttpSession session, @RequestParam(value="page", defaultValue="1") int page){
@@ -96,6 +109,8 @@ public class ReviewController {
 
 		return url;
 	}
+	
+	
 	
 	@RequestMapping(value = "/viewReviewRegist", method = {RequestMethod.GET, RequestMethod.POST})
 	public String viewReviewRegist(HttpSession session, Model model){

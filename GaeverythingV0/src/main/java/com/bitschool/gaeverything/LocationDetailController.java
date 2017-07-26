@@ -78,6 +78,7 @@ public class LocationDetailController {
 		return url;
 	}
 	
+	
 	//´ñ±Û µî·Ï
 	@RequestMapping(value="/addComment",method=RequestMethod.POST)
 	public String addComment(HttpSession session,Model model,
@@ -150,7 +151,7 @@ public class LocationDetailController {
 		return url;
 	}
 	
-	
+
 	
 
 }

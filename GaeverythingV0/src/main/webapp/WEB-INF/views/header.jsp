@@ -12,8 +12,13 @@
 			    padding-bottom: 10px;">
 				
 				<!-- Logo -->
-				<div id="logo">
+				<!-- <div id="logo">
 					<a href="/"><img src="/resources/images/logo3.png" alt=""></a>
+				</div>
+				 -->
+				<div id="logo">
+					<a href="/"><img src="/resources/images/gaeverything_black.png" alt=""></a>
+					<a href="/" class="dashboard-logo"><img src="/resources/images/gaeverything_white.png" alt=""></a>
 				</div>
 
 				<!-- Mobile Navigation -->
