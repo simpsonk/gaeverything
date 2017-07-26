@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -147,11 +148,12 @@
 								</div>
 								</c:if>
 							</c:forEach>	
-					</div>	
+					</div>
+					<c:if test="${fn:length(reviewList) > 3}">
 					<div class="row">
 							<a href="/review/viewDetailReviews?locationSeq=${detail.locationSeq}&page=1" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
-					</div>					
-							
+					</div>
+					</c:if>
 					</div>
 			<!-- write Review / End -->
 
