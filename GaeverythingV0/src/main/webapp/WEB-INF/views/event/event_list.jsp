@@ -200,42 +200,22 @@
 			<!-- Search / End -->
 
 
-		<section class="listings-container margin-top-30">
+		<section class="listings-container margin-top-30" id="menu_wrap">
 			<!-- Sorting / Layout Switcher -->
 			<div class="row fs-switcher">
 
 				<div class="col-md-6">
 					<!-- Showing Results -->
-					<p class="showing-results">14 Results Found </p>
+					<p class="showing-results"> Results Found </p>
 				</div>
-
 			</div>
 
-
-			<!-- Listings -->
+			
+			<!-- Listings(ul) -->
 			<div class="row fs-listings" id="eventList">
 				
 				<!-- Listing Item -->
-				<div class="col-lg-6 col-md-12" id="menu-wrap">
-					<a href="listings-single-page.html" class="listing-item-container" data-marker-id="1">
-						<div class="listing-item">
-							<img src="/resources/images/listing-item-01.jpg" alt="">
-
-							<div class="listing-badge now-open">Now Open</div>
-							
-							<div class="listing-item-content">
-								<span class="tag">Eat & Drink</span>
-								<h3>Tom's Restaurant</h3>
-								<span>964 School Street, New York</span>
-								<span>17/7/20 - 17/7/30</span>
-							</div>
-							<span class="like-icon"></span>
-						</div>
-						<div class="star-rating" data-rating="3.5">
-							<div class="rating-counter">(12 reviews)</div>
-						</div>
-					</a>
-				</div>
+				
 				<!-- Listing Item / End -->
 			</div>
 			<!-- Listings Container / End -->
@@ -252,11 +232,7 @@
 							<!-- Pagination -->
 							<div class="pagination-container margin-top-15 margin-bottom-40">
 								<nav class="pagination">
-									<ul>
-										<li><a href="#" class="current-page">1</a></li>
-										<li><a href="#">2</a></li>
-										<li><a href="#">3</a></li>
-										<li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
+									<ul id="pagination">	
 									</ul>
 								</nav>
 							</div>
@@ -314,7 +290,7 @@
 	var container = document.getElementById("map"), //지도띄울 div
 		options = {
 			center :  new daum.maps.LatLng(37.6646797, 126.7421222), //지도 시작 시 좌표
-			level  : 11 //확대, 축소정도
+			level  : 12 //확대, 축소정도
 		};
 	var map = new daum.maps.Map(container, options);
 	/////////////////////////////////////////////////////////////////
@@ -332,6 +308,9 @@
 			success : function(data){
  				createMarkers(data);
  				setMarkers(map);
+ 				eventList(data);
+ 				
+ 				
 			},
 			error : function(request, status, error) {
 				 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -369,7 +348,6 @@
 		daum.maps.event.addListener(marker, 'click', function(){
 			overlay.setMap(map);
 		});
-		
 	}
 
 	function createOverlays(data){
@@ -388,7 +366,7 @@
 			'				<div class="ellipsis">'+data[i].address+'</div>' +
 			'				<div><span>'+"날짜: "+data[i].startDate+'</span></div>'+
 			'				<div><a href="'+data[i].link+ '" target="_blank" class="link">홈페이지 확인</a></div>' +
-			'			</div>'+
+			'			</div>'+	
 			'		</div>'+
 			'	</div>' + 
 			'</div>';
@@ -417,6 +395,62 @@
 	    }            
 	}	
 
+	function eventList(data){
+		displayEvent(data);
+	}
+	
+	
+	function displayEvent(data){
+		var listEl = document.getElementById("eventList"),
+			menuEl = document.getElementById("menu-wrap"),
+			fragment = document.createDocumentFragment();
+			makeEventList(data);		
+	}
+
+	
+	
+	//listEl의 fragment로 넣어줌
+	function makeEventList(data){
+		//div태그 안에 들어갈 내용을 innerHTML로 붙여줌
+		var listEl = document.getElementById("eventList"),
+			menuEl = document.getElementById("menu-wrap"),
+			fragment = document.createDocumentFragment();
+		var el;
+		for(var i=0; i<data.length; i++){
+			el = document.createElement("div");
+			var itemStr = '<a href="listings-single-page.html" class="listing-item-container" data-marker-id="1">' + 
+					  '		<div class="listing-item">' + 
+					  '			<img src="/resources/images/event/'+data[i].thumbnail+'" alt="">' + 
+					  //'			<div class="listing-badge now-open">Now Open</div>' + 
+					  '			<div class="listing-item-content">' + 
+					  '				<span class="tag">Fair</span>' + 
+					  '				<h3>'+data[i].eventName+'</h3>' + 
+					  '				<span>'+data[i].address+'</span>' + 
+					  '				<span>' + data[i].startDate + '-' + data[i].endDate +'</span>' + 
+					  '			</div>' + 
+					  '			<span class="like-icon"></span>	'+
+					  '		</div>'+
+					  '		<div class="star-rating" data-rating="3.5">' + 
+					  '			<div class="rating-counter">(12 reviews)</div>' + 
+					  '		</div>' + 
+					  '	   </a>';
+			el.innerHTML = itemStr; 
+			el.className = 'col-lg-6 col-md-12';
+			fragment.appendChild(el);
+		}//for
+		listEl.appendChild(fragment);	
+	}
+	
+	function removeAllChildNods(el) {   
+	    while (el.hasChildNodes()) {
+	        el.removeChild (el.lastChild);
+	    }
+	}
+	
+	
+
+
+	
 
 </script>
 
