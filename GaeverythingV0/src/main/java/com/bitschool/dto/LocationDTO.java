@@ -20,6 +20,10 @@ public class LocationDTO {
 	private String longitude;
 	private String latitude;
 	private String radius;
+	private String userLikeStatus;
+
+	
+	
 	
 	
 	private int relatedPlaceCount;
@@ -28,7 +32,13 @@ public class LocationDTO {
 	private String replacePlace;
 	
 	
-	
+	public String getUserLikeStatus() {
+		return userLikeStatus;
+	}
+	public void setUserLikeStatus(String userLikeStatus) {
+		this.userLikeStatus = userLikeStatus;
+	}
+
 	public String getRadius() {
 		return radius;
 	}
@@ -175,6 +185,7 @@ public class LocationDTO {
 	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
+	
 	@Override
 	public String toString() {
 		return "LocationDTO [locationSeq=" + locationSeq + ", related_place_count=" + related_place_count + ", zipcode="
@@ -182,8 +193,8 @@ public class LocationDTO {
 				+ ", placeUrl=" + placeUrl + ", categoryCode=" + categoryCode + ", category=" + category
 				+ ", newAddress=" + newAddress + ", title=" + title + ", id=" + id + ", phone=" + phone + ", imageUrl="
 				+ imageUrl + ", address=" + address + ", addressBCode=" + addressBCode + ", longitude=" + longitude
-				+ ", latitude=" + latitude + ", radius=" + radius + ", relatedPlaceCount=" + relatedPlaceCount
-				+ ", locId=" + locId + ", locCategory=" + locCategory + ", replacePlace=" + replacePlace + "]";
+				+ ", latitude=" + latitude + ", radius=" + radius + ", userLikeStatus=" + userLikeStatus
+				+ ", relatedPlaceCount=" + relatedPlaceCount + ", locId=" + locId + ", locCategory=" + locCategory
+				+ ", replacePlace=" + replacePlace + "]";
 	}
-	
 }

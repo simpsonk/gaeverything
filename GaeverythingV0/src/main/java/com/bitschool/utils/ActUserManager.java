@@ -6,6 +6,8 @@ import javax.servlet.http.HttpSession;
 
 import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BoardDTO;
+import com.bitschool.dto.DetailCommentDTO;
+import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.service.ActUserService;
 
@@ -13,16 +15,18 @@ public class ActUserManager {
 	
 	private ActUserService service;
 	
+	public static final String REVIEW = "00";
+	public static final String DETAIL_PAGE = "10";
+	
+	
+	
 	public ActUserManager(ActUserService service){
 		 this.service = service;
 	}
 	
-	public BoardDTO checkLikeStatus(HttpSession session, BoardDTO dto){
+	public BoardDTO checkLikeStatus(ActUserDTO aDTO, BoardDTO dto){
 		String userLikeStatus = "like-icon";
-		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		ActUserDTO aDTO = new ActUserDTO(member.getEmail(), "00", dto.getBoardNo(), 0);
-		System.out.println(aDTO);
-		boolean flag = service.getLikeStatus(aDTO);
+		boolean flag = service.isCheckedLikeStatus(aDTO);
 		if(flag){
 			userLikeStatus = "like-icon liked";
 		}
@@ -30,13 +34,24 @@ public class ActUserManager {
 		return dto;
 	}
 	
-	public List<BoardDTO> checkLikeStatus(HttpSession session, List<BoardDTO> list) {
+
+	public LocationDTO checkLikeStatus(ActUserDTO aDTO, LocationDTO dto) {
 		// TODO Auto-generated method stub
-		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		String userLikeStatus = "like-icon";
+		boolean flag = service.isCheckedLikeStatus(aDTO);
+		if(flag){
+			userLikeStatus = "like-icon liked";
+		}
+		dto.setUserLikeStatus(userLikeStatus);
+		return dto;
+	}
+	
+	public List<BoardDTO> checkLikeStatus(ActUserDTO aDTO, List<BoardDTO> list) {
+		// TODO Auto-generated method stub
 		for(int i=0;i<list.size();i++){
 			String userLikeStatus = "like-icon";
-			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), "00", list.get(i).getBoardNo(), 0);
-			boolean flag = service.getLikeStatus(aDTO);
+			aDTO.setContentNo(list.get(i).getBoardNo());
+			boolean flag = service.isCheckedLikeStatus(aDTO);
 			if(flag){
 				userLikeStatus = "like-icon liked";
 			}
@@ -51,39 +66,18 @@ public class ActUserManager {
 		return flag;
 	}
 
-	public boolean dropLikeStatus(ActUserDTO dto) {
+	public boolean deleteLikeStatus(ActUserDTO dto) {
 		// TODO Auto-generated method stub
 		boolean flag = false;
 		flag = service.deleteLikeStatus(dto);
 		return flag;
 	}
 
-	
-
-
-	public boolean registDetailPageLikeStatus(HttpSession session, int locationSeq) {
-		// TODO Auto-generated method stub
-		boolean flag = false;
-		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		ActUserDTO aDTO = new ActUserDTO(member.getEmail(), "10", 0, locationSeq);
-		flag = service.getDetailPageLikeStatus(aDTO);
-		return flag;
-	}
-
-	public boolean dropDetailPageLikeStatus(HttpSession session, int locationSeq) {
-		// TODO Auto-generated method stub
-		boolean flag = false;
-		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		ActUserDTO aDTO = new ActUserDTO(member.getEmail(), "10", 0, locationSeq);
-		flag = service.deleteDetailPageLikeStatus(aDTO);
-		return flag;
-		
-	}
-
-	public int LikeStatusCount(String type) {
+	public int getLikeStatusCount(ActUserDTO dto) {
 		// TODO Auto-generated method stub
 		int count = 0;
-		count = service.getLikeCount(type);
+		count = service.getLikeCount(dto);
 		return count;
 	}
+
 }

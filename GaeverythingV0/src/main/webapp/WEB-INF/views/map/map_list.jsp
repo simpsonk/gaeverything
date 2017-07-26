@@ -183,8 +183,8 @@
 	var overlay=new daum.maps.CustomOverlay();
 	var searchCount = 0;
 	var searchWord="";
-	var latitude;
-	var longitude;
+	var latitude = 33.450701;
+	var longitude = 126.570667;
 	var option=0;
 	var locData=[];
 	
@@ -217,7 +217,6 @@
 		  function success(position) {
 			    latitude  = position.coords.latitude;
 			    longitude = position.coords.longitude;
-			    
 				searchWord = document.getElementById('seachword').value;
 				option = $("select[name=searchOption]").val();
 
@@ -262,7 +261,8 @@
 				searchCount++;
 		  }
 		  navigator.geolocation.getCurrentPosition(success);
-	})();
+		}
+	)();
 	
 	
 	$(document).ready(function() {

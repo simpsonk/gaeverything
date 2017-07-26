@@ -75,9 +75,13 @@ public class ReviewController {
 		List<BoardDTO> list = service.getPagedList(pDTO); 
 		model.addAttribute("page", page);
 		
+		
 		//user like status like
 		if(isLogin){
-			list= new ActUserManager(aService).checkLikeStatus(session, list);
+			MemberDTO member = (MemberDTO)session.getAttribute("member");
+			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.REVIEW);
+
+			list= new ActUserManager(aService).checkLikeStatus(aDTO, list);
 		}
 		
 		//´ñ±Û¼ö ¹Þ±â
@@ -174,9 +178,12 @@ public class ReviewController {
 		System.out.println("read post ");
 		BoardDTO dto = service.selectToRead(boardNo);
 
+
 		//user like status like
 		if(isLogin){
-			dto= new ActUserManager(aService).checkLikeStatus(session, dto);
+			MemberDTO member = (MemberDTO)session.getAttribute("member");
+			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.REVIEW, dto.getBoardNo());
+			dto= new ActUserManager(aService).checkLikeStatus(aDTO, dto);
 		}
 		
 
@@ -297,17 +304,23 @@ public class ReviewController {
 	public @ResponseBody int updateLike(
 							 @RequestParam("like") String like,
 							 @RequestParam("boardNo") int boardNo,
-							 HttpSession session){
+							 @RequestParam("email") String email){
 		int data = 0;
-		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		ActUserDTO dto = new ActUserDTO(member.getEmail(), "00", boardNo, 0);
+		ActUserManager manager = new ActUserManager(aService);
+		ActUserDTO dto = new ActUserDTO(email, ActUserManager.REVIEW, boardNo);
+		boolean flag = false;
 		if(like.equals("like-icon")){
-			new ActUserManager(aService).registLikeStatus(dto);
-			data = service.updateLike(boardNo);
+			flag = manager.registLikeStatus(dto);
+			if(!flag){
+				System.out.println("insert fail: ReviewLike");
+			}
 		}else if(like.equals("like-icon liked")){
-			new ActUserManager(aService).dropLikeStatus(dto);
-			data = service.dislike(boardNo);
+			flag = manager.deleteLikeStatus(dto);
+			if(!flag){
+				System.out.println("delete fail: ReviewLike");
+			}
 		}
+		data = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.REVIEW, boardNo));
 		return data;
 	}
 	
@@ -315,21 +328,23 @@ public class ReviewController {
 	public @ResponseBody int updateDetailPageLike(
 							 @RequestParam("like") String like,
 							 @RequestParam("locationSeq") int locationSeq,
-							 HttpSession session){
+							 @RequestParam("email") String email){
 		boolean flag = false;
 		int data = 0;
+		ActUserManager manager = new ActUserManager(aService);
+		ActUserDTO dto = new ActUserDTO(email, ActUserManager.DETAIL_PAGE, locationSeq);
 		if(like.equals("like-icon")){
-			flag = new ActUserManager(aService).registDetailPageLikeStatus(session, locationSeq);
+			flag = manager.registLikeStatus(dto);
 			if(!flag){
 				System.out.println("insert fail: DetailPageLike");
 			}
 		}else if(like.equals("like-icon liked")){
-			flag = new ActUserManager(aService).dropDetailPageLikeStatus(session, locationSeq);
+			flag = manager.deleteLikeStatus(dto);
 			if(!flag){
 				System.out.println("delete fail: DetailPageLike");
 			}
 		}
-		data = new ActUserManager(aService).LikeStatusCount("10");
+		data = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.DETAIL_PAGE, locationSeq));
 		return data;
 	}
 	

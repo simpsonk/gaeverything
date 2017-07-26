@@ -9,7 +9,7 @@ public class DetailCommentDTO {
 	private String message;
 	private double rating;
 	private Timestamp regiDate;
-	
+
 	private String photo;
 	
 	public int getLocationSeq() {
@@ -55,12 +55,10 @@ public class DetailCommentDTO {
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
+	
 	@Override
 	public String toString() {
 		return "DetailCommentDTO [locationSeq=" + locationSeq + ", commentSeq=" + commentSeq + ", nickname=" + nickname
 				+ ", message=" + message + ", rating=" + rating + ", regiDate=" + regiDate + ", photo=" + photo + "]";
 	}
-
-
-
 }

@@ -18,7 +18,6 @@
 				displayPlaces(data.places);
 				displayInfoList(data.pList, data.infoList, 0, 5);
 				clusterer.addMarkers(markers);
-				console.log(markers);
 
 			},
 			error : function(request, status, error) {

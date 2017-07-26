@@ -1,6 +1,7 @@
 package com.bitschool.dao;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import javax.inject.Inject;
 
@@ -65,5 +66,12 @@ public class ActUserDAO {
 			flag = true;
 		}
 		return flag;
+	}
+
+	public int getLikeCount(ActUserDTO dto) throws SQLException{
+		// TODO Auto-generated method stub
+		int count = 0;
+		count = session.selectOne(nameSpace+".selectCount", dto);
+		return count;
 	}
 }

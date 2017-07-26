@@ -15,11 +15,9 @@ public class ActUserService {
 	@Inject
 	private ActUserDAO dao;
 	
-	public boolean getLikeStatus(ActUserDTO dto) {
+	public boolean isCheckedLikeStatus(ActUserDTO dto) {
 		// TODO Auto-generated method stub
 		boolean flag = false;
-		System.out.println(dto);
-		System.out.println(dao);
 		try {
 			flag = dao.searchStatus(dto);
 		} catch (SQLException e) {
@@ -77,9 +75,15 @@ public class ActUserService {
 		return flag;
 	}
 
-	public int getLikeCount(String type) {
+	public int getLikeCount(ActUserDTO dto) {
 		// TODO Auto-generated method stub
 		int count = 0;
+		try {
+			count = dao.getLikeCount(dto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return count;
 	}
 

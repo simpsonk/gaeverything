@@ -111,7 +111,8 @@
 		var ele = document.getElementById("like");
 		var class_name = ele.className;
 		var boardNo = document.getElementById("boardNo").value;
-		var url = '/review/updateLike?like='+class_name+'&boardNo='+boardNo;
+		var email = document.getElementById("memberEmail").value
+		var url = '/review/updateLike?like='+class_name+'&boardNo='+boardNo+"&email="+email;
 		var id = document.getElementById("numOflike");
 		
 		var icon = document.createElement('i');
@@ -320,7 +321,7 @@
 				<!-- commentbox -->
 				<h3 class="listing-desc-headline margin-bottom-35">Add Comment</h3>
 					<div class="about-author2"">	
-						<input type="hidden" name="userId" value="${member.email}">	
+						<input type="hidden" name="userId" id = "memberEmail"value="${member.email}">	
 						<input type="hidden" name="nicknameCmt" id="memberNickname" value="${member.nickname}">
 					</div>
 

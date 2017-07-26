@@ -43,14 +43,14 @@
 <div class="container">
 	<div class="row sticky-wrapper">
 		<div class="col-lg-12 col-md-12 padding-right-100 padding-left-100 ">
-
+			<input type="hidden" id = "memberEmail" value="${member.email}" >
 			<!-- Titlebar -->
 			<div id="titlebar" class="listing-titlebar " style="padding-bottom: 30px;">
 				<div class="listing-titlebar-title">
 					<h2>${detail.title} <span class="listing-tag"> Hospital </span></h2>
 					<div>
 						<span>average rating: ${averageRatings} (${countRatings})</span><span style="margin-left: 20px;">${countReview} Reviews</span>
-						<span>${countReplies} Comments</span><span style="margin-left: 20px;">159 people bookmarked this place</span>
+						<span>${countReplies} Comments</span><span style="margin-left: 20px;" id = "numOflike">${likeCount} people bookmarked this place</span>
 					</div>					
 				</div>
 			</div>
@@ -63,7 +63,7 @@
 				</c:when>
 				<c:otherwise>
 					<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
-						<button type="button" class="like-button" onclick="like_clicked()"><span id = "like" class="like-icon"></span> Bookmark this listing</button> 
+						<button type="button" class="like-button" onclick="like_clicked()"><span id = "like" class="${detail.userLikeStatus }"></span> Bookmark this listing</button> 
 					</div>	
 				</c:otherwise>
 			</c:choose>								
@@ -462,22 +462,16 @@ function box_clicked(locationSeq){
 function like_clicked(){
 	var class_name = document.getElementById("like").className;
 	var locationSeq = document.getElementById("locationSeq").value;
-	var url = '/review/updateDetailPageLike?like='+class_name+'&locationSeq='+locationSeq;
+	var email = document.getElementById("memberEmail").value;
+	var url = '/review/updateDetailPageLike?like='+class_name+'&locationSeq='+locationSeq+'&email='+email;
 	var id = document.getElementById("numOflike");
-	
-	var icon = document.createElement('i');
-	icon.className = 'sl sl-icon-heart';
-	var span = document.createElement('span');
 	
 	$.ajax({
         url : url,
         dataType : 'json',
         type:"POST",
         success : function(data) {
-        	id.innerHTML=""; //상위태그. 
-        	span.innerHTML = " "+data ; //1) 상위태그 안에 들어갈 "내용" 먼저 셋팅
-        	id.appendChild(icon); //	  2) 상위태그 안에 포함되어 "하위 태그"
-        	id.appendChild(span); //	       append함.
+        	id.innerHTML=data+' people bookmarked this place'; 
         },
         error : function(request, status, error) {
             alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
