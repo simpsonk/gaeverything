@@ -102,43 +102,63 @@
 			
 			<!-- regist photo test push case-->
 			<div id="regist-review" class="listing-section margin-top-70 margin-bottom-30">
-				<div class="col-lg-12" style="padding-left: 0px;">
-					<div class="col-lg-2" style="padding-left: 0px;">
-						<h3 class="listing-desc-headline ">Review</h3>
+				<div class="col-lg-12" style="padding-left: 0px;">	
+					<div class="col-lg-2" style="padding-left: 0px;">				
+						<h3 class="listing-desc-headline ">Review <span>(${countReview})</span></h3>							
 					</div>
-					<!-- Uplaod Photos -->
-					<div class="col-lg-10">
+				</div>				
+				<div class="col-lg-10">
 						<div style="height: 50px;margin-top: 34px;">
-							<div class = "col-lg-8" style="padding-top: 8px;">
-						
-					<c:if test="${reviewList == null}">
-							 	<span>이 장소의 리뷰를 첫 번째로 등록해주세요.</span> 
-					</c:if>
-							<c:forEach var="reviews" items="${reviewList}">
-							<div class="row">
+							<c:if test="${empty reviewList}">
+							<div class = "col-lg-8" style="padding-top: 8px;">							
+							 	<span>이 장소의 리뷰를 첫 번째로 등록해주세요.</span> 							
+							</div>
+							</c:if>	
+						<div class="add-review-photos col-lg-4" style="position:static;">		
+								<div class="photoUpload">
+									<span><i class="im im-icon-Pencil"></i> Write Review</span>
+								</div>
+						</div>	
+					</div>
+				<div class="col-lg-12" style="padding-left: 0px;">
+					<!-- Uplaod Photos -->
+					<div class="col-lg-12">
+						<div style="height: 50px;margin-top: 34px;">
+							<div class = "col-lg-12" style="padding-top: 8px;">					
+					
+					<div class="row">
+							<c:forEach var="reviews" items="${reviewList}" varStatus="status">
+								<c:if test="${status.index<3}">							
+
 								<!-- Listing Item -->
-								<div class="col-lg-6 col-md-12">
+								<div class="col-md-4">
 									<a href="/review/readPost?boardNo=${reviews.boardNo}&page=1" class="listing-item-container">
 										<div class="listing-item">
-											<img src="/resources/upload/${reviews.uploadImg}" alt="">							
+											<c:choose>
+											<c:when test="${reviews.uploadImg!=null}">
+											<img src="/resources/upload/${reviews.uploadImg}" alt="">	
+											</c:when>	
+											<c:otherwise>
+											<img src="/resources/images/hospital.jpg" alt="">	
+											</c:otherwise>	
+											</c:choose>				
 											<div class="listing-item-content">							
-												<h3>${reviews.title}</h3>
-												<span>${reviews.onlyText}</span>
-												<span>${reviews.nickname}</span> 
+												<h3>${reviews.title}</h3>												
+												<span>${reviews.nickname}</span><br>
 												<span>${reviews.regiDate}</span>
 											</div>
 										</div>
 										<span class="star-rating" data-rating="${reviews.rating}">${reviews.rating}</span>															
 									</a>
 								</div>
+								</c:if>
+							</c:forEach>	
+					</div>	
+					<div class="row">
+							<a href="/review/viewReviewList" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
+					</div>					
 							</div>
-							</c:forEach>							
-							</div>
-							<div class="add-review-photos col-lg-4" style="position:static;">
-								<div class="photoUpload">
-									<span><i class="im im-icon-Pencil"></i> Write Review</span>
-								</div>
-							</div>
+							
 						</div>
 					</div>
 				</div>
