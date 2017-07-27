@@ -489,8 +489,7 @@ function no_login_like(locationSeq){
 	    fragment.appendChild(itemEl);
 	 }    
     listEl.appendChild(fragment); 
-    starRating('.star-rating');
-       
+    starRating('.star');       
 } 
 
  
@@ -507,7 +506,7 @@ function getListItem(reply) {
 	'<div class="comment-content"><div class="arrow-comment"></div>'+
 		'<div class="comment-by">'+
 			reply.nickname+'<span class="date">'+regi+'</span>'+
-			'<div class="star-rating" data-rating="'+reply.rating+'"></div>'+
+			'<div class="star star-rating" data-rating="'+reply.rating+'"></div>'+
 		'</div>'+
 		'<p id="changeMsg'+reply.commentSeq+'">'+reply.message+'</p></div>';
 		if(nickname==reply.nickname){
