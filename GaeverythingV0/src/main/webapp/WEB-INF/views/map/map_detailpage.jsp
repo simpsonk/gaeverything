@@ -96,13 +96,28 @@
 					<!-- Uplaod Photos -->
 					<div class="col-lg-10">
 						<div style="height: 50px;margin-top: 34px;">
+						
+						<c:choose>
+						<c:when test="${DetailPhoto.locationPhoto==null}">
 							<div class = "col-lg-8" style="padding-top: 8px;">
 								<span>이 장소의 사진을 첫 번째로 등록해주세요.</span>
 							</div>
+						</c:when>
+						<c:otherwise>
+							<div class = "col-lg-8" style="padding-top: 8px;">
+								<img id="photoImage" src="/resources/upload/${DetailPhoto.locationPhoto}" alt="">
+							</div>
+						</c:otherwise>
+						</c:choose>
+							
 							<div class="add-review-photos col-lg-4" style="position:static;">
+							<form id="addPhoto" action="" class="addPhoto" method="post"enctype="multipart/form-data">
+									<input type="hidden" id="locationSeq" name="locationSeq" value="${detail.locationSeq}">
 								<div class="photoUpload">
 									<span><i class="sl sl-icon-arrow-up-circle"></i> Upload Photos</span>
+									<input name="photo" type="file" onchange="addDetailPhoto()" class="upload" />
 								</div>
+							</form>
 							</div>
 						</div>
 					</div>
@@ -363,6 +378,12 @@
 	marker.setMap(map);
 	
 
+	//photo 등록
+	function addDetailPhoto(){
+		var url = "/map/detail/addPhoto";
+		addPhoto.action = url;
+		addPhoto.submit();
+	}
 //댓글 등록 버튼 클릭시
 $('#registComment').click(function(){
 	var locationSeq = document.getElementById("locationSeq").value;
@@ -489,8 +510,7 @@ function no_login_like(locationSeq){
 	    fragment.appendChild(itemEl);
 	 }    
     listEl.appendChild(fragment); 
-    starRating('.star-rating');
-       
+    starRating('.star');       
 } 
 
  
@@ -507,10 +527,10 @@ function getListItem(reply) {
 	'<div class="comment-content"><div class="arrow-comment"></div>'+
 		'<div class="comment-by">'+
 			reply.nickname+'<span class="date">'+regi+'</span>'+
-			'<div class="star-rating" data-rating="'+reply.rating+'"></div>'+
+			'<div class="star star-rating" data-rating="'+reply.rating+'"></div>'+
 		'</div>'+
 		'<p id="changeMsg'+reply.commentSeq+'">'+reply.message+'</p></div>';
-		if(isLogin==reply.nickname){ 
+		if(nickname==reply.nickname){
 				itemStr += '<div class="col-md-8 centered-content" >	'+							
 				'<a onclick="go_url(1, '+reply.commentSeq+');" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-note"></i>Edit</a>'+
 				'<a onclick="go_url(2, '+reply.commentSeq+');" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-close"></i>Delete</a>'+

@@ -5,7 +5,7 @@
 <mapper namespace="com.bitschool.gaverything.CalendarMapper">
 	<insert id="insert" parameterType="com.bitschool.dto.CalendarDTO">
 		<selectKey keyProperty="seq" order="BEFORE" resultType="Integer">
-			select seq.nextval from dual
+			select calendar_seq.nextval from dual
 		</selectKey>
 		insert into calendar(seq,id,dogid,title,place,message,startTime,
 		startDate,endTime,endDate,repeatdata,repeatview) 

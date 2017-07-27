@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.bitschool.dao.LocationDetailDAO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.DetailCommentDTO;
+import com.bitschool.dto.DetailPhotoDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
 @Service
@@ -44,7 +45,20 @@ public class LocationDetailService {
 			e.printStackTrace();
 		}
 		return flag;
-	}	
+	}
+	// 디테일페이지 사진 등록 
+		public boolean photoAdd(DetailPhotoDTO dto){
+			// TODO Auto-generated method stub
+			boolean flag = false;
+			try {
+				flag = dao.photoAdd(dto);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return flag;
+		}
+		
 	
 	// 디테일페이지 댓글 리스팅 
 	public List<DetailCommentDTO> commentList(int locseq){
