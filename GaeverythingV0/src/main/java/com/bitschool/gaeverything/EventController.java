@@ -35,6 +35,11 @@ public class EventController {
 		
 	}
 	
+	@RequestMapping(value="/detail", method=RequestMethod.GET)
+	public String detail (){
+		String url = "event/event_detail";
+		return url;
+	}
 	
 	
 }

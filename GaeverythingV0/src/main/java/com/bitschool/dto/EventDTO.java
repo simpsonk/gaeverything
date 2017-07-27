@@ -6,8 +6,8 @@ public class EventDTO {
 	
 	private int eventNo;
 	private String eventName;
-	private Timestamp startDate;
-	private Timestamp endDate;
+	private String startDate;
+	private String endDate;
 	private String location;
 	private String address;
 	private String call;
@@ -32,7 +32,22 @@ public class EventDTO {
 	public void setEventName(String eventName) {
 		this.eventName = eventName;
 	}
-	public Timestamp getStartDate() {
+	
+	
+	
+	public String getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+	public String getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+	/*public Timestamp getStartDate() {
 		return startDate;
 	}
 	public void setStartDate(Timestamp startDate) {
@@ -43,7 +58,7 @@ public class EventDTO {
 	}
 	public void setEndDate(Timestamp endDate) {
 		this.endDate = endDate;
-	}
+	}*/
 	public String getLocation() {
 		return location;
 	}
