@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.DetailCommentDTO;
+import com.bitschool.dto.DetailPhotoDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
 @Repository
@@ -39,6 +40,17 @@ public class LocationDetailDAO {
 		}
 		return flag;
 	}	
+	// 디테일페이지 사진 등록 
+		public boolean photoAdd(DetailPhotoDTO dto) throws SQLException{
+			// TODO Auto-generated method stub
+			boolean flag = false;
+			int aCnt = session.insert(namespace+".photoAdd",dto);
+			if(aCnt>0){
+				flag = true;
+			}
+			return flag;
+		}	
+
 
 	// 디테일페이지 댓글 리스팅 
 	public List<DetailCommentDTO> commentList(int locseq) throws SQLException{
@@ -112,6 +124,5 @@ public class LocationDetailDAO {
 		dto = session.selectList(namespace+".getReviews",locationSeq);
 		return dto;
 	}
-
 
 }

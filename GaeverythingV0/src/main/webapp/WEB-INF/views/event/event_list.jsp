@@ -417,6 +417,7 @@
 		var listEl = document.getElementById("eventList"),
 			menuEl = document.getElementById("menu-wrap"),
 			fragment = document.createDocumentFragment();
+			
 		var el;
 		for(var i=0; i<data.length; i++){
 			el = document.createElement("div");
@@ -441,10 +442,40 @@
 			el.innerHTML = itemStr; 
 			el.className = 'col-lg-6 col-md-12';
 			fragment.appendChild(el);
-		}//for
+		}//for 
 		listEl.appendChild(fragment);	
 	}
 	
+	
+	/* function getListItem(data){
+		fragment = document.createDocumentFragment();
+		var el;
+		for(var i=0; i<data.length; i++){
+			el = document.createElement("div");
+			var itemStr = '<a href="/event/detail" class="listing-item-container" data-marker-id="1">' + 
+					  '		<div class="listing-item">' + 
+					  '			<img src="/resources/images/event/'+data[i].thumbnail+'" alt="">' + 
+					  //'			<div class="listing-badge now-open">Now Open</div>' + 
+					  '			<div class="listing-item-content">' + 
+					  '				<span class="tag">Fair</span>' + 
+					  '				<h3>'+data[i].eventName+'</h3>' + 
+					  '				<span><i class="fa fa-map-marker"></i>  '+data[i].address+'</span>' + 
+					  '				<span><i class="fa fa-calendar-check-o"></i>  ' + data[i].startDate + '  ~  ' + data[i].endDate +'</span>' + 
+					  '				<span><i class="fa fa-dollar"></i>  ' + data[i].fee + '   <i class="fa fa-check"></i>  '+ data[i].discountInfo +'</span>' + 
+
+					  '			</div>' + 
+					  '			<span class="like-icon"></span>	'+
+					  '		</div>'+
+					  '		<div class="star-rating" data-rating="3.5">' + 
+					  '			<div class="rating-counter">(12 reviews)</div>' + 
+					  '		</div>' + 
+					  '	   </a>';
+			el.innerHTML = itemStr; 
+			el.className = 'col-lg-6 col-md-12';
+			fragment.appendChild(el);
+		}//for	 */
+		
+	}
 	function removeAllChildNods(el) {   
 	    while (el.hasChildNodes()) {
 	        el.removeChild (el.lastChild);

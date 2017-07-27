@@ -31,6 +31,7 @@ import com.bitschool.service.ActUserService;
 import com.bitschool.service.IBoardService;
 import com.bitschool.service.ICommentService;
 import com.bitschool.service.IPagerService;
+import com.bitschool.service.LocationDetailService;
 import com.bitschool.service.LocationService;
 import com.bitschool.utils.ActUserManager;
 import com.bitschool.utils.LoginFilter;
@@ -55,8 +56,20 @@ public class ReviewController {
 	
 	@Inject
 	private ActUserService aService;
-
 	
+	@Inject
+	private LocationDetailService dService; 
+
+	//디테일페이지에서 리뷰 더보기로 게시판 연결
+	@RequestMapping(value = "/viewDetailReviews", method = RequestMethod.GET)
+	public String viewDetailReviews(HttpSession session,  @RequestParam(value="locationSeq") int locationSeq,
+			@RequestParam(value="page", defaultValue="1") int page,Model model){
+		String url = "review/review_list";
+		List<BoardDTO> reviewList = dService.getReviews(locationSeq);		
+		model.addAttribute("list",reviewList);
+		model.addAttribute("page",page);
+		return url;
+	}
 	
 	@RequestMapping(value = "/viewReviewList", method = {RequestMethod.GET, RequestMethod.POST})
 	public String viewReviewList(Model model, HttpSession session, @RequestParam(value="page", defaultValue="1") int page){
@@ -75,9 +88,12 @@ public class ReviewController {
 		List<BoardDTO> list = service.getPagedList(pDTO); 
 		model.addAttribute("page", page);
 		
+		
 		//user like status like
 		if(isLogin){
-			list= new ActUserManager().checkLikeStatus(session, aService, list);
+			MemberDTO member = (MemberDTO)session.getAttribute("member");
+			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.REVIEW);
+			list= new ActUserManager(aService).checkLikeStatus(aDTO, list);
 		}
 		
 		//댓글수 받기
@@ -92,6 +108,8 @@ public class ReviewController {
 
 		return url;
 	}
+	
+	
 	
 	@RequestMapping(value = "/viewReviewRegist", method = {RequestMethod.GET, RequestMethod.POST})
 	public String viewReviewRegist(HttpSession session, Model model){
@@ -174,9 +192,12 @@ public class ReviewController {
 		System.out.println("read post ");
 		BoardDTO dto = service.selectToRead(boardNo);
 
+
 		//user like status like
 		if(isLogin){
-			dto= new ActUserManager().checkLikeStatus(session, aService, dto);
+			MemberDTO member = (MemberDTO)session.getAttribute("member");
+			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.REVIEW, dto.getBoardNo());
+			dto= new ActUserManager(aService).checkLikeStatus(aDTO, dto);
 		}
 		
 
@@ -297,19 +318,49 @@ public class ReviewController {
 	public @ResponseBody int updateLike(
 							 @RequestParam("like") String like,
 							 @RequestParam("boardNo") int boardNo,
-							 HttpSession session){
+							 @RequestParam("email") String email){
 		int data = 0;
-		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		ActUserDTO dto = new ActUserDTO(member.getEmail(), boardNo, "00");
+		ActUserManager manager = new ActUserManager(aService);
+		ActUserDTO dto = new ActUserDTO(email, ActUserManager.REVIEW, boardNo);
+		boolean flag = false;
 		if(like.equals("like-icon")){
-			new ActUserManager().registLikeStatus(dto, aService);
-			data = service.updateLike(boardNo);
+			flag = manager.registLikeStatus(dto);
+			if(!flag){
+				System.out.println("insert fail: ReviewLike");
+			}
 		}else if(like.equals("like-icon liked")){
-			new ActUserManager().dropLikeStatus(dto, aService);
-			data = service.dislike(boardNo);
+			flag = manager.deleteLikeStatus(dto);
+			if(!flag){
+				System.out.println("delete fail: ReviewLike");
+			}
 		}
+		data = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.REVIEW, boardNo));
 		return data;
-	}	
+	}
+	
+	@RequestMapping(value="/updateDetailPageLike", method={RequestMethod.GET, RequestMethod.POST})
+	public @ResponseBody int updateDetailPageLike(
+							 @RequestParam("like") String like,
+							 @RequestParam("locationSeq") int locationSeq,
+							 @RequestParam("email") String email){
+		boolean flag = false;
+		int data = 0;
+		ActUserManager manager = new ActUserManager(aService);
+		ActUserDTO dto = new ActUserDTO(email, ActUserManager.SHOP, locationSeq);
+		if(like.equals("like-icon")){
+			flag = manager.registLikeStatus(dto);
+			if(!flag){
+				System.out.println("insert fail: DetailPageLike");
+			}
+		}else if(like.equals("like-icon liked")){
+			flag = manager.deleteLikeStatus(dto);
+			if(!flag){
+				System.out.println("delete fail: DetailPageLike");
+			}
+		}
+		data = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.SHOP, locationSeq));
+		return data;
+	}
 	
 	@RequestMapping(value = "viewSearchShop", method = RequestMethod.GET)
 	public String viewSearchShop(HttpSession session, Model model){

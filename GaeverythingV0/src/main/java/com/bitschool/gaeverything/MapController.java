@@ -15,10 +15,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MapInfomation;
+import com.bitschool.dto.MemberDTO;
+import com.bitschool.service.ActUserService;
 import com.bitschool.service.LocationService;
 import com.bitschool.service.PageService;
+import com.bitschool.utils.ActUserManager;
+import com.bitschool.utils.LoginFilter;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -35,9 +40,13 @@ public class MapController {
 	@Inject
 	private PageService pService;
 	
+	@Inject
+	private ActUserService aService;
+	
 	@RequestMapping(value = "/viewMapList", method = RequestMethod.GET)
-	public String viewMapList(HttpServletRequest request){
+	public String viewMapList(HttpSession session, Model model){
 		String url = "map/map_list";
+		boolean isLogin = new LoginFilter().isLogin(session, model);
 		return url;
 	}
 	
@@ -48,10 +57,18 @@ public class MapController {
 			@RequestParam("level") int level,
 			@RequestParam("lat") double lat,
 			@RequestParam("lon") double lon,
-			@RequestParam(value = "option", defaultValue = "0") int option
-			){
+			@RequestParam(value = "option", defaultValue = "0") int option,
+			HttpSession session){
+		
 		MapInfomation info = new MapInfomation(searchWord, categories, level, lat, lon, option);
 		List<LocationDTO> list = service.getData(info);
+		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		//좋아요 상태 유지
+		if(member!=null){
+			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.SHOP);
+			list= new ActUserManager(aService).checkLikeStatus(list, aDTO);
+		}
+		
 		HashMap<String, Object> map = pService.makeSerachList(0, 5, list);
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		data.put("places", list);
