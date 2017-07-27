@@ -67,12 +67,12 @@ public class LocationDetailController {
 		//좋아요 상태 유지
 		if(isLogin){
 			MemberDTO member = (MemberDTO)session.getAttribute("member");
-			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.SHOP, locationSeq);
-			dto= manager.checkLikeStatus(aDTO, dto);
+			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.LOCATION, locationSeq);
+			dto= manager.checkLocLikeStatus(aDTO, dto);
 		}
 		
 		//디테일  페이지 좋아요 카운트  
-		int likeCount = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.SHOP, locationSeq));
+		int likeCount = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.LOCATION, locationSeq));
 		
 		model.addAttribute("commentlist",list);
 		model.addAttribute("detail", dto);	

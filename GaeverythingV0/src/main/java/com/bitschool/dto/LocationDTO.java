@@ -26,8 +26,16 @@ public class LocationDTO {
 	private String locId;
 	private String locCategory;
 	private String replacePlace;
+	private int countLike;
 	
 	
+	
+	public int getCountLike() {
+		return countLike;
+	}
+	public void setCountLike(int countLike) {
+		this.countLike = countLike;
+	}
 	public String getUserLikeStatus() {
 		return userLikeStatus;
 	}
@@ -191,6 +199,8 @@ public class LocationDTO {
 				+ imageUrl + ", address=" + address + ", addressBCode=" + addressBCode + ", longitude=" + longitude
 				+ ", latitude=" + latitude + ", radius=" + radius + ", userLikeStatus=" + userLikeStatus
 				+ ", relatedPlaceCount=" + relatedPlaceCount + ", locId=" + locId + ", locCategory=" + locCategory
-				+ ", replacePlace=" + replacePlace + "]";
+				+ ", replacePlace=" + replacePlace + ", countLike=" + countLike + "]";
 	}
+	
+
 }

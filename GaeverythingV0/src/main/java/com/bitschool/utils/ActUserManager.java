@@ -16,26 +16,24 @@ public class ActUserManager {
 	private ActUserService service;
 	
 	public static final String REVIEW = "00";
-	public static final String SHOP = "10";
-	
-	
-	
+	public static final String LOCATION = "10";
+
 	public ActUserManager(ActUserService service){
 		 this.service = service;
 	}
 	
-	public BoardDTO checkLikeStatus(ActUserDTO aDTO, BoardDTO dto){
+	public BoardDTO checkReLikeStatus(ActUserDTO aDTO, BoardDTO dto){
 		String userLikeStatus = "like-icon";
 		boolean flag = service.isCheckedLikeStatus(aDTO);
 		if(flag){
 			userLikeStatus = "like-icon liked";
 		}
 		dto.setUserLikeStatus(userLikeStatus);
+		dto.setCountLike(service.getLikeCount(aDTO));
 		return dto;
 	}
-	
 
-	public LocationDTO checkLikeStatus(ActUserDTO aDTO, LocationDTO dto) {
+	public LocationDTO checkLocLikeStatus(ActUserDTO aDTO, LocationDTO dto) {
 		// TODO Auto-generated method stub
 		String userLikeStatus = "like-icon";
 		boolean flag = service.isCheckedLikeStatus(aDTO);
@@ -43,24 +41,12 @@ public class ActUserManager {
 			userLikeStatus = "like-icon liked";
 		}
 		dto.setUserLikeStatus(userLikeStatus);
+		dto.setCountLike(service.getLikeCount(aDTO));
 		return dto;
 	}
 	
-	public List<BoardDTO> checkLikeStatus(ActUserDTO aDTO, List<BoardDTO> list) {
-		// TODO Auto-generated method stub
-		for(int i=0;i<list.size();i++){
-			String userLikeStatus = "like-icon";
-			aDTO.setContentNo(list.get(i).getBoardNo());
-			boolean flag = service.isCheckedLikeStatus(aDTO);
-			if(flag){
-				userLikeStatus = "like-icon liked";
-			}
-			list.get(i).setUserLikeStatus(userLikeStatus);
-		}
-		return list;
-	}
 	
-	public List<LocationDTO> checkLikeStatus(List<LocationDTO> list, ActUserDTO aDTO) {
+	public List<LocationDTO> checkListLocLikeStatus(ActUserDTO aDTO, List<LocationDTO> list) {
 		// TODO Auto-generated method stub
 		System.out.println(list.size());
 		for(int i=0;i<list.size();i++){
@@ -71,6 +57,22 @@ public class ActUserManager {
 				userLikeStatus = "like-icon liked";
 			}
 			list.get(i).setUserLikeStatus(userLikeStatus);
+			list.get(i).setCountLike(service.getLikeCount(aDTO));
+		}
+		return list;
+	}
+	
+	public List<BoardDTO> checkListReLikeStatus(ActUserDTO aDTO, List<BoardDTO> list) {
+		// TODO Auto-generated method stub
+		for(int i=0;i<list.size();i++){
+			String userLikeStatus = "like-icon";
+			aDTO.setContentNo(list.get(i).getBoardNo());
+			boolean flag = service.isCheckedLikeStatus(aDTO);
+			if(flag){
+				userLikeStatus = "like-icon liked";
+			}
+			list.get(i).setUserLikeStatus(userLikeStatus);
+			list.get(i).setCountLike(service.getLikeCount(aDTO));
 		}
 		return list;
 	}

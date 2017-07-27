@@ -26,6 +26,7 @@
  	    // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
 	    listEl.appendChild(fragment);
 	    pageList.innerHTML = pList;
+	    starRating('.star-rating');
 	}
 	
 	

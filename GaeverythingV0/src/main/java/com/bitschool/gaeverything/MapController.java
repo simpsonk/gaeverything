@@ -65,8 +65,8 @@ public class MapController {
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		//좋아요 상태 유지
 		if(member!=null){
-			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.SHOP);
-			list= new ActUserManager(aService).checkLikeStatus(list, aDTO);
+			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.LOCATION);
+			list= new ActUserManager(aService).checkListLocLikeStatus(aDTO, list);
 		}
 		
 		HashMap<String, Object> map = pService.makeSerachList(0, 5, list);

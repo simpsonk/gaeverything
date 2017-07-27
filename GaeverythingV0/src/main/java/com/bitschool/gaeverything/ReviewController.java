@@ -65,7 +65,7 @@ public class ReviewController {
 	public String viewDetailReviews(HttpSession session,  @RequestParam(value="locationSeq") int locationSeq,
 			@RequestParam(value="page", defaultValue="1") int page,Model model){
 		String url = "review/review_list";
-		List<BoardDTO> reviewList = dService.getReviews(locationSeq);		
+		List<BoardDTO> reviewList = dService.getReviews(locationSeq);
 		model.addAttribute("list",reviewList);
 		model.addAttribute("page",page);
 		return url;
@@ -93,7 +93,7 @@ public class ReviewController {
 		if(isLogin){
 			MemberDTO member = (MemberDTO)session.getAttribute("member");
 			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.REVIEW);
-			list= new ActUserManager(aService).checkLikeStatus(aDTO, list);
+			list= new ActUserManager(aService).checkListReLikeStatus(aDTO, list);
 		}
 		
 		//´ñ±Û¼ö ¹Þ±â
@@ -192,12 +192,11 @@ public class ReviewController {
 		System.out.println("read post ");
 		BoardDTO dto = service.selectToRead(boardNo);
 
-
 		//user like status like
 		if(isLogin){
 			MemberDTO member = (MemberDTO)session.getAttribute("member");
 			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.REVIEW, dto.getBoardNo());
-			dto= new ActUserManager(aService).checkLikeStatus(aDTO, dto);
+			dto= new ActUserManager(aService).checkReLikeStatus(aDTO, dto);
 		}
 		
 
@@ -346,7 +345,7 @@ public class ReviewController {
 		boolean flag = false;
 		int data = 0;
 		ActUserManager manager = new ActUserManager(aService);
-		ActUserDTO dto = new ActUserDTO(email, ActUserManager.SHOP, locationSeq);
+		ActUserDTO dto = new ActUserDTO(email, ActUserManager.LOCATION, locationSeq);
 		if(like.equals("like-icon")){
 			flag = manager.registLikeStatus(dto);
 			if(!flag){
@@ -358,7 +357,7 @@ public class ReviewController {
 				System.out.println("delete fail: DetailPageLike");
 			}
 		}
-		data = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.SHOP, locationSeq));
+		data = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.LOCATION, locationSeq));
 		return data;
 	}
 	
