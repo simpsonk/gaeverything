@@ -180,7 +180,7 @@
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ebfbfbd7a5ec71c10c63936dd90beb22&libraries=clusterer"></script>
 <script>
-	var overlay=new daum.maps.CustomOverlay();
+	var overlay = new daum.maps.CustomOverlay();
 	var searchCount = 0;
 	var searchWord="";
 	var latitude = 37.4946444;
