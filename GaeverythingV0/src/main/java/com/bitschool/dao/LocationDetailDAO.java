@@ -40,7 +40,6 @@ public class LocationDetailDAO {
 		}
 		return flag;
 	}	
-<<<<<<< HEAD
 	// 디테일페이지 사진 등록 
 		public boolean photoAdd(DetailPhotoDTO dto) throws SQLException{
 			// TODO Auto-generated method stub
@@ -51,7 +50,7 @@ public class LocationDetailDAO {
 			}
 			return flag;
 		}	
-=======
+
 
 	// 디테일페이지 댓글 리스팅 
 	public List<DetailCommentDTO> commentList(int locseq) throws SQLException{
@@ -126,6 +125,4 @@ public class LocationDetailDAO {
 		return dto;
 	}
 
-
->>>>>>> cbf6b265254f9a5a8b29fc6d787866de290d51c5
 }

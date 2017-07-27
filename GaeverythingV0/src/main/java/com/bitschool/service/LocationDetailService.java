@@ -45,7 +45,6 @@ public class LocationDetailService {
 			e.printStackTrace();
 		}
 		return flag;
-<<<<<<< HEAD
 	}
 	// 디테일페이지 사진 등록 
 		public boolean photoAdd(DetailPhotoDTO dto){
@@ -59,8 +58,7 @@ public class LocationDetailService {
 			}
 			return flag;
 		}
-=======
-	}	
+		
 	
 	// 디테일페이지 댓글 리스팅 
 	public List<DetailCommentDTO> commentList(int locseq){
@@ -185,6 +183,5 @@ public class LocationDetailService {
 		}
 		return dto;
 	}
->>>>>>> cbf6b265254f9a5a8b29fc6d787866de290d51c5
 
 }

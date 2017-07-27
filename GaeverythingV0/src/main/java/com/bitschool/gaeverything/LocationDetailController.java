@@ -1,12 +1,9 @@
 package com.bitschool.gaeverything;
 
-<<<<<<< HEAD
 import java.io.File;
 import java.io.IOException;
-=======
 
 import java.util.List;
->>>>>>> cbf6b265254f9a5a8b29fc6d787866de290d51c5
 
 import javax.inject.Inject;
 import javax.mail.Session;
@@ -18,12 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-<<<<<<< HEAD
 import org.springframework.web.multipart.MultipartFile;
-=======
 import org.springframework.web.bind.annotation.ResponseBody;
->>>>>>> cbf6b265254f9a5a8b29fc6d787866de290d51c5
-
 import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.DetailCommentDTO;
@@ -117,7 +110,6 @@ public class LocationDetailController {
 		}
 		return url;
 	}
-<<<<<<< HEAD
 	@RequestMapping(value="addPhoto",method=RequestMethod.POST)
 	public String addPhoto(HttpServletRequest hsr, @RequestParam("locationSeq") int LSeq,
 			@RequestParam("photo") MultipartFile photo){
@@ -143,7 +135,6 @@ public class LocationDetailController {
 		}
 		return url;
 	}
-=======
 	
 	//댓글 수정하는 페이지
 	@RequestMapping(value="/viewEditComment",method={RequestMethod.GET,RequestMethod.POST})
@@ -160,7 +151,6 @@ public class LocationDetailController {
 		return url;
 	}
 	
->>>>>>> cbf6b265254f9a5a8b29fc6d787866de290d51c5
 	
 	//댓글 수정	
 	@RequestMapping(value="/editComment",method=RequestMethod.POST)

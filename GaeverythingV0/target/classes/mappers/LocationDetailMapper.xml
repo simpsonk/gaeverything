@@ -18,16 +18,14 @@
 		insert into detailcomment (locationseq,commentseq,nickname,message,rating,photo) 
 		values(#{locationSeq},#{commentSeq},#{nickname},#{message},#{rating},#{photo})
 	</insert>
-<<<<<<< HEAD
 	<!-- 디테일페이지 사진 등록 -->
 	<insert id="photoAdd" parameterType="DetailPhotoDTO">
 		<selectKey resultType="Integer" order="BEFORE" keyProperty="photoNumber">
-			select detailphotoseq.nextval from dual
+			select detailphoto_seq.nextval from dual
 		</selectKey>
 		insert into detailphoto (locationseq,locationphoto,detailphotoseq) 
 		values(#{locationSeq},#{locationPhoto},#{photoNumber})
 	</insert>
-=======
 
 	<!-- 디테일페이지 댓글 리스팅 -->
 	<select id="commentList" parameterType="Integer" resultType="DetailCommentDTO">
@@ -87,5 +85,4 @@
 	</select>	
 		
 
->>>>>>> cbf6b265254f9a5a8b29fc6d787866de290d51c5
 </mapper>
