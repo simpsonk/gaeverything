@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.bitschool.dto.DetailCommentDTO;
+import com.bitschool.dto.DetailPhotoDTO;
 import com.bitschool.dto.LocationDTO;
 @Repository
 public class LocationDetailDAO {
@@ -36,5 +37,14 @@ public class LocationDetailDAO {
 		}
 		return flag;
 	}	
-
+	// 디테일페이지 사진 등록 
+		public boolean photoAdd(DetailPhotoDTO dto) throws SQLException{
+			// TODO Auto-generated method stub
+			boolean flag = false;
+			int aCnt = session.insert(namespace+".photoAdd",dto);
+			if(aCnt>0){
+				flag = true;
+			}
+			return flag;
+		}	
 }

@@ -1,5 +1,8 @@
 package com.bitschool.gaeverything;
 
+import java.io.File;
+import java.io.IOException;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -9,8 +12,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bitschool.dto.DetailCommentDTO;
+import com.bitschool.dto.DetailPhotoDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.service.LocationDetailService;
@@ -50,6 +55,30 @@ public class LocationDetailController {
 		}
 		return url;
 	}
-	
+	@RequestMapping(value="addPhoto",method=RequestMethod.POST)
+	public String addPhoto(HttpServletRequest hsr, @RequestParam("locationSeq") int LSeq,
+			@RequestParam("photo") MultipartFile photo){
+		String url = null;
+		String photoName = photo.getOriginalFilename();
+		String root_path = hsr.getSession().getServletContext().getRealPath("/");
+		String attach_path = "resources\\upload\\";
+		DetailPhotoDTO Pdto = new DetailPhotoDTO();
+		Pdto.setLocationSeq(LSeq);
+		Pdto.setLocationPhoto(photoName);
+		try {
+			photo.transferTo(new File(root_path+attach_path+photoName));
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		boolean flag = service.photoAdd(Pdto);
+		if(flag){
+			url = "redirect:/viewDetailPage";
+		}
+		return url;
+	}
 	
 }
