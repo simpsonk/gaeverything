@@ -61,7 +61,7 @@
 	<div class="blog-page">
 	<div class="row">
 	<div class="col-lg-9 col-md-8 padding-right-30">
-
+	<input type="hidden" id = "memberEmail" value="${member.email}">
 	<!-- Blog Post -->	
 	<c:forEach items="${list}" var="board">
 		
@@ -307,9 +307,12 @@
 	
 	function like_clicked(boardNo){
 		var class_name = document.getElementById("like"+boardNo).className;
-		var url = '/review/updateLike?like='+class_name+'&boardNo='+boardNo;
+		var email = document.getElementById("memberEmail").value
 		var id = document.getElementById("numOflike"+boardNo);
 		
+		
+		var url = '/review/updateLike?like='+class_name+'&boardNo='+boardNo+'&email='+email;
+
 		var icon = document.createElement('i');
 		icon.className = 'sl sl-icon-heart';
 		var span = document.createElement('span');

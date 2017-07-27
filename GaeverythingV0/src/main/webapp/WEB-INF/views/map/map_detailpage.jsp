@@ -44,21 +44,30 @@
 <div class="container">
 	<div class="row sticky-wrapper">
 		<div class="col-lg-12 col-md-12 padding-right-100 padding-left-100 ">
-
+			<input type="hidden" id = "memberEmail" value="${member.email}" >
 			<!-- Titlebar -->
 			<div id="titlebar" class="listing-titlebar " style="padding-bottom: 30px;">
 				<div class="listing-titlebar-title">
 					<h2>${detail.title} <span class="listing-tag"> Hospital </span></h2>
 					<div>
 						<span>average rating: ${averageRatings} (${countRatings})</span><span style="margin-left: 20px;">${countReview} Reviews</span>
-						<span>${countReplies} Comments</span><span style="margin-left: 20px;">159 people bookmarked this place</span>
+						<span>${countReplies} Comments</span><span style="margin-left: 20px;" id = "numOflike">${likeCount} people bookmarked this place</span>
 					</div>					
 				</div>
 			</div>
-			<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
-				<button class="like-button"><span class="like-icon"></span> Bookmark this listing</button> 
-			</div>
-		
+			
+			<c:choose>
+				<c:when test="${member.nickname == null }">
+					<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
+						<button type="button" class="like-button" onclick="no_login_like()"><span class="like-icon"></span> Bookmark this listing</button> 
+					</div>	
+				</c:when>
+				<c:otherwise>
+					<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
+						<button type="button" class="like-button" onclick="like_clicked()"><span id = "like" class="${detail.userLikeStatus }"></span> Bookmark this listing</button> 
+					</div>	
+				</c:otherwise>
+			</c:choose>								
 			
 			<!-- Overview -->
 			<div id="detail-Info" class="listing-section">
@@ -442,6 +451,32 @@ function box_clicked(locationSeq){
 	location.href = "/viewLogin?uri=/map/detail/viewDetailPage?locationSeq="+locationSeq;
 }
 
+function like_clicked(){
+	var class_name = document.getElementById("like").className;
+	var locationSeq = document.getElementById("locationSeq").value;
+	var email = document.getElementById("memberEmail").value;
+	var url = '/review/updateDetailPageLike?like='+class_name+'&locationSeq='+locationSeq+'&email='+email;
+	var id = document.getElementById("numOflike");
+	
+	$.ajax({
+        url : url,
+        dataType : 'json',
+        type:"POST",
+        success : function(data) {
+        	id.innerHTML=data+' people bookmarked this place'; 
+        },
+        error : function(request, status, error) {
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+          }
+     });
+}
+
+function no_login_like(locationSeq){
+	alert("로그인을 해주세요!");
+	var locationSeq = document.getElementById("locationSeq").value;
+	location.href = "/viewLogin?uri=/map/detail/viewDetailPage?locationSeq="+locationSeq;
+}
+
 
  function displayInfoList(commentlist){
     var listEl = document.getElementById('replyList'), 
@@ -520,8 +555,6 @@ $(document).ready(function() {
        }
 	});		
 });
-
-
 
 </script>
 </body>

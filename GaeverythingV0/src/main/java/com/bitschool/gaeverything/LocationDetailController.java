@@ -4,6 +4,7 @@ package com.bitschool.gaeverything;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -14,18 +15,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.DetailCommentDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
+import com.bitschool.service.ActUserService;
 import com.bitschool.service.LocationDetailService;
+import com.bitschool.utils.ActUserManager;
+import com.bitschool.utils.LoginFilter;
 
 @RequestMapping(value = "map/detail")
 @Controller
 public class LocationDetailController {
 	
 	@Inject
-	LocationDetailService service;
+	private LocationDetailService service;
+	
+	@Inject
+	private ActUserService aService;
+	
 	//디테일 리뷰데이터
 	@RequestMapping(value = "/getReviewData", method = {RequestMethod.POST,RequestMethod.GET})
 	public @ResponseBody List<DetailCommentDTO> getReviewData(@RequestParam(value="locationSeq") int locationSeq){
@@ -35,8 +44,14 @@ public class LocationDetailController {
 	
 	//디테일 페이지 연결
 	@RequestMapping(value = "/viewDetailPage", method = RequestMethod.GET)
-	public String viewDetailPage(HttpServletRequest request, @RequestParam(value="locationSeq") int locationSeq,
+	public String viewDetailPage(HttpServletRequest request, 
+			@RequestParam(value="locationSeq") int locationSeq, 
+			HttpSession session,
 			Model model){
+		
+		//로그인 유지
+		boolean isLogin = new LoginFilter().isLogin(session, model);
+		ActUserManager manager = new ActUserManager(aService);
 		String url = "map/map_detailpage";
 		LocationDTO dto = new LocationDTO();		
 		int countReview = service.countReviews(locationSeq);	
@@ -45,18 +60,29 @@ public class LocationDetailController {
 		String temp = String.format("%.2f", averageRatings);
 		int countRatings = service.getRatings(locationSeq).size()+service.getReplyRatings(locationSeq).size();
 		int countReplies = service.countReplies(locationSeq);
-		MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
 		dto = service.selectOne(locationSeq);		
 		List<BoardDTO> reviewList = service.getReviews(locationSeq);
-		List<DetailCommentDTO> list = service.commentList(locationSeq);		
+		List<DetailCommentDTO> list = service.commentList(locationSeq);
+		
+		//좋아요 상태 유지
+		if(isLogin){
+			MemberDTO member = (MemberDTO)session.getAttribute("member");
+			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.SHOP, locationSeq);
+			dto= manager.checkLikeStatus(aDTO, dto);
+		}
+		
+		//디테일  페이지 좋아요 카운트  
+		int likeCount = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.SHOP, locationSeq));
+		
 		model.addAttribute("commentlist",list);
 		model.addAttribute("detail", dto);	
-		model.addAttribute("member",member);
 		model.addAttribute("countReview",countReview);
 		model.addAttribute("averageRatings",temp);
 		model.addAttribute("countRatings",countRatings);
 		model.addAttribute("countReplies",countReplies);
 		model.addAttribute("reviewList",reviewList);
+		model.addAttribute("likeCount", likeCount);
+		
 		System.out.println("댓글 리스트 : "+list);
 		System.out.println("detail : "+dto);
 		return url;

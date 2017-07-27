@@ -11,10 +11,11 @@ import com.bitschool.dto.ActUserDTO;
 
 @Service
 public class ActUserService {
+	
 	@Inject
 	private ActUserDAO dao;
 	
-	public boolean getLikeStatus(ActUserDTO dto) {
+	public boolean isCheckedLikeStatus(ActUserDTO dto) {
 		// TODO Auto-generated method stub
 		boolean flag = false;
 		try {
@@ -48,6 +49,42 @@ public class ActUserService {
 			e.printStackTrace();
 		}
 		return flag;
+	}
+
+	public boolean getDetailPageLikeStatus(ActUserDTO aDTO) {
+		// TODO Auto-generated method stub
+		boolean flag = false;
+		try {
+			flag = dao.insertDetailPageLikeStatus(aDTO);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return flag;
+	}
+
+	public boolean deleteDetailPageLikeStatus(ActUserDTO aDTO) {
+		// TODO Auto-generated method stub
+		boolean flag = false;
+		try {
+			flag = dao.deleteDetailPageLikeStatus(aDTO);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return flag;
+	}
+
+	public int getLikeCount(ActUserDTO dto) {
+		// TODO Auto-generated method stub
+		int count = 0;
+		try {
+			count = dao.getLikeCount(dto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return count;
 	}
 
 	
