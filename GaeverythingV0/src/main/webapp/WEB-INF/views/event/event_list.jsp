@@ -418,7 +418,7 @@
 				var placePosition = new daum.maps.LatLng(data[i].latitude,data[i].longitude), 
 				itemEl = eventItems(data[i]); //좌측 리스트 한덩어리
 
-				var itemOverlay = createOverlay(data[i]);
+				var itemOverlay = createOverlay(data[i],i);
 				
 				/* alert(itemOverlay); */
 
@@ -464,12 +464,12 @@
 			return el;
 		}
 
-		function createOverlay(event) {
+		function createOverlay(event, idx) {
 			//event: event객체 하나.
 			var content = '<div class="wrap">' 
 					+ '		<div class="info">'
 					+ '		<div class="title">'+ event.eventName
-					+ '			<div class="close" onclick="closeOverlay('+ event+ ')" title="닫기"></div>'
+					+ '			<div class="close" onclick="closeOverlay('+ idx+ ')" title="닫기"></div>'
 					+ '		</div>	'
 					+ '		<div class="body">'
 					+ '			<div class="img">'
@@ -498,10 +498,10 @@
 			return overlay;
 		}
 
-		/* 
-		 function closeOverlay(event, overlay){
-			overlay.setMap(null);
-		}  */
+		 
+		 function closeOverlay(index){
+			 clearOverlay(overlays[index]);
+		}  
 
 		function createMarker(placePosition, overlay) {
 			var markerPostion = placePosition;
