@@ -1,5 +1,6 @@
 package com.bitschool.gaeverything;
 
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BoardDTO;
@@ -32,6 +34,14 @@ public class LocationDetailController {
 	
 	@Inject
 	private ActUserService aService;
+	
+	//디테일 리뷰데이터
+	@RequestMapping(value = "/getReviewData", method = {RequestMethod.POST,RequestMethod.GET})
+	public @ResponseBody List<DetailCommentDTO> getReviewData(@RequestParam(value="locationSeq") int locationSeq){
+		List<DetailCommentDTO> commentlist = service.commentList(locationSeq);	
+		return commentlist;
+	}
+	
 	//디테일 페이지 연결
 	@RequestMapping(value = "/viewDetailPage", method = RequestMethod.GET)
 	public String viewDetailPage(HttpServletRequest request, 

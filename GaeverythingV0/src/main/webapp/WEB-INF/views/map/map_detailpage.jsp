@@ -271,7 +271,13 @@
 				<section class="comments listing-reviews">
  					
 					 <ul>
-					  <c:forEach var="comm" items="${commentlist}">
+					 <div class="row fs-listings" id = "replyList" >
+					 
+				
+					 </div>
+					 
+	<%-- 				  <c:forEach var="comm" items="${commentlist}" varStatus="status">
+					  							 									
 					  	<input type="hidden" id="ratingVal${comm.commentSeq}" value="${comm.rating}">
 					  	<li>
 							<div class="avatar"><img src="/resources/upload/${comm.photo}" alt="" /></div> 
@@ -285,45 +291,28 @@
 							
 							
 							<!-- edit, delete -->
-						 <c:if test="${member.nickname == comm.nickname}"> 
-		 					<%-- <div class="comment-by">
-								<a class="reply" onclick="go_url(1, ${comm.commentSeq})" return false; ><i class="sl sl-icon-note"></i> Edit</a>
-							</div>
-							<div class="comment-by">
-								<a class="reply" style="margin-top: 36px;" onclick="/map/detail/viewDeleteComment" return false; ><i class="sl sl-icon-close"></i> Delete</a>
-							</div> --%>
-						  
-						 
+						 <c:if test="${member.nickname == comm.nickname}"> 	
 							  <div class="col-md-8 centered-content" >								
 								<a onclick="go_url(1, ${comm.commentSeq});" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-note"></i>Edit</a>
 								<a onclick="go_url(2, ${comm.commentSeq});" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-close"></i>Delete</a>
 							</div>  
 						 </c:if> 
-						</li>
-				  	</c:forEach>	  
-						
+						</li>					
+				  	</c:forEach> --%>
+				  	
+			 
+				  	
+				  	<c:if test="${fn:length(commentlist) > 5}">
+					<div class="row" style="float:center;">
+							<a href="" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
+					</div>
+					</c:if>
+				
 					 </ul>
 			 
 				</section> 
 			</form>
-				<!-- Pagination -->
-				<div class="clearfix"></div>
-				<div class="row">
-					<div class="col-md-12">
-						<!-- Pagination -->
-						<div class="pagination-container margin-top-30">
-							<nav class="pagination">
-								<ul>
-									<li><a href="#" class="current-page">1</a></li>
-									<li><a href="#">2</a></li>
-									<li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
-								</ul>
-							</nav>
-						</div>
-					</div>
-				</div>
-				<div class="clearfix"></div>
-				<!-- Pagination / End -->
+
 			</div>
 		</div>
 
@@ -487,6 +476,69 @@ function no_login_like(locationSeq){
 	var locationSeq = document.getElementById("locationSeq").value;
 	location.href = "/viewLogin?uri=/map/detail/viewDetailPage?locationSeq="+locationSeq;
 }
+
+
+ function displayInfoList(commentlist){
+    var listEl = document.getElementById('replyList'), 
+    fragment = document.createDocumentFragment(),
+    itemEl;    	       
+	removeAllChildNods(listEl);
+    for(var i=0;i<commentlist.length;i++){
+	    itemEl = getListItem(commentlist[i]);
+	    fragment.appendChild(itemEl);
+	  }    
+    listEl.appendChild(fragment);
+    
+ 
+
+} 
+
+
+function getListItem(reply) {
+    var el = document.createElement('div');
+    var nickname = document.getElementById('isLogin').value;
+    var itemStr ='	<input type="hidden" id="ratingVal'+reply.commentSeq+'" value="'+reply.rating+'">'+
+	  	'<li><div class="avatar"><img src="/resources/upload/'+reply.photo+'" alt="" /></div>'+
+	'<div class="comment-content"><div class="arrow-comment"></div>'+
+		'<div class="comment-by">'+
+			reply.nickname+'<span class="date">'+reply.regiDate+'</span>'+
+			'<div class="star-rating" data-rating="'+reply.rating+'"></div>'+
+		'</div>'+
+		'<p id="changeMsg'+reply.commentSeq+'">'+reply.message+'</p></div>';
+		if(isLogin==reply.nickname){ 
+				itemStr += '<div class="col-md-8 centered-content" >	'+							
+				'<a onclick="go_url(1, '+reply.commentSeq+');" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-note"></i>Edit</a>'+
+				'<a onclick="go_url(2, '+reply.commentSeq+');" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-close"></i>Delete</a>'+
+			'</div></li>';
+		}
+		el.innerHTML = itemStr;		
+    return el;
+}
+
+//검색결과 목록의 자식 Element를 제거하는 함수입니다
+function removeAllChildNods(el) {   
+    while (el.hasChildNodes()) {
+        el.removeChild (el.lastChild);
+    }
+}
+
+
+
+$(document).ready(function() {
+	var locationSeq = document.getElementById("locationSeq").value;
+	url = '/map/detail/getReviewData?locationSeq='+locationSeq;
+	$.ajax({
+		url : url,
+		dataType : 'json',
+		type:"POST",
+		success : function(commentlist) {					
+			displayInfoList(commentlist);					
+		},
+		error : function(request, status, error) {
+			 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+       }
+	});		
+});
 
 </script>
 

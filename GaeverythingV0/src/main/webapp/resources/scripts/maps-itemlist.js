@@ -8,22 +8,22 @@
 	    	    
 	    // 검색 결과 목록에 추가된 항목들을 제거합니다
 	    removeAllChildNods(listEl);
-		
+	    var url = '/map/detail/viewDetailPage?locationSeq=';
 	    //페이징 리스트 만들기
 	    for(var i=0;i<infoList.length;i++){
 	    	// 검색 결과 항목 Element를 생성합니다
 		    itemEl = getListItem(i, infoList[i]);
-		 	// 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
+		 	// 검색결과 항목들을 검색결과 목록 Element에 추가합니다
 		    fragment.appendChild(itemEl);
 		 	
 	        (function(marker, title, imageUrl, address, placeUrl, radius) {
 	        	itemEl.addEventListener('click', function(){
 	            	setOverlay(map, makeContent(title, imageUrl, address, placeUrl, radius), marker.getPosition());
 	            }); 
-	        })(markers[amount*page+i], infoList[i].title, infoList[i].imageUrl, infoList[i].address, infoList[i].placeUrl , infoList[i].radius); 
+	        })(markers[amount*page+i], infoList[i].title, infoList[i].imageUrl, infoList[i].address, url+infoList[i].locationSeq , infoList[i].radius); 
 	    }
 	    
- 	    // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
+ 	    // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
 	    listEl.appendChild(fragment);
 	    pageList.innerHTML = pList;
 	}
