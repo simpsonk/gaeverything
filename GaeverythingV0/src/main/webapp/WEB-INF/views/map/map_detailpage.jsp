@@ -295,7 +295,7 @@
 				  	
 				  	<c:if test="${fn:length(commentlist) > 5}">
 					<div class="row" style="float:center;">
-							<a href="" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
+							<a id="commentMore" href="" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
 					</div>
 					</c:if>
 				
@@ -448,25 +448,30 @@ function box_clicked(locationSeq){
     fragment = document.createDocumentFragment(),
     itemEl;    	       
 	removeAllChildNods(listEl);
-    for(var i=0;i<commentlist.length;i++){
+
+	for(var i=0;i<commentlist.length;i++){
 	    itemEl = getListItem(commentlist[i]);
 	    fragment.appendChild(itemEl);
-	  }    
-    listEl.appendChild(fragment);
-    
- 
-
+	 }    
+    listEl.appendChild(fragment); 
+    starRating('.star-rating');
+       
 } 
 
+ 
+ 
 
 function getListItem(reply) {
     var el = document.createElement('div');
     var nickname = document.getElementById('isLogin').value;
+    var regi = new Date(reply.regiDate); 
+    regi = regi.getFullYear() + '-' + leadingZeros((regi.getMonth()+1),2) + '-' + leadingZeros(regi.getDate(),2)
+    +' '+leadingZeros(regi.getHours(),2)+':'+leadingZeros(regi.getMinutes(),2)+':'+leadingZeros(regi.getSeconds(),2);
     var itemStr ='	<input type="hidden" id="ratingVal'+reply.commentSeq+'" value="'+reply.rating+'">'+
 	  	'<li><div class="avatar"><img src="/resources/upload/'+reply.photo+'" alt="" /></div>'+
 	'<div class="comment-content"><div class="arrow-comment"></div>'+
 		'<div class="comment-by">'+
-			reply.nickname+'<span class="date">'+reply.regiDate+'</span>'+
+			reply.nickname+'<span class="date">'+regi+'</span>'+
 			'<div class="star-rating" data-rating="'+reply.rating+'"></div>'+
 		'</div>'+
 		'<p id="changeMsg'+reply.commentSeq+'">'+reply.message+'</p></div>';
@@ -476,9 +481,20 @@ function getListItem(reply) {
 				'<a onclick="go_url(2, '+reply.commentSeq+');" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-close"></i>Delete</a>'+
 			'</div></li>';
 		}
-		el.innerHTML = itemStr;		
+		el.innerHTML = itemStr;
     return el;
 }
+
+function leadingZeros(n, digits) {
+	  var zero = '';
+	  n = n.toString();
+
+	  if (n.length < digits) {
+	    for (var i = 0; i < digits - n.length; i++)
+	      zero += '0';
+	  }
+	  return zero + n;
+	}
 
 //검색결과 목록의 자식 Element를 제거하는 함수입니다
 function removeAllChildNods(el) {   
@@ -508,6 +524,5 @@ $(document).ready(function() {
 
 
 </script>
-
 </body>
 </html>
