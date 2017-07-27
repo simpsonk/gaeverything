@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-
 <!-- Basic Page Needs
 ================================================== -->
 <title>Listeo</title>
@@ -43,20 +44,30 @@
 <div class="container">
 	<div class="row sticky-wrapper">
 		<div class="col-lg-12 col-md-12 padding-right-100 padding-left-100 ">
-
+			<input type="hidden" id = "memberEmail" value="${member.email}" >
 			<!-- Titlebar -->
 			<div id="titlebar" class="listing-titlebar " style="padding-bottom: 30px;">
 				<div class="listing-titlebar-title">
 					<h2>${detail.title} <span class="listing-tag"> Hospital </span></h2>
 					<div>
-						<span>average rating: 0 (0)</span><span style="margin-left: 20px;">12 Reviews</span><span style="margin-left: 20px;">159 people bookmarked this place</span>
+						<span>average rating: ${averageRatings} (${countRatings})</span><span style="margin-left: 20px;">${countReview} Reviews</span>
+						<span>${countReplies} Comments</span><span style="margin-left: 20px;" id = "numOflike">${likeCount} people bookmarked this place</span>
 					</div>					
 				</div>
 			</div>
-			<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
-					<button class="like-button"><span class="like-icon"></span> Bookmark this listing</button> 
-			</div>
-		
+			
+			<c:choose>
+				<c:when test="${member.nickname == null }">
+					<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
+						<button type="button" class="like-button" onclick="no_login_like()"><span class="like-icon"></span> Bookmark this listing</button> 
+					</div>	
+				</c:when>
+				<c:otherwise>
+					<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
+						<button type="button" class="like-button" onclick="like_clicked()"><span id = "like" class="${detail.userLikeStatus }"></span> Bookmark this listing</button> 
+					</div>	
+				</c:otherwise>
+			</c:choose>								
 			
 			<!-- Overview -->
 			<div id="detail-Info" class="listing-section">
@@ -116,25 +127,58 @@
 			
 			<!-- regist photo test push case-->
 			<div id="regist-review" class="listing-section margin-top-70 margin-bottom-30">
-				<div class="col-lg-12" style="padding-left: 0px;">
-					<div class="col-lg-2" style="padding-left: 0px;">
-						<h3 class="listing-desc-headline ">Review</h3>
-					</div>
-					<!-- Uplaod Photos -->
-					<div class="col-lg-10">
-						<div style="height: 50px;margin-top: 34px;">
-							<div class = "col-lg-8" style="padding-top: 8px;">
-								<span>이 장소의 사진을 첫 번째로 등록해주세요.</span>
-							</div>
-							<div class="add-review-photos col-lg-4" style="position:static;">
-								<div class="photoUpload">
-									<span><i class="im im-icon-Pencil"></i> Write Review</span>
-								</div>
-							</div>
+				<div class="col-lg-2" style="padding-left: 0px;">				
+					<h3 class="listing-desc-headline ">Review <span>(${countReview})</span></h3>							
+				</div>
+				<div class="col-lg-10">
+					<div style="height: 50px;margin-top: 34px;">
+						<c:if test="${empty reviewList}">
+						<div class = "col-lg-8" style="padding-top: 8px;">							
+						 	<span>이 장소의 리뷰를 첫 번째로 등록해주세요.</span> 							
 						</div>
+						</c:if>	
+						<div class="add-review-photos col-lg-4" style="position:static;">		
+							<div class="photoUpload">
+								<span><i class="im im-icon-Pencil"></i> Write Review</span>
+							</div>
+						</div>	
 					</div>
 				</div>
-			</div>
+			<div class="col-lg-12" style="padding-left: 0px;">
+					<div class="row">
+							<c:forEach var="reviews" items="${reviewList}" varStatus="status">
+								<c:if test="${status.index<3}">							
+
+								<!-- Listing Item -->
+								<div class="col-md-4">
+									<a href="/review/readPost?boardNo=${reviews.boardNo}&page=1" class="listing-item-container">
+										<div class="listing-item">
+											<c:choose>
+											<c:when test="${reviews.uploadImg!=null}">
+											<img src="/resources/upload/${reviews.uploadImg}" alt="">	
+											</c:when>	
+											<c:otherwise>
+											<img src="/resources/images/hospital.jpg" alt="">	
+											</c:otherwise>	
+											</c:choose>				
+											<div class="listing-item-content">							
+												<h3>${reviews.title}</h3>												
+												<span>${reviews.nickname}</span><br>
+												<span>${reviews.regiDate}</span>
+											</div>
+										</div>
+										<span class="star-rating" data-rating="${reviews.rating}">${reviews.rating}</span>															
+									</a>
+								</div>
+								</c:if>
+							</c:forEach>	
+					</div>
+					<c:if test="${fn:length(reviewList) > 3}">
+					<div class="row">
+							<a href="/review/viewDetailReviews?locationSeq=${detail.locationSeq}&page=1" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
+					</div>
+					</c:if>
+					</div>
 			<!-- write Review / End -->
 
 		
@@ -152,38 +196,61 @@
 				
 			<!-- Comment -->
 			<div id="listing-reviews" class="listing-section">
-				<h3 class="listing-desc-headline margin-top-75 margin-bottom-20">Comment <span>(12)</span></h3>
+				<h3 class="listing-desc-headline margin-top-75 margin-bottom-20">Comment <span>(${countReplies})</span></h3>
 
 				<!-- Add Review Box -->
 				<div id="add-review" class="add-review-box" style="margin-top: 0px;">
 	
 					<!-- Add Review -->
-					<h3 class="listing-desc-headline margin-bottom-20">Add Comment</h3>
+					<h3 id="ment" class="listing-desc-headline margin-bottom-20">Add Comment</h3>
 					
 					<span class="leave-rating-title">Your rating for this listing</span>
 					
 					<!-- Rating / Upload Button -->
-					<form id="add-comment" action="/map/detail/addComment" class="add-comment" method="post">
+					<form id="add-comment" action="" class="add-comment" method="post">
 						<input type="hidden" id="locationSeq" name="locationSeq" value="${detail.locationSeq}">
+						<input type="hidden" id="commentSeq" name = "commentSeq" value = "0" >
 					
 					<div class="row">
 						<div class="col-md-6">
 							<!-- Leave Rating -->
-							<div class="clearfix"></div>
-											   		
-							<div class="leave-rating margin-bottom-30">
-								<input type="radio" name="rating" id="rating-1" value="1"/>
-								<label for="rating-1" class="fa fa-star"></label>
-								<input type="radio" name="rating" id="rating-2" value="2"/>
-								<label for="rating-2" class="fa fa-star"></label>
-								<input type="radio" name="rating" id="rating-3" value="3"/>
-								<label for="rating-3" class="fa fa-star"></label>
-								<input type="radio" name="rating" id="rating-4" value="4"/>
-								<label for="rating-4" class="fa fa-star"></label>
-								<input type="radio" name="rating" id="rating-5" value="5"/>
-								<label for="rating-5" class="fa fa-star"></label>
-							</div>
-							<div class="clearfix"></div>
+								<!-- rating -->
+						<div class = "rating col-md-12" style="padding-bottom: 10px;">	
+							<h5>Rating</h5>					
+								
+							<fieldset class="rating">
+  								<input type="radio" id="star5" name="rating" value="5.0"  />
+  								<label class = "full" for="star5" title="Awesome - 5 stars"></label>
+	  								
+	   							<input type="radio" id="star4half" name="rating" value="4.5"/>
+	   							<label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+   							
+  								<input type="radio" id="star4" name="rating" value="4.0"  />
+  								<label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+	  								
+	   							<input type="radio" id="star3half" name="rating" value="3.5" />
+	   							<label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+	   							
+	   							<input type="radio" id="star3" name="rating" value="3.0" />
+	   							<label class = "full" for="star3" title="Meh - 3 stars"></label>
+	   							
+	   							<input type="radio" id="star2half" name="rating" value="2.5" }/>
+	   							<label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+	   							
+  		 						<input type="radio" id="star2" name="rating" value="2.0" />
+  		 						<label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+	  		 						
+	   							<input type="radio" id="star1half" name="rating" value="1.5" />
+	   							<label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+	   							
+	   							<input type="radio" id="star1" name="rating" value="1.0"/>
+	   							<label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+	   							
+	   							<input type="radio" id="starhalf" name="rating" value="0.5" />
+	   							<label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+							</fieldset>
+													
+						</div>
 						</div>
 	
 					</div>
@@ -192,82 +259,75 @@
 					
 						<fieldset>
 							<div>
-								<label>Comment:</label>
-								<textarea name="message" cols="40" rows="3"></textarea>
+								<label>Comment:	</label>
+								<c:choose>
+										<c:when test="${member.nickname == null}">
+											<textarea cols="40" rows="3" id="commMsg" name="message" onclick="box_clicked(${detail.locationSeq})" placeholder="로그인 후 댓글작성이 가능합니다."></textarea>
+										</c:when>
+										<c:otherwise>
+											<textarea cols="40" rows="3" id="commMsg" name="message" placeholder="댓글을 작성해주세요 :)"></textarea>
+										</c:otherwise>
+								</c:choose>
+						
 							</div>
 	
-						</fieldset>	
+						</fieldset>					
+						<input type="hidden" id="isLogin" value="${member.nickname}">	
 						<input type="button" id="registComment" value="Submit Comment">
+						<input type="button" id="modifyComment" value="Modify Comment" style="display: none;">
 						<div class="clearfix"></div>
 					</form>
 	
 				</div>
 				<!-- Add Review Box / End -->
 				<!-- Reviews -->
+			<form id="commentData" method="post">
+				<input type="hidden" id="locationSeq2" name="locationSeq2" value="${detail.locationSeq}">
 				<section class="comments listing-reviews">
-
-					<ul>
-						<li>
-							<div class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /></div>
+ 					
+					 <ul>
+					 <div class="row fs-listings" id = "replyList" >
+					 
+				
+					 </div>
+					 
+	<%-- 				  <c:forEach var="comm" items="${commentlist}" varStatus="status">
+					  							 									
+					  	<input type="hidden" id="ratingVal${comm.commentSeq}" value="${comm.rating}">
+					  	<li>
+							<div class="avatar"><img src="/resources/upload/${comm.photo}" alt="" /></div> 
 							<div class="comment-content"><div class="arrow-comment"></div>
-								<div class="comment-by">Kathy Brown<span class="date">June 2017</span>
-									<div class="star-rating" data-rating="5"></div>
+								<div class="comment-by">
+									${comm.nickname}<span class="date">${comm.regiDate}</span>
+									<div class="star-rating" data-rating="${comm.rating}"></div>
 								</div>
-								<p>Morbi velit eros, sagittis in facilisis non, rhoncus et erat. Nam posuere tristique sem, eu ultricies tortor imperdiet vitae. Curabitur lacinia neque non metus</p>
+								<p id="changeMsg${comm.commentSeq}">${comm.message}</p>							
 							</div>
-						</li>
-
-						<li>
-							<div class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /> </div>
-							<div class="comment-content"><div class="arrow-comment"></div>
-								<div class="comment-by">John Doe<span class="date">May 2017</span>
-									<div class="star-rating" data-rating="4"></div>
-								</div>
-								<p>Commodo est luctus eget. Proin in nunc laoreet justo volutpat blandit enim. Sem felis, ullamcorper vel aliquam non, varius eget justo. Duis quis nunc tellus sollicitudin mauris.</p>
-							</div>
-						</li>
-
-						<li>
-							<div class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /></div>
-							<div class="comment-content"><div class="arrow-comment"></div>
-								<div class="comment-by">Kathy Brown<span class="date">June 2017</span>
-									<div class="star-rating" data-rating="5"></div>
-								</div>
-								<p>Morbi velit eros, sagittis in facilisis non, rhoncus et erat. Nam posuere tristique sem, eu ultricies tortor imperdiet vitae. Curabitur lacinia neque non metus</p>
-							</div>
-						</li>
-
-						<li>
-							<div class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /> </div>
-							<div class="comment-content"><div class="arrow-comment"></div>
-								<div class="comment-by">John Doe<span class="date">May 2017</span>
-									<div class="star-rating" data-rating="5"></div>
-								</div>
-								<p>Commodo est luctus eget. Proin in nunc laoreet justo volutpat blandit enim. Sem felis, ullamcorper vel aliquam non, varius eget justo. Duis quis nunc tellus sollicitudin mauris.</p>
-							</div>
-
-						</li>
-					 </ul>
-				</section>
-
-				<!-- Pagination -->
-				<div class="clearfix"></div>
-				<div class="row">
-					<div class="col-md-12">
-						<!-- Pagination -->
-						<div class="pagination-container margin-top-30">
-							<nav class="pagination">
-								<ul>
-									<li><a href="#" class="current-page">1</a></li>
-									<li><a href="#">2</a></li>
-									<li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
-								</ul>
-							</nav>
-						</div>
+							
+							
+							<!-- edit, delete -->
+						 <c:if test="${member.nickname == comm.nickname}"> 	
+							  <div class="col-md-8 centered-content" >								
+								<a onclick="go_url(1, ${comm.commentSeq});" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-note"></i>Edit</a>
+								<a onclick="go_url(2, ${comm.commentSeq});" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-close"></i>Delete</a>
+							</div>  
+						 </c:if> 
+						</li>					
+				  	</c:forEach> --%>
+				  	
+			 
+				  	
+				  	<c:if test="${fn:length(commentlist) > 5}">
+					<div class="row" style="float:center;">
+							<a id="commentMore" href="" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
 					</div>
-				</div>
-				<div class="clearfix"></div>
-				<!-- Pagination / End -->
+					</c:if>
+				
+					 </ul>
+			 
+				</section> 
+			</form>
+
 			</div>
 		</div>
 
@@ -292,7 +352,7 @@
 <script type="text/javascript" src="<c:url value = '/resources/scripts/jquery-ui.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/tooltips.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/custom.js'/>"></script>
-<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=fa1e9654d15cae4c8c5f39d8b36f7984"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ebfbfbd7a5ec71c10c63936dd90beb22"></script>
 
 <script type="text/javascript">
 	var longitude = document.getElementById('longitude').value;
@@ -326,11 +386,197 @@
 	}
 //댓글 등록 버튼 클릭시
 $('#registComment').click(function(){
-	$('#add-comment').submit();
+	var locationSeq = document.getElementById("locationSeq").value;
+	checkMessage(locationSeq);
+	var ds = document.getElementById("add-comment");
+	var url = "/map/detail/addComment";
+	ds.action = url;
+	if($("#commMsg").val()!='' && 
+			$('input:radio[name="rating"]').is(":checked")){
+		ds.submit();
+	}else{
+		return;
+	}			
 });
-	
-	
-</script>
 
+//댓글 수정 버튼 클릭시
+$('#modifyComment').click(function(){
+	var ds = document.getElementById("add-comment");
+	var url = "/map/detail/editComment";
+	ds.action = url;
+	ds.submit();
+});
+
+
+//댓글  Edit, Delete
+function go_url(type, commSeq){	
+	var commentSeq = document.getElementById("commentSeq");
+	var commMsg = document.getElementById("commMsg");
+	var changeMsg = document.getElementById("changeMsg"+commSeq);
+	var ratingVal = document.getElementById("ratingVal"+commSeq);
+	var ment = document.getElementById("ment");
+	if(type==1){		
+		commentSeq.value = commSeq;
+		commMsg.innerHTML = changeMsg.innerHTML;
+		if(ratingVal.value==0.5){
+			$('input:radio[name=rating]:input[value="0.5"]').attr("checked", true);			
+		}else if(ratingVal.value==1.0){
+			$('input:radio[name=rating]:input[value="1.0"]').attr("checked", true);		
+		}else if(ratingVal.value==1.5){
+			$('input:radio[name=rating]:input[value="1.5"]').attr("checked", true);		
+		}else if(ratingVal.value==2.0){
+			$('input:radio[name=rating]:input[value="2.0"]').attr("checked", true);		
+		}else if(ratingVal.value==2.5){
+			$('input:radio[name=rating]:input[value="2.5"]').attr("checked", true);		
+		}else if(ratingVal.value==3.0){
+			$('input:radio[name=rating]:input[value="3.0"]').attr("checked", true);		
+		}else if(ratingVal.value==3.5){
+			$('input:radio[name=rating]:input[value="3.5"]').attr("checked", true);		
+		}else if(ratingVal.value==4.0){
+			$('input:radio[name=rating]:input[value="4.0"]').attr("checked", true);		
+		}else if(ratingVal.value==4.5){
+			$('input:radio[name=rating]:input[value="4.5"]').attr("checked", true);		
+		}else if(ratingVal.value==5.0){
+			$('input:radio[name=rating]:input[value="5.0"]').attr("checked", true);		
+		}		
+		commMsg.focus();
+ 		$('#modifyComment').show();
+		$('#registComment').hide();
+		ment.innerHTML = 'Edit Comment';
+	}else if(type==2){
+		var ds = document.getElementById("add-comment");
+		var url = "/map/detail/deleteComment?commentSeq="+commSeq;
+		ds.action = url;
+		ds.submit();
+	}
+}
+
+//등록시 필수항목 체크
+function checkMessage(locationSeq){
+	  var isLogin = document.getElementById("isLogin");
+	  if(isLogin.value==''){
+		  alert("댓글작성은 회원만 가능합니다.");	
+		  location.href = "/viewLogin?uri=/map/detail/viewDetailPage?locationSeq="+locationSeq;
+	  }else{
+		  if($('input:radio[name="rating"]').is(":checked")==false){
+			  alert('별점을 표시해주세요.');
+		  }
+		  if($("#commMsg").val()==''){
+			  alert('코멘트를 입력해주세요.');
+		  }	
+	  }
+}
+
+function box_clicked(locationSeq){
+	alert("댓글작성은 회원만 가능합니다.");	
+	location.href = "/viewLogin?uri=/map/detail/viewDetailPage?locationSeq="+locationSeq;
+}
+
+function like_clicked(){
+	var class_name = document.getElementById("like").className;
+	var locationSeq = document.getElementById("locationSeq").value;
+	var email = document.getElementById("memberEmail").value;
+	var url = '/review/updateDetailPageLike?like='+class_name+'&locationSeq='+locationSeq+'&email='+email;
+	var id = document.getElementById("numOflike");
+	
+	$.ajax({
+        url : url,
+        dataType : 'json',
+        type:"POST",
+        success : function(data) {
+        	id.innerHTML=data+' people bookmarked this place'; 
+        },
+        error : function(request, status, error) {
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+          }
+     });
+}
+
+function no_login_like(locationSeq){
+	alert("로그인을 해주세요!");
+	var locationSeq = document.getElementById("locationSeq").value;
+	location.href = "/viewLogin?uri=/map/detail/viewDetailPage?locationSeq="+locationSeq;
+}
+
+
+ function displayInfoList(commentlist){
+    var listEl = document.getElementById('replyList'), 
+    fragment = document.createDocumentFragment(),
+    itemEl;    	       
+	removeAllChildNods(listEl);
+
+	for(var i=0;i<commentlist.length;i++){
+	    itemEl = getListItem(commentlist[i]);
+	    fragment.appendChild(itemEl);
+	 }    
+    listEl.appendChild(fragment); 
+    starRating('.star-rating');
+       
+} 
+
+ 
+ 
+
+function getListItem(reply) {
+    var el = document.createElement('div');
+    var nickname = document.getElementById('isLogin').value;
+    var regi = new Date(reply.regiDate); 
+    regi = regi.getFullYear() + '-' + leadingZeros((regi.getMonth()+1),2) + '-' + leadingZeros(regi.getDate(),2)
+    +' '+leadingZeros(regi.getHours(),2)+':'+leadingZeros(regi.getMinutes(),2)+':'+leadingZeros(regi.getSeconds(),2);
+    var itemStr ='	<input type="hidden" id="ratingVal'+reply.commentSeq+'" value="'+reply.rating+'">'+
+	  	'<li><div class="avatar"><img src="/resources/upload/'+reply.photo+'" alt="" /></div>'+
+	'<div class="comment-content"><div class="arrow-comment"></div>'+
+		'<div class="comment-by">'+
+			reply.nickname+'<span class="date">'+regi+'</span>'+
+			'<div class="star-rating" data-rating="'+reply.rating+'"></div>'+
+		'</div>'+
+		'<p id="changeMsg'+reply.commentSeq+'">'+reply.message+'</p></div>';
+		if(isLogin==reply.nickname){ 
+				itemStr += '<div class="col-md-8 centered-content" >	'+							
+				'<a onclick="go_url(1, '+reply.commentSeq+');" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-note"></i>Edit</a>'+
+				'<a onclick="go_url(2, '+reply.commentSeq+');" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-close"></i>Delete</a>'+
+			'</div></li>';
+		}
+		el.innerHTML = itemStr;
+    return el;
+}
+
+function leadingZeros(n, digits) {
+	  var zero = '';
+	  n = n.toString();
+
+	  if (n.length < digits) {
+	    for (var i = 0; i < digits - n.length; i++)
+	      zero += '0';
+	  }
+	  return zero + n;
+	}
+
+//검색결과 목록의 자식 Element를 제거하는 함수입니다
+function removeAllChildNods(el) {   
+    while (el.hasChildNodes()) {
+        el.removeChild (el.lastChild);
+    }
+}
+
+
+
+$(document).ready(function() {
+	var locationSeq = document.getElementById("locationSeq").value;
+	url = '/map/detail/getReviewData?locationSeq='+locationSeq;
+	$.ajax({
+		url : url,
+		dataType : 'json',
+		type:"POST",
+		success : function(commentlist) {					
+			displayInfoList(commentlist);					
+		},
+		error : function(request, status, error) {
+			 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+       }
+	});		
+});
+
+</script>
 </body>
 </html>

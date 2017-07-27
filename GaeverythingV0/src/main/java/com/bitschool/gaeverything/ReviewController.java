@@ -2,6 +2,7 @@ package com.bitschool.gaeverything;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -20,13 +21,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bitschool.dao.ReviewFileBean;
+import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.CommentDTO;
+import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.dto.PageDTO;
+import com.bitschool.service.ActUserService;
 import com.bitschool.service.IBoardService;
 import com.bitschool.service.ICommentService;
 import com.bitschool.service.IPagerService;
+import com.bitschool.service.LocationDetailService;
+import com.bitschool.service.LocationService;
+import com.bitschool.utils.ActUserManager;
 import com.bitschool.utils.LoginFilter;
 import com.fasterxml.jackson.core.JsonFactory;
 
@@ -44,23 +51,50 @@ public class ReviewController {
 	@Inject
 	private ICommentService cService;
 	
+	@Inject
+	private LocationService locService;
+	
+	@Inject
+	private ActUserService aService;
+	
+	@Inject
+	private LocationDetailService dService; 
+
+	//디테일페이지에서 리뷰 더보기로 게시판 연결
+	@RequestMapping(value = "/viewDetailReviews", method = RequestMethod.GET)
+	public String viewDetailReviews(HttpSession session,  @RequestParam(value="locationSeq") int locationSeq,
+			@RequestParam(value="page", defaultValue="1") int page,Model model){
+		String url = "review/review_list";
+		List<BoardDTO> reviewList = dService.getReviews(locationSeq);		
+		model.addAttribute("list",reviewList);
+		model.addAttribute("page",page);
+		return url;
+	}
 	
 	@RequestMapping(value = "/viewReviewList", method = {RequestMethod.GET, RequestMethod.POST})
 	public String viewReviewList(Model model, HttpSession session, @RequestParam(value="page", defaultValue="1") int page){
 		
+		//로그인 유지
+		boolean isLogin = new LoginFilter().isLogin(session, model);
+		
 		//페이지 리스트
 		int amount = 5;
 		PageDTO pDTO = new PageDTO(page, amount);
+		
 		String pList = pService.pageList(pDTO);
 		model.addAttribute("pList", pList);
 		
 		//게시물 리스트
 		List<BoardDTO> list = service.getPagedList(pDTO); 
 		model.addAttribute("page", page);
-			
-		//로그인 유지
-		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		model.addAttribute("member", member);
+		
+		
+		//user like status like
+		if(isLogin){
+			MemberDTO member = (MemberDTO)session.getAttribute("member");
+			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.REVIEW);
+			list= new ActUserManager(aService).checkLikeStatus(aDTO, list);
+		}
 		
 		//댓글수 받기
 		int countCmts = 0;
@@ -71,27 +105,49 @@ public class ReviewController {
 		}
 		model.addAttribute("list", list);
 		String url = "review/review_list";
+
 		return url;
 	}
+	
+	
 	
 	@RequestMapping(value = "/viewReviewRegist", method = {RequestMethod.GET, RequestMethod.POST})
 	public String viewReviewRegist(HttpSession session, Model model){
-		String url = "review/review_regist";
 		boolean isLogin = new LoginFilter().isLogin(session, model);
+		String url = "review/review_regist";
 		return url;
 	}
 	
-	@RequestMapping(value = "/newPost", method={RequestMethod.POST,RequestMethod.GET })
-	public String newPost(BoardDTO dto, ReviewFileBean filebean, HttpServletRequest request, Model model,
-						  @RequestParam("boardCategory") String boardCategory){
+	@RequestMapping(value = "/newPost", method={RequestMethod.POST, RequestMethod.GET})
+	public String newPost(BoardDTO dto, HttpSession session){
 		String url = null;
-		System.out.println("글쓴이>>> " + dto.getNickname());
+		System.out.println(dto);
+		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		dto.setNickname(member.getNickname());
 		boolean flag = service.insertPost(dto);
 		if(flag){
 			url = "redirect:/review/viewReviewList";
 		}
 		return url;
 	}
+	
+	@RequestMapping(value = "/modify", method=RequestMethod.POST)
+	public String modify(BoardDTO dto, Model model, @RequestParam("page") int page, @RequestParam("boardNo") int boardNo){
+		System.out.println("modify controller");
+		System.out.println("check:"+dto);
+		String url = null;
+		dto.setBoardNo(boardNo);
+		boolean flag = service.updatePost(dto);
+		System.out.println("dao result: "+ flag);
+		if(flag){
+			model.addAttribute("dto", dto);
+			model.addAttribute("boardNo", dto.getBoardNo());
+			url = "redirect:/review/readPost?page="+page;
+		}
+		return url;
+	}
+
+	
 	
 	@RequestMapping(value="/fileUpload", method=RequestMethod.POST)
 	public String fileUpload(ReviewFileBean filebean, HttpServletRequest request, Model model){
@@ -130,14 +186,24 @@ public class ReviewController {
 	public String readPost(@RequestParam("boardNo") int boardNo, 
 						   HttpSession session,
 						   Model model){
+		boolean isLogin = new LoginFilter().isLogin(session, model);
 		String url = null;
-		System.out.println("read post ");
 		
+		System.out.println("read post ");
 		BoardDTO dto = service.selectToRead(boardNo);
+
+
+		//user like status like
+		if(isLogin){
+			MemberDTO member = (MemberDTO)session.getAttribute("member");
+			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.REVIEW, dto.getBoardNo());
+			dto= new ActUserManager(aService).checkLikeStatus(aDTO, dto);
+		}
+		
+
 		List<CommentDTO> cList = cService.getAllComment(boardNo);
 		int numOfCmt = cService.countCmt(boardNo);
 
-		boolean isLogin = new LoginFilter().isLogin(session, model);
 
 		model.addAttribute("numOfCmt", numOfCmt);
 		model.addAttribute("dto", dto);
@@ -149,27 +215,16 @@ public class ReviewController {
 		return url;
 	}
 	
-	@RequestMapping(value="/clickModify", method=RequestMethod.POST)
-	public String clickModify(@RequestParam("boardNo") int boardNo, Model model){
+	@RequestMapping(value="/clickModify", method={RequestMethod.POST, RequestMethod.GET})
+	public String clickModify(@RequestParam("boardNo") int boardNo, Model model, HttpSession session){
+		boolean isLogin = new LoginFilter().isLogin(session, model);
 		BoardDTO dto = service.selectToRead(boardNo);
 		model.addAttribute("dto", dto);
-		String url = "review/modify_content";
+		System.out.println(dto);
+		String url = "review/review_regist";
 		return url;
 	}
 	
-	@RequestMapping(value = "/modify", method=RequestMethod.POST)
-	public String modify(BoardDTO dto, Model model, @RequestParam("page") int page){
-		System.out.println("modify controller");
-		String url = null;
-		boolean flag = service.updatePost(dto);
-		System.out.println("dao result: "+ flag);
-		if(flag){
-			model.addAttribute("dto", dto);
-			model.addAttribute("boardNo", dto.getBoardNo());
-			url = "redirect:/review/readPost?page="+page;
-		}
-		return url;
-	}
 	
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
 	public String delete(@RequestParam("boardNo") int boardNo, @RequestParam("page") int page){
@@ -262,15 +317,82 @@ public class ReviewController {
 	@RequestMapping(value="/updateLike", method={RequestMethod.GET, RequestMethod.POST})
 	public @ResponseBody int updateLike(
 							 @RequestParam("like") String like,
-							 @RequestParam("boardNo") int boardNo){
+							 @RequestParam("boardNo") int boardNo,
+							 @RequestParam("email") String email){
 		int data = 0;
-		System.out.println("좋아요: "+ like);
-		System.out.println("좋아요글번호: " + boardNo);
+		ActUserManager manager = new ActUserManager(aService);
+		ActUserDTO dto = new ActUserDTO(email, ActUserManager.REVIEW, boardNo);
+		boolean flag = false;
 		if(like.equals("like-icon")){
-			data = service.updateLike(boardNo);
+			flag = manager.registLikeStatus(dto);
+			if(!flag){
+				System.out.println("insert fail: ReviewLike");
+			}
 		}else if(like.equals("like-icon liked")){
-			data = service.dislike(boardNo);
+			flag = manager.deleteLikeStatus(dto);
+			if(!flag){
+				System.out.println("delete fail: ReviewLike");
+			}
 		}
+		data = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.REVIEW, boardNo));
 		return data;
-	}	
+	}
+	
+	@RequestMapping(value="/updateDetailPageLike", method={RequestMethod.GET, RequestMethod.POST})
+	public @ResponseBody int updateDetailPageLike(
+							 @RequestParam("like") String like,
+							 @RequestParam("locationSeq") int locationSeq,
+							 @RequestParam("email") String email){
+		boolean flag = false;
+		int data = 0;
+		ActUserManager manager = new ActUserManager(aService);
+		ActUserDTO dto = new ActUserDTO(email, ActUserManager.SHOP, locationSeq);
+		if(like.equals("like-icon")){
+			flag = manager.registLikeStatus(dto);
+			if(!flag){
+				System.out.println("insert fail: DetailPageLike");
+			}
+		}else if(like.equals("like-icon liked")){
+			flag = manager.deleteLikeStatus(dto);
+			if(!flag){
+				System.out.println("delete fail: DetailPageLike");
+			}
+		}
+		data = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.SHOP, locationSeq));
+		return data;
+	}
+	
+	@RequestMapping(value = "viewSearchShop", method = RequestMethod.GET)
+	public String viewSearchShop(HttpSession session, Model model){
+		String url = "review/search_shop";
+		HashMap<String, Object> map = (HashMap<String, Object>)session.getAttribute("map");
+		if(map!=null){
+			List<LocationDTO> list = (List<LocationDTO>)map.get("list");
+			HashMap<String, Object> searchData = (HashMap<String, Object>)map.get("searchData");
+			model.addAttribute("list", list);
+			model.addAttribute("searchData", searchData);
+			session.removeAttribute("map");
+		}
+		return url;
+	}
+	
+	@RequestMapping(value = "getSearhShopname", method = RequestMethod.POST)
+	public String getSearhShopname(@RequestParam(value = "searchWord") String searchWord, @RequestParam(value = "selectOp1") String selectOp1, 
+			@RequestParam(value = "selectOp2") String selectOp2, Model model,  HttpSession session){
+		String url = "redirect:/review/viewSearchShop";
+		HashMap<String, Object> searchData = new HashMap<String, Object>();
+		
+		searchData.put("searchWord", searchWord);
+		searchData.put("selectOp1", selectOp1);
+		searchData.put("selectOp2", selectOp2);
+		
+		List<LocationDTO> list = locService.getSearchData(searchData);
+		System.out.println(list);
+		System.out.println(searchData);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("searchData", searchData);
+		session.setAttribute("map", map);
+		return url;
+	}
 }

@@ -1,5 +1,9 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
 Built-By: ￬ﾵﾜ￭ﾚﾨ￬ﾧﾄ
+=======
+Built-By: bitschool
+>>>>>>> cbf6b265254f9a5a8b29fc6d787866de290d51c5
 Build-Jdk: 1.8.0_131
 Created-By: Maven Integration for Eclipse
 

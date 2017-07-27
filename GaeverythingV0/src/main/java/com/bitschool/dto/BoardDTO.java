@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 public class BoardDTO {
 	
 	private String boardCategory;
+	private int locationSeq;
 	private int boardNo;
 	private String nickname;
 	private String title;
@@ -22,9 +23,30 @@ public class BoardDTO {
 	private int orderNo;
 	private int depth;
 	private int numOfCmt;
+	private String userLikeStatus;
 	private String address;
 	private String encodeUTF;
 	
+	
+	
+	
+
+	public String getUserLikeStatus() {
+		return userLikeStatus;
+	}
+
+	public void setUserLikeStatus(String userLikeStatus) {
+		this.userLikeStatus = userLikeStatus;
+	}
+
+	public int getLocationSeq() {
+		return locationSeq;
+	}
+
+	public void setLocationSeq(int locationSeq) {
+		this.locationSeq = locationSeq;
+	}
+
 	public String getEncodeUTF() {
 	      try {
 	         this.encodeUTF = URLEncoder.encode(nickname, "UTF-8");
@@ -171,10 +193,16 @@ public class BoardDTO {
 		this.onlyText = onlyText;
 	}
 
+	@Override
+	public String toString() {
+		return "BoardDTO [boardCategory=" + boardCategory + ", locationSeq=" + locationSeq + ", boardNo=" + boardNo
+				+ ", nickname=" + nickname + ", title=" + title + ", rating=" + rating + ", countLike=" + countLike
+				+ ", message=" + message + ", onlyText=" + onlyText + ", uploadImg=" + uploadImg + ", regiDate="
+				+ regiDate + ", readCount=" + readCount + ", groupNo=" + groupNo + ", parentNo=" + parentNo
+				+ ", orderNo=" + orderNo + ", depth=" + depth + ", numOfCmt=" + numOfCmt + ", userLikeStatus="
+				+ userLikeStatus + ", address=" + address + ", encodeUTF=" + encodeUTF + "]";
+	}
 
-
-
-	
 	
 	
 

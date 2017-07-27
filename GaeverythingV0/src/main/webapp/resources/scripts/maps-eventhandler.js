@@ -18,6 +18,7 @@
 				displayPlaces(data.places);
 				displayInfoList(data.pList, data.infoList, 0, 5);
 				clusterer.addMarkers(markers);
+
 			},
 			error : function(request, status, error) {
 				 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -56,7 +57,7 @@
 				$('#resultCount').text(result);
 				displayPlaces(data.places);
 				displayInfoList(data.pList, data.infoList, page, 5);
-				
+
 				clusterer.clear();
 				clusterer.addMarkers(markers);
 			},

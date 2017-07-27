@@ -8,7 +8,9 @@
 <script type="text/javascript">
 	window.parent.CKEDITOR.tools.callFunction('${CKEditorFuncNum}','${file_path}','파일전송 완료!');
 	
- 	window.parent.document.getElementById("upload").value='${filename}';
+ 	if(window.parent.document.getElementById("upload").value==""){
+ 		window.parent.document.getElementById("upload").value ='${filename}';	
+ 	}
 	alert('${filename}');
 </script>
 </head>
