@@ -16,7 +16,7 @@ public class ActUserManager {
 	private ActUserService service;
 	
 	public static final String REVIEW = "00";
-	public static final String DETAIL_PAGE = "10";
+	public static final String SHOP = "10";
 	
 	
 	
@@ -51,6 +51,21 @@ public class ActUserManager {
 		for(int i=0;i<list.size();i++){
 			String userLikeStatus = "like-icon";
 			aDTO.setContentNo(list.get(i).getBoardNo());
+			boolean flag = service.isCheckedLikeStatus(aDTO);
+			if(flag){
+				userLikeStatus = "like-icon liked";
+			}
+			list.get(i).setUserLikeStatus(userLikeStatus);
+		}
+		return list;
+	}
+	
+	public List<LocationDTO> checkLikeStatus(List<LocationDTO> list, ActUserDTO aDTO) {
+		// TODO Auto-generated method stub
+		System.out.println(list.size());
+		for(int i=0;i<list.size();i++){
+			String userLikeStatus = "like-icon";
+			aDTO.setContentNo(list.get(i).getLocationSeq());
 			boolean flag = service.isCheckedLikeStatus(aDTO);
 			if(flag){
 				userLikeStatus = "like-icon liked";

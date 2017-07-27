@@ -52,7 +52,7 @@
 <div class="fs-container">
 	<div class="fs-inner-container content">
 		<div class="fs-content">
-
+			<input type="hidden" id = "memberEmail" value = "${member.email}">
 			<!-- Search -->
 			<section class="search">
 				<div class="row">
@@ -183,14 +183,14 @@
 	var overlay=new daum.maps.CustomOverlay();
 	var searchCount = 0;
 	var searchWord="";
-	var latitude = 33.450701;
-	var longitude = 126.570667;
+	var latitude = 37.4946444;
+	var longitude = 127.02759279999998;
 	var option=0;
 	var locData=[];
 	
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 		mapOption = { 
-		center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+		center: new daum.maps.LatLng(37.4946444, 127.02759279999998), // 지도의 중심좌표
 		level: 4 // 지도의 확대 레벨
 	};
 	

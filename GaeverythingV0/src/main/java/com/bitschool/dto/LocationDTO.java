@@ -22,10 +22,6 @@ public class LocationDTO {
 	private String radius;
 	private String userLikeStatus;
 
-	
-	
-	
-	
 	private int relatedPlaceCount;
 	private String locId;
 	private String locCategory;
