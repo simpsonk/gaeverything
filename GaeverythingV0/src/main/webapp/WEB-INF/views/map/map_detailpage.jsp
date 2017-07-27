@@ -475,7 +475,7 @@ function getListItem(reply) {
 			'<div class="star-rating" data-rating="'+reply.rating+'"></div>'+
 		'</div>'+
 		'<p id="changeMsg'+reply.commentSeq+'">'+reply.message+'</p></div>';
-		if(isLogin==reply.nickname){ 
+		if(nickname==reply.nickname){
 				itemStr += '<div class="col-md-8 centered-content" >	'+							
 				'<a onclick="go_url(1, '+reply.commentSeq+');" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-note"></i>Edit</a>'+
 				'<a onclick="go_url(2, '+reply.commentSeq+');" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-close"></i>Delete</a>'+
