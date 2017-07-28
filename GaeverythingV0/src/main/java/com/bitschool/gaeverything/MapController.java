@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -29,7 +28,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 @RequestMapping(value = "map")
 @Controller
 public class MapController {
@@ -42,6 +40,35 @@ public class MapController {
 	
 	@Inject
 	private ActUserService aService;
+			
+	@RequestMapping(value = "/searchMapData", method = {RequestMethod.POST,RequestMethod.GET})
+	public @ResponseBody String searchMapData(HttpSession session,
+			@RequestParam(value="page") int page,
+			@RequestParam(value="query") String query){
+		String data = null;
+		String url = "https://dapi.kakao.com/v2/local/search/keyword.json?query="+query+
+				"&page="+page+
+				"&appkey=ebfbfbd7a5ec71c10c63936dd90beb22&size=15";
+		
+		return url;
+	}
+	
+	@RequestMapping(value = "/viewMapData", method = {RequestMethod.POST,RequestMethod.GET})
+	public String viewMapData(HttpSession session, Model model){
+		String url = "map/map_data";
+		return url;
+	}
+	
+	
+	
+	
+	//지울거임
+	@RequestMapping(value = "/viewTest", method = RequestMethod.GET)
+	public String viewTest(HttpSession session, Model model){
+		String url = "map/test";
+		return url;
+	}
+	
 	
 	@RequestMapping(value = "/viewMapList", method = RequestMethod.GET)
 	public String viewMapList(HttpSession session, Model model){
