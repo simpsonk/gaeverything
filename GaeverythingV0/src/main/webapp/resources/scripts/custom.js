@@ -1312,6 +1312,14 @@ function starRating(ratingElem) {
 
 	});
 
-} starRating('.star-rating');
+} 
+
+function clearStarRating(ratingElem) {
+	$(ratingElem).each(function() {
+    	$(this).empty();
+	});
+} 
+
+starRating('.star-rating');
 
 

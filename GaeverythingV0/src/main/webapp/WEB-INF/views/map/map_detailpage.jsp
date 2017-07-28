@@ -319,7 +319,8 @@
 				  	
 				  	<c:if test="${fn:length(commentlist) > 5}">
 					<div class="row" style="float:center;">
-							<a id="commentMore" href="" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
+						<input type="button" id="commentMore" value="Read More">
+							<!-- <a id="commentMore" href="" class="read-more">Read More <i class="fa fa-angle-right"></i></a> -->
 					</div>
 					</c:if>
 				
@@ -499,22 +500,52 @@ function no_login_like(locationSeq){
 }
 
 
- function displayInfoList(commentlist){
+ function displayInfoList(start,end,commentlist){
     var listEl = document.getElementById('replyList'), 
     fragment = document.createDocumentFragment(),
     itemEl;    	       
-	removeAllChildNods(listEl);
-
-	for(var i=0;i<commentlist.length;i++){
+	for(var i=start;i<end;i++){
 	    itemEl = getListItem(commentlist[i]);
 	    fragment.appendChild(itemEl);
 	 }    
-    listEl.appendChild(fragment); 
+    listEl.appendChild(fragment);
+    clearStarRating('.star');
     starRating('.star');       
 } 
+ 
+ 
+ var commentStart = 5;
+ var commentEnd = 10;
+ var lastComment = false;
+ 
+ $('#commentMore').click(function(){
+	 moreList();
+	 if(lastComment){
+		 $('#commentMore').hide();
+	 }	 
+ });   
+ function moreList(){	    
+		var locationSeq = document.getElementById("locationSeq").value;
+		url = '/map/detail/getReviewData?locationSeq='+locationSeq;
+		$.ajax({
+			url : url,
+			dataType : 'json',
+			type:"POST",
+			success : function(commentlist) {					
+				displayInfoList(commentStart,commentEnd,commentlist);		
+				commentStart = commentStart+5;
+				commentEnd = commentEnd+5;
+				if(commentEnd>commentlist.length){
+					commentEnd = commentlist.length;
+					lastComment = true;
+				}
+			},
+			error : function(request, status, error) {
+				 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	       }
+		});	
+	};
 
- 
- 
 
 function getListItem(reply) {
     var el = document.createElement('div');
@@ -568,7 +599,7 @@ $(document).ready(function() {
 		dataType : 'json',
 		type:"POST",
 		success : function(commentlist) {					
-			displayInfoList(commentlist);					
+			displayInfoList(0,5,commentlist);					
 		},
 		error : function(request, status, error) {
 			 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
