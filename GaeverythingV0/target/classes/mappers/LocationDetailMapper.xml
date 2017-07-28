@@ -20,11 +20,11 @@
 	</insert>
 	<!-- 디테일페이지 사진 등록 -->
 	<insert id="photoAdd" parameterType="DetailPhotoDTO">
-		<selectKey resultType="Integer" order="BEFORE" keyProperty="photoNumber">
+		<selectKey resultType="Integer" order="BEFORE" keyProperty="detailPhotoSeq">
 			select detailphoto_seq.nextval from dual
 		</selectKey>
 		insert into detailphoto (locationseq,locationphoto,detailphotoseq) 
-		values(#{locationSeq},#{locationPhoto},#{photoNumber})
+		values(#{locationSeq},#{locationPhoto},#{detailPhotoSeq})
 	</insert>
 
 	<!-- 디테일페이지 댓글 리스팅 -->

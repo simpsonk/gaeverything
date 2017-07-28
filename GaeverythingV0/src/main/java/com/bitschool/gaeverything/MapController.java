@@ -47,21 +47,21 @@ public class MapController {
 	public String viewMapList(HttpSession session, Model model){
 		String url = "map/map_list";
 		boolean isLogin = new LoginFilter().isLogin(session, model);
+		
 		return url;
 	}
 	
-	@RequestMapping(value = "getLocationData", method = {RequestMethod.POST,RequestMethod.GET})
+	@RequestMapping(value = "getSearchLocationData", method = {RequestMethod.POST,RequestMethod.GET})
 	public @ResponseBody HashMap<String, Object> getLocationData(
 			@RequestParam(value = "searchWord", defaultValue = "") String searchWord,
-			@RequestParam(value = "categories", defaultValue = "5 449 776") String categories,
+			@RequestParam(value = "categories") String categories,
 			@RequestParam("level") int level,
 			@RequestParam("lat") double lat,
 			@RequestParam("lon") double lon,
-			@RequestParam(value = "option", defaultValue = "0") int option,
 			HttpSession session){
 		
-		MapInfomation info = new MapInfomation(searchWord, categories, level, lat, lon, option);
-		List<LocationDTO> list = service.getData(info);
+		MapInfomation info = new MapInfomation(searchWord, categories, level, lat, lon);
+		List<LocationDTO> list = service.SearchLocation(info);
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		//좋아요 상태 유지
 		if(member!=null){
@@ -69,6 +69,38 @@ public class MapController {
 			list= new ActUserManager(aService).checkListLocLikeStatus(aDTO, list);
 		}
 		
+		HashMap<String, Object> map = pService.makeSerachList(0, 5, list);
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		data.put("places", list);
+		data.put("pList", map.get("pList"));
+		data.put("infoList", map.get("infoList"));
+		return data;
+	}
+	
+	@RequestMapping(value = "getSearchShopNameData", method = {RequestMethod.POST,RequestMethod.GET})
+	public @ResponseBody HashMap<String, Object> getSearchShopNameData(
+			@RequestParam(value = "searchWord") String searchWord,
+			@RequestParam(value = "categories") String categories,
+			@RequestParam("level") int level,
+			@RequestParam("lat") double lat,
+			@RequestParam("lon") double lon,
+			HttpSession session){
+		String[] temps = categories.split(",");
+		MapInfomation info=null;
+		if(temps.length==1){
+			info = new MapInfomation(searchWord, temps[0], level, lat, lon);
+		}
+		
+		System.out.println("info:"+info);
+		List<LocationDTO> list = service.SearchShopName(info);
+		System.out.println(list);
+
+		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		//좋아요 상태 유지
+		if(member!=null){
+			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.LOCATION);
+			list= new ActUserManager(aService).checkListLocLikeStatus(aDTO, list);
+		}
 		HashMap<String, Object> map = pService.makeSerachList(0, 5, list);
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		data.put("places", list);
@@ -99,8 +131,6 @@ public class MapController {
 		data.put("places", list);
 		data.put("pList", map.get("pList"));
 		data.put("infoList", map.get("infoList"));
-		System.out.println(locData+":"+page);
-		System.out.println(locData);
 		return data;
 	}
 	

@@ -19,6 +19,5 @@ public class EventController {
 	public String getAllEvents(){
 		String url = "";
 		return url;
-	}
-	
+	}	
 }

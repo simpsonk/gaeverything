@@ -6,7 +6,6 @@ public class MapInfomation {
 	private int level;
 	private double lat;
 	private double lon;
-	private int option;
 	private String page;
 	
 	
@@ -14,13 +13,12 @@ public class MapInfomation {
 		
 	}
 	
-	public MapInfomation(String searchWord, String categories, int level, double lat, double lon, int option) {
+	public MapInfomation(String searchWord, String categories, int level, double lat, double lon) {
 		this.searchWord = searchWord;
 		this.categories = categories;
 		this.level = level;
 		this.lat = lat;
 		this.lon = lon;
-		this.option = option;
 	}
 	
 	public int getLevel() {
@@ -42,13 +40,6 @@ public class MapInfomation {
 		this.lon = lon;
 	}
 
-	public int getOption() {
-		return option;
-	}
-
-	public void setOption(int option) {
-		this.option = option;
-	}
 
 	public String getSearchWord() {
 		return searchWord;
@@ -69,7 +60,7 @@ public class MapInfomation {
 	@Override
 	public String toString() {
 		return "MapInfomation [searchWord=" + searchWord + ", categories=" + categories + ", level=" + level + ", lat="
-				+ lat + ", lon=" + lon + ", option=" + option + "]";
+				+ lat + ", lon=" + lon + "]";
 	}
 
 	

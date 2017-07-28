@@ -50,7 +50,7 @@
 		select * from location 
 	</select>
 	
-	<select id="selectShopName" resultType="LocationDTO">
+	<select id="selectShopName" resultType="LocationDTO" parameterType="MapInfomation">
 		select * from location where categoryCode = #{categories} and title like '%'||#{searchWord}||'%'
 	</select>
 	

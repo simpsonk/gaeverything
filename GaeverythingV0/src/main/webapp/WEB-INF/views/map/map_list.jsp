@@ -60,7 +60,6 @@
 						<div class="row with-forms">
 							<div class="col-fs-3">	
 								<select data-placeholder="Option" class="chosen-select" name="searchOption">
-									<option value="0" selected="selected">Option</option>
 									<option value="1" ${option==1?'selected="selected"':''}>shop name</option>
 									<option value="2" ${option==2?'selected="selected"':''}>location</option>
 								</select>
@@ -83,7 +82,7 @@
 						<input id="check-1" type="checkbox" name="check" checked="checked" value="5 449 776">
 						<label for="check-1">Hospital</label>
 
-						<input id="check-2" type="checkbox" name="check">
+						<input id="check-2" type="checkbox" name="check" value="5 449 776">
 						<label for="check-2">Hotels</label>
 					</div>
 				</div>
@@ -187,6 +186,7 @@
 	var longitude = 127.02759279999998;
 	var option=0;
 	var locData=[];
+	var markers = [];//지도 마커
 	
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 		mapOption = { 
@@ -218,7 +218,10 @@
 			    latitude  = position.coords.latitude;
 			    longitude = position.coords.longitude;
 				searchWord = document.getElementById('seachword').value;
-				option = $("select[name=searchOption]").val();
+				var categories = "";
+				$('input[name="check"]:checked').each(function() {
+					categories+= $(this).val()+",";
+				 });
 
 			 // 마커가 표시될 위치입니다 
 			    var markerPosition  = new daum.maps.LatLng(latitude, longitude); 
@@ -229,8 +232,10 @@
 			    });
 			    map.setCenter(new daum.maps.LatLng(latitude, longitude));
 			    marker.setMap(map);
+			    
 			    var level = map.getLevel();
-				url = '/map/getLocationData?searchWord='+searchWord+'&categories=5 449 776'+'&level='+level+'&lat='+latitude+'&lon='+longitude+"&option="+option;
+			    
+				url = '/map/getSearchLocationData?searchWord='+searchWord+'&level='+level+'&lat='+latitude+'&lon='+longitude+'&categories='+categories;
 				
 				$.ajax({
 					url : url,
@@ -267,40 +272,77 @@
 	
 	$(document).ready(function() {
 		$("#search").click(function() {
-			
 			searchWord = document.getElementById('seachword').value;
 
 			option = $("select[name=searchOption]").val();
+			var categories = "";
+
+			$('input[name="check"]:checked').each(function() {
+				categories+= $(this).val()+",";
+			 });
 			
 			var level = map.getLevel();
-			url = '/map/getLocationData?searchWord='+searchWord+'&categories=5 449 776'+'&level='+level+'&lat='+latitude+'&lon='+longitude+"&option="+option;
 			
-			$.ajax({
-				url : url,
-				dataType : 'json',
-				type:"POST",
-				success : function(data) {
-					locData = data.places;
-					var length = data.places.length;
-					var result = length+' Results Found';
-					$('#resultCount').text(result);
-					displayPlaces(data.places);
-					displayInfoList(data.pList, data.infoList, 0, 5);
-					
-				},
-				error : function(request, status, error) {
-					 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	           }
-			});
-			//이전 이벤트 삭제
-			if(searchCount!=0){
+			if(option==2){
+				url = '/map/getSearchLocationData?searchWord='+searchWord+'&level='+level+'&lat='+latitude+'&lon='+longitude+"&option="+option+'&categories='+categories;
+
+				$.ajax({
+					url : url,
+					dataType : 'json',
+					type:"POST",
+					success : function(data) {
+						locData = data.places;
+						var length = data.places.length;
+						var result = length+' Results Found';
+						$('#resultCount').text(result);
+						displayPlaces(data.places);
+						displayInfoList(data.pList, data.infoList, 0, 5);
+						clusterer.clear();
+						clusterer.addMarkers(markers);
+ 					},
+					error : function(request, status, error) {
+						 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		           }
+				});
+				//이전 이벤트 삭제
+				if(searchCount!=0){
+					wheelEventRemove();
+					moveEventRemove();	
+				}
+				//이전 이벤트 등록
+				wheelEventAdd();
+				moveEventAdd();
+				searchCount++;
+			}else if(option==1){
+				if(searchWord===""){
+					alert("검색어를 입력하세요!");
+					return;
+				}
+				url = '/map/getSearchShopNameData?searchWord='+searchWord+'&level='+level+'&lat='+latitude+'&lon='+longitude+'&categories='+categories;
+				
+				//초기 휠 이벤트 및 마우스 이벤트 삭제
 				wheelEventRemove();
 				moveEventRemove();	
+
+				$.ajax({
+					url : url,
+					dataType : 'json',
+					type:"POST",
+					success : function(data) {
+ 						locData = data.places;
+						var length = data.places.length;
+						var result = length+' Results Found';
+						$('#resultCount').text(result);
+						displaySearhPlaces(data.places);
+						displayInfoList(data.pList, data.infoList, 0, 5);
+						clusterer.clear();
+						clusterer.addMarkers(markers);
+ 					},
+					error : function(request, status, error) {
+						 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		           }
+				});
 			}
-			//이전 이벤트 등록
-			wheelEventAdd();
-			moveEventAdd();
-			searchCount++;
 		});
 	});
 </script>

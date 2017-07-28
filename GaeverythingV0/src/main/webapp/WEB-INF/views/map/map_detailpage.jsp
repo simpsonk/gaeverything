@@ -50,8 +50,8 @@
 				<div class="listing-titlebar-title">
 					<h2>${detail.title} <span class="listing-tag"> Hospital </span></h2>
 					<div>
-						<span>average rating: ${averageRatings} (${countRatings})</span><span style="margin-left: 20px;">${countReview} Reviews</span>
-						<span>${countReplies} Comments</span><span style="margin-left: 20px;" id = "numOflike">${likeCount} people bookmarked this place</span>
+						<span>average rating: ${detail.averageRatings} (${detail.countRatings})</span><span style="margin-left: 20px;">${detail.countReview} Reviews</span>
+						<span>${detail.countReplies} Comments</span><span style="margin-left: 20px;" id = "numOflike">${detail.countLike} people bookmarked this place</span>
 					</div>					
 				</div>
 			</div>

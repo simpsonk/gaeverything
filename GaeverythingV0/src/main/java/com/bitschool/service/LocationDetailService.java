@@ -8,11 +8,13 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.bitschool.dao.LocationDetailDAO;
+import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.DetailCommentDTO;
 import com.bitschool.dto.DetailPhotoDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
+import com.bitschool.utils.ActUserManager;
 @Service
 public class LocationDetailService {
 
@@ -181,6 +183,22 @@ public class LocationDetailService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return dto;
+	}
+
+	public LocationDTO getLocActUserResult(ActUserManager manager, LocationDTO dto) {
+		// TODO Auto-generated method stub
+		int countReview = this.countReviews(dto.getLocationSeq());	
+		
+		double averageRatings = this.getAverageRatings(this.getRatings(dto.getLocationSeq()),this.getReplyRatings(dto.getLocationSeq()));
+		averageRatings=(Double.isNaN(averageRatings))?0:averageRatings;
+		String temp = String.format("%.2f", averageRatings);
+		
+		int countRatings = this.getRatings(dto.getLocationSeq()).size()+this.getReplyRatings(dto.getLocationSeq()).size();
+		int countReplies = this.countReplies(dto.getLocationSeq());
+		int countLike = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.LOCATION, dto.getLocationSeq()));
+		
+		dto.setActUserResult(countReview, temp, countRatings, countReplies, countLike);
 		return dto;
 	}
 

@@ -13,23 +13,53 @@ public class LocationDTO {
 	private String newAddress;
 	private String title;
 	private String id;
-	private String phone;
+	private String phone;	
 	private String imageUrl;
 	private String address;
 	private String addressBCode;
 	private String longitude;
 	private String latitude;
 	private String radius;
-	private String userLikeStatus;
-
+	
 	private int relatedPlaceCount;
 	private String locId;
-	private String locCategory;
 	private String replacePlace;
+	
+	private int countReview;
+	private String averageRatings;
+	private int countRatings;
+	private int countReplies;
 	private int countLike;
+	private String userLikeStatus;
+	
+
 	
 	
 	
+	public int getCountReview() {
+		return countReview;
+	}
+	public void setCountReview(int countReview) {
+		this.countReview = countReview;
+	}
+	public String getAverageRatings() {
+		return averageRatings;
+	}
+	public void setAverageRatings(String averageRatings) {
+		this.averageRatings = averageRatings;
+	}
+	public int getCountRatings() {
+		return countRatings;
+	}
+	public void setCountRatings(int countRatings) {
+		this.countRatings = countRatings;
+	}
+	public int getCountReplies() {
+		return countReplies;
+	}
+	public void setCountReplies(int countReplies) {
+		this.countReplies = countReplies;
+	}
 	public int getCountLike() {
 		return countLike;
 	}
@@ -69,13 +99,6 @@ public class LocationDTO {
 	public void setLocId(String locId) {
 		this.locId = locId;
 	}
-	public String getLocCategory() {
-		return locCategory;
-	}
-	public void setLocCategory(String locCategory) {
-		this.locCategory = locCategory;
-	}
-	
 	
 	public int getLocationSeq() {
 		return locationSeq;
@@ -126,7 +149,6 @@ public class LocationDTO {
 	}
 	public void setCategoryCode(String categoryCode) {
 		this.categoryCode = categoryCode;
-		this.setLocCategory(categoryCode);
 	}
 	public String getCategory() {
 		return category;
@@ -190,6 +212,15 @@ public class LocationDTO {
 		this.latitude = latitude;
 	}
 	
+	public void setActUserResult(int countReview, String averageRatings, int countRatings, int countReplies, int countLike) {
+		// TODO Auto-generated method stub
+		this.countReview = countReview ;
+		this.averageRatings = averageRatings;
+		this.countRatings = countRatings;
+		this.countReplies = countReplies;
+		this.countLike = countLike;
+	}
+	
 	@Override
 	public String toString() {
 		return "LocationDTO [locationSeq=" + locationSeq + ", related_place_count=" + related_place_count + ", zipcode="
@@ -197,10 +228,13 @@ public class LocationDTO {
 				+ ", placeUrl=" + placeUrl + ", categoryCode=" + categoryCode + ", category=" + category
 				+ ", newAddress=" + newAddress + ", title=" + title + ", id=" + id + ", phone=" + phone + ", imageUrl="
 				+ imageUrl + ", address=" + address + ", addressBCode=" + addressBCode + ", longitude=" + longitude
-				+ ", latitude=" + latitude + ", radius=" + radius + ", userLikeStatus=" + userLikeStatus
-				+ ", relatedPlaceCount=" + relatedPlaceCount + ", locId=" + locId + ", locCategory=" + locCategory
-				+ ", replacePlace=" + replacePlace + ", countLike=" + countLike + "]";
+				+ ", latitude=" + latitude + ", radius=" + radius + ", relatedPlaceCount=" + relatedPlaceCount
+				+ ", locId=" + locId + ", replacePlace=" + replacePlace + ", countReview=" + countReview
+				+ ", averageRatings=" + averageRatings + ", countRatings=" + countRatings + ", countReplies="
+				+ countReplies + ", countLike=" + countLike + ", userLikeStatus=" + userLikeStatus + "]";
 	}
+	
+
 	
 
 }
