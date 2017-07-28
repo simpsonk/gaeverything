@@ -501,9 +501,9 @@ function no_login_like(locationSeq){
 
 
  function displayInfoList(start,end,commentlist){
-    var listEl = document.getElementById('replyList'), 
+    var listEl = document.getElementById('replyList'),
     fragment = document.createDocumentFragment(),
-    itemEl;    	       
+    itemEl; 
 	for(var i=start;i<end;i++){
 	    itemEl = getListItem(commentlist[i]);
 	    fragment.appendChild(itemEl);
@@ -514,39 +514,19 @@ function no_login_like(locationSeq){
 } 
  
  
- var commentStart = 5;
- var commentEnd = 10;
- var lastComment = false;
- 
+ var commentStart;
+ var commentEnd;
+  
  $('#commentMore').click(function(){
-	 moreList();
-	 if(lastComment){
+	 displayInfoList(commentStart,commentEnd,list);	
+	 if(commentEnd==list.length){
 		 $('#commentMore').hide();
-	 }	 
+	 }	
+	 commentStart = commentStart+5;
+	 commentEnd = commentEnd+5;
+	 commentEnd = commentEnd>list.length?list.length:commentEnd;
  });   
- function moreList(){	    
-		var locationSeq = document.getElementById("locationSeq").value;
-		url = '/map/detail/getReviewData?locationSeq='+locationSeq;
-		$.ajax({
-			url : url,
-			dataType : 'json',
-			type:"POST",
-			success : function(commentlist) {					
-				displayInfoList(commentStart,commentEnd,commentlist);		
-				commentStart = commentStart+5;
-				commentEnd = commentEnd+5;
-				if(commentEnd>commentlist.length){
-					commentEnd = commentlist.length;
-					lastComment = true;
-				}
-			},
-			error : function(request, status, error) {
-				 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	       }
-		});	
-	};
-
-
+ 
 function getListItem(reply) {
     var el = document.createElement('div');
     var nickname = document.getElementById('isLogin').value;
@@ -589,7 +569,7 @@ function removeAllChildNods(el) {
     }
 }
 
-
+var list = [];
 
 $(document).ready(function() {
 	var locationSeq = document.getElementById("locationSeq").value;
@@ -598,8 +578,15 @@ $(document).ready(function() {
 		url : url,
 		dataType : 'json',
 		type:"POST",
-		success : function(commentlist) {					
-			displayInfoList(0,5,commentlist);					
+		success : function(commentlist) {
+			list = commentlist;
+			if(commentlist.length<=5){
+				displayInfoList(0,commentlist.length,commentlist);
+			}else{
+				displayInfoList(0,5,commentlist);	
+				commentStart = 5;
+				commentEnd = commentlist.length>10?10:commentlist.length;
+			}
 		},
 		error : function(request, status, error) {
 			 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
