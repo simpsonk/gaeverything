@@ -12,7 +12,7 @@
 	    for ( var i=0; i<places.length; i++ ) {
 	        // 마커를 생성하고 지도에 표시합니다
 	        var placePosition = new daum.maps.LatLng(places[i].latitude, places[i].longitude),
-	            marker = addMarker(placePosition, i); 
+	            marker = addMarker(placePosition); 
 	        
 	        var detailUrl = url+places[i].locationSeq; //마커에 상세정보 클릭시 이동할 Url
 
@@ -30,7 +30,7 @@
 	
 	
 	// 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
-	function addMarker(position, idx, title) {
+	function addMarker(position) {
 	    var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
 	        imageSize = new daum.maps.Size(24, 36),  // 마커 이미지의 크기
 	        markerImage = new daum.maps.MarkerImage(imageSrc, imageSize),

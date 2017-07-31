@@ -144,9 +144,13 @@
 		<!-- Map -->
 		<div id="map-container">
 	    	<div id="map" style="width: 100%; overflow: hidden;">
+	    	
+	    	<div id="roadviewControl" onclick="setRoadviewRoad()"><span>Road View</span></div>
+	    	 <div id="roadview" style="width:100%;height:100%;"></div> 
 	    		<!-- map goes here -->
 	    	</div>
 		</div>
+		
 	</div>
 </div>
 
@@ -180,13 +184,17 @@
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ebfbfbd7a5ec71c10c63936dd90beb22&libraries=clusterer"></script>
 <script>
-	var overlay=new daum.maps.CustomOverlay();
+	var overlay = new daum.maps.CustomOverlay();
 	var searchCount = 0;
 	var searchWord="";
 	var latitude = 37.4946444;
 	var longitude = 127.02759279999998;
 	var option=0;
 	var locData=[];
+	
+	// 로드뷰 객체 생성
+	var rvContainer = document.getElementById('roadview');
+	var rv = new daum.maps.Roadview(rvContainer); 
 	
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 		mapOption = { 
@@ -198,6 +206,7 @@
 	var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 	var zoomControl = new daum.maps.ZoomControl();
 	map.addControl(zoomControl, daum.maps.ControlPosition.RIGHT);
+	
 	
 	// 마커 클러스터러를 생성합니다 
      var clusterer = new daum.maps.MarkerClusterer({

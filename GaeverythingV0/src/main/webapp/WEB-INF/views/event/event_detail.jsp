@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -44,30 +43,21 @@
 <div class="container">
 	<div class="row sticky-wrapper">
 		<div class="col-lg-12 col-md-12 padding-right-100 padding-left-100 ">
-			<input type="hidden" id = "memberEmail" value="${member.email}" >
+
 			<!-- Titlebar -->
 			<div id="titlebar" class="listing-titlebar " style="padding-bottom: 30px;">
 				<div class="listing-titlebar-title">
 					<h2>${detail.title} <span class="listing-tag"> Hospital </span></h2>
 					<div>
 						<span>average rating: ${averageRatings} (${countRatings})</span><span style="margin-left: 20px;">${countReview} Reviews</span>
-						<span>${countReplies} Comments</span><span style="margin-left: 20px;" id = "numOflike">${likeCount} people bookmarked this place</span>
+						<span>${countReplies} Comments</span><span style="margin-left: 20px;">159 people bookmarked this place</span>
 					</div>					
 				</div>
 			</div>
-			
-			<c:choose>
-				<c:when test="${member.nickname == null }">
-					<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
-						<button type="button" class="like-button" onclick="no_login_like()"><span class="like-icon"></span> Bookmark this listing</button> 
-					</div>	
-				</c:when>
-				<c:otherwise>
-					<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
-						<button type="button" class="like-button" onclick="like_clicked()"><span id = "like" class="${detail.userLikeStatus }"></span> Bookmark this listing</button> 
-					</div>	
-				</c:otherwise>
-			</c:choose>								
+			<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
+				<button class="like-button"><span class="like-icon"></span> Bookmark this listing</button> 
+			</div>
+		
 			
 			<!-- Overview -->
 			<div id="detail-Info" class="listing-section">
@@ -90,89 +80,52 @@
 			<!-- regist photo -->
 			<div id="regist-photo" class="listing-section margin-top-70 margin-bottom-30">
 				<div class="col-lg-12" style="padding-left: 0px;">
-					
-					<!-- Uplaod Photos -->
-					<c:choose>
-					<c:when test="${detailphoto==null}">
-					
 					<div class="col-lg-2" style="padding-left: 0px;">
 						<h3 class="listing-desc-headline ">Photo</h3>
 					</div>
-					
+					<!-- Uplaod Photos -->
 					<div class="col-lg-10">
 						<div style="height: 50px;margin-top: 34px;">
 							<div class = "col-lg-8" style="padding-top: 8px;">
 								<span>이 장소의 사진을 첫 번째로 등록해주세요.</span>
 							</div>
 							<div class="add-review-photos col-lg-4" style="position:static;">
-								<form id="addPhoto" action="" class="addPhoto" method="post"enctype="multipart/form-data">
-									<input type="hidden" id="locationSeq" name="locationSeq" value="${detail.locationSeq}">
-									<div class="photoUpload">
-										<span><i class="sl sl-icon-arrow-up-circle"></i> Upload Photos</span>
-										<input name="photo" type="file" onchange="addDetailPhoto()" class="upload" />
-									</div>
-								</form>
+								<div class="photoUpload">
+									<span><i class="sl sl-icon-arrow-up-circle"></i> Upload Photos</span>
+								</div>
 							</div>
 						</div>
 					</div>
-					
-					</c:when>	
-						<c:otherwise>
-						
-						<div class="col-lg-2" style="padding-left: 0px;">
-							<h3 class="listing-desc-headline ">Photo</h3>
-						</div>
-						
-						<div class="col-lg-10">
-							<div style="height: 50px;margin-top: 34px;">
-								<div class="add-review-photos col-lg-4" style="position:static;">
-									<form id="addPhoto" action="" class="addPhoto" method="post"enctype="multipart/form-data">
-										<input type="hidden" id="locationSeq" name="locationSeq" value="${detail.locationSeq}">
-										<div class="photoUpload">
-											<span><i class="sl sl-icon-arrow-up-circle"></i> Upload Photos</span>
-											<input name="photo" type="file" onchange="addDetailPhoto()" class="upload" />
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-						
-						<div class="review-images mfp-gallery-container col-lg-12" style="padding-top: 8px;">
-							<c:forEach var="dp" items="${detailphoto}" begin='0' end='3' step='1' varStatus="status">
-								<a href="/resources/upload/${dp.locationPhoto}" class="mfp-gallery">
-								<img src="/resources/upload/${dp.locationPhoto}" alt=""></a>
-								<div class="category-box-content">
-									<h2>${status.count} +</h2>
-								</div>
-							</c:forEach>
-						</div>
-						
-						</c:otherwise>
-					</c:choose>
 				</div>
 			</div>
 			<!-- regist photo / End -->
 			
 			<!-- regist photo test push case-->
 			<div id="regist-review" class="listing-section margin-top-70 margin-bottom-30">
-				<div class="col-lg-2" style="padding-left: 0px;">				
-					<h3 class="listing-desc-headline ">Review <span>(${countReview})</span></h3>							
-				</div>
+				<div class="col-lg-12" style="padding-left: 0px;">	
+					<div class="col-lg-2" style="padding-left: 0px;">				
+						<h3 class="listing-desc-headline ">Review <span>(${countReview})</span></h3>							
+					</div>
+				</div>				
 				<div class="col-lg-10">
-					<div style="height: 50px;margin-top: 34px;">
-						<c:if test="${empty reviewList}">
-						<div class = "col-lg-8" style="padding-top: 8px;">							
-						 	<span>이 장소의 리뷰를 첫 번째로 등록해주세요.</span> 							
-						</div>
-						</c:if>	
-						<div class="add-review-photos col-lg-4" style="position:static;">		
-							<div class="photoUpload">
-								<span><i class="im im-icon-Pencil"></i> Write Review</span>
+						<div style="height: 50px;margin-top: 34px;">
+							<c:if test="${empty reviewList}">
+							<div class = "col-lg-8" style="padding-top: 8px;">							
+							 	<span>이 장소의 리뷰를 첫 번째로 등록해주세요.</span> 							
 							</div>
+							</c:if>	
+						<div class="add-review-photos col-lg-4" style="position:static;">		
+								<div class="photoUpload">
+									<span><i class="im im-icon-Pencil"></i> Write Review</span>
+								</div>
 						</div>	
 					</div>
-				</div>
-			<div class="col-lg-12" style="padding-left: 0px;">
+				<div class="col-lg-12" style="padding-left: 0px;">
+					<!-- Uplaod Photos -->
+					<div class="col-lg-12">
+						<div style="height: 50px;margin-top: 34px;">
+							<div class = "col-lg-12" style="padding-top: 8px;">					
+					
 					<div class="row">
 							<c:forEach var="reviews" items="${reviewList}" varStatus="status">
 								<c:if test="${status.index<3}">							
@@ -200,13 +153,16 @@
 								</div>
 								</c:if>
 							</c:forEach>	
-					</div>
-					<c:if test="${fn:length(reviewList) > 3}">
+					</div>	
 					<div class="row">
-							<a href="/review/viewDetailReviews?locationSeq=${detail.locationSeq}&page=1" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
+							<a href="/review/viewReviewList" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
+					</div>					
+							</div>
+							
+						</div>
 					</div>
-					</c:if>
-					</div>
+				</div>
+			</div>
 			<!-- write Review / End -->
 
 		
@@ -262,9 +218,9 @@
 	   							<input type="radio" id="star3" name="rating" value="3.0" />
 	   							<label class = "full" for="star3" title="Meh - 3 stars"></label>
 	   							
-	   							<input type="radio" id="star2half" name="rating" value="2.5" />
+	   							<input type="radio" id="star2half" name="rating" value="2.5" }/>
 	   							<label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-	   									
+	   							
   		 						<input type="radio" id="star2" name="rating" value="2.0" />
   		 						<label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
 	  		 						
@@ -314,13 +270,7 @@
 				<section class="comments listing-reviews">
  					
 					 <ul>
-					 <div class="row fs-listings" id = "replyList" >
-					 
-				
-					 </div>
-					 
-	<%-- 				  <c:forEach var="comm" items="${commentlist}" varStatus="status">
-					  							 									
+					  <c:forEach var="comm" items="${commentlist}">
 					  	<input type="hidden" id="ratingVal${comm.commentSeq}" value="${comm.rating}">
 					  	<li>
 							<div class="avatar"><img src="/resources/upload/${comm.photo}" alt="" /></div> 
@@ -334,29 +284,45 @@
 							
 							
 							<!-- edit, delete -->
-						 <c:if test="${member.nickname == comm.nickname}"> 	
+						 <c:if test="${member.nickname == comm.nickname}"> 
+		 					<%-- <div class="comment-by">
+								<a class="reply" onclick="go_url(1, ${comm.commentSeq})" return false; ><i class="sl sl-icon-note"></i> Edit</a>
+							</div>
+							<div class="comment-by">
+								<a class="reply" style="margin-top: 36px;" onclick="/map/detail/viewDeleteComment" return false; ><i class="sl sl-icon-close"></i> Delete</a>
+							</div> --%>
+						  
+						 
 							  <div class="col-md-8 centered-content" >								
 								<a onclick="go_url(1, ${comm.commentSeq});" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-note"></i>Edit</a>
 								<a onclick="go_url(2, ${comm.commentSeq});" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-close"></i>Delete</a>
 							</div>  
 						 </c:if> 
-						</li>					
-				  	</c:forEach> --%>
-				  	
-			 
-				  	
-				  	<c:if test="${fn:length(commentlist) > 5}">
-					<div class="row" style="float:center;">
-						<input type="button" id="commentMore" value="Read More">
-							<!-- <a id="commentMore" href="" class="read-more">Read More <i class="fa fa-angle-right"></i></a> -->
-					</div>
-					</c:if>
-				
+						</li>
+				  	</c:forEach>	  
+						
 					 </ul>
 			 
 				</section> 
 			</form>
-
+				<!-- Pagination -->
+				<div class="clearfix"></div>
+				<div class="row">
+					<div class="col-md-12">
+						<!-- Pagination -->
+						<div class="pagination-container margin-top-30">
+							<nav class="pagination">
+								<ul>
+									<li><a href="#" class="current-page">1</a></li>
+									<li><a href="#">2</a></li>
+									<li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<!-- Pagination / End -->
 			</div>
 		</div>
 
@@ -407,12 +373,6 @@
 	marker.setMap(map);
 	
 
-	//photo 등록
-	function addDetailPhoto(){
-		var url = "/map/detail/addPhoto";
-		addPhoto.action = url;
-		addPhoto.submit();
-	}
 //댓글 등록 버튼 클릭시
 $('#registComment').click(function(){
 	var locationSeq = document.getElementById("locationSeq").value;
@@ -501,127 +461,7 @@ function box_clicked(locationSeq){
 	location.href = "/viewLogin?uri=/map/detail/viewDetailPage?locationSeq="+locationSeq;
 }
 
-function like_clicked(){
-	var class_name = document.getElementById("like").className;
-	var locationSeq = document.getElementById("locationSeq").value;
-	var email = document.getElementById("memberEmail").value;
-	var url = '/review/updateDetailPageLike?like='+class_name+'&locationSeq='+locationSeq+'&email='+email;
-	var id = document.getElementById("numOflike");
-	
-	$.ajax({
-        url : url,
-        dataType : 'json',
-        type:"POST",
-        success : function(data) {
-        	id.innerHTML=data+' people bookmarked this place'; 
-        },
-        error : function(request, status, error) {
-            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-          }
-     });
-}
-
-function no_login_like(locationSeq){
-	alert("로그인을 해주세요!");
-	var locationSeq = document.getElementById("locationSeq").value;
-	location.href = "/viewLogin?uri=/map/detail/viewDetailPage?locationSeq="+locationSeq;
-}
-
-
- function displayInfoList(start,end,commentlist){
-    var listEl = document.getElementById('replyList'),
-    fragment = document.createDocumentFragment(),
-    itemEl; 
-	for(var i=start;i<end;i++){
-	    itemEl = getListItem(commentlist[i]);
-	    fragment.appendChild(itemEl);
-	 }    
-    listEl.appendChild(fragment);
-    clearStarRating('.star');
-    starRating('.star');       
-} 
- 
- 
- var commentStart;
- var commentEnd;
-  
- $('#commentMore').click(function(){
-	 displayInfoList(commentStart,commentEnd,list);	
-	 if(commentEnd==list.length){
-		 $('#commentMore').hide();
-	 }	
-	 commentStart = commentStart+5;
-	 commentEnd = commentEnd+5;
-	 commentEnd = commentEnd>list.length?list.length:commentEnd;
- });   
- 
-function getListItem(reply) {
-    var el = document.createElement('div');
-    var nickname = document.getElementById('isLogin').value;
-    var regi = new Date(reply.regiDate); 
-    regi = regi.getFullYear() + '-' + leadingZeros((regi.getMonth()+1),2) + '-' + leadingZeros(regi.getDate(),2)
-    +' '+leadingZeros(regi.getHours(),2)+':'+leadingZeros(regi.getMinutes(),2)+':'+leadingZeros(regi.getSeconds(),2);
-    var itemStr ='	<input type="hidden" id="ratingVal'+reply.commentSeq+'" value="'+reply.rating+'">'+
-	  	'<li><div class="avatar"><img src="/resources/upload/'+reply.photo+'" alt="" /></div>'+
-	'<div class="comment-content"><div class="arrow-comment"></div>'+
-		'<div class="comment-by">'+
-			reply.nickname+'<span class="date">'+regi+'</span>'+
-			'<div class="star star-rating" data-rating="'+reply.rating+'"></div>'+
-		'</div>'+
-		'<p id="changeMsg'+reply.commentSeq+'">'+reply.message+'</p></div>';
-		if(nickname==reply.nickname){
-				itemStr += '<div class="col-md-8 centered-content" >	'+							
-				'<a onclick="go_url(1, '+reply.commentSeq+');" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-note"></i>Edit</a>'+
-				'<a onclick="go_url(2, '+reply.commentSeq+');" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-close"></i>Delete</a>'+
-			'</div></li>';
-		}
-		el.innerHTML = itemStr;
-    return el;
-}
-
-function leadingZeros(n, digits) {
-	  var zero = '';
-	  n = n.toString();
-
-	  if (n.length < digits) {
-	    for (var i = 0; i < digits - n.length; i++)
-	      zero += '0';
-	  }
-	  return zero + n;
-	}
-
-//검색결과 목록의 자식 Element를 제거하는 함수입니다
-function removeAllChildNods(el) {   
-    while (el.hasChildNodes()) {
-        el.removeChild (el.lastChild);
-    }
-}
-
-var list = [];
-
-$(document).ready(function() {
-	var locationSeq = document.getElementById("locationSeq").value;
-	url = '/map/detail/getReviewData?locationSeq='+locationSeq;
-	$.ajax({
-		url : url,
-		dataType : 'json',
-		type:"POST",
-		success : function(commentlist) {
-			list = commentlist;
-			if(commentlist.length<=5){
-				displayInfoList(0,commentlist.length,commentlist);
-			}else{
-				displayInfoList(0,5,commentlist);	
-				commentStart = 5;
-				commentEnd = commentlist.length>10?10:commentlist.length;
-			}
-		},
-		error : function(request, status, error) {
-			 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-       }
-	});		
-});
-
 </script>
+
 </body>
 </html>
