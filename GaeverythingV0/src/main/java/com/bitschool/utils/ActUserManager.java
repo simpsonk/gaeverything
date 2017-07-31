@@ -18,8 +18,6 @@ public class ActUserManager {
 	public static final String REVIEW = "00";
 	public static final String SHOP = "10";
 	
-	
-	
 	public ActUserManager(ActUserService service){
 		 this.service = service;
 	}
@@ -36,7 +34,6 @@ public class ActUserManager {
 	
 
 	public LocationDTO checkLikeStatus(ActUserDTO aDTO, LocationDTO dto) {
-		// TODO Auto-generated method stub
 		String userLikeStatus = "like-icon";
 		boolean flag = service.isCheckedLikeStatus(aDTO);
 		if(flag){
@@ -47,7 +44,6 @@ public class ActUserManager {
 	}
 	
 	public List<BoardDTO> checkLikeStatus(ActUserDTO aDTO, List<BoardDTO> list) {
-		// TODO Auto-generated method stub
 		for(int i=0;i<list.size();i++){
 			String userLikeStatus = "like-icon";
 			aDTO.setContentNo(list.get(i).getBoardNo());
@@ -61,7 +57,6 @@ public class ActUserManager {
 	}
 	
 	public List<LocationDTO> checkLikeStatus(List<LocationDTO> list, ActUserDTO aDTO) {
-		// TODO Auto-generated method stub
 		System.out.println(list.size());
 		for(int i=0;i<list.size();i++){
 			String userLikeStatus = "like-icon";
@@ -82,14 +77,12 @@ public class ActUserManager {
 	}
 
 	public boolean deleteLikeStatus(ActUserDTO dto) {
-		// TODO Auto-generated method stub
 		boolean flag = false;
 		flag = service.deleteLikeStatus(dto);
 		return flag;
 	}
 
 	public int getLikeStatusCount(ActUserDTO dto) {
-		// TODO Auto-generated method stub
 		int count = 0;
 		count = service.getLikeCount(dto);
 		return count;
