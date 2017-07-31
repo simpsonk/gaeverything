@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" session="false"%>
+   pageEncoding="UTF-8" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -50,108 +50,104 @@
 <!-- Content
 ================================================== -->
 <div class="fs-container">
-	<div class="fs-inner-container content">
-		<div class="fs-content">
-			<input type="hidden" id = "memberEmail" value = "${member.email}">
-			<!-- Search -->
-			<section class="search">
-				<div class="row">
-					<div class="col-fs-12">
-						<div class="row with-forms">
-							<div class="col-fs-3">	
-								<select data-placeholder="Option" class="chosen-select" name="searchOption">
-									<option value="0" selected="selected">Option</option>
-									<option value="1" ${option==1?'selected="selected"':''}>shop name</option>
-									<option value="2" ${option==2?'selected="selected"':''}>location</option>
-								</select>
-							</div>
-							<div class="col-fs-6">
-								<div class="input-with-icon">
-									<i class="sl sl-icon-magnifier"></i>
-									<input type="text" placeholder="What are you looking for?" value="${word}" id="seachword">
-								</div>
-							</div>
-							<div class="col-fs-3" style="text-align:center">
-								<button class="button" id = "search"  style="margin: auto; width: 130px;">search</button>			
-							</div>
-						</div>
-					</div>					
-				</div>
-				<div class="col-fs-12">
-					<div class="panel-dropdown-content checkboxes categories" style="padding-top: 0px; padding-bottom: 0px; padding-left: 0px;">
-						<span style="padding-right: 10px;">Categories : </span>  
-						<input id="check-1" type="checkbox" name="check" checked="checked" value="5 449 776">
-						<label for="check-1">Hospital</label>
+   <div class="fs-inner-container content">
+      <div class="fs-content">
+         <input type="hidden" id = "memberEmail" value = "${member.email}">
+         <!-- Search -->
+         <section class="search">
+            <div class="row">
+               <div class="col-fs-12">
+                  <div class="row with-forms">
+                     <div class="col-fs-3">   
+                        <select data-placeholder="Option" class="chosen-select" name="searchOption">
+                           <option value="0" selected="selected">Option</option>
+                           <option value="1" ${option==1?'selected="selected"':''}>shop name</option>
+                           <option value="2" ${option==2?'selected="selected"':''}>location</option>
+                        </select>
+                     </div>
+                     <div class="col-fs-6">
+                        <div class="input-with-icon">
+                           <i class="sl sl-icon-magnifier"></i>
+                           <input type="text" placeholder="What are you looking for?" value="${word}" id="seachword">
+                        </div>
+                     </div>
+                     <div class="col-fs-3" style="text-align:center">
+                        <button class="button" id = "search"  style="margin: auto; width: 130px;">search</button>         
+                     </div>
+                  </div>
+               </div>               
+            </div>
+            <div class="col-fs-12">
+               <div class="panel-dropdown-content checkboxes categories" style="padding-top: 0px; padding-bottom: 0px; padding-left: 0px;">
+                  <span style="padding-right: 10px;">Categories : </span>  
+                  <input id="check-1" type="checkbox" name="check" checked="checked" value="5 449 776">
+                  <label for="check-1">Hospital</label>
 
-						<input id="check-2" type="checkbox" name="check">
-						<label for="check-2">Hotels</label>
-					</div>
-				</div>
-			</section>		 
- 		<!-- Search / End -->
-		
-			
+                  <input id="check-2" type="checkbox" name="check">
+                  <label for="check-2">Hotels</label>
+               </div>
+            </div>
+         </section>       
+       <!-- Search / End -->
+      
+         
 
-		<section class="listings-container margin-top-30" id = "menu_wrap">
-			<!-- Sorting / Layout Switcher -->
-			<div class="row fs-switcher">
-				<div class="col-md-6" >
-					<!-- Showing Results -->
-					<p class="showing-results" id = "resultCount"></p>
-				</div>
-			</div>
-
-
-			<!-- Listings -->
-			<div class="row fs-listings" id = "placesList">
-				
-			</div>
-			<!-- Listings Container / End -->
+      <section class="listings-container margin-top-30" id = "menu_wrap">
+         <!-- Sorting / Layout Switcher -->
+         <div class="row fs-switcher">
+            <div class="col-md-6" >
+               <!-- Showing Results -->
+               <p class="showing-results" id = "resultCount"></p>
+            </div>
+         </div>
 
 
-			<!-- Pagination Container -->
-			<div class="row fs-listings">
-				<div class="col-md-12">
+         <!-- Listings -->
+         <div class="row fs-listings" id = "placesList">
+            
+         </div>
+         <!-- Listings Container / End -->
 
-					<!-- Pagination -->
-					<div class="clearfix"></div>
-					<div class="row">
-						<div class="col-md-12">
-							<!-- Pagination -->
-							<div class="pagination-container margin-top-15 margin-bottom-40">
-								<nav class="pagination">
-									<ul id = "pageList">
-									</ul>
-								</nav>
-							</div>
-						</div>
-					</div>
-					<div class="clearfix"></div>
-					<!-- Pagination / End -->
-					
-					<!-- Copyrights -->
-					<div class="copyrights margin-top-0">© 2017 Listeo. All Rights Reserved.</div>
 
-				</div>
-			</div>
-			<!-- Pagination Container / End -->
-		</section>
+         <!-- Pagination Container -->
+         <div class="row fs-listings">
+            <div class="col-md-12">
 
-		</div>
-	</div>
-	<div class="fs-inner-container map-fixed">
+               <!-- Pagination -->
+               <div class="clearfix"></div>
+               <div class="row">
+                  <div class="col-md-12">
+                     <!-- Pagination -->
+                     <div class="pagination-container margin-top-15 margin-bottom-40">
+                        <nav class="pagination">
+                           <ul id = "pageList">
+                           </ul>
+                        </nav>
+                     </div>
+                  </div>
+               </div>
+               <div class="clearfix"></div>
+               <!-- Pagination / End -->
+               
+               <!-- Copyrights -->
+               <div class="copyrights margin-top-0">© 2017 Listeo. All Rights Reserved.</div>
 
-		<!-- Map -->
-		<div id="map-container">
-	    	<div id="map" style="width: 100%; overflow: hidden;">
-	    	
-	    	<div id="roadviewControl" onclick="setRoadviewRoad()"><span>Road View</span></div>
-	    	 <div id="roadview" style="width:100%;height:100%;"></div> 
-	    		<!-- map goes here -->
-	    	</div>
-		</div>
-		
-	</div>
+            </div>
+         </div>
+         <!-- Pagination Container / End -->
+      </section>
+
+      </div>
+   </div>
+   <div class="fs-inner-container map-fixed">
+
+      <!-- Map -->
+      <div id="map-container">
+          <div id="map" style="width: 100%; overflow: hidden;">
+             <!-- map goes here -->
+          </div>
+      </div>
+   </div>
 </div>
 
 
@@ -184,134 +180,129 @@
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ebfbfbd7a5ec71c10c63936dd90beb22&libraries=clusterer"></script>
 <script>
-	var overlay = new daum.maps.CustomOverlay();
-	var searchCount = 0;
-	var searchWord="";
-	var latitude = 37.4946444;
-	var longitude = 127.02759279999998;
-	var option=0;
-	var locData=[];
-	
-	// 로드뷰 객체 생성
-	var rvContainer = document.getElementById('roadview');
-	var rv = new daum.maps.Roadview(rvContainer); 
-	
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-		mapOption = { 
-		center: new daum.maps.LatLng(37.4946444, 127.02759279999998), // 지도의 중심좌표
-		level: 4 // 지도의 확대 레벨
-	};
-	
-	// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
-	var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-	var zoomControl = new daum.maps.ZoomControl();
-	map.addControl(zoomControl, daum.maps.ControlPosition.RIGHT);
-	
-	
-	// 마커 클러스터러를 생성합니다 
+   var overlay = new daum.maps.CustomOverlay();
+   var searchCount = 0;
+   var searchWord="";
+   var latitude = 37.4946444;
+   var longitude = 127.02759279999998;
+   var option=0;
+   var locData=[];
+   
+   var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+      mapOption = { 
+      center: new daum.maps.LatLng(37.4946444, 127.02759279999998), // 지도의 중심좌표
+      level: 4 // 지도의 확대 레벨
+   };
+   
+   // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+   var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+   var zoomControl = new daum.maps.ZoomControl();
+   map.addControl(zoomControl, daum.maps.ControlPosition.RIGHT);
+   
+   // 마커 클러스터러를 생성합니다 
      var clusterer = new daum.maps.MarkerClusterer({
         map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
         averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
         minLevel: 6 // 클러스터 할 최소 지도 레벨 
     });
  
-	
+   
 
-	
-	//현재 위치에 따라 마커를 생성한다.
-	(function() {
-		  if (!navigator.geolocation){
-		  	alert('현재 위치를 확인할 수 없습니다.');
-		  }
-		  function success(position) {
-			    latitude  = position.coords.latitude;
-			    longitude = position.coords.longitude;
-				searchWord = document.getElementById('seachword').value;
-				option = $("select[name=searchOption]").val();
+   
+   //현재 위치에 따라 마커를 생성한다.
+   (function() {
+        if (!navigator.geolocation){
+           alert('현재 위치를 확인할 수 없습니다.');
+        }
+        function success(position) {
+             latitude  = position.coords.latitude;
+             longitude = position.coords.longitude;
+            searchWord = document.getElementById('seachword').value;
+            option = $("select[name=searchOption]").val();
 
-			 // 마커가 표시될 위치입니다 
-			    var markerPosition  = new daum.maps.LatLng(latitude, longitude); 
-				
-			    // 마커를 생성합니다
-			    var marker = new daum.maps.Marker({
-			        position: markerPosition
-			    });
-			    map.setCenter(new daum.maps.LatLng(latitude, longitude));
-			    marker.setMap(map);
-			    var level = map.getLevel();
-				url = '/map/getLocationData?searchWord='+searchWord+'&categories=5 449 776'+'&level='+level+'&lat='+latitude+'&lon='+longitude+"&option="+option;
-				
-				$.ajax({
-					url : url,
-					dataType : 'json',
-					type:"POST",
-					success : function(data) {
-						locData = data.places;
-						var length = data.places.length;
-						var result = length+' Results Found';
-						$('#resultCount').text(result);
-						displayPlaces(data.places);
-						displayInfoList(data.pList, data.infoList, 0, 5);
-						clusterer.clear();
-						clusterer.addMarkers(markers);
-					},
-					error : function(request, status, error) {
-						 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-		           }
-				});
-				//이전 이벤트 삭제
-				if(searchCount!=0){
-					wheelEventRemove();
-					moveEventRemove();	
-				}
-				//이전 이벤트 등록
-				wheelEventAdd();
-				moveEventAdd();
-				searchCount++;
-		  }
-		  navigator.geolocation.getCurrentPosition(success);
-		}
-	)();
-	
-	
-	$(document).ready(function() {
-		$("#search").click(function() {
-			
-			searchWord = document.getElementById('seachword').value;
+          // 마커가 표시될 위치입니다 
+             var markerPosition  = new daum.maps.LatLng(latitude, longitude); 
+            
+             // 마커를 생성합니다
+             var marker = new daum.maps.Marker({
+                 position: markerPosition
+             });
+             map.setCenter(new daum.maps.LatLng(latitude, longitude));
+             marker.setMap(map);
+             var level = map.getLevel();
+            url = '/map/getLocationData?searchWord='+searchWord+'&categories=5 449 776'+'&level='+level+'&lat='+latitude+'&lon='+longitude+"&option="+option;
+            
+            $.ajax({
+               url : url,
+               dataType : 'json',
+               type:"POST",
+               success : function(data) {
+                  locData = data.places;
+                  var length = data.places.length;
+                  var result = length+' Results Found';
+                  $('#resultCount').text(result);
+                  displayPlaces(data.places);
+                  displayInfoList(data.pList, data.infoList, 0, 5);
+                  clusterer.clear();
+                  clusterer.addMarkers(markers);
+               },
+               error : function(request, status, error) {
+                   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                 }
+            });
+            //이전 이벤트 삭제
+            if(searchCount!=0){
+               wheelEventRemove();
+               moveEventRemove();   
+            }
+            //이전 이벤트 등록
+            wheelEventAdd();
+            moveEventAdd();
+            searchCount++;
+        }
+        navigator.geolocation.getCurrentPosition(success);
+      }
+   )();
+   
+   
+   $(document).ready(function() {
+      $("#search").click(function() {
+         
+         searchWord = document.getElementById('seachword').value;
 
-			option = $("select[name=searchOption]").val();
-			
-			var level = map.getLevel();
-			url = '/map/getLocationData?searchWord='+searchWord+'&categories=5 449 776'+'&level='+level+'&lat='+latitude+'&lon='+longitude+"&option="+option;
-			
-			$.ajax({
-				url : url,
-				dataType : 'json',
-				type:"POST",
-				success : function(data) {
-					locData = data.places;
-					var length = data.places.length;
-					var result = length+' Results Found';
-					$('#resultCount').text(result);
-					displayPlaces(data.places);
-					displayInfoList(data.pList, data.infoList, 0, 5);
-					
-				},
-				error : function(request, status, error) {
-					 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	           }
-			});
-			//이전 이벤트 삭제
-			if(searchCount!=0){
-				wheelEventRemove();
-				moveEventRemove();	
-			}
-			//이전 이벤트 등록
-			wheelEventAdd();
-			moveEventAdd();
-			searchCount++;
-		});
-	});
+         option = $("select[name=searchOption]").val();
+         
+         var level = map.getLevel();
+         url = '/map/getLocationData?searchWord='+searchWord+'&categories=HP8'+'&level='+level+'&lat='+latitude+'&lon='+longitude+"&option="+option;
+         
+         $.ajax({
+            url : url,
+            dataType : 'json',
+            type:"POST",
+            success : function(data) {
+               locData = data.places;
+               var length = data.places.length;
+               var result = length+' Results Found';
+               $('#resultCount').text(result);
+               displayPlaces(data.places);
+               displayInfoList(data.pList, data.infoList, 0, 5);
+               
+            },
+            error : function(request, status, error) {
+                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+              }
+         });
+         //이전 이벤트 삭제
+         if(searchCount!=0){
+            wheelEventRemove();
+            moveEventRemove();   
+         }
+         //이전 이벤트 등록
+         wheelEventAdd();
+         moveEventAdd();
+         searchCount++;
+      });
+   });
 </script>
 </body>
 </html>

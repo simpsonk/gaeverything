@@ -80,7 +80,7 @@ public class MapController {
 	@RequestMapping(value = "getLocationData", method = {RequestMethod.POST,RequestMethod.GET})
 	public @ResponseBody HashMap<String, Object> getLocationData(
 			@RequestParam(value = "searchWord", defaultValue = "") String searchWord,
-			@RequestParam(value = "categories", defaultValue = "5 449 776") String categories,
+			@RequestParam(value = "categories", defaultValue = "HP8") String categories,
 			@RequestParam("level") int level,
 			@RequestParam("lat") double lat,
 			@RequestParam("lon") double lon,
