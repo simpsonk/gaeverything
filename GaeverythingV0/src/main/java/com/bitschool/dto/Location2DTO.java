@@ -14,6 +14,7 @@ public class Location2DTO {
 	private String x;
 	private String y;
 	
+	private int locationSeq;
 
 	public String getPlace_name() {
 		return place_name;
