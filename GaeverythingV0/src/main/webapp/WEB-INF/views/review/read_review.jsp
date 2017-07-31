@@ -141,6 +141,20 @@
 		location.href = "/viewLogin?uri=/review/readPost?boardNo="+boardNo+"&page="+page;
 	}
 	
+	function click_prev(){
+		var prev = document.getElementById("prevPost").value;
+		if(prev == null){
+			alert("가장 최신 글입니다.");
+		}
+	}
+	
+	function click_next(){
+		var prev = document.getElementById("nextPost").value;
+		if(next == null){
+			alert("가장 마지막 글입니다.");
+		}
+	}
+	
 	
 </script>
 
@@ -375,7 +389,7 @@
 								<input type = "hidden" name = "groupNo" value = "${cmt.groupNo}">
 							
 								<div class="comment-by" style="height: 70px;padding-bottom: 5px;">${cmt.nicknameCmt}
-								<span class="date" id="date" style="font-size: 8px;">등록일 <fmt:formatDate value = "${dto.regiDate}" pattern="YY/MM/dd hh:mm:ss"/></span>	
+								<span class="date" id="date" style="font-size: 8px;">등록일 <fmt:formatDate value = "${dto.regiDate}" pattern="YYYY-MM-dd hh:mm:ss"/></span>	
 									
 								<c:if test="${member.nickname == cmt.nicknameCmt}">
 									<div class="comment-by">
@@ -402,15 +416,13 @@
 			<!-- Post Navigation -->
 			<ul id="posts-nav" class="margin-top-0 margin-bottom-45">
 				<li class="next-post">
-					<a href="#"><span>Next Post</span>
-					The Best Cofee Shops In Sydney Neighborhoods</a>
+					<a href="/review/next?boardNo=${dto.boardNo}&page=${param.page}" id="nextPost" onclick="click_next()"><span>Next Post</span>${nextTitle}</a>
 				</li>
 				<li class="prev-post">
-					<a href="#"><span>Previous Post</span>
-					Hotels for All Budgets</a>
+					<a href="/review/prev?boardNo=${dto.boardNo}&page=${param.page}" id="prevPost" onclick="click_prev()"><span>Previous Post</span>${prevTitle}</a>
 				</li>
 			</ul>
-			
+				
 			
 			<div class="clearfix"></div>
 			<h4 class="headline margin-top-25">Related Posts</h4>

@@ -46,9 +46,9 @@ public class BoardPageService implements IPagerService{
 	@Override
 	public String pageList(PageDTO pDTO) {
 		//List<String> pList = null;
-		//amount = 20: 한 페이지당 20개 게시물 출력
+		//amount = 20: �븳 �럹�씠吏��떦 20媛� 寃뚯떆臾� 異쒕젰
 		
-		//총 출력 페이지 개수
+		//珥� 異쒕젰 �럹�씠吏� 媛쒖닔
 		int numOfPage = (int)Math.ceil(this.totalPosts()/(double)pDTO.getAmount());
 		int pageUnit = (pDTO.getPage()/10)*10;
 		int startPage = pageUnit+1;
@@ -77,8 +77,8 @@ public class BoardPageService implements IPagerService{
 		
 		
 		int numOfPage = (int)Math.ceil(this.totalSearch(sDTO)/(double)pDTO.getAmount());
-		System.out.println("검색결과: " + this.totalSearch(sDTO)+"개");
-		System.out.println("페이지수:" + numOfPage+ "개");
+		System.out.println("寃��깋寃곌낵: " + this.totalSearch(sDTO)+"媛�");
+		System.out.println("�럹�씠吏��닔:" + numOfPage+ "媛�");
 		int pageUnit = (pDTO.getPage()/10)*10;
 		int startPage = pageUnit+1;
 		int lastPage = pageUnit+10;
@@ -89,14 +89,14 @@ public class BoardPageService implements IPagerService{
 		sb.append("<div class='w3-bar'>");
 		
 		if((pDTO.getPage()/10)>=1){
-			sb.append(" <a href='/review/search?page="+(pageUnit-9)+"&by="+sDTO.getSearch()+"&search="+sDTO.getEncodeUTF()+"' class='w3-button'>«</a>");
+			sb.append(" <a href='/review/search?page="+(pageUnit-9)+"&by="+sDTO.getSearch()+"&search="+sDTO.getEncodeUTF()+"' class='w3-button'>짬</a>");
 		}
 		for(int i=startPage; i<=lastPage; i++){
 			sb.append("<a href='/review/search?page="+i+"&by="+sDTO.getBy()+"&search="+sDTO.getEncodeUTF()+"' class='w3-button w3-green'>"+i+"</a>  ");
 		}
 		
 		if(lastPage<numOfPage){
-			sb.append("<a href='/board/search?page="+(pageUnit+11)+"&by="+sDTO.getBy()+"&seach="+sDTO.getEncodeUTF()+"' class='w3-button'>»</a></div></div>");			
+			sb.append("<a href='/board/search?page="+(pageUnit+11)+"&by="+sDTO.getBy()+"&seach="+sDTO.getEncodeUTF()+"' class='w3-button'>쨩</a></div></div>");			
 		}
 		
 		return sb.toString();

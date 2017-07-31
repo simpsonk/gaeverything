@@ -115,4 +115,22 @@
 		select count(*) from act_user where email = #{email} and boardNo = #{boardNo} and actType = #{actType}
 	</select>
 	
+	<select id="prevNum" parameterType="Integer" resultType="Integer">
+		select num from (select rownum as num, temp.* from(select * from board order by boardNo desc)temp) where boardNo = #{boardNo}
+	</select>
+	
+	<select id="readPrev" parameterType="Integer" resultType="BoardDTO">
+		select * from (select rownum as num, temp.* from(select * from board order by boardNo desc)temp) where num = (#{num}-1)
+	</select>
+	
+	<select id="nextNum" parameterType="Integer" resultType="Integer">
+		select num from (select rownum as num, temp.* from(select * from board order by boardNo desc)temp) where boardNo = #{boardNo}
+	</select>
+	
+	<select id="readNext" parameterType="Integer" resultType="BoardDTO">
+		select * from (select rownum as num, temp.* from(select * from board order by boardNo desc)temp) where num = (#{num}+1)
+	</select>
+	
+	
+	
 </mapper>

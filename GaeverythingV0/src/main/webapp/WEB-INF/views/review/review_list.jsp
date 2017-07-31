@@ -122,7 +122,7 @@
 						<li><i class="sl sl-icon-bubble"></i> ${board.numOfCmt}</li>
 						<li id="numOflike${board.boardNo}"><i class="sl sl-icon-heart"></i> ${board.countLike}</li>
 						<li><i class="sl sl-icon-eye"></i> ${board.readCount}</li>
-						<li><fmt:formatDate value = "${board.regiDate}" pattern="YY/MM/dd hh:mm:ss"/></li>
+						<li><fmt:formatDate value = "${board.regiDate}" pattern="YYYY-MM-dd hh:mm:ss"/></li>
 				</ul>
 				
 								
