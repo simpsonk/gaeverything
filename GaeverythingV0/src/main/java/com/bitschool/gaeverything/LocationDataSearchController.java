@@ -1,4 +1,4 @@
-package com.bitschool.gaeverything;
+/*package com.bitschool.gaeverything;
 
 import java.io.File;
 import java.io.IOException;
@@ -204,3 +204,4 @@ public class LocationDataSearchController {
 	
 
 }
+*/
