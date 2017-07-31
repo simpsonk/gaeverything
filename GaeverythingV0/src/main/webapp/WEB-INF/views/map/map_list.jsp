@@ -144,13 +144,9 @@
 		<!-- Map -->
 		<div id="map-container">
 	    	<div id="map" style="width: 100%; overflow: hidden;">
-	    	
-	    	<div id="roadviewControl" onclick="setRoadviewRoad()"><span>Road View</span></div>
-	    	 <div id="roadview" style="width:100%;height:100%;"></div> 
 	    		<!-- map goes here -->
 	    	</div>
 		</div>
-		
 	</div>
 </div>
 
@@ -192,10 +188,6 @@
 	var option=0;
 	var locData=[];
 	
-	// 로드뷰 객체 생성
-	var rvContainer = document.getElementById('roadview');
-	var rv = new daum.maps.Roadview(rvContainer); 
-	
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 		mapOption = { 
 		center: new daum.maps.LatLng(37.4946444, 127.02759279999998), // 지도의 중심좌표
@@ -206,7 +198,6 @@
 	var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 	var zoomControl = new daum.maps.ZoomControl();
 	map.addControl(zoomControl, daum.maps.ControlPosition.RIGHT);
-	
 	
 	// 마커 클러스터러를 생성합니다 
      var clusterer = new daum.maps.MarkerClusterer({

@@ -141,9 +141,16 @@
 							<c:forEach var="dp" items="${detailphoto}" begin='0' end='3' step='1' varStatus="status">
 								<a href="/resources/upload/${dp.locationPhoto}" class="mfp-gallery">
 								<img src="/resources/upload/${dp.locationPhoto}" alt=""></a>
-								<div class="category-box-content">
-									<h2>${status.count} +</h2>
+								<div class="col-lg-12">
+							<div style="height: 50px;margin-top: 34px;">
+								<div class="add-review-photos col-lg-4" style="position:static;">
+										<div class="photoUpload">
+											<span><i class="sl sl-icon-arrow-up-circle"></i> 더 보기</span>
+											<input name="photo" type="file" onchange="addDetailPhoto()" class="upload" />
+										</div>
 								</div>
+							</div>
+						</div>
 							</c:forEach>
 						</div>
 						
