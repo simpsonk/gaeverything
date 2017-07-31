@@ -83,6 +83,7 @@ public class MapController {
 		ObjectMapper mapper = new ObjectMapper();
 		List<LocationDTO> list = null;
 		HashMap<String, Object> map = null;
+		System.out.println("locData="+locData);
 		try {
 			list = mapper.readValue(locData, new TypeReference<List<LocationDTO>>(){});
 			map = pService.makeSerachList(page, 5, list);

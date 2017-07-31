@@ -30,7 +30,7 @@ import com.bitschool.utils.LoginFilter;
 
 @RequestMapping(value = "map/detail")
 @Controller
-public class LocationDetailController {
+public class LocationDataSearchController {
 	
 	@Inject
 	private LocationDetailService service;

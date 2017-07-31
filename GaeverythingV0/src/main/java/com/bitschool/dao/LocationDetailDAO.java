@@ -50,7 +50,15 @@ public class LocationDetailDAO {
 			}
 			return flag;
 		}	
-
+		
+		//사진 보여주기
+		public List<DetailPhotoDTO> selectPhoto(int locationSeq) throws SQLException{
+			// TODO Auto-generated method stub
+			List<DetailPhotoDTO> list = null;
+			list = session.selectList(namespace+".selectPhoto",locationSeq);
+			return list;
+		}
+		
 
 	// 디테일페이지 댓글 리스팅 
 	public List<DetailCommentDTO> commentList(int locseq) throws SQLException{

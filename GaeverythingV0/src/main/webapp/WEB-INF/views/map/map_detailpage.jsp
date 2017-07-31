@@ -90,37 +90,65 @@
 			<!-- regist photo -->
 			<div id="regist-photo" class="listing-section margin-top-70 margin-bottom-30">
 				<div class="col-lg-12" style="padding-left: 0px;">
+					
+					<!-- Uplaod Photos -->
+					<c:choose>
+					<c:when test="${detailphoto==null}">
+					
 					<div class="col-lg-2" style="padding-left: 0px;">
 						<h3 class="listing-desc-headline ">Photo</h3>
 					</div>
-					<!-- Uplaod Photos -->
+					
 					<div class="col-lg-10">
 						<div style="height: 50px;margin-top: 34px;">
-						
-						<c:choose>
-						<c:when test="${DetailPhoto.locationPhoto==null}">
 							<div class = "col-lg-8" style="padding-top: 8px;">
 								<span>이 장소의 사진을 첫 번째로 등록해주세요.</span>
 							</div>
-						</c:when>
-						<c:otherwise>
-							<div class = "col-lg-8" style="padding-top: 8px;">
-								<img id="photoImage" src="/resources/upload/${DetailPhoto.locationPhoto}" alt="">
-							</div>
-						</c:otherwise>
-						</c:choose>
-							
 							<div class="add-review-photos col-lg-4" style="position:static;">
-							<form id="addPhoto" action="" class="addPhoto" method="post"enctype="multipart/form-data">
+								<form id="addPhoto" action="" class="addPhoto" method="post"enctype="multipart/form-data">
 									<input type="hidden" id="locationSeq" name="locationSeq" value="${detail.locationSeq}">
-								<div class="photoUpload">
-									<span><i class="sl sl-icon-arrow-up-circle"></i> Upload Photos</span>
-									<input name="photo" type="file" onchange="addDetailPhoto()" class="upload" />
-								</div>
-							</form>
+									<div class="photoUpload">
+										<span><i class="sl sl-icon-arrow-up-circle"></i> Upload Photos</span>
+										<input name="photo" type="file" onchange="addDetailPhoto()" class="upload" />
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>
+					
+					</c:when>	
+						<c:otherwise>
+						
+						<div class="col-lg-2" style="padding-left: 0px;">
+							<h3 class="listing-desc-headline ">Photo</h3>
+						</div>
+						
+						<div class="col-lg-10">
+							<div style="height: 50px;margin-top: 34px;">
+								<div class="add-review-photos col-lg-4" style="position:static;">
+									<form id="addPhoto" action="" class="addPhoto" method="post"enctype="multipart/form-data">
+										<input type="hidden" id="locationSeq" name="locationSeq" value="${detail.locationSeq}">
+										<div class="photoUpload">
+											<span><i class="sl sl-icon-arrow-up-circle"></i> Upload Photos</span>
+											<input name="photo" type="file" onchange="addDetailPhoto()" class="upload" />
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+						
+						<div class="review-images mfp-gallery-container col-lg-12" style="padding-top: 8px;">
+							<c:forEach var="dp" items="${detailphoto}" begin='0' end='3' step='1' varStatus="status">
+								<a href="/resources/upload/${dp.locationPhoto}" class="mfp-gallery">
+								<img src="/resources/upload/${dp.locationPhoto}" alt=""></a>
+								<div class="category-box-content">
+									<h2>${status.count} +</h2>
+								</div>
+							</c:forEach>
+						</div>
+						
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 			<!-- regist photo / End -->
@@ -234,9 +262,9 @@
 	   							<input type="radio" id="star3" name="rating" value="3.0" />
 	   							<label class = "full" for="star3" title="Meh - 3 stars"></label>
 	   							
-	   							<input type="radio" id="star2half" name="rating" value="2.5" }/>
+	   							<input type="radio" id="star2half" name="rating" value="2.5" />
 	   							<label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-	   							
+	   									
   		 						<input type="radio" id="star2" name="rating" value="2.0" />
   		 						<label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
 	  		 						

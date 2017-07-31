@@ -85,6 +85,20 @@ public class LocationDetailService {
 		return flag;
 	}
 	
+	//사진 보여주기
+			public List<DetailPhotoDTO> selectPhoto(int locationSeq) {
+				// TODO Auto-generated method stub
+				List<DetailPhotoDTO> list = null;
+				try {
+					list = dao.selectPhoto(locationSeq);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return list;
+			}
+			
+	
 	// 디테일페이지 댓글 수정  
 	public boolean commentEdit(DetailCommentDTO dto){
 		boolean flag = false;
