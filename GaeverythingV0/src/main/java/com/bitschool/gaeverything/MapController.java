@@ -87,7 +87,9 @@ public class MapController {
 			@RequestParam("lon") double lon,
 			HttpSession session){
 		
-		MapInfomation info = new MapInfomation(searchWord, categories, level, lat, lon);
+		String[] categories1 = categories.split(",");
+		
+		MapInfomation info = new MapInfomation(searchWord, categories1[0], level, lat, lon);
 		List<LocationDTO> list = service.SearchLocation(info);
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		//좋아요 상태 유지
