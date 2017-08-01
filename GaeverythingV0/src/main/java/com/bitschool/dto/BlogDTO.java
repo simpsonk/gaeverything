@@ -1,11 +1,17 @@
 package com.bitschool.dto;
 
 public class BlogDTO {
+	private int blogSeq;
+	private int locationSeq;
+	
 	private String title;
 	private String link;
 	private String description;
 	private String bloggername;
 	private String bloggerlink;
+	
+	private String postdate;
+	
 	public String getTitle() {
 		return title;
 	}
@@ -36,11 +42,30 @@ public class BlogDTO {
 	public void setBloggerlink(String bloggerlink) {
 		this.bloggerlink = bloggerlink;
 	}
+	
+	public int getBlogSeq() {
+		return blogSeq;
+	}
+	public void setBlogSeq(int blogSeq) {
+		this.blogSeq = blogSeq;
+	}
+	public int getLocationSeq() {
+		return locationSeq;
+	}
+	public void setLocationSeq(int locationSeq) {
+		this.locationSeq = locationSeq;
+	}	
+	public String getPostdate() {
+		return postdate;
+	}
+	public void setPostdate(String postdate) {
+		this.postdate = postdate;
+	}
 	@Override
 	public String toString() {
-		return "BlogDTO [title=" + title + ", link=" + link + ", description=" + description + ", bloggername="
-				+ bloggername + ", bloggerlink=" + bloggerlink + "]";
-	}
-	
+		return "BlogDTO [blogSeq=" + blogSeq + ", locationSeq=" + locationSeq + ", title=" + title + ", link=" + link
+				+ ", description=" + description + ", bloggername=" + bloggername + ", bloggerlink=" + bloggerlink
+				+ ", postdate=" + postdate + "]";
+	}	
 	
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bitschool.dto.BlogDTO;
 import com.bitschool.dto.Location2DTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.service.DataService;
@@ -33,8 +34,69 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class GetDataController {
 	@Inject
 	private DataService service;	
+	//블로그 데이터 입력
+	   public List<BlogDTO> GetBlogDatum() {
+	        String clientId = "LEq7OLCKz1iWikgbm3jr";//애플리케이션 클라이언트 아이디값";
+	        String clientSecret = "pNcj27Jve1";//애플리케이션 클라이언트 시크릿값";
+			List<BlogDTO> list = null;
+			
+	        try {
+	            String text = URLEncoder.encode("압구정웰동물병원", "UTF-8");
+	            String apiURL = "https://openapi.naver.com/v1/search/blog?query="+ text; // json 결과
+	            //String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text; // xml 결과
+	            URL url = new URL(apiURL);
+	            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+	            con.setRequestMethod("GET");
+	            con.setRequestProperty("X-Naver-Client-Id", clientId);
+	            con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
+	            int responseCode = con.getResponseCode();
+	            BufferedReader br;
+	            if(responseCode==200) { // 정상 호출
+	                br = new BufferedReader(new InputStreamReader(con.getInputStream(),"UTF-8"));
+	            } else {  // 에러 발생
+	                br = new BufferedReader(new InputStreamReader(con.getErrorStream(),"UTF-8"));
+	            }
+	            String inputLine;
+	            StringBuffer response = new StringBuffer();
+	            while ((inputLine = br.readLine()) != null) {
+	                response.append(inputLine);
+	            }
+	            br.close();
+	            System.out.println(response.toString());
+	            ObjectMapper mapper = new ObjectMapper();
+	            
+	    
+	    		String itemdata = response.toString().substring(99,response.length()-1);
+	    		System.out.println(itemdata);
+	    		list = mapper.readValue(itemdata,new TypeReference<List<BlogDTO>>(){});
+
+	    	
+	        } catch (JsonParseException e) {
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	        return list;
+	    }
 	
-	//데이터 넣는 방법 : 
+	@RequestMapping(value="/insertBlogData", method=RequestMethod.GET)
+	public String insertBlogData(BlogDTO dto){
+		List<BlogDTO> list = this.GetBlogDatum();
+		System.out.println("insertBlogData / list : "+list);
+		String url = null;
+		boolean flag = false;
+		for(int i=0;i<list.size();i++){
+			flag = service.insertBlogData(list.get(i));
+		}
+		System.out.println(flag);
+		return url;
+	}
+	
+	
+	
+	// 지도 데이터 넣는 방법 : 
 	// "OO구 동물병원" /  page= 1,2,3 / substring 140~160 알아서 맞추기   
 	// http://localhost:5050/data/insertData 
 	
