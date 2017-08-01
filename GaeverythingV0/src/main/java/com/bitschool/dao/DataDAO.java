@@ -20,6 +20,12 @@ public class DataDAO {
 	
 	private final static String namespace = "com.bitschool.bootstrap.DataMapper";
 	
+	public List<LocationDTO> selectLocation() throws SQLException{
+		List<LocationDTO> list = null;
+		list = session.selectList(namespace+".selectLocation");
+		return list;
+	}
+	
 	public boolean insertData(Location2DTO dto) throws SQLException{
 		// TODO Auto-generated method stub
 		boolean flag = false;
