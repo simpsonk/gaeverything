@@ -61,8 +61,8 @@
 							<div class="col-fs-3">	
 								<select data-placeholder="Option" class="chosen-select" name="searchOption">
 									<option value="0" selected="selected">Option</option>
-									<option value="1" ${option==1?'selected="selected"':''}>shop name</option>
-									<option value="2" ${option==2?'selected="selected"':''}>location</option>
+									<option value="1" ${option==1?'selected="selected"':''}>Shop name</option>
+									<option value="2" ${option==2?'selected="selected"':''}>Location</option>
 								</select>
 							</div>
 							<div class="col-fs-6">

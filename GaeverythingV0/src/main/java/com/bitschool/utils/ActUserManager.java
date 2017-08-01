@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.DetailCommentDTO;
+import com.bitschool.dto.EventDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.service.ActUserService;
@@ -17,6 +18,8 @@ public class ActUserManager {
 	
 	public static final String REVIEW = "00";
 	public static final String SHOP = "10";
+	public static final String EVENT = "20";
+	
 	
 	public ActUserManager(ActUserService service){
 		 this.service = service;
@@ -42,6 +45,17 @@ public class ActUserManager {
 		dto.setUserLikeStatus(userLikeStatus);
 		return dto;
 	}
+	
+	public EventDTO checkLikeStatus(ActUserDTO aDTO, EventDTO dto) {
+		String userLikeStatus = "like-icon";
+		boolean flag = service.isCheckedLikeStatus(aDTO);
+		if(flag){
+			userLikeStatus = "like-icon liked";
+		}
+		dto.setUserLikeStatus(userLikeStatus);
+		return dto;
+	}
+	
 	
 	public List<BoardDTO> checkLikeStatus(ActUserDTO aDTO, List<BoardDTO> list) {
 		for(int i=0;i<list.size();i++){
@@ -69,6 +83,22 @@ public class ActUserManager {
 		}
 		return list;
 	}
+	
+	public List<EventDTO> checkLikeStatusEvent(ActUserDTO aDTO, List<EventDTO> list) {
+		System.out.println(list.size());
+		for(int i=0;i<list.size();i++){
+			String userLikeStatus = "like-icon";
+			aDTO.setContentNo(list.get(i).getEventNo());
+			boolean flag = service.isCheckedLikeStatus(aDTO);
+			if(flag){
+				userLikeStatus = "like-icon liked";
+			}
+			list.get(i).setUserLikeStatus(userLikeStatus);
+		}
+		return list;
+	}
+	
+	
 	
 	public boolean registLikeStatus(ActUserDTO dto){
 		boolean flag = false;

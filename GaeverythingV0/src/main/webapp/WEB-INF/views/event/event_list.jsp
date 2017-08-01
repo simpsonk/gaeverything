@@ -56,13 +56,10 @@
 		<!-- Content
 ================================================== -->
 		<div class="fs-container">
-
 			<div class="fs-inner-container content">
 				<div class="fs-content">
-
 					<!-- Search -->
 					<section class="search">
-
 					<div class="row">
 						<div class="col-md-12">
 
@@ -70,127 +67,39 @@
 							<div class="row with-forms">
 
 								<!-- Main Search Input -->
-								<div class="col-fs-6">
-									<div class="input-with-icon">
-										<i class="sl sl-icon-magnifier"></i> <input type="text"
-											placeholder="What are you looking for?" value="" />
-									</div>
+								<div class="col-fs-3">
+									<select class="chosen-select" name="searchOption">
+										
+										<option value="1" selected="selected" ${option==1?'selected="selected"':''}>Title</option>
+										<option value="2" ${option==2?'selected="selected"':''}>Location</option>
+									</select>
 								</div>
 
 								<!-- Main Search Input -->
-								<div class="col-fs-6">
-									<div class="input-with-icon location">
-
-										<input type="text" placeholder="Destination, city, address"
-											value="" /> <a href="#"><i class="fa fa-dot-circle-o"></i></a>
+								<div class="col-fs-6">															
+									<div class="input-with-icon">
+										<i class="sl sl-icon-magnifier"></i>
+										 <input type="text" placeholder="What are you looking for?" value="" />
 									</div>
+								</div>	
+								<div class="col-fs-3" style="text-align:center">
+									<button class="button" id = "search"  style="margin: auto; width: 130px;">search</button>			
 								</div>
-
-
-								<!-- Filters -->
-								<div class="col-fs-12">
-
-									<!-- Panel Dropdown / End -->
-									<div class="panel-dropdown">
-										<a href="#">Categories</a>
-										<div class="panel-dropdown-content checkboxes categories">
-
-											<!-- Checkboxes -->
-											<div class="row">
-												<div class="col-md-6">
-													<input id="check-1" type="checkbox" name="check" checked
-														class="all"> <label for="check-1">All
-														Categories</label> <input id="check-2" type="checkbox"
-														name="check"> <label for="check-2">Shops</label> <input
-														id="check-3" type="checkbox" name="check"> <label
-														for="check-3">Hotels</label>
-												</div>
-
-												<div class="col-md-6">
-													<input id="check-4" type="checkbox" name="check">
-													<label for="check-4">Eat & Drink</label> <input
-														id="check-5" type="checkbox" name="check"> <label
-														for="check-5">Fitness</label> <input id="check-6"
-														type="checkbox" name="check"> <label for="check-6">Events</label>
-												</div>
-											</div>
-
-											<!-- Buttons -->
-											<div class="panel-buttons">
-												<button class="panel-cancel">Cancel</button>
-												<button class="panel-apply">Apply</button>
-											</div>
-
-										</div>
-									</div>
-									<!-- Panel Dropdown / End -->
-
-									<!-- Panel Dropdown -->
-									<div class="panel-dropdown wide">
-										<a href="#">More Filters</a>
-										<div class="panel-dropdown-content checkboxes">
-
-											<!-- Checkboxes -->
-											<div class="row">
-												<div class="col-md-6">
-													<input id="check-a" type="checkbox" name="check"> <label
-														for="check-a">Elevator in building</label> <input
-														id="check-b" type="checkbox" name="check"> <label
-														for="check-b">Friendly workspace</label> <input
-														id="check-c" type="checkbox" name="check"> <label
-														for="check-c">Instant Book</label> <input id="check-d"
-														type="checkbox" name="check"> <label for="check-d">Wireless
-														Internet</label>
-												</div>
-
-												<div class="col-md-6">
-													<input id="check-e" type="checkbox" name="check">
-													<label for="check-e">Free parking on premises</label> <input
-														id="check-f" type="checkbox" name="check"> <label
-														for="check-f">Free parking on street</label> <input
-														id="check-g" type="checkbox" name="check"> <label
-														for="check-g">Smoking allowed</label> <input id="check-h"
-														type="checkbox" name="check"> <label for="check-h">Events</label>
-												</div>
-											</div>
-
-											<!-- Buttons -->
-											<div class="panel-buttons">
-												<button class="panel-cancel">Cancel</button>
-												<button class="panel-apply">Apply</button>
-											</div>
-
-										</div>
-									</div>
-									<!-- Panel Dropdown / End -->
-
-									<!-- Panel Dropdown -->
-									<div class="panel-dropdown">
-										<a href="#">Distance Radius</a>
-										<div class="panel-dropdown-content">
-											<input class="distance-radius" type="range" min="1" max="100"
-												step="1" value="50"
-												data-title="Radius around selected destination">
-											<div class="panel-buttons">
-												<button class="panel-cancel">Disable</button>
-												<button class="panel-apply">Apply</button>
-											</div>
-										</div>
-									</div>
-									<!-- Panel Dropdown / End -->
-
-								</div>
-								<!-- Filters / End -->
-
 							</div>
-							<!-- Row With Forms / End -->
-
+						</div>
+					</div>	
+					<div class="col-fs-12">
+						<div class="panel-dropdown-content checkboxes categories" style="padding-top: 0px; padding-bottom: 0px; padding-left: 0px;">
+							<span style="padding-right: 10px;">Categories : </span>  
+							<input id="check-1" type="checkbox" name="check" checked="checked" value="5 449 776">
+							<label for="check-1">Fair</label>
+	
+							<input id="check-2" type="checkbox" name="check">
+							<label for="check-2">Festival</label>
 						</div>
 					</div>
-
 					</section>
 					<!-- Search / End -->
-
 
 					<section class="listings-container margin-top-30" id="menu_wrap">
 					<!-- Sorting / Layout Switcher -->
@@ -198,16 +107,13 @@
 
 						<div class="col-md-6">
 							<!-- Showing Results -->
-							<p class="showing-results">Results Found</p>
+							<p class="showing-results" id="ResultsFound"></p>
 						</div>
 					</div>
 
-
 					<!-- Listings(ul) -->
 					<div class="row fs-listings" id="eventList">
-
 						<!-- Listing Item -->
-
 						<!-- Listing Item / End -->
 					</div>
 					<!-- Listings Container / End --> <!-- Pagination Container -->
@@ -232,7 +138,7 @@
 							<!-- Pagination / End -->
 
 							<!-- Copyrights -->
-							<div class="copyrights margin-top-0">© 2017 Listeo. All
+							<div class="copyrights margin-top-0">© 2017 gaeverything. All
 								Rights Reserved.</div>
 
 						</div>
@@ -290,13 +196,23 @@
 	var map = new daum.maps.Map(container, options);
 	/////////////////////////////////////////////////////////////////
 
+	var markers = [];
+	var makerPostions = [];
+	var overlays = [];
+	var eventData = [];
+	
 	$(document).ready(
 			function() {
 				$.ajax({
-					url : "/event/getAllEvents",
+					url		 : "/event/getAllEvents",
 					dataType : "json",
-					type : 'post',
-					success : function(data) {
+					type 	 : 'post',
+					success  : function(data) {
+						eventData = data.events; //전체이벤트리스트
+						//data : 맵형식 -> 이벤트리스트, 페이징리스트, 
+						var numOfData = data.events.length ;
+						var foundResult = numOfData + ' Results Found';
+						$('#ResultsFound').text(foundResult);
 						eventList(data);
 						setMarkers(map);
 					},
@@ -306,40 +222,63 @@
 				});
 			});
 
-	var markers = [];
-	var makerPostions = [];
-	var overlays = [];
+	
+	function pageClickEvent(page) {
+		var stringEventData = JSON.stringify(eventData);
+		$.ajax({
+			url 	 : "/event/getPagingData?page="+page,
+			data	 : {"data": stringEventData},
+			type 	 : 'post',
+			dataType : "json",
+			success  : function(data) {
+				eventData = data.events; 
+				eventList(data);
+				setMarkers(map);
+			},
+			error : function(request, status, error) {
+				alert("code:" + request.status + "\n" + "message:"+ request.responseText + "\n" + "error:"+ error);
+			}
+		});
+	}
+		
+	
 
 	///*****
 	function eventList(data) {
-		displayEvent(data);
+		displayEvent(data.pList, data.infoList, data.events);
 		//페이징추가예정
-		//displayPagination(data);
+	//	displayPagination(data.pList, data.infoList);
 	}
 
-	function displayEvent(data) {
+	function displayEvent(pList, infoList, events) {
 		var listEl = document.getElementById("eventList"), 
 			menuEl = document.getElementById("menu-wrap"), 
 			fragment = document.createDocumentFragment();
+		var pageList = document.getElementById("pagination");
+			pageList.innerHTML = pList;
+			
 			removeAllChildNods(listEl);
 	
-		for (var i=0; i<data.length; i++) {
+		for (var i=0; i<infoList.length; i++) {
 			//리스트보여줄 태그
-			alert(data[i].longitude);
-			var placePosition = new daum.maps.LatLng(data[i].latitude, data[i].longitude),
+			/* alert(data[0].latitude);w
+			alert(data[0].longitude); */
+			var placePosition = new daum.maps.LatLng(infoList[i].latitude, infoList[i].longitude),
 			
-			itemEl = eventItems(data[i]); //좌측 리스트 한덩어리
+			itemEl = eventItems(infoList[i]); //좌측 리스트 한덩어리
 
-			var itemOverlay = createOverlay(data[i], i, placePosition);
+			var itemOverlay = createOverlay(infoList[i], i, placePosition);
 
 			(function(overlay){
-				itemEl.onclick = function() {
+				itemEl.onmouseover = function() {
 					setOverlay(overlay); 			
+					clearStarRating('.star-rating');
+					starRating('.star-rating');
 				};
 				
-				/*  itemEl.onmouseout = function() {
+				 itemEl.onmouseout = function() {
 					clearOverlay(overlay); 			
-				};  */
+				}; 
 			})(overlays[i]);
 
 			fragment.appendChild(itemEl);
@@ -348,6 +287,7 @@
 		listEl.appendChild(fragment);
 		starRating('.star-rating');
 	}
+	
 
 	//좌측리스트
 	function eventItems(event) {
@@ -359,26 +299,29 @@
 				//'			<div class="listing-badge now-open">Now Open</div>' + 
 				'			<div class="listing-item-content">'
 				+ '				<span class="tag">Fair</span>' 
-				+ '				<h3>'+ event.eventName + '</h3>'
-				+ '				<span><i class="fa fa-map-marker"></i>  '+ event.address+ '</span>'
-				+ '				<span><i class="fa fa-calendar-check-o"></i>  '+ event.startDate+ '  ~  '+ event.endDate	+ '</span>'
+				+ '				<h3>'+ event.eventName + '</h3><br>'
+				+ '				<span><i class="fa fa-map-marker"></i>  '+ event.address+ '</span><br>'
+				+ '				<span><i class="fa fa-calendar-check-o"></i>  '+ event.startDate+ '  ~  '+ event.endDate	+ '</span><br>'
 				+ '				<span><i class="fa fa-dollar"></i>  '+ event.fee+ '   <i class="fa fa-check"></i>  '+ event.discountInfo+ '</span>'
 				+ '			</div>'
 				+ '			<span class="like-icon"></span>	'
 				+ '		</div>'
 				+ '		<div class="star-rating" data-rating="3.5">'
-				+ '			<div class="rating-counter">(12 reviews)</div>'
-				+ '		</div>' 
+				+ '		</div>(12 reviews)' 
 				+ '	   </a>';
 		el.innerHTML = itemStr;
 		el.className = 'col-lg-6 col-md-12';
 		return el;
 	}
 
+ 	/* function displayPagination(pList, infoList){
+		var pageList = document.getElementById("pagination");
+		
+		pageList.innerHTML = pList;
+	}  */
 	
 	//이미지크기에따라 오버레이 크기 달라짐!!!!!
 	function createOverlay(event, idx, placePosition) {
-	//	alert(event.latitude, event.longitude);
 		var contentStr =
 		'<div class="infoBox" style="width: 270px; transform: translateZ(0px); position: absolute; visibility: visible; left: 284.75px; bottom: -185.3px; cursor: default;">' + 
         '    <div class="map-box">' + 
@@ -392,9 +335,8 @@
         '      </a>'+
         '      <div class="listing-content">   '+
         '         <div class="listing-title">'+
-        '            <div class="star-rating" data-rating="3.5   ">46 Review<div>'+      
-        '         </div>'+
-        '      </div>'+
+        '            <div class="star-rating" data-rating="3.5">'+
+        '      		</div>46 Review'+
         '   </div>'+
         '</div>';
 
@@ -411,6 +353,7 @@
 		overlays.push(overlay);
 		//5) 마커에 오버레이 표시
 		createMarker(overlayPosition, overlay);
+		
 		return overlay;
 	}
 	
@@ -444,6 +387,8 @@
 	function markerClick(marker, overlay) {
 		daum.maps.event.addListener(marker, 'click', function() {
 			overlay.setMap(map);
+			clearStarRating('.star-rating');
+			starRating('.star-rating');
 		}); 
 	}
 
@@ -472,6 +417,7 @@
 	/* function displayPagination(data){
 		
 	} */
+
 
 	 
 	</script>

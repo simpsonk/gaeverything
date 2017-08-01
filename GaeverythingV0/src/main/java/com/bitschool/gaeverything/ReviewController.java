@@ -74,20 +74,16 @@ public class ReviewController {
 	@RequestMapping(value = "/viewReviewList", method = {RequestMethod.GET, RequestMethod.POST})
 	public String viewReviewList(Model model, HttpSession session, @RequestParam(value="page", defaultValue="1") int page){
 		
-		//�α��� ����
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		
-		//������ ����Ʈ
 		int amount = 5;
 		PageDTO pDTO = new PageDTO(page, amount);
 		
 		String pList = pService.pageList(pDTO);
 		model.addAttribute("pList", pList);
 		
-		//�Խù� ����Ʈ
 		List<BoardDTO> list = service.getPagedList(pDTO); 
 		model.addAttribute("page", page);
-		
 		
 		//user like status like
 		if(isLogin){
@@ -96,7 +92,6 @@ public class ReviewController {
 			list= new ActUserManager(aService).checkLikeStatus(aDTO, list);
 		}
 		
-		//��ۼ� �ޱ�
 		int countCmts = 0;
 		for(int i=0; i<list.size(); i++){
 			BoardDTO dto = list.get(i);
@@ -119,7 +114,6 @@ public class ReviewController {
 	@RequestMapping(value = "/newPost", method={RequestMethod.POST, RequestMethod.GET})
 	public String newPost(BoardDTO dto, HttpSession session){
 		String url = null;
-		System.out.println(dto);
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		dto.setNickname(member.getNickname());
 		boolean flag = service.insertPost(dto);
@@ -131,12 +125,9 @@ public class ReviewController {
 	
 	@RequestMapping(value = "/modify", method=RequestMethod.POST)
 	public String modify(BoardDTO dto, Model model, @RequestParam("page") int page, @RequestParam("boardNo") int boardNo){
-		System.out.println("modify controller");
-		System.out.println("check:"+dto);
 		String url = null;
 		dto.setBoardNo(boardNo);
 		boolean flag = service.updatePost(dto);
-		System.out.println("dao result: "+ flag);
 		if(flag){
 			model.addAttribute("dto", dto);
 			model.addAttribute("boardNo", dto.getBoardNo());
@@ -153,7 +144,6 @@ public class ReviewController {
 		String root_path = session.getServletContext().getRealPath("/");
 		String attach_path = "/resources/upload/";
 		MultipartFile upload = filebean.getUpload();
-		System.out.println(upload);
 		String filename  = "";
 		String CKEditorFuncNum = "";
 		if(upload!=null){
@@ -169,7 +159,6 @@ public class ReviewController {
 				e.printStackTrace();
 			}
 			String file_path = attach_path + filename;
-			System.out.println("���ϸ�:" + filename);
 			model.addAttribute("file_path", file_path);
 			model.addAttribute("filename", filename);
 			model.addAttribute("CKEditorFuncNum", CKEditorFuncNum);
@@ -185,9 +174,8 @@ public class ReviewController {
 						   Model model){
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		String url = null;
-		System.out.println("read post ");
 		BoardDTO dto = service.selectToRead(boardNo);
-	//	System.out.println("Ŭ���� �� ����: " + dto.getTitle());
+	
 		//user like status like
 		if(isLogin){
 			MemberDTO member = (MemberDTO)session.getAttribute("member");
@@ -228,7 +216,6 @@ public class ReviewController {
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		BoardDTO dto = service.selectToRead(boardNo);
 		model.addAttribute("dto", dto);
-		System.out.println(dto);
 		String url = "review/review_regist";
 		return url;
 	}
@@ -237,7 +224,6 @@ public class ReviewController {
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
 	public String delete(@RequestParam("boardNo") int boardNo, @RequestParam("page") int page){
 		String url = null; 
-		System.out.println("delete controller");
 		boolean flag = service.remove(boardNo);
 		if(flag){
 			url = "redirect:/review/viewReviewList?page="+page;
@@ -254,10 +240,8 @@ public class ReviewController {
 		String url = null;
 		cDTO.setGroupNo(boardNo);
 		boolean flag = cService.addComment(cDTO); 
-		System.out.println(cDTO.toString());
 
 		if(flag){
-		//	System.out.println("����߰���� ��Ʈ�ѷ�: " + flag);
 			model.addAttribute("boardNo", boardNo);
 			model.addAttribute("page", page);
 			
@@ -274,13 +258,12 @@ public class ReviewController {
 							Model model, 
 							HttpSession session){
 		
-		System.out.println("������۳ѹ�:" + commentNo);
 		dto = service.selectToRead(boardNo);
 		int numOfCmt = cService.countCmt(boardNo);
 		List<CommentDTO> cList = cService.getAllComment(boardNo);
 		
 		boolean isLogin = new LoginFilter().isLogin(session, model);
-	
+
 		model.addAttribute("cList", cList);
 		model.addAttribute("numOfCmt", numOfCmt);
 		model.addAttribute("dto", dto);

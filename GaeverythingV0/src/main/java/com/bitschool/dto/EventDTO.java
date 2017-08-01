@@ -19,6 +19,7 @@ public class EventDTO {
 	private String discountInfo;
 	private String regist;
 	private String thumbnail;
+	private String userLikeStatus;
 	
 	public int getEventNo() {
 		return eventNo;
@@ -125,6 +126,13 @@ public class EventDTO {
 	public void setThumbnail(String thumbnail) {
 		this.thumbnail = thumbnail;
 	}
+	public String getUserLikeStatus() {
+		return userLikeStatus;
+	}
+	public void setUserLikeStatus(String userLikeStatus) {
+		this.userLikeStatus = userLikeStatus;
+	}
+	
 	
 	
 	
