@@ -62,7 +62,7 @@ public class MapController {
 	
 	
 	
-	//Áö¿ï°ÅÀÓ
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value = "/viewTest", method = RequestMethod.GET)
 	public String viewTest(HttpSession session, Model model){
 		String url = "map/test";
@@ -92,9 +92,9 @@ public class MapController {
 		MapInfomation info = new MapInfomation(searchWord, categories1[0], level, lat, lon);
 		List<LocationDTO> list = service.SearchLocation(info);
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		//ÁÁ¾Æ¿ä »óÅÂ À¯Áö
+		//ï¿½ï¿½ï¿½Æ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		if(member!=null){
-			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.LOCATION);
+			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.SHOP);
 			list= new ActUserManager(aService).checkListLocLikeStatus(aDTO, list);
 		}
 		
@@ -125,9 +125,9 @@ public class MapController {
 		System.out.println(list);
 
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		//ÁÁ¾Æ¿ä »óÅÂ À¯Áö
+		//ï¿½ï¿½ï¿½Æ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		if(member!=null){
-			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.LOCATION);
+			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.SHOP);
 			list= new ActUserManager(aService).checkListLocLikeStatus(aDTO, list);
 		}
 		HashMap<String, Object> map = pService.makeSerachList(0, 5, list);

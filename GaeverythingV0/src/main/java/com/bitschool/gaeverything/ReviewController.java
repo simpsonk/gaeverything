@@ -337,7 +337,7 @@ public class ReviewController {
 		boolean flag = false;
 		int data = 0;
 		ActUserManager manager = new ActUserManager(aService);
-		ActUserDTO dto = new ActUserDTO(email, ActUserManager.LOCATION, locationSeq);
+		ActUserDTO dto = new ActUserDTO(email, ActUserManager.SHOP, locationSeq);
 		if(like.equals("like-icon")){
 			flag = manager.registLikeStatus(dto);
 			if(!flag){
@@ -349,7 +349,7 @@ public class ReviewController {
 				System.out.println("delete fail: DetailPageLike");
 			}
 		}
-		data = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.LOCATION, locationSeq));
+		data = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.SHOP, locationSeq));
 		return data;
 	}
 	

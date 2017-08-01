@@ -37,21 +37,21 @@ public class LocationDetailController {
 	@Inject
 	private ActUserService aService;
 	
-	//µðÅ×ÀÏ ¸®ºäµ¥ÀÌÅÍ
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½äµ¥ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value = "/getReviewData", method = {RequestMethod.POST,RequestMethod.GET})
 	public @ResponseBody List<DetailCommentDTO> getReviewData(@RequestParam(value="locationSeq") int locationSeq){
 		List<DetailCommentDTO> commentlist = service.commentList(locationSeq);	
 		return commentlist;
 	}
 	
-	//µðÅ×ÀÏ ÆäÀÌÁö ¿¬°á
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value = "/viewDetailPage", method = RequestMethod.GET)
 	public String viewDetailPage(HttpServletRequest request, 
 			@RequestParam(value="locationSeq") int locationSeq, 
 			HttpSession session,
 			Model model){
 		
-		//·Î±×ÀÎ À¯Áö
+		//ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		ActUserManager manager = new ActUserManager(aService);
 		String url = "map/map_detailpage";
@@ -63,10 +63,10 @@ public class LocationDetailController {
 		dto = service.getLocActUserResult(manager, dto);
 		List<DetailPhotoDTO> photoList = service.selectPhoto(locationSeq);
 		
-		//ÁÁ¾Æ¿ä »óÅÂ À¯Áö
+		//ï¿½ï¿½ï¿½Æ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		if(isLogin){
 			MemberDTO member = (MemberDTO)session.getAttribute("member");
-			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.LOCATION, locationSeq);
+			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.SHOP, locationSeq);
 			dto= manager.checkLocLikeStatus(aDTO, dto);
 		}
 		
@@ -76,18 +76,18 @@ public class LocationDetailController {
 		model.addAttribute("reviewList",reviewList);
 		model.addAttribute("detailphoto",photoList);
 		
-		System.out.println("´ñ±Û ¸®½ºÆ® : "+list);
+		System.out.println("ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® : "+list);
 		System.out.println("detail : "+dto);
 		return url;
 	}
 	
 	
-	//´ñ±Û µî·Ï
+	//ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	@RequestMapping(value="/addComment",method=RequestMethod.POST)
 	public String addComment(HttpSession session,Model model,
 			DetailCommentDTO dto){
 		String url = null;
-		System.out.println("addComment·Î µé¾î¿È");
+		System.out.println("addCommentï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		dto.setNickname(member.getNickname());
 		dto.setPhoto(member.getPhoto());
@@ -95,8 +95,8 @@ public class LocationDetailController {
 		boolean flag = service.commentAdd(dto);
 		if(flag){
 			url = "redirect:viewDetailPage?locationSeq="+dto.getLocationSeq();
-			System.out.println("addComment ¼º°ø");
-			System.out.println("´ñ±Ûdto : "+dto);
+			System.out.println("addComment ï¿½ï¿½ï¿½ï¿½");
+			System.out.println("ï¿½ï¿½ï¿½dto : "+dto);
 		}
 		return url;
 	}
@@ -136,7 +136,7 @@ public class LocationDetailController {
 		return url;
 	}
 	
-	//´ñ±Û ¼öÁ¤ÇÏ´Â ÆäÀÌÁö
+	//ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value="/viewEditComment",method={RequestMethod.GET,RequestMethod.POST})
 	public String viewEditComment(HttpSession session,Model model,@RequestParam(value="locationSeq2") int locationSeq){
 		String url = null;
@@ -152,31 +152,31 @@ public class LocationDetailController {
 	}
 	
 	
-	//´ñ±Û ¼öÁ¤	
+	//ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½	
 	@RequestMapping(value="/editComment",method=RequestMethod.POST)
 	public String editComment(HttpSession session,Model model,
 			DetailCommentDTO dto){
 		String url = null;
-		System.out.println("editComment·Î µé¾î¿È");
+		System.out.println("editCommentï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		dto.setNickname(member.getNickname());
 		dto.setPhoto(member.getPhoto());
-		System.out.println("¼öÁ¤µÈ ´ñ±Û dto : "+dto);
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ dto : "+dto);
 		boolean flag = service.commentEdit(dto);
 		if(flag){
 			url = "redirect:viewDetailPage?locationSeq="+dto.getLocationSeq();
-			System.out.println("editComment ¼º°ø");
-			System.out.println("´ñ±Ûdto : "+dto);
+			System.out.println("editComment ï¿½ï¿½ï¿½ï¿½");
+			System.out.println("ï¿½ï¿½ï¿½dto : "+dto);
 		}
 		return url;
 	}
 	
-	//´ñ±Û »èÁ¦
+	//ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value="/deleteComment",method=RequestMethod.POST)
 	public String deleteComment(HttpSession session,Model model,
 			@RequestParam(value="commentSeq") int commentSeq,@RequestParam(value="locationSeq") int locationSeq){
 		String url = null;
-		System.out.println("deleteComment·Î µé¾î¿È");
+		System.out.println("deleteCommentï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		DetailCommentDTO dto = new DetailCommentDTO();
 		dto.setNickname(member.getNickname());
@@ -184,7 +184,7 @@ public class LocationDetailController {
 		boolean flag = service.commentDelete(dto);
 		if(flag){
 			url = "redirect:viewDetailPage?locationSeq="+locationSeq;
-			System.out.println("deleteComment ¼º°ø");
+			System.out.println("deleteComment ï¿½ï¿½ï¿½ï¿½");
 		}
 		return url;
 	}
