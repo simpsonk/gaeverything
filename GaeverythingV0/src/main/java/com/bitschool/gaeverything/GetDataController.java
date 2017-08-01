@@ -48,7 +48,7 @@ public class GetDataController {
 	        	LocationDTO ldto = ldtolist.get(i);					
 		        try {
 		            String text = URLEncoder.encode(ldto.getTitle(), "UTF-8");
-		            String apiURL = "https://openapi.naver.com/v1/search/blog?query="+ text; // json 결과
+		            String apiURL = "https://openapi.naver.com/v1/search/blog?query=\""+ text + "\""; // json 결과
 		            //String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text; // xml 결과
 		            URL url = new URL(apiURL);
 		            HttpURLConnection con = (HttpURLConnection)url.openConnection();
@@ -77,7 +77,9 @@ public class GetDataController {
 		    		list = mapper.readValue(itemdata,new TypeReference<List<BlogDTO>>(){});
 		    		for(int j=0;j<list.size();j++){
 		    			list.get(j).setLocationSeq(ldto.getLocationSeq());
-		    			lists.add(list.get(j));
+		    			if(list.get(j).getTitle().contains(ldto.getTitle())){
+		    				lists.add(list.get(j));
+		    			}
 		    		}    		
 		        } catch (JsonParseException e) {
 					e.printStackTrace();

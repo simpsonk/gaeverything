@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.bitschool.dto.BlogDTO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.DetailCommentDTO;
 import com.bitschool.dto.DetailPhotoDTO;
@@ -130,6 +131,13 @@ public class LocationDetailDAO {
 	public List<BoardDTO> getReviews(int locationSeq) throws SQLException{
 		List<BoardDTO> dto = null;
 		dto = session.selectList(namespace+".getReviews",locationSeq);
+		return dto;
+	}
+	
+	// 해당 장소의 블로그 리뷰 불러오기
+	public List<BlogDTO> getBlogReviews(int locationSeq) throws SQLException{
+		List<BlogDTO> dto = null;
+		dto = session.selectList(namespace+".getBlogReviews",locationSeq);
 		return dto;
 	}
 

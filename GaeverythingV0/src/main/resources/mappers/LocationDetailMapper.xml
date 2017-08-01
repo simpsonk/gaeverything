@@ -89,5 +89,9 @@
 		order by boardno desc
 	</select>	
 		
-
+	<!-- 해당 장소의 블로그 리뷰 불러오기 -->
+	<select id="getBlogReviews" parameterType="Integer" resultType="BlogDTO">
+		select * from blog 
+		where locationSeq = #{locationSeq} 
+	</select>	
 </mapper>

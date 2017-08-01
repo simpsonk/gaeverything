@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.bitschool.dto.ActUserDTO;
+import com.bitschool.dto.BlogDTO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.DetailCommentDTO;
 import com.bitschool.dto.DetailPhotoDTO;
@@ -37,7 +38,7 @@ public class LocationDetailController {
 	
 	@Inject
 	private ActUserService aService;
-	
+		
 	//디테일 리뷰데이터
 	@RequestMapping(value = "/getReviewData", method = {RequestMethod.POST,RequestMethod.GET})
 	public @ResponseBody List<DetailCommentDTO> getReviewData(@RequestParam(value="locationSeq") int locationSeq){
@@ -51,7 +52,6 @@ public class LocationDetailController {
 			@RequestParam(value="locationSeq") int locationSeq, 
 			HttpSession session,
 			Model model){
-		
 		//로그인 유지
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		ActUserManager manager = new ActUserManager(aService);
@@ -67,6 +67,7 @@ public class LocationDetailController {
 		List<BoardDTO> reviewList = service.getReviews(locationSeq);
 		List<DetailCommentDTO> list = service.commentList(locationSeq);
 		List<DetailPhotoDTO> photoList = service.selectPhoto(locationSeq);
+		List<BlogDTO> blogList = service.getBlogReviews(locationSeq);
 		//좋아요 상태 유지
 		if(isLogin){
 			MemberDTO member = (MemberDTO)session.getAttribute("member");
@@ -86,6 +87,7 @@ public class LocationDetailController {
 		model.addAttribute("reviewList",reviewList);
 		model.addAttribute("likeCount", likeCount);
 		model.addAttribute("detailphoto",photoList);
+		model.addAttribute("blogList",blogList);
 		
 		System.out.println("댓글 리스트 : "+list);
 		System.out.println("detail : "+dto);
