@@ -26,6 +26,11 @@
 		insert into detailphoto (locationseq,locationphoto,detailphotoseq) 
 		values(#{locationSeq},#{locationPhoto},#{detailPhotoSeq})
 	</insert>
+	
+	<select id="selectPhoto" parameterType="Integer" resultType="DetailPhotoDTO">
+		select * from detailphoto 
+		where locationSeq = #{locationSeq}
+	</select>
 
 	<!-- 디테일페이지 댓글 리스팅 -->
 	<select id="commentList" parameterType="Integer" resultType="DetailCommentDTO">

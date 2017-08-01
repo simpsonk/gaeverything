@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" session="false"%>
+   pageEncoding="UTF-8" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -82,71 +82,70 @@
 						<input id="check-1" type="checkbox" name="check" checked="checked" value="5 449 776">
 						<label for="check-1">Hospital</label>
 
-						<input id="check-2" type="checkbox" name="check" value="5 449 776">
+						<input id="check-2" type="checkbox" name="check" value="HP8">
 						<label for="check-2">Hotels</label>
 					</div>
 				</div>
 			</section>		 
  		<!-- Search / End -->
-		
-			
-
-		<section class="listings-container margin-top-30" id = "menu_wrap">
-			<!-- Sorting / Layout Switcher -->
-			<div class="row fs-switcher">
-				<div class="col-md-6" >
-					<!-- Showing Results -->
-					<p class="showing-results" id = "resultCount"></p>
-				</div>
-			</div>
 
 
-			<!-- Listings -->
-			<div class="row fs-listings" id = "placesList">
-				
-			</div>
-			<!-- Listings Container / End -->
+      <section class="listings-container margin-top-30" id = "menu_wrap">
+         <!-- Sorting / Layout Switcher -->
+         <div class="row fs-switcher">
+            <div class="col-md-6" >
+               <!-- Showing Results -->
+               <p class="showing-results" id = "resultCount"></p>
+            </div>
+         </div>
 
 
-			<!-- Pagination Container -->
-			<div class="row fs-listings">
-				<div class="col-md-12">
+         <!-- Listings -->
+         <div class="row fs-listings" id = "placesList">
+            
+         </div>
+         <!-- Listings Container / End -->
 
-					<!-- Pagination -->
-					<div class="clearfix"></div>
-					<div class="row">
-						<div class="col-md-12">
-							<!-- Pagination -->
-							<div class="pagination-container margin-top-15 margin-bottom-40">
-								<nav class="pagination">
-									<ul id = "pageList">
-									</ul>
-								</nav>
-							</div>
-						</div>
-					</div>
-					<div class="clearfix"></div>
-					<!-- Pagination / End -->
-					
-					<!-- Copyrights -->
-					<div class="copyrights margin-top-0">© 2017 Listeo. All Rights Reserved.</div>
 
-				</div>
-			</div>
-			<!-- Pagination Container / End -->
-		</section>
+         <!-- Pagination Container -->
+         <div class="row fs-listings">
+            <div class="col-md-12">
 
-		</div>
-	</div>
-	<div class="fs-inner-container map-fixed">
+               <!-- Pagination -->
+               <div class="clearfix"></div>
+               <div class="row">
+                  <div class="col-md-12">
+                     <!-- Pagination -->
+                     <div class="pagination-container margin-top-15 margin-bottom-40">
+                        <nav class="pagination">
+                           <ul id = "pageList">
+                           </ul>
+                        </nav>
+                     </div>
+                  </div>
+               </div>
+               <div class="clearfix"></div>
+               <!-- Pagination / End -->
+               
+               <!-- Copyrights -->
+               <div class="copyrights margin-top-0">© 2017 Listeo. All Rights Reserved.</div>
 
-		<!-- Map -->
-		<div id="map-container">
-	    	<div id="map" style="width: 100%; overflow: hidden;">
-	    		<!-- map goes here -->
-	    	</div>
-		</div>
-	</div>
+            </div>
+         </div>
+         <!-- Pagination Container / End -->
+      </section>
+
+      </div>
+   </div>
+   <div class="fs-inner-container map-fixed">
+
+      <!-- Map -->
+      <div id="map-container">
+          <div id="map" style="width: 100%; overflow: hidden;">
+             <!-- map goes here -->
+          </div>
+      </div>
+   </div>
 </div>
 
 
@@ -198,15 +197,12 @@
 	var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 	var zoomControl = new daum.maps.ZoomControl();
 	map.addControl(zoomControl, daum.maps.ControlPosition.RIGHT);
-	
-	// 마커 클러스터러를 생성합니다 
+
      var clusterer = new daum.maps.MarkerClusterer({
         map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
         averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
         minLevel: 6 // 클러스터 할 최소 지도 레벨 
     });
- 
-	
 
 	
 	//현재 위치에 따라 마커를 생성한다.
@@ -345,6 +341,7 @@
 			}
 		});
 	});
+
 </script>
 </body>
 </html>
