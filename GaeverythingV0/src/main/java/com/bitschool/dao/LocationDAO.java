@@ -27,17 +27,17 @@ public class LocationDAO {
 		return list;
 	}
 
-	public List<LocationDTO> selectShopName (MapInfomation info) throws SQLException{
-		// TODO Auto-generated method stub
-		List<LocationDTO> list = null;
-		list = session.selectList(namespace+".selectShopName", info);
-		return list;
-	}
-
 	public List<LocationDTO> selectLocation(MapInfomation info) throws SQLException{
 		// TODO Auto-generated method stub
 		List<LocationDTO> list = null;
 		list = session.selectList(namespace+".selectLocation", info);
+		return list;
+	}
+
+	public List<LocationDTO> selectShopName(MapInfomation info)throws SQLException {
+		// TODO Auto-generated method stub
+		List<LocationDTO> list = null;
+		list = session.selectList(namespace+".selectShopName", info);
 		return list;
 	}
 	

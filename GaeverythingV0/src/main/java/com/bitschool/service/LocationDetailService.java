@@ -8,12 +8,17 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.bitschool.dao.LocationDetailDAO;
+<<<<<<< HEAD
 import com.bitschool.dto.BlogDTO;
+=======
+import com.bitschool.dto.ActUserDTO;
+>>>>>>> 6fdad2737a969940b342c7181d607b4fba1d4317
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.DetailCommentDTO;
 import com.bitschool.dto.DetailPhotoDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
+import com.bitschool.utils.ActUserManager;
 @Service
 public class LocationDetailService {
 
@@ -22,7 +27,7 @@ public class LocationDetailService {
 	private LocationDetailDAO dao;
 	
 	
-	//locationSeq·Î ÇÑ Àå¼ÒÀÇ DTO ¹Þ¾Æ¿À±â 
+	//locationSeqï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ DTO ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½ 
 	public LocationDTO selectOne(int seq){
 		// TODO Auto-generated method stub
 		LocationDTO dto = null;
@@ -35,7 +40,7 @@ public class LocationDetailService {
 		return dto;
 	}
 	
-	// µðÅ×ÀÏÆäÀÌÁö ´ñ±Û ÀÛ¼º 
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ 
 	public boolean commentAdd(DetailCommentDTO dto){
 		// TODO Auto-generated method stub
 		boolean flag = false;
@@ -47,7 +52,7 @@ public class LocationDetailService {
 		}
 		return flag;
 	}
-	// µðÅ×ÀÏÆäÀÌÁö »çÁø µî·Ï 
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ 
 		public boolean photoAdd(DetailPhotoDTO dto){
 			// TODO Auto-generated method stub
 			boolean flag = false;
@@ -61,7 +66,7 @@ public class LocationDetailService {
 		}
 		
 	
-	// µðÅ×ÀÏÆäÀÌÁö ´ñ±Û ¸®½ºÆÃ 
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 	public List<DetailCommentDTO> commentList(int locseq){
 		// TODO Auto-generated method stub
 		List<DetailCommentDTO> dto = null;
@@ -74,7 +79,7 @@ public class LocationDetailService {
 		return dto;
 	}
 	
-	// ¸¶ÀÌÆäÀÌÁö¿¡¼­ Æ÷Åä ¼öÁ¤½Ã ´ñ±Û¸®½ºÆÃÀÇ Æ÷Åäµµ ¼öÁ¤
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Û¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½äµµ ï¿½ï¿½ï¿½ï¿½
 	public boolean updatePhoto(MemberDTO member){
 		boolean flag = false;
 		try {
@@ -86,7 +91,7 @@ public class LocationDetailService {
 		return flag;
 	}
 	
-	//»çÁø º¸¿©ÁÖ±â
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½
 			public List<DetailPhotoDTO> selectPhoto(int locationSeq) {
 				// TODO Auto-generated method stub
 				List<DetailPhotoDTO> list = null;
@@ -100,7 +105,7 @@ public class LocationDetailService {
 			}
 			
 	
-	// µðÅ×ÀÏÆäÀÌÁö ´ñ±Û ¼öÁ¤  
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½  
 	public boolean commentEdit(DetailCommentDTO dto){
 		boolean flag = false;
 		try {
@@ -112,7 +117,7 @@ public class LocationDetailService {
 		return flag;
 	}
 
-	// µðÅ×ÀÏÆäÀÌÁö ´ñ±Û »èÁ¦  
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½  
 	public boolean commentDelete(DetailCommentDTO dto){
 		boolean flag = false;
 		try {
@@ -124,7 +129,7 @@ public class LocationDetailService {
 		return flag;
 	}
 	
-	// °Ô½ÃÆÇ¿¡¼­ ÀÛ¼ºÇÑ ¸®ºä °³¼ö °¡Á®¿À±â 
+	// ï¿½Ô½ï¿½ï¿½Ç¿ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 	public int countReviews(int locationSeq){
 		int count = 0;
 		try {
@@ -136,7 +141,7 @@ public class LocationDetailService {
 		return count;
 	}
 	
-	// °Ô½ÃÆÇ¿¡¼­ ÀÛ¼ºÇÑ ¸®ºäÀÇ º°Á¡ ¸®½ºÆ® °¡Á®¿À±â 
+	// ï¿½Ô½ï¿½ï¿½Ç¿ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 	public List<Double> getRatings(int locationSeq){
 		List<Double> ratings = null;
 		try {
@@ -148,7 +153,7 @@ public class LocationDetailService {
 		return ratings;
 	}	
 	
-	// µðÅ×ÀÏÆäÀÌÁö ´ñ±Û¿¡¼­ ÀÛ¼ºÇÑ º°Á± °¡Á®¿À±â 
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Û¿ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 	public List<Double> getReplyRatings(int locationSeq){
 		List<Double> ratings = null;
 		try {
@@ -160,7 +165,7 @@ public class LocationDetailService {
 		return ratings;
 	}
 	
-	//°Ô½ÃÆÇ¿¡¼­ ÀÛ¼ºÇÑ ¸®ºäÀÇ º°Á¡°ú µðÅ×ÀÏÆäÀÌÁö ´ñ±Û¿¡¼­ ÀÛ¼ºÇÑ º°Á¡À» ´Ù Æ÷ÇÔÇÑ Æò±Õ °è»êÇÏ±â
+	//ï¿½Ô½ï¿½ï¿½Ç¿ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Û¿ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 	public double getAverageRatings(List<Double> ratings1,List<Double> ratings2){
 		double average = 0;
 		double sum1 = 0;
@@ -175,7 +180,7 @@ public class LocationDetailService {
 		return average;
 	}
 	
-	// µðÅ×ÀÏÆäÀÌÁö ´ñ±Û °³¼ö °¡Á®¿À±â 
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 	public int countReplies(int locationSeq){
 		int count = 0;
 		try {
@@ -187,7 +192,7 @@ public class LocationDetailService {
 		return count;
 	}
 	
-	// °Ô½ÃÆÇ¿¡¼­ ÀÛ¼ºÇÑ ¸®ºä °¡Á®¿À±â
+	// ï¿½Ô½ï¿½ï¿½Ç¿ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public List<BoardDTO> getReviews(int locationSeq){
 		List<BoardDTO> dto = null;
 		try {
@@ -208,6 +213,22 @@ public class LocationDetailService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return dto;
+	}
+
+	public LocationDTO getLocActUserResult(ActUserManager manager, LocationDTO dto) {
+		// TODO Auto-generated method stub
+		int countReview = this.countReviews(dto.getLocationSeq());	
+		
+		double averageRatings = this.getAverageRatings(this.getRatings(dto.getLocationSeq()),this.getReplyRatings(dto.getLocationSeq()));
+		averageRatings=(Double.isNaN(averageRatings))?0:averageRatings;
+		String temp = String.format("%.2f", averageRatings);
+		
+		int countRatings = this.getRatings(dto.getLocationSeq()).size()+this.getReplyRatings(dto.getLocationSeq()).size();
+		int countReplies = this.countReplies(dto.getLocationSeq());
+		int countLike = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.SHOP, dto.getLocationSeq()));
+		
+		dto.setActUserResult(countReview, temp, countRatings, countReplies, countLike);
 		return dto;
 	}
 

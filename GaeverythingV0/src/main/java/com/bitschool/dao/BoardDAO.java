@@ -187,7 +187,7 @@ public class BoardDAO implements IBoardDAO{
 	}
 
 	@Override
-	public boolean updateDislike(int boardNo) {
+	public boolean updateDislike(int boardNo) throws SQLException{
 		boolean flag = false;
 		int affected = session.update(nameSpace+".updateDislike", boardNo);
 		if(affected > 0){
@@ -195,6 +195,28 @@ public class BoardDAO implements IBoardDAO{
 		}
 		return flag;
 		
+	}
+
+	@Override
+	public BoardDTO getPrev(int boardNo) throws SQLException{
+		int num = session.selectOne(nameSpace+".prevNum", boardNo);
+		System.out.println("현재글번호의 num:"+ num);
+		BoardDTO bDTO = null;
+		if(num!=1){
+			bDTO = session.selectOne(nameSpace+".readPrev", num);
+		}
+		
+	//	System.out.println("이전글 보드넘버:" + preBoardNo);
+		return bDTO;
+	}
+	
+	@Override
+	public BoardDTO getNext(int boardNo) throws SQLException{
+		int num = session.selectOne(nameSpace+".nextNum", boardNo);
+		System.out.println("현재글번호의 num:"+ num);
+		BoardDTO bDTO = session.selectOne(nameSpace+".readNext", num);
+		//System.out.println("다음글 보드넘버:" + preBoardNo);
+		return bDTO;
 	}
 
 }

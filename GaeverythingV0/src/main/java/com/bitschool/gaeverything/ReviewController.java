@@ -60,12 +60,12 @@ public class ReviewController {
 	@Inject
 	private LocationDetailService dService; 
 
-	//µğÅ×ÀÏÆäÀÌÁö¿¡¼­ ¸®ºä ´õº¸±â·Î °Ô½ÃÆÇ ¿¬°á
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value = "/viewDetailReviews", method = RequestMethod.GET)
 	public String viewDetailReviews(HttpSession session,  @RequestParam(value="locationSeq") int locationSeq,
 			@RequestParam(value="page", defaultValue="1") int page,Model model){
 		String url = "review/review_list";
-		List<BoardDTO> reviewList = dService.getReviews(locationSeq);		
+		List<BoardDTO> reviewList = dService.getReviews(locationSeq);
 		model.addAttribute("list",reviewList);
 		model.addAttribute("page",page);
 		return url;
@@ -74,29 +74,24 @@ public class ReviewController {
 	@RequestMapping(value = "/viewReviewList", method = {RequestMethod.GET, RequestMethod.POST})
 	public String viewReviewList(Model model, HttpSession session, @RequestParam(value="page", defaultValue="1") int page){
 		
-		//·Î±×ÀÎ À¯Áö
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		
-		//ÆäÀÌÁö ¸®½ºÆ®
 		int amount = 5;
 		PageDTO pDTO = new PageDTO(page, amount);
 		
 		String pList = pService.pageList(pDTO);
 		model.addAttribute("pList", pList);
 		
-		//°Ô½Ã¹° ¸®½ºÆ®
 		List<BoardDTO> list = service.getPagedList(pDTO); 
 		model.addAttribute("page", page);
-		
 		
 		//user like status like
 		if(isLogin){
 			MemberDTO member = (MemberDTO)session.getAttribute("member");
 			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.REVIEW);
-			list= new ActUserManager(aService).checkLikeStatus(aDTO, list);
+			list= new ActUserManager(aService).checkListReLikeStatus(aDTO, list);
 		}
 		
-		//´ñ±Û¼ö ¹Ş±â
 		int countCmts = 0;
 		for(int i=0; i<list.size(); i++){
 			BoardDTO dto = list.get(i);
@@ -108,9 +103,7 @@ public class ReviewController {
 
 		return url;
 	}
-	
-	
-	
+
 	@RequestMapping(value = "/viewReviewRegist", method = {RequestMethod.GET, RequestMethod.POST})
 	public String viewReviewRegist(HttpSession session, Model model){
 		boolean isLogin = new LoginFilter().isLogin(session, model);
@@ -121,7 +114,6 @@ public class ReviewController {
 	@RequestMapping(value = "/newPost", method={RequestMethod.POST, RequestMethod.GET})
 	public String newPost(BoardDTO dto, HttpSession session){
 		String url = null;
-		System.out.println(dto);
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		dto.setNickname(member.getNickname());
 		boolean flag = service.insertPost(dto);
@@ -133,12 +125,9 @@ public class ReviewController {
 	
 	@RequestMapping(value = "/modify", method=RequestMethod.POST)
 	public String modify(BoardDTO dto, Model model, @RequestParam("page") int page, @RequestParam("boardNo") int boardNo){
-		System.out.println("modify controller");
-		System.out.println("check:"+dto);
 		String url = null;
 		dto.setBoardNo(boardNo);
 		boolean flag = service.updatePost(dto);
-		System.out.println("dao result: "+ flag);
 		if(flag){
 			model.addAttribute("dto", dto);
 			model.addAttribute("boardNo", dto.getBoardNo());
@@ -146,8 +135,6 @@ public class ReviewController {
 		}
 		return url;
 	}
-
-	
 	
 	@RequestMapping(value="/fileUpload", method=RequestMethod.POST)
 	public String fileUpload(ReviewFileBean filebean, HttpServletRequest request, Model model){
@@ -157,7 +144,6 @@ public class ReviewController {
 		String root_path = session.getServletContext().getRealPath("/");
 		String attach_path = "/resources/upload/";
 		MultipartFile upload = filebean.getUpload();
-		System.out.println(upload);
 		String filename  = "";
 		String CKEditorFuncNum = "";
 		if(upload!=null){
@@ -173,7 +159,6 @@ public class ReviewController {
 				e.printStackTrace();
 			}
 			String file_path = attach_path + filename;
-			System.out.println("ÆÄÀÏ¸í:" + filename);
 			model.addAttribute("file_path", file_path);
 			model.addAttribute("filename", filename);
 			model.addAttribute("CKEditorFuncNum", CKEditorFuncNum);
@@ -184,33 +169,44 @@ public class ReviewController {
 	
 	@RequestMapping(value = "/readPost", method={RequestMethod.GET, RequestMethod.POST})
 	public String readPost(@RequestParam("boardNo") int boardNo, 
+						   @RequestParam(value="page", defaultValue="1") int page,
 						   HttpSession session,
 						   Model model){
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		String url = null;
-		
-		System.out.println("read post ");
 		BoardDTO dto = service.selectToRead(boardNo);
-
 
 		//user like status like
 		if(isLogin){
 			MemberDTO member = (MemberDTO)session.getAttribute("member");
 			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.REVIEW, dto.getBoardNo());
-			dto= new ActUserManager(aService).checkLikeStatus(aDTO, dto);
+			dto= new ActUserManager(aService).checkReLikeStatus(aDTO, dto);
 		}
-		
-
 		List<CommentDTO> cList = cService.getAllComment(boardNo);
 		int numOfCmt = cService.countCmt(boardNo);
-
-
+		
+		BoardDTO bDTO1 = service.searchPrev(boardNo);
+		String prevTitle= "";
+		if(bDTO1!=null){
+			prevTitle = bDTO1.getTitle();
+		}else{
+			prevTitle = "(ì´ì „ ê¸€ì´ ì—†ìŠµë‹ˆë‹¤.)";
+		}
+		
+		BoardDTO bDTO2 = service.searchNext(boardNo);
+		String nextTitle= "";
+		if(bDTO2!=null){
+			nextTitle = bDTO2.getTitle();
+		}else{
+			nextTitle = "(ë‹¤ìŒ ê¸€ì´ ì—†ìŠµë‹ˆë‹¤.)";
+		}
+		
 		model.addAttribute("numOfCmt", numOfCmt);
 		model.addAttribute("dto", dto);
 		model.addAttribute("cList", cList);
-
-		System.out.println(cList);
-		System.out.println("´ñ±Û¸ñ·Ï ¹ŞÀ½");
+		model.addAttribute("page", page);
+		model.addAttribute("prevTitle", prevTitle);
+		model.addAttribute("nextTitle",nextTitle);
 		url = "review/read_review";
 		return url;
 	}
@@ -220,7 +216,6 @@ public class ReviewController {
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		BoardDTO dto = service.selectToRead(boardNo);
 		model.addAttribute("dto", dto);
-		System.out.println(dto);
 		String url = "review/review_regist";
 		return url;
 	}
@@ -229,7 +224,6 @@ public class ReviewController {
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
 	public String delete(@RequestParam("boardNo") int boardNo, @RequestParam("page") int page){
 		String url = null; 
-		System.out.println("delete controller");
 		boolean flag = service.remove(boardNo);
 		if(flag){
 			url = "redirect:/review/viewReviewList?page="+page;
@@ -246,10 +240,8 @@ public class ReviewController {
 		String url = null;
 		cDTO.setGroupNo(boardNo);
 		boolean flag = cService.addComment(cDTO); 
-		System.out.println(cDTO.toString());
 
 		if(flag){
-			System.out.println("´ñ±ÛÃß°¡°á°ú ÄÁÆ®·Ñ·¯: " + flag);
 			model.addAttribute("boardNo", boardNo);
 			model.addAttribute("page", page);
 			
@@ -266,13 +258,12 @@ public class ReviewController {
 							Model model, 
 							HttpSession session){
 		
-		System.out.println("¼öÁ¤´ñ±Û³Ñ¹ö:" + commentNo);
 		dto = service.selectToRead(boardNo);
 		int numOfCmt = cService.countCmt(boardNo);
 		List<CommentDTO> cList = cService.getAllComment(boardNo);
 		
 		boolean isLogin = new LoginFilter().isLogin(session, model);
-	
+
 		model.addAttribute("cList", cList);
 		model.addAttribute("numOfCmt", numOfCmt);
 		model.addAttribute("dto", dto);
@@ -393,6 +384,33 @@ public class ReviewController {
 		map.put("list", list);
 		map.put("searchData", searchData);
 		session.setAttribute("map", map);
+		return url;
+	}
+	
+	@RequestMapping(value="/prev", method=RequestMethod.GET)
+	public String prev(@RequestParam("boardNo") int boardNo, @RequestParam(value="page", defaultValue="1") int page, Model model){
+		String url = "redirect:/review/readPost";
+		BoardDTO bDTO = service.searchPrev(boardNo);
+		if(bDTO!=null){
+			model.addAttribute("boardNo", bDTO.getBoardNo());
+		}else{
+			model.addAttribute("boardNo", boardNo);
+		}
+		model.addAttribute("page", page);
+		return url;
+	}
+	
+	@RequestMapping(value="/next", method=RequestMethod.GET)
+	public String next(@RequestParam("boardNo") int boardNo, @RequestParam(value="page", defaultValue="1") int page, Model model){
+		String url = "redirect:/review/readPost";
+		BoardDTO bDTO= service.searchNext(boardNo);
+		if(bDTO!=null){
+			model.addAttribute("boardNo", bDTO.getBoardNo());
+		}else{
+			model.addAttribute("boardNo", boardNo);
+		}
+		model.addAttribute("page", page);
+		
 		return url;
 	}
 }

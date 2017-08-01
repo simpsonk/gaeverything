@@ -19,5 +19,7 @@ public interface IBoardService {
 	public int getNumOfCmts(int boardNo);
 	public int updateLike(int boardNo);
 	public int dislike(int boardNo);
+	public BoardDTO searchPrev(int boardNo);
+	public BoardDTO searchNext(int boardNo);
 
 }

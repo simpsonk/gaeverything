@@ -17,7 +17,6 @@ public class ActUserDAO {
 	private static String nameSpace = "com.bitschool.gaeverything.ActUserMapper";
 
 	public boolean searchStatus(ActUserDTO dto) throws SQLException{
-		// TODO Auto-generated method stub
 		boolean flag = false;
 		System.out.println(dto);
 		int count = session.selectOne(nameSpace+".selectStatus", dto);
@@ -29,7 +28,6 @@ public class ActUserDAO {
 	}
 
 	public boolean insertLikeStatus(ActUserDTO dto) throws SQLException {
-		// TODO Auto-generated method stub
 		boolean flag = false;
 		int aCnt = session.insert(nameSpace+".insertLikeStatus", dto);
 		if(aCnt>0){
@@ -39,7 +37,6 @@ public class ActUserDAO {
 	}
 
 	public boolean deleteLikeStatus(ActUserDTO dto) throws SQLException{
-		// TODO Auto-generated method stub
 		boolean flag = false;
 		int aCnt = session.delete(nameSpace+".deleteLikeStatus", dto);
 		if(aCnt>0){
@@ -49,7 +46,6 @@ public class ActUserDAO {
 	}
 
 	public boolean insertDetailPageLikeStatus(ActUserDTO aDTO) throws SQLException{
-		// TODO Auto-generated method stub
 		boolean flag = false;
 		int aCnt = session.update(nameSpace+".insertDetailPageLikeStatus", aDTO);
 		if(aCnt>0){
@@ -59,7 +55,6 @@ public class ActUserDAO {
 	}
 
 	public boolean deleteDetailPageLikeStatus(ActUserDTO aDTO) throws SQLException{
-		// TODO Auto-generated method stub
 		boolean flag = false;
 		int aCnt = session.update(nameSpace+".deleteDetailPageLikeStatus", aDTO);
 		if(aCnt>0){
@@ -69,7 +64,6 @@ public class ActUserDAO {
 	}
 
 	public int getLikeCount(ActUserDTO dto) throws SQLException{
-		// TODO Auto-generated method stub
 		int count = 0;
 		count = session.selectOne(nameSpace+".selectCount", dto);
 		return count;

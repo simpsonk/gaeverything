@@ -6,7 +6,7 @@
 
 <!-- Basic Page Needs
 ================================================== -->
-<title>Listeo</title>
+<title>gaeverything</title>
 <meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -33,7 +33,6 @@
 					<div class="row with-forms">
 						<div class="col-fs-2">	
 							<select data-placeholder="Option" class="chosen-select" name="selectOp1" id = "selectOp1">
-								<option value="0" ${searchData['selectOp1']=='0'?'selected="selected"':''}>Option</option>
 								<option value="1" ${searchData['selectOp1']=='1'?'selected="selected"':''}>Shop Name</option>
 								<option value="2" ${searchData['selectOp1']=='2'?'selected="selected"':''}>Location</option>
 							</select>

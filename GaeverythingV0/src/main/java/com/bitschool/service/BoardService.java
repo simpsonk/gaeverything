@@ -144,4 +144,27 @@ public class BoardService implements IBoardService {
 		}
 		return numOfLike;
 	}
+
+	@Override
+	public BoardDTO searchPrev(int boardNo) {
+		BoardDTO bDTO = null;
+		try {
+			bDTO = dao.getPrev(boardNo);
+			System.out.println(bDTO);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return bDTO;
+	}
+	
+	@Override
+	public BoardDTO searchNext(int boardNo) {
+		BoardDTO bDTO = null;
+		try {
+			bDTO = dao.getNext(boardNo);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return bDTO;
+	}
 }

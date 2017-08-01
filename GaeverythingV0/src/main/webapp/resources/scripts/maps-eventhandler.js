@@ -4,7 +4,13 @@
 	    var center = map.getCenter(); 
 		var lat = center.getLat();
 		var lon = center.getLng();
-	    var url = '/map/getLocationData?searchWord='+searchWord+'&categories=5 449 776'+'&level='+eLevel+'&lat='+lat+'&lon='+lon+'&option='+option;
+		var categories = "";
+		$('input[name="check"]:checked').each(function() {
+			categories+= $(this).val()+",";
+		 });
+		
+		
+	    var url = '/map/getSearchLocationData?searchWord='+searchWord+'&categories='+categories+'&level='+eLevel+'&lat='+lat+'&lon='+lon+'&option='+option;
 	   	$.ajax({
 			url : url,
 			dataType : 'json',
@@ -18,7 +24,6 @@
 				displayPlaces(data.places);
 				displayInfoList(data.pList, data.infoList, 0, 5);
 				clusterer.addMarkers(markers);
-
 			},
 			error : function(request, status, error) {
 				 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);

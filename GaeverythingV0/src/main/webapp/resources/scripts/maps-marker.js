@@ -1,4 +1,30 @@
-	var markers = [];//지도 마커
+
+	function displaySearhPlaces(places){
+		removeMarker();
+	    
+	    closeOverlay();
+	    
+	    var url = '/map/detail/viewDetailPage?locationSeq=';
+	    
+	    bounds = new daum.maps.LatLngBounds();
+	    
+	    for ( var i=0; i<places.length; i++ ) {
+	    	
+	    	var placePosition = new daum.maps.LatLng(places[i].latitude, places[i].longitude),
+            marker = addMarker(placePosition, i); 
+	    	
+	    	bounds.extend(placePosition);
+	    	
+	        var detailUrl = url+places[i].locationSeq; //마커에 상세정보 클릭시 이동할 Url
+
+	        (function(marker, title, imageUrl, address, detailUrl, radius) {
+	            daum.maps.event.addListener(marker, 'click', function() {
+	            	setOverlay(map, makeContent(title, imageUrl, address, detailUrl, radius), marker.getPosition());
+	            });
+	        })(marker, places[i].title, places[i].imageUrl, places[i].address, url+places[i].locationSeq , places[i].radius);
+	    }
+	    map.setBounds(bounds);
+	}
 
 	function displayPlaces(places) {
 		
@@ -25,6 +51,7 @@
 	            });
 	        })(marker, places[i].title, places[i].imageUrl, places[i].address, url+places[i].locationSeq , places[i].radius);
 	    }
+	    
 	}
 	
 	
@@ -96,6 +123,33 @@
     	overlay.setMap(map);
     }
     
+    
+    
+    
+    function makeContent2(title, imageUrl, address, placeUrl, radius){
+    	var content = 	'<div class="infoBox" style="width: 270px; transform: translateZ(0px); position: absolute; visibility: visible; left: 284.75px; bottom: -185.3px; cursor: default;">' + 
+				        '    <div class="map-box">' + 
+				        '		<a href="#" class="listing-img-container">'+
+				        '			<div class="infoBox-close"><i class="fa fa-times"></i></div>'+
+				        '			<img src="/resources/images/hospital.jpg" alt="">'+
+				        '			<div class="listing-item-content">'+
+				        '				<h3>'+title+'</h3>'+
+				        '				<span>'+address+'</span>'+
+				        '			</div>'+
+				        '		</a>'+
+				        '		<div class="listing-content">	'+
+				        '			<div class="listing-title">'+
+				        '				<div class="star-rating" data-rating="3.5	">46 Review<div>'+		
+				        '			</div>'+
+				        '		</div>'+
+				        '	</div>'+
+				        '</div>';	        
+    	return content;
+    }
+   
+   
+    	     
+    
     function makeContent(title, imageUrl, address, placeUrl, radius){
     	var content = 	'<div class="wrap">' + 
 				        '    <div class="info">' + 
@@ -110,14 +164,15 @@
     		content+=	'                <img src="/resources/images/hospital.jpg" width="73" height="70">';
     	}
     		content+=   '			</div>' + 
-				        '           <div class="desc">' + 
-				        '				<div class="ellipsis">'+address+'('+radius+'km)</div>' + 
-				        '				<div><a href="'+placeUrl+'" target="_blank" class="link">상세정보</a></div>' + 
+				        '           <div class="desc">'+ 
+				        '				<div class="ellipsis">'+address;
+    		content +=					radius!=null?'('+radius+'km)':''; 
+			content +=  '				<div><a href="'+placeUrl+'" target="_blank" class="link">상세정보</a></div>' + 
 				        '            </div>' + 
 				        '        </div>' + 
 				        '    </div>' +    
 				        '</div>';
     	return content;
     }
-    	            
+    	
     

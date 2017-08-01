@@ -40,27 +40,31 @@ public class LocationService {
 		return flag;
 	}
 
-	public List<LocationDTO> getData(MapInfomation info) {
+	public List<LocationDTO> SearchLocation(MapInfomation info) {
 		// TODO Auto-generated method stub
 		List<LocationDTO> list  = null;
-		List<LocationDTO> levelList = null;
 		try {
-			if(info.getOption()==0&&info.getSearchWord().equals("")){
-				list = dao.selectAll();
-			}else if(info.getOption()==1){
-				list = dao.selectShopName(info);
-			}else if(info.getOption()==2){
-				list = dao.selectLocation(info);
-			}
-			levelList = this.levelEffect(info, list);
+			list = dao.selectAll();
+			list = this.levelEffect(info, list);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		return levelList;
+		return list;
 	}
 	
-	
+	public List<LocationDTO> SearchShopName(MapInfomation info) {
+		// TODO Auto-generated method stub
+		List<LocationDTO> list  = null;
+		try {
+			list = dao.selectShopName(info);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 	
 	public List<LocationDTO> levelEffect(MapInfomation info, List<LocationDTO> list){
 		double[] distances = {0.8, 1.6, 2.5, 6, 10, 30, 50};
@@ -123,28 +127,6 @@ public class LocationService {
         return (rad * 180 / Math.PI);
     }
     
-    public List<LocationDTO> levelEffect1(MapInfomation info, List<LocationDTO> list){
-		List<LocationDTO> levelList = new ArrayList<LocationDTO>();
-		double earthRad = 6371;
-		double startLat = info.getLat();
-		double startLon = info.getLon();
-		
-		for(int i=0;i<list.size();i++){
-			LocationDTO temp = list.get(i);
-			double endLat = Double.parseDouble(temp.getLatitude());
-			double endLon = Double.parseDouble(temp.getLongitude());
-			
-			double x = (Math.cos(startLon)*earthRad*2*Math.PI/360)*Math.abs(startLat-endLat);
-			double y = (earthRad*2*Math.PI/360)*Math.abs(startLon-endLon);
-			
-			double distance = Math.sqrt((Math.pow(2, x)+Math.pow(2, y)));
-			if(!(distance>0.8)){
-				levelList.add(temp);
-				System.out.println(distance);
-			}
-		}
-		return levelList;
-	}
 
 	public List<LocationDTO> getSearchData(HashMap<String, Object> searchData) {
 		// TODO Auto-generated method stub
@@ -171,5 +153,6 @@ public class LocationService {
 		return list;
 	}
 
+	
 
 }
