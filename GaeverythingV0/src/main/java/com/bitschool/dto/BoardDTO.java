@@ -12,7 +12,6 @@ public class BoardDTO {
 	private String nickname;
 	private String title;
 	private double rating;
-	private int countLike;
 	private String message;
 	private String onlyText;
 	private String uploadImg;
@@ -26,10 +25,21 @@ public class BoardDTO {
 	private String userLikeStatus;
 	private String address;
 	private String encodeUTF;
+	private int countLike;
 	
 	
 	
 	
+	
+	
+
+	public int getCountLike() {
+		return countLike;
+	}
+
+	public void setCountLike(int countLike) {
+		this.countLike = countLike;
+	}
 
 	public String getUserLikeStatus() {
 		return userLikeStatus;
@@ -73,13 +83,6 @@ public class BoardDTO {
 
 
 
-	public int getCountLike() {
-		return countLike;
-	}
-
-	public void setCountLike(int countLike) {
-		this.countLike = countLike;
-	}
 	public void setEncodeUTF(String encodeUTF) {
 		this.encodeUTF = encodeUTF;
 	}
@@ -196,12 +199,14 @@ public class BoardDTO {
 	@Override
 	public String toString() {
 		return "BoardDTO [boardCategory=" + boardCategory + ", locationSeq=" + locationSeq + ", boardNo=" + boardNo
-				+ ", nickname=" + nickname + ", title=" + title + ", rating=" + rating + ", countLike=" + countLike
-				+ ", message=" + message + ", onlyText=" + onlyText + ", uploadImg=" + uploadImg + ", regiDate="
-				+ regiDate + ", readCount=" + readCount + ", groupNo=" + groupNo + ", parentNo=" + parentNo
-				+ ", orderNo=" + orderNo + ", depth=" + depth + ", numOfCmt=" + numOfCmt + ", userLikeStatus="
-				+ userLikeStatus + ", address=" + address + ", encodeUTF=" + encodeUTF + "]";
+				+ ", nickname=" + nickname + ", title=" + title + ", rating=" + rating + ", message=" + message
+				+ ", onlyText=" + onlyText + ", uploadImg=" + uploadImg + ", regiDate=" + regiDate + ", readCount="
+				+ readCount + ", groupNo=" + groupNo + ", parentNo=" + parentNo + ", orderNo=" + orderNo + ", depth="
+				+ depth + ", numOfCmt=" + numOfCmt + ", userLikeStatus=" + userLikeStatus + ", address=" + address
+				+ ", encodeUTF=" + encodeUTF + ", countLike=" + countLike + "]";
 	}
+
+
 
 	
 	

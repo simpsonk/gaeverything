@@ -101,7 +101,5 @@ public class EventController {
 		data.put("infoList", map.get("infoList"));
 		return data;	
 	}
-	
-	
-	
+
 }

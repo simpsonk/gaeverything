@@ -2,11 +2,9 @@ package com.bitschool.gaeverything;
 
 import java.io.File;
 import java.io.IOException;
-
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -15,8 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.DetailCommentDTO;
@@ -56,35 +55,26 @@ public class LocationDetailController {
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		ActUserManager manager = new ActUserManager(aService);
 		String url = "map/map_detailpage";
-		LocationDTO dto = new LocationDTO();		
-		int countReview = service.countReviews(locationSeq);	
-		double averageRatings = service.getAverageRatings(service.getRatings(locationSeq),service.getReplyRatings(locationSeq));
-		averageRatings=(Double.isNaN(averageRatings))?0:averageRatings;
-		String temp = String.format("%.2f", averageRatings);
-		int countRatings = service.getRatings(locationSeq).size()+service.getReplyRatings(locationSeq).size();
-		int countReplies = service.countReplies(locationSeq);
-		dto = service.selectOne(locationSeq);		
+		
+		LocationDTO dto	 = service.selectOne(locationSeq);		
 		List<BoardDTO> reviewList = service.getReviews(locationSeq);
 		List<DetailCommentDTO> list = service.commentList(locationSeq);
+		
+		dto = service.getLocActUserResult(manager, dto);
+		List<DetailPhotoDTO> photoList = service.selectPhoto(locationSeq);
 		
 		//좋아요 상태 유지
 		if(isLogin){
 			MemberDTO member = (MemberDTO)session.getAttribute("member");
-			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.SHOP, locationSeq);
-			dto= manager.checkLikeStatus(aDTO, dto);
+			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.LOCATION, locationSeq);
+			dto= manager.checkLocLikeStatus(aDTO, dto);
 		}
 		
-		//디테일  페이지 좋아요 카운트  
-		int likeCount = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.SHOP, locationSeq));
 		
 		model.addAttribute("commentlist",list);
-		model.addAttribute("detail", dto);	
-		model.addAttribute("countReview",countReview);
-		model.addAttribute("averageRatings",temp);
-		model.addAttribute("countRatings",countRatings);
-		model.addAttribute("countReplies",countReplies);
+		model.addAttribute("detail", dto);
 		model.addAttribute("reviewList",reviewList);
-		model.addAttribute("likeCount", likeCount);
+		model.addAttribute("detailphoto",photoList);
 		
 		System.out.println("댓글 리스트 : "+list);
 		System.out.println("detail : "+dto);
@@ -112,7 +102,7 @@ public class LocationDetailController {
 	}
 	@RequestMapping(value="addPhoto",method=RequestMethod.POST)
 	public String addPhoto(HttpServletRequest hsr, @RequestParam("locationSeq") int LSeq,
-			@RequestParam("photo") MultipartFile photo){
+			@RequestParam("photo") MultipartFile photo, Model model){
 		String url = null;
 		String photoName = photo.getOriginalFilename();
 		String root_path = hsr.getSession().getServletContext().getRealPath("/");
@@ -120,6 +110,7 @@ public class LocationDetailController {
 		DetailPhotoDTO Pdto = new DetailPhotoDTO();
 		Pdto.setLocationSeq(LSeq);
 		Pdto.setLocationPhoto(photoName);
+		System.out.println(Pdto);
 		try {
 			photo.transferTo(new File(root_path+attach_path+photoName));
 		} catch (IllegalStateException e) {
@@ -130,9 +121,18 @@ public class LocationDetailController {
 			e.printStackTrace();
 		}
 		boolean flag = service.photoAdd(Pdto);
+		List<DetailPhotoDTO> list = service.selectPhoto(LSeq);
+		model.addAttribute("detailphoto",list);
+		
 		if(flag){
-			url = "redirect:/viewDetailPage";
+			url = "redirect:viewDetailPage?locationSeq="+LSeq;
 		}
+		return url;
+	}
+	
+	@RequestMapping(value = "/viewPhoto", method = {RequestMethod.POST,RequestMethod.GET})
+	public String getReviewData(){
+		String url = "map/test2";
 		return url;
 	}
 	
