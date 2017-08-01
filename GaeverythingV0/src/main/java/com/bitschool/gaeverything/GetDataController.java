@@ -41,7 +41,7 @@ public class GetDataController {
 	public List<Location2DTO> GetDatum(){
     	List<Location2DTO> list = null;
         try {
-            String text = URLEncoder.encode("서대문구 동물병원", "UTF-8");      
+            String text = URLEncoder.encode("안양시 동물병원", "UTF-8");      
             String apiURL = "https://dapi.kakao.com/v2/local/search/keyword.json?query="+text+"&page=3&appkey=ebfbfbd7a5ec71c10c63936dd90beb22&size=15";
             URL url = new URL(apiURL);
             HttpURLConnection con = (HttpURLConnection)url.openConnection();
@@ -56,7 +56,7 @@ public class GetDataController {
             br.close();
             System.out.println("response.toString() : "+response.toString());
             String data = response.toString();
-            String docudata = data.substring(146, data.length()-1);
+            String docudata = data.substring(144, data.length()-1);
             System.out.println("docudata : "+docudata);
     		ObjectMapper mapper = new ObjectMapper();  
     		try {

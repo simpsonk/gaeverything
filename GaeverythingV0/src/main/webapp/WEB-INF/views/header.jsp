@@ -18,8 +18,8 @@
 				</div> -->
 				 
 				<div id="logo">
-					<a href="/"><img src="/resources/images/gaeverything_black.png" alt=""></a>
-					<a href="/" class="dashboard-logo"><img src="/resources/images/gaeverything_white.png" alt=""></a>
+					<a href="/"><img src="/resources/images/1_black.png" alt=""></a>
+					<a href="/" class="dashboard-logo"><img src="/resources/images/1_white.png" alt=""></a> 
 				</div>  
 
 				<!-- Mobile Navigation -->
