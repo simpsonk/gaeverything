@@ -43,37 +43,40 @@
 	
 	function getListItem(index, places) {
 	    var el = document.createElement('div');
-	    var itemStr ='<div class="listing-item-container list-layout" data-marker-id="1" >'+
-	  			   	'<a class="listing-item" class="link" target="_blank" href ="/map/detail/viewDetailPage?locationSeq='+places.locationSeq+'">';
+	    var itemStr ='<div class="listing-item-container list-layout" data-marker-id="1" >';
+	    /*href ="/map/detail/viewDetailPage?locationSeq='+places.locationSeq+'"*/
 	  			   	if(places.imageUrl){
-		  			   	itemStr +=	'<div class="listing-item-image">'+
+		  			   	itemStr +=	'<a href ="/map/detail/viewDetailPage?locationSeq='+places.locationSeq+'" class="listing-item">'+
+		  			   				'<div class="listing-item-image">'+
 					  			    	'<img src="'+places.imageUrl+'" alt="">'+
 					  			    	'<span class="tag">Hospital</span>'+
 				  			    	'</div>';
 	  			   	}else {
-		  			  	itemStr +=	'<div class="listing-item-image">'+
+		  			  	itemStr +=	'<a href ="/map/detail/viewDetailPage?locationSeq='+places.locationSeq+'" class="listing-item">'+
+		  			  				'<div class="listing-item-image">'+
 	  			    					'<img src="/resources/images/hospital.jpg" alt="">'+
 	  			    					'<span class="tag">Hospital</span>'+
 				    				'</div>';		
 		  			   	}
-	  			  	itemStr +=	'<div class="listing-item-content">'+
-				   			    	'<div class="listing-item-inner">'+
-				  			    		'<h3>'+places.title+'</h3>'+
-	  			  						'<span>'+places.address; 
-	  			  	itemStr +=					places.radius!=null?'('+places.radius+'km)':'';
-	  			  	itemStr +=			'</span>'+
-	  			  						'<div class="star-rating" data-rating="3.5">'+
-				  			    			'<div class="rating-counter">(12 reviews)</div>'+
-				  			    		'</div>'+
-				  			    	'</div>';
+		  			  	itemStr +=	'<div class="listing-item-content">'+
+					   			    	'<div class="listing-item-inner">'+
+					  			    		'<h3>'+places.title+'</h3>'+
+		  			  						'<span>'+places.address; 
+		  			  	itemStr +=					places.radius!=null?'('+places.radius+'km)':'';
+		  			  	itemStr +=			'</span>'+
+		  			  						'<div class="star-rating" data-rating="3.5">'+
+					  			    			'<div class="rating-counter">(12 reviews)</div>'+
+					  			    		'</div>'+
+					  			    	'</div>'+
+				  			    	'</div>'+
+				  			    	'</a>';
+		  			  				
 	  			  	if(places.userLikeStatus == null){
 	  			  		itemStr +=	'<span class="like-icon" id="like" onclick="no_login_like()"></span>';
 	  			  	}else{
 	  			  		itemStr +=	'<span class="'+places.userLikeStatus+'" id="like'+places.locationSeq+'" onclick="like_clicked('+places.locationSeq+')"></span>';
 	  			  	}
-	  			  	itemStr +=	'</div>'+
-				  			'</a>'+
-				  		'</div>';
+	  			  	itemStr +='</div>';
   		el.innerHTML = itemStr;
   		el.className = 'col-lg-12 col-md-12';
 	    return el;

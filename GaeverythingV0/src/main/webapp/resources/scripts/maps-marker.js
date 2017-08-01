@@ -126,7 +126,7 @@
     
     
     
-    function makeContent(title, imageUrl, address, placeUrl, radius){
+    function makeContent2(title, imageUrl, address, placeUrl, radius){
     	var content = 	'<div class="infoBox" style="width: 270px; transform: translateZ(0px); position: absolute; visibility: visible; left: 284.75px; bottom: -185.3px; cursor: default;">' + 
 				        '    <div class="map-box">' + 
 				        '		<a href="#" class="listing-img-container">'+
@@ -150,7 +150,7 @@
    
     	     
     
-    function makeContent2(title, imageUrl, address, placeUrl, radius){
+    function makeContent(title, imageUrl, address, placeUrl, radius){
     	var content = 	'<div class="wrap">' + 
 				        '    <div class="info">' + 
 				        '        <div class="title">' + title+ 

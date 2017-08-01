@@ -62,19 +62,6 @@ public class LocationDetailController {
 		List<DetailCommentDTO> list = service.commentList(locationSeq);
 		
 		dto = service.getLocActUserResult(manager, dto);
-		
-/*		int countReview = service.countReviews(locationSeq);	
-		double averageRatings = service.getAverageRatings(service.getRatings(locationSeq),service.getReplyRatings(locationSeq));
-		averageRatings=(Double.isNaN(averageRatings))?0:averageRatings;
-		String temp = String.format("%.2f", averageRatings);
-		int countRatings = service.getRatings(locationSeq).size()+service.getReplyRatings(locationSeq).size();
-		int countReplies = service.countReplies(locationSeq);
-*/		
-		//디테일  페이지 좋아요 카운트  
-/*		int countLike = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.LOCATION, locationSeq));
-*/		
-/*		dto.setActUserResult(countReview, temp, countRatings, countReplies, countLike);
-*/		
 		//좋아요 상태 유지
 		if(isLogin){
 			MemberDTO member = (MemberDTO)session.getAttribute("member");
