@@ -9,6 +9,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 
+import com.bitschool.dto.BlogDTO;
 import com.bitschool.dto.LocationDTO;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -33,9 +34,9 @@ public class APIExamSearchBlog {
             int responseCode = con.getResponseCode();
             BufferedReader br;
             if(responseCode==200) { // 정상 호출
-                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                br = new BufferedReader(new InputStreamReader(con.getInputStream(),"UTF-8"));
             } else {  // 에러 발생
-                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream(),"UTF-8"));
             }
             String inputLine;
             StringBuffer response = new StringBuffer();
@@ -45,25 +46,10 @@ public class APIExamSearchBlog {
             br.close();
             System.out.println(response.toString());
             
-            HashMap<String, Object> data = new HashMap<String, Object>();
-    		ObjectMapper mapper = new ObjectMapper();
-    		List<LocationDTO> list = null;
-    		HashMap<String, Object> map = null;
-    		System.out.println("response="+response);
-    		try {
-    			data = mapper.readValue(response.toString(), new TypeReference<List<LocationDTO>>(){});
-    			System.out.println(data.get("items"));
-    			//list = mapper.readValue(response, new TypeReference<List<LocationDTO>>(){});
-    			//map = pService.makeSerachList(page, 5, list);
-    		} catch (JsonParseException e) {
-    			e.printStackTrace();
-    		} catch (JsonMappingException e) {
-    			e.printStackTrace();
-    		} catch (IOException e) {
-    			e.printStackTrace();
-    		}
             
-            
+    		List<BlogDTO> list = null;
+    		System.out.println(response.toString().substring(99,response.length()-1));
+    		
         } catch (Exception e) {
             System.out.println(e);
         }

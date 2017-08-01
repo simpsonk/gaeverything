@@ -325,31 +325,7 @@
 					 
 				
 					 </div>
-					 
-	<%-- 				  <c:forEach var="comm" items="${commentlist}" varStatus="status">
-					  							 									
-					  	<input type="hidden" id="ratingVal${comm.commentSeq}" value="${comm.rating}">
-					  	<li>
-							<div class="avatar"><img src="/resources/upload/${comm.photo}" alt="" /></div> 
-							<div class="comment-content"><div class="arrow-comment"></div>
-								<div class="comment-by">
-									${comm.nickname}<span class="date">${comm.regiDate}</span>
-									<div class="star-rating" data-rating="${comm.rating}"></div>
-								</div>
-								<p id="changeMsg${comm.commentSeq}">${comm.message}</p>							
-							</div>
-							
-							
-							<!-- edit, delete -->
-						 <c:if test="${member.nickname == comm.nickname}"> 	
-							  <div class="col-md-8 centered-content" >								
-								<a onclick="go_url(1, ${comm.commentSeq});" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-note"></i>Edit</a>
-								<a onclick="go_url(2, ${comm.commentSeq});" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-close"></i>Delete</a>
-							</div>  
-						 </c:if> 
-						</li>					
-				  	</c:forEach> --%>
-				  	
+			  	
 			 
 				  	
 				  	<c:if test="${fn:length(commentlist) > 5}">
