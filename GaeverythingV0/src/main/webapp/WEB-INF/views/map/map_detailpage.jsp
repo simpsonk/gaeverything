@@ -115,7 +115,8 @@
 							</div>
 						</div>
 					</div>
-						<div class="review-images mfp-gallery-container col-lg-12" style="padding-top: 8px;">
+					<div class="mfp-gallery-container" id="">
+						<div class="review-images col-lg-12" style="padding-top: 8px;">
 							<c:forEach var="dp" items="${detailphoto}" varStatus="status">
 								<c:if test="${status.index<4}">	
 									<a href="/resources/upload/${dp.locationPhoto}" class="mfp-gallery listing-item-container">
@@ -124,12 +125,22 @@
 								</c:if>
 							</c:forEach>
 						</div>	
+						<div class="review-images col-lg-12" style="padding-top: 8px;">
+							<c:forEach var="dp" items="${detailphoto}" varStatus="status">
+								<c:if test="${status.index<4}">	
+									<a href="/resources/upload/dog_icon.png" class="mfp-gallery listing-item-container">
+									<div class="listing-item">	<img src="/resources/upload/dog_icon.png" alt=""></div>
+								</a>
+								</c:if>
+							</c:forEach>
+						</div>
+					</div>
 					<c:if test="${fn:length(detailphoto) > 4}">
 					<div class="row">
 					<div class="col-lg-12">
 					<div class="mfp-gallery-container">
 							<c:forEach var="dp" items="${detailphoto}" varStatus="status">
-									<img src="/resources/upload/${dp.locationPhoto}" hidden="hidden" class="mfp-gallery">
+									<a href="/resources/upload/${dp.locationPhoto}" style="display: none" class="mfp-gallery"></a>
 							</c:forEach>
 							<a class="read-more mfp-gallery">Read More <i class=""></i></a>
 					</div>
@@ -367,6 +378,7 @@
 <script type="text/javascript" src="<c:url value = '/resources/scripts/jquery-ui.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/tooltips.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/custom.js'/>"></script>
+<script type="text/javascript" src="<c:url value = '/resources/scripts/maps-datailpage.js'/>"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ebfbfbd7a5ec71c10c63936dd90beb22"></script>
 
 <script type="text/javascript">
@@ -393,12 +405,16 @@
 	marker.setMap(map);
 	
 
-	//photo 등록
-	function addDetailPhoto(){
-		var url = "/map/detail/addPhoto";
-		addPhoto.action = url;
-		addPhoto.submit();
-	}
+//photo 등록
+function addDetailPhoto(){
+	var url = "/map/detail/addPhoto";
+	addPhoto.action = url;
+	addPhoto.submit();
+}
+	
+	
+	
+
 //댓글 등록 버튼 클릭시
 $('#registComment').click(function(){
 	var locationSeq = document.getElementById("locationSeq").value;

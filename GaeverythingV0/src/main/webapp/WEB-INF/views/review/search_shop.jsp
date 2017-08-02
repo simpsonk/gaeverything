@@ -40,7 +40,7 @@
 						<div id = "hiddenOption" class="col-fs-2">	
 							<select class="chosen-select" name="selectOp2" id = "selectOp2">
 								<option value="0" ${searchData['selectOp2']=='0'?'selected="selected"':''}>Category</option>
-								<option value="5 449 776" ${searchData['selectOp2']=='5 449 776'?'selected="selected"':''}>Hospital</option>
+								<option value="HP8" ${searchData['selectOp2']=='HP8'?'selected="selected"':''}>Hospital</option>
 								<option value="3">#######</option>
 							</select>
 						</div>
