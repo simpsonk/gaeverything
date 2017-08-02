@@ -118,7 +118,6 @@
 						<div class="review-images mfp-gallery-container col-lg-12" style="padding-top: 8px;">
 							<c:forEach var="dp" items="${detailphoto}" varStatus="status">
 								<c:if test="${status.index<4}">	
-								
 									<a href="/resources/upload/${dp.locationPhoto}" class="mfp-gallery listing-item-container">
 									<div class="listing-item">	<img src="/resources/upload/${dp.locationPhoto}" alt=""></div>
 								</a>
@@ -128,7 +127,12 @@
 					<c:if test="${fn:length(detailphoto) > 4}">
 					<div class="row">
 					<div class="col-lg-12">
-							<a href="" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
+					<div class="mfp-gallery-container">
+							<c:forEach var="dp" items="${detailphoto}" varStatus="status">
+									<img src="/resources/upload/${dp.locationPhoto}" hidden="hidden" class="mfp-gallery">
+							</c:forEach>
+							<a class="read-more mfp-gallery">Read More <i class=""></i></a>
+					</div>
 					</div>
 					</div>
 					</c:if>
