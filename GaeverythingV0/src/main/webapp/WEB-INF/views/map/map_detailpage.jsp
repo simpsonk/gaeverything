@@ -174,7 +174,7 @@
 						</c:if>	
 						<div class="add-review-photos col-lg-4" style="position:static;">		
 							<div class="photoUpload">
-								<span><i class="im im-icon-Pencil"></i> Write Review</span>
+								<a href="/review/viewReviewRegist"><span><i class="im im-icon-Pencil"></i> Write Review</span></a>
 							</div>
 						</div>	
 					</div>
