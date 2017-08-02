@@ -4,6 +4,9 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
+
+import com.bitschool.dao.BoardDAO;
+
 import com.bitschool.dao.LocationDetailDAO;
 import com.bitschool.dto.BlogDTO;
 import com.bitschool.dto.ActUserDTO;
@@ -21,6 +24,8 @@ public class LocationDetailService {
 	@Inject
 	private LocationDetailDAO dao;
 	
+	@Inject
+	private BoardDAO bdao;
 	
 	public LocationDTO selectOne(int seq){
 		// TODO Auto-generated method stub
@@ -178,6 +183,12 @@ public class LocationDetailService {
 		List<BoardDTO> dto = null;
 		try {
 			dto = dao.getReviews(locationSeq);
+			int countCmt = 0;
+			for(int i=0;i<dto.size();i++){
+				countCmt = bdao.countCmt(dto.get(i).getBoardNo());
+				dto.get(i).setNumOfCmt(countCmt);
+			}
+		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -185,7 +196,7 @@ public class LocationDetailService {
 		return dto;
 	}
 	
-	// �ش� ����� ��α� ���� �ҷ�����
+
 	public List<BlogDTO> getBlogReviews(int locationSeq){
 		List<BlogDTO> dto = null;
 		try {

@@ -163,7 +163,7 @@
 			<!-- regist photo test push case-->
 			<div id="regist-review" class="listing-section margin-top-70 margin-bottom-30">
 				<div class="col-lg-2" style="padding-left: 0px;">				
-					<h3 class="listing-desc-headline ">Review <span>(${countReview})</span></h3>							
+					<h3 class="listing-desc-headline ">Review <span>(${reviewList.size()})</span></h3>							
 				</div>
 				<div class="col-lg-10">
 					<div style="height: 50px;margin-top: 34px;">
@@ -174,7 +174,9 @@
 						</c:if>	
 						<div class="add-review-photos col-lg-4" style="position:static;">		
 							<div class="photoUpload">
-								<span><i class="im im-icon-Pencil"></i> Write Review</span>
+								<span>
+								<a href="/review/viewReviewRegist?locationSeq=${detail.locationSeq}&boardCategory=${boardCategory}&address=${detail.title}">
+								<i class="im im-icon-Pencil"></i> Write Review</span></a>
 							</div>
 						</div>	
 					</div>
@@ -202,7 +204,8 @@
 												<span>${reviews.regiDate}</span>
 											</div>
 										</div>
-										<span class="star-rating" data-rating="${reviews.rating}">${reviews.rating}</span>															
+										<span class="star-rating" data-rating="${reviews.rating}">(${reviews.numOfCmt} comments)</span>															
+								
 									</a>
 								</div>
 								</c:if>
@@ -253,7 +256,7 @@
 				
 			<!-- Comment -->
 			<div id="listing-reviews" class="listing-section">
-				<h3 class="listing-desc-headline margin-top-75 margin-bottom-20">Comment <span>(${countReplies})</span></h3>
+				<h3 class="listing-desc-headline margin-top-75 margin-bottom-20">Comment <span>(${commentlist.size()})</span></h3>
 
 				<!-- Add Review Box -->
 				<div id="add-review" class="add-review-box" style="margin-top: 0px;">
@@ -306,10 +309,10 @@
 	   							<input type="radio" id="starhalf" name="rating" value="0.5" />
 	   							<label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
 							</fieldset>
-													
+											
 						</div>
 						</div>
-	
+				
 					</div>
 		
 					<!-- Review Comment -->
