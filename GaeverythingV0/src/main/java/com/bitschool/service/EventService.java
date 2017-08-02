@@ -20,7 +20,6 @@ public class EventService {
 		List<EventDTO> list = null;
 		try {
 			list = eDAO.readAll();
-			System.out.println("���� ����Ʈ����:" + list.size());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -104,17 +104,24 @@ public class EventController {
 	
 	@RequestMapping(value="/searchEvent", method=RequestMethod.POST)
 	public @ResponseBody HashMap<String, Object> searchEvent(@RequestParam("opt") String opt, 
-															 @RequestParam("str") String str){
+															 @RequestParam("str") String str,
+															 HttpSession session){
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		List<EventDTO> list = null; 
 		HashMap<String, Object> map = null;
 		
-		list = service.searchEvent(new EventSearchDTO(opt, str));
-		data.put("searchList", list);
+		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		if(member!=null){
+			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.EVENT);
+			list= new ActUserManager(aService).checkLikeStatusEvent(aDTO, list);
+		}
 		
+		list = service.searchEvent(new EventSearchDTO(opt, str));
+		data.put("events", list);
 		map = pService.makeEventSerachList(0, 6, list);
 		data.put("pList", map.get("pList"));
 		data.put("infoList", map.get("infoList"));
+		
 		
 		return data;
 	}

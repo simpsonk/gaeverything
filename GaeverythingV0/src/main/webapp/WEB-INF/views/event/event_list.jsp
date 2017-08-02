@@ -196,9 +196,10 @@
 	/////////////////////////////////////////////////////////////////
 
 	var markers = [];
-	var makerPostions = [];
+	var markerPostions = [];
 	var overlays = [];
 	var eventData = [];
+	var points = [];
 	
 	$(document).ready(
 			function() {
@@ -214,6 +215,7 @@
 						$('#ResultsFound').text(foundResult);
 						eventList(data);
 						setMarkers(map);
+						alert(markers.length);
 					},
 					error : function(request, status, error) {
 						alert("code:" + request.status + "\n" + "message:"+ request.responseText + "\n" + "error:"+ error);
@@ -230,7 +232,7 @@
 			type 	 : 'post',
 			dataType : "json",
 			success  : function(data) {
-				eventData = data.events; 
+			//	eventData = data.events; 
 				eventList(data);
 				setMarkers(map);
 			},
@@ -246,67 +248,91 @@
 			var searchStr = $('#searchStr').val();
 			//스트링밸류와
 			var opt = $('select[name="searchOption"]').val();
-			alert(opt);	
 			//선택옵션 밸류를 받아서
 			$.ajax({
 				url  	 : "/event/searchEvent?opt="+opt+"&str="+searchStr, //쿼리스트링으로 보내줌 
 				dataType : 'json',
 				type	 : 'POST',
 				success  : function(data){
+					//검색결과: events, 페이징: pList, 페이지당 리스트: infoList
+					clearMarkers(); //첫 화면시 불러왔던 모든 마커들을 제거 -> 검색결과 마커만 보여줄것이므로
+					changeBound(data.events);
 					eventData = data.events; 
 					eventList(data);
 					setMarkers(map);
+					var numOfData = data.events.length ;
+					var foundResult = numOfData + ' Results Found';
+					$('#ResultsFound').text(foundResult);
+					//지도 내 마커가 해당 결과마커만 남기게
+					//지도표시 레벨 변경
+					
 				}
 			});
 			
 		});
 	});
 		
-	
+	function changeBound(events){
+		var bounds = new daum.maps.LatLngBounds();
+		// LatLngBounds 객체에 좌표를 추가
+		for(var i=0; i<events.length; i++){
+			bounds.extend(new daum.maps.LatLng(events[i].latitude, events[i].longtitude));
+		}
+		setBounds(bounds);	
+	}
 
 	///*****
 	function eventList(data) {
 		displayEvent(data.pList, data.infoList, data.events);
-		//페이징추가예정
-	//	displayPagination(data.pList, data.infoList);
 	}
 
 	function displayEvent(pList, infoList, events) {
+		
+		var level = map.getLevel();
+		alert(level); 
+		
 		var listEl = document.getElementById("eventList"), 
 			menuEl = document.getElementById("menu-wrap"), 
 			fragment = document.createDocumentFragment();
+		
 		var pageList = document.getElementById("pagination");
 			pageList.innerHTML = pList;
 			
 			removeAllChildNods(listEl);
 	
+		for(var i=0; i<events.length; i++){
+			createOverlay(events[i], i, new daum.maps.LatLng(events[i].latitude, events[i].longitude));
+		}	
+			
 		for (var i=0; i<infoList.length; i++) {
 			//리스트보여줄 태그
 			/* alert(data[0].latitude);w
 			alert(data[0].longitude); */
-			var placePosition = new daum.maps.LatLng(infoList[i].latitude, infoList[i].longitude),
+			//var placePosition = new daum.maps.LatLng(infoList[i].latitude, infoList[i].longitude),
 			
 			itemEl = eventItems(infoList[i]); //좌측 리스트 한덩어리
 
-			var itemOverlay = createOverlay(infoList[i], i, placePosition);
-
+			//var itemOverlay = 
 			(function(overlay){
 				itemEl.onmouseover = function() {
 					setOverlay(overlay); 			
 					clearStarRating('.star-rating');
 					starRating('.star-rating');
 				};
-				
 				 itemEl.onmouseout = function() {
 					clearOverlay(overlay); 			
 				}; 
 			})(overlays[i]);
 
 			fragment.appendChild(itemEl);
+			
 		}//for 
 
 		listEl.appendChild(fragment);
 		starRating('.star-rating');
+		
+		
+		
 	}
 	
 
@@ -334,12 +360,6 @@
 		el.className = 'col-lg-6 col-md-12';
 		return el;
 	}
-
- 	/* function displayPagination(pList, infoList){
-		var pageList = document.getElementById("pagination");
-		
-		pageList.innerHTML = pList;
-	}  */
 	
 	//이미지크기에따라 오버레이 크기 달라짐!!!!!
 	function createOverlay(event, idx, placePosition) {
@@ -383,8 +403,9 @@
 	}  
 
 	function createMarker(placePosition, overlay) {
+		
 		var markerPostion = placePosition;
-		makerPostions.push(markerPostion);
+		markerPostions.push(markerPostion);
 		//2) 마커이미지 셋팅
 		var imgSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png', 
 			imgSize = new daum.maps.Size(24, 36), 
@@ -397,6 +418,10 @@
 			position : markerPostion,
 			image : markerImg
 		});
+		
+	
+		
+		
 		//5)마커+오버레이에 클릭이벤트 등록
 		markerClick(marker, overlay);
 		//6)만든 마커를 배열에 추가
@@ -416,9 +441,21 @@
 	// 배열에 추가된 마커들을 지도에 표시
 	function setMarkers(map) {
 		for (var i = 0; i < markers.length; i++) {
-			markers[i].setMap(map);
+			markers[i].setMap(map);	
 		}
 	}
+	
+	function setBounds(bounds){
+		map.setBounds(bounds);
+	}
+	
+	function clearMarkers(){
+		for (var i = 0; i < markers.length; i++) {
+			markers[i].setMap(null);
+		}
+		markers = [];
+		markerPostions = [];
+	} 
 
 	function removeAllChildNods(el) {
 		while (el.hasChildNodes()) {
