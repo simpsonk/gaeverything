@@ -163,7 +163,7 @@
 			<!-- regist photo test push case-->
 			<div id="regist-review" class="listing-section margin-top-70 margin-bottom-30">
 				<div class="col-lg-2" style="padding-left: 0px;">				
-					<h3 class="listing-desc-headline ">Review <span>(${countReview})</span></h3>							
+					<h3 class="listing-desc-headline ">Review <span>(${reviewList.size()})</span></h3>							
 				</div>
 				<div class="col-lg-10">
 					<div style="height: 50px;margin-top: 34px;">
@@ -202,7 +202,8 @@
 												<span>${reviews.regiDate}</span>
 											</div>
 										</div>
-										<span class="star-rating" data-rating="${reviews.rating}">${reviews.rating}</span>															
+										<span class="star-rating" data-rating="${reviews.rating}">(${reviews.numOfCmt} comments)</span>															
+								
 									</a>
 								</div>
 								</c:if>
@@ -253,7 +254,7 @@
 				
 			<!-- Comment -->
 			<div id="listing-reviews" class="listing-section">
-				<h3 class="listing-desc-headline margin-top-75 margin-bottom-20">Comment <span>(${countReplies})</span></h3>
+				<h3 class="listing-desc-headline margin-top-75 margin-bottom-20">Comment <span>(${commentlist.size()})</span></h3>
 
 				<!-- Add Review Box -->
 				<div id="add-review" class="add-review-box" style="margin-top: 0px;">
@@ -306,10 +307,46 @@
 	   							<input type="radio" id="starhalf" name="rating" value="0.5" />
 	   							<label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
 							</fieldset>
-													
+											
 						</div>
 						</div>
-	
+						<div class="col-md-6">
+							<!-- Leave Rating -->
+								<!-- rating -->
+						<div class = "rating col-md-12" style="padding-bottom: 10px;">	
+							<h5>Price Rating</h5>
+							<fieldset class="rating">
+  								<input type="radio" id="star5" name="rating" value="5.0"  />
+  								<label class = "full" for="star5" title="Awesome - 5 stars"></label>
+	  								
+	   							<input type="radio" id="star4half" name="rating" value="4.5"/>
+	   							<label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+   							
+  								<input type="radio" id="star4" name="rating" value="4.0"  />
+  								<label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+	  								
+	   							<input type="radio" id="star3half" name="rating" value="3.5" />
+	   							<label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+	   							
+	   							<input type="radio" id="star3" name="rating" value="3.0" />
+	   							<label class = "full" for="star3" title="Meh - 3 stars"></label>
+	   							
+	   							<input type="radio" id="star2half" name="rating" value="2.5" />
+	   							<label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+	   									
+  		 						<input type="radio" id="star2" name="rating" value="2.0" />
+  		 						<label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+	  		 						
+	   							<input type="radio" id="star1half" name="rating" value="1.5" />
+	   							<label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+	   							
+	   							<input type="radio" id="star1" name="rating" value="1.0"/>
+	   							<label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+	   							
+	   							<input type="radio" id="starhalf" name="rating" value="0.5" />
+	   							<label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+							</fieldset>	
+							</div></div>
 					</div>
 		
 					<!-- Review Comment -->
