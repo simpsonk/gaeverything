@@ -69,7 +69,6 @@
 								<!-- Main Search Input -->
 								<div class="col-fs-3">
 									<select class="chosen-select" name="searchOption" id="searchOption">
-										
 										<option value="1" selected="selected" ${option==1?'selected="selected"':''}>Title</option>
 										<option value="2" ${option==2?'selected="selected"':''}>Location</option>
 									</select>
@@ -247,14 +246,16 @@
 			var searchStr = $('#searchStr').val();
 			//스트링밸류와
 			var opt = $('select[name="searchOption"]').val();
-			alert(opt);
+			alert(opt);	
 			//선택옵션 밸류를 받아서
-			$ajax({
+			$.ajax({
 				url  	 : "/event/searchEvent?opt="+opt+"&str="+searchStr, //쿼리스트링으로 보내줌 
 				dataType : 'json',
 				type	 : 'POST',
 				success  : function(data){
-					
+					eventData = data.events; 
+					eventList(data);
+					setMarkers(map);
 				}
 			});
 			
