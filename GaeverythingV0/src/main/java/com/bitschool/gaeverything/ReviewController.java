@@ -60,7 +60,7 @@ public class ReviewController {
 	@Inject
 	private LocationDetailService dService; 
 
-	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+
 	@RequestMapping(value = "/viewDetailReviews", method = RequestMethod.GET)
 	public String viewDetailReviews(HttpSession session,  @RequestParam(value="locationSeq") int locationSeq,
 			@RequestParam(value="page", defaultValue="1") int page,Model model){
@@ -105,9 +105,14 @@ public class ReviewController {
 	}
 
 	@RequestMapping(value = "/viewReviewRegist", method = {RequestMethod.GET, RequestMethod.POST})
-	public String viewReviewRegist(HttpSession session, Model model){
+	public String viewReviewRegist(HttpSession session, Model model,@RequestParam(value="locationSeq") int locationSeq,
+			@RequestParam(value="boardCategory",defaultValue="1") int boardCategory,
+			@RequestParam(value="address") String address){
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		String url = "review/review_regist";
+		model.addAttribute("locationSeq",locationSeq);
+		model.addAttribute("boardCategory",boardCategory);
+		model.addAttribute("address",address);
 		return url;
 	}
 	
@@ -190,7 +195,7 @@ public class ReviewController {
 		if(bDTO1!=null){
 			prevTitle = bDTO1.getTitle();
 		}else{
-			prevTitle = "(ì´ì „ ê¸€ì´ ì—†ìŠµë‹ˆë‹¤.)";
+			prevTitle = "(ÀÌÀü±ÛÀÌ ¾ø½À´Ï´Ù.)";
 		}
 		
 		BoardDTO bDTO2 = service.searchNext(boardNo);
@@ -198,7 +203,7 @@ public class ReviewController {
 		if(bDTO2!=null){
 			nextTitle = bDTO2.getTitle();
 		}else{
-			nextTitle = "(ë‹¤ìŒ ê¸€ì´ ì—†ìŠµë‹ˆë‹¤.)";
+			nextTitle = "(´ÙÀ½±ÛÀÌ ¾ø½À´Ï´Ù.)";
 		}
 		
 		model.addAttribute("numOfCmt", numOfCmt);

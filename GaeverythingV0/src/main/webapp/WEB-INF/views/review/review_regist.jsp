@@ -72,15 +72,33 @@
 		<form action="" method="post" id="postData">
 			<!-- Blog Post -->
 			<div class="blog-post">
+				<c:choose>
+				<c:when test="${locationSeq!=null}">
+				<input type="hidden" id = "locationSeq" name = "locationSeq" value = "${locationSeq}">	
+				</c:when>
+				<c:otherwise>
 				<input type="hidden" id = "locationSeq" name = "locationSeq" value = "${dto.locationSeq}">		
+				</c:otherwise>
+				</c:choose>
 				<!-- category -->		
 				<div class="col-md-4">
 					<h5>Category</h5>
+					<c:choose>
+					<c:when test="${locationSeq!=null}">
+					<select class="chosen-select" name = "boardCategory">
+						<option value ="0">Categories</option>
+						<option value ="1" ${boardCategory == '1'?'selected="selected"':''}>병원, 뷰티</option>
+						<option value ="2" ${boardCategory == '2'?'selected="selected"':''}>애견동반 식당, 카페</option>
+					</select>	
+					</c:when>
+					<c:otherwise>
 					<select class="chosen-select" name = "boardCategory">
 						<option value ="0">Categories</option>
 						<option value ="1" ${dto.boardCategory == '1'?'selected="selected"':''}>병원, 뷰티</option>
 						<option value ="2" ${dto.boardCategory == '2'?'selected="selected"':''}>애견동반 식당, 카페</option>
-					</select>		
+					</select>	
+					</c:otherwise>
+					</c:choose>	
 				</div>
 						
 				<!-- title -->
@@ -92,7 +110,15 @@
 				<!-- location -->			
 				<div class 	= "location col-md-8">
 					<h5>Location</h5>
-					<input type="text" placeholder="장소를 선택해주세요." name="address" id="address" value="${dto.address}" readonly="readonly">
+					<c:choose>
+					<c:when test="${locationSeq!=null}">
+					<input type="text" placeholder="장소를 선택해주세요." name="address" id="address" value="${address}" readonly="readonly">
+					</c:when>
+					<c:otherwise>
+					<input type="text" placeholder="장소를 선택해주세요." name="address" id="address" value="${dto.address}" readonly="readonly">	
+					</c:otherwise>
+					</c:choose>
+					
 				</div>
 				<div class = "location col-md-4" >
 					<div style="padding-top: 30px;">
