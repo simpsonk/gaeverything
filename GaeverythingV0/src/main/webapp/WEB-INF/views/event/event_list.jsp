@@ -183,7 +183,7 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ebfbfbd7a5ec71c10c63936dd90beb22&libraries=clusterer"></script>
 	
 	<script>
-
+////하.........................................
 	
 	//1. 기본 지도 보이기
 	var container = document.getElementById("map"), //지도띄울 div
@@ -272,6 +272,13 @@
 		});
 	});
 		
+	
+	
+	//1. 좌측 리스트만들기(페이징)
+	
+	//2. 우측 마커+오버레이 만들기
+	
+	
 	function changeBound(events){
 		var bounds = new daum.maps.LatLngBounds();
 		// LatLngBounds 객체에 좌표를 추가
@@ -342,10 +349,8 @@
 		var itemStr = '<a href="/event/detail" class="listing-item-container" data-marker-id="1">'
 				+ '		<div class="listing-item">'
 				+ '			<img src="/resources/images/event/'+event.thumbnail+'" alt="">'
-				+
-				//'			<div class="listing-badge now-open">Now Open</div>' + 
-				'			<div class="listing-item-content">'
-				+ '				<span class="tag">Fair</span>' 
+				+ '			<div class="listing-item-content">'
+				+ '				<span class="tag" style="background: #f91942;">Fair</span>' 
 				+ '				<h3>'+ event.eventName + '</h3><br>'
 				+ '				<span><i class="fa fa-map-marker"></i>  '+ event.address+ '</span><br>'
 				+ '				<span><i class="fa fa-calendar-check-o"></i>  '+ event.startDate+ '  ~  '+ event.endDate	+ '</span><br>'

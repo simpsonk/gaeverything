@@ -5,7 +5,7 @@
 <mapper namespace="com.bitschool.Event.EventMapper">
 	
 	<select id="readAll" resultType="EventDTO">
-		select * from event
+		select * from event order by startdate
 	</select>
 	
 	<select id="search" parameterType="EventSearchDTO" resultType="EventDTO">
