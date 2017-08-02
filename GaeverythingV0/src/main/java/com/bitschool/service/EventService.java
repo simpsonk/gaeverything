@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import com.bitschool.dao.EventDAO;
 import com.bitschool.dto.EventDTO;
+import com.bitschool.dto.EventSearchDTO;
 
 @Service
 public class EventService {
@@ -19,11 +20,21 @@ public class EventService {
 		List<EventDTO> list = null;
 		try {
 			list = eDAO.readAll();
-			System.out.println("¼­ºñ½º ¸®½ºÆ®°³¼ö:" + list.size());
+			System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½:" + list.size());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
+		return list;
+	}
+
+	public List<EventDTO> searchEvent(EventSearchDTO sDTO) {
+		List<EventDTO> list = null;
+		try {
+			list = eDAO.getSearchResult(sDTO);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return list;
 	}
 

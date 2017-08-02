@@ -8,4 +8,9 @@
 		select * from event
 	</select>
 	
+	<select id="search" parameterType="EventSearchDTO" resultType="EventDTO">
+		select * from event 
+		<if test = "opt == 1"> where eventname like '%'||#{str}||'%'</if>
+		<if test = "opt == 1"> where address like '%'||#{str}||'%'</if>
+	</select>
 </mapper>

@@ -1,5 +1,6 @@
 package com.bitschool.dao;
 
+import java.nio.channels.SelectableChannel;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.bitschool.dto.EventDTO;
+import com.bitschool.dto.EventSearchDTO;
 
 @Repository
 public class EventDAO {
@@ -20,7 +22,13 @@ public class EventDAO {
 
 	public List<EventDTO> readAll()  throws SQLException {
 		List<EventDTO> list = session.selectList(namespace+".readAll");		
-		System.out.println("´Ù¿À°á°ú:" + list.size());
+		System.out.println("ï¿½Ù¿ï¿½ï¿½ï¿½ï¿½:" + list.size());
+		return list;
+	}
+
+	public List<EventDTO> getSearchResult(EventSearchDTO sDTO)  throws SQLException{
+		List<EventDTO> list = session.selectList(namespace+".search", sDTO);
+		System.out.println("ê²€ìƒ‰ê²°ê³¼ ìˆ˜:" + list.size());
 		return list;
 	}
 	

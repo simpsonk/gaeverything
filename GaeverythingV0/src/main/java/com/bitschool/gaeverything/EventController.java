@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.EventDTO;
+import com.bitschool.dto.EventSearchDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.service.ActUserService;
 import com.bitschool.service.EventService;
@@ -102,4 +103,15 @@ public class EventController {
 		return data;	
 	}
 
+	
+	@RequestMapping(value="/searchEvent", method=RequestMethod.POST)
+	public @ResponseBody HashMap<String, Object> searchEvent(@RequestParam("opt") String opt, 
+															 @RequestParam("str") String str){
+		HashMap<String, Object> data = null; //페이징 리스트, 페이지당 리스트 담을 데이터 
+		List<EventDTO> list = null; //검색결과 담을 리스트
+		
+		list = service.searchEvent(new EventSearchDTO(opt, str));
+		data.put("searchList", list);
+		return data;
+	}
 }

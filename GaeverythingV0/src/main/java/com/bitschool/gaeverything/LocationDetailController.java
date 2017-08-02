@@ -37,13 +37,7 @@ public class LocationDetailController {
 	
 	@Inject
 	private ActUserService aService;
-<<<<<<< HEAD
-		
-	//µðÅ×ÀÏ ¸®ºäµ¥ÀÌÅÍ
-=======
-	
-	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½äµ¥ï¿½ï¿½ï¿½ï¿½
->>>>>>> 6fdad2737a969940b342c7181d607b4fba1d4317
+
 	@RequestMapping(value = "/getReviewData", method = {RequestMethod.POST,RequestMethod.GET})
 	public @ResponseBody List<DetailCommentDTO> getReviewData(@RequestParam(value="locationSeq") int locationSeq){
 		List<DetailCommentDTO> commentlist = service.commentList(locationSeq);	
@@ -56,12 +50,7 @@ public class LocationDetailController {
 			@RequestParam(value="locationSeq") int locationSeq, 
 			HttpSession session,
 			Model model){
-<<<<<<< HEAD
-		//·Î±×ÀÎ À¯Áö
-=======
-		
-		//ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
->>>>>>> 6fdad2737a969940b342c7181d607b4fba1d4317
+
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		ActUserManager manager = new ActUserManager(aService);
 		String url = "map/map_detailpage";
@@ -72,13 +61,8 @@ public class LocationDetailController {
 		
 		dto = service.getLocActUserResult(manager, dto);
 		List<DetailPhotoDTO> photoList = service.selectPhoto(locationSeq);
-<<<<<<< HEAD
 		List<BlogDTO> blogList = service.getBlogReviews(locationSeq);
-		//ÁÁ¾Æ¿ä »óÅÂ À¯Áö
-=======
-		
-		//ï¿½ï¿½ï¿½Æ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
->>>>>>> 6fdad2737a969940b342c7181d607b4fba1d4317
+
 		if(isLogin){
 			MemberDTO member = (MemberDTO)session.getAttribute("member");
 			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.SHOP, locationSeq);

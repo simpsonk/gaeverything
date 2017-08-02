@@ -2,23 +2,18 @@ package com.bitschool.service;
 
 import java.sql.SQLException;
 import java.util.List;
-
 import javax.inject.Inject;
-
 import org.springframework.stereotype.Service;
-
 import com.bitschool.dao.LocationDetailDAO;
-<<<<<<< HEAD
 import com.bitschool.dto.BlogDTO;
-=======
 import com.bitschool.dto.ActUserDTO;
->>>>>>> 6fdad2737a969940b342c7181d607b4fba1d4317
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.DetailCommentDTO;
 import com.bitschool.dto.DetailPhotoDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.utils.ActUserManager;
+
 @Service
 public class LocationDetailService {
 
@@ -204,7 +199,7 @@ public class LocationDetailService {
 		return dto;
 	}
 	
-	// ÇØ´ç Àå¼ÒÀÇ ºí·Î±× ¸®ºä ºÒ·¯¿À±â
+	// ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Î±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½
 	public List<BlogDTO> getBlogReviews(int locationSeq){
 		List<BlogDTO> dto = null;
 		try {

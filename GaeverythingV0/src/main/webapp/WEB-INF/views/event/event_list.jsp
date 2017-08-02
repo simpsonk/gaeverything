@@ -8,7 +8,7 @@
 
 <!-- Basic Page Needs
 ================================================== -->
-<title>gaeverything</title>
+<title>gaverything</title>
 <style type="text/css">
  .wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
     .wrap * {padding: 0;margin: 0;}
@@ -68,7 +68,7 @@
 
 								<!-- Main Search Input -->
 								<div class="col-fs-3">
-									<select class="chosen-select" name="searchOption">
+									<select class="chosen-select" name="searchOption" id="searchOption">
 										
 										<option value="1" selected="selected" ${option==1?'selected="selected"':''}>Title</option>
 										<option value="2" ${option==2?'selected="selected"':''}>Location</option>
@@ -240,14 +240,27 @@
 			}
 		});
 	}
-/* 	
+	
 	$(document).ready(function(){
 		$('#search').click(function(){
-			var searchStr = document.getElementById('searchStr').value;
+			//서치버튼을 클릭하면
+			var searchStr = $('#searchStr').val();
+			//스트링밸류와
+			var opt = $('select[name="searchOption"]').val();
+			alert(opt);
+			//선택옵션 밸류를 받아서
+			$ajax({
+				url  	 : "/event/searchEvent?opt="+opt+"&str="+searchStr, //쿼리스트링으로 보내줌 
+				dataType : 'json',
+				type	 : 'POST',
+				success  : function(data){
+					
+				}
+			});
 			
 		});
 	});
-		 */
+		
 	
 
 	///*****
@@ -299,7 +312,7 @@
 	//좌측리스트
 	function eventItems(event) {
 		var el = document.createElement("div");
-		var itemStr = '<a href="#" class="listing-item-container" data-marker-id="1">'
+		var itemStr = '<a href="/event/detail" class="listing-item-container" data-marker-id="1">'
 				+ '		<div class="listing-item">'
 				+ '			<img src="/resources/images/event/'+event.thumbnail+'" alt="">'
 				+
