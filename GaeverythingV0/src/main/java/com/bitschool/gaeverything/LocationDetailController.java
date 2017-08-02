@@ -38,19 +38,19 @@ public class LocationDetailController {
 	@Inject
 	private ActUserService aService;
 
+		
+	//µðÅ×ÀÏ ¸®ºäµ¥ÀÌÅÍ
 	@RequestMapping(value = "/getReviewData", method = {RequestMethod.POST,RequestMethod.GET})
 	public @ResponseBody List<DetailCommentDTO> getReviewData(@RequestParam(value="locationSeq") int locationSeq){
 		List<DetailCommentDTO> commentlist = service.commentList(locationSeq);	
 		return commentlist;
 	}
 	
-	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value = "/viewDetailPage", method = RequestMethod.GET)
 	public String viewDetailPage(HttpServletRequest request, 
 			@RequestParam(value="locationSeq") int locationSeq, 
 			HttpSession session,
 			Model model){
-
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		ActUserManager manager = new ActUserManager(aService);
 		String url = "map/map_detailpage";
@@ -62,7 +62,7 @@ public class LocationDetailController {
 		dto = service.getLocActUserResult(manager, dto);
 		List<DetailPhotoDTO> photoList = service.selectPhoto(locationSeq);
 		List<BlogDTO> blogList = service.getBlogReviews(locationSeq);
-
+		//ÁÁ¾Æ¿ä »óÅÂ À¯Áö
 		if(isLogin){
 			MemberDTO member = (MemberDTO)session.getAttribute("member");
 			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.SHOP, locationSeq);
@@ -76,18 +76,14 @@ public class LocationDetailController {
 		model.addAttribute("detailphoto",photoList);
 		model.addAttribute("blogList",blogList);
 		
-		System.out.println("ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® : "+list);
-		System.out.println("detail : "+dto);
 		return url;
 	}
 	
 	
-	//ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	@RequestMapping(value="/addComment",method=RequestMethod.POST)
 	public String addComment(HttpSession session,Model model,
 			DetailCommentDTO dto){
 		String url = null;
-		System.out.println("addCommentï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		dto.setNickname(member.getNickname());
 		dto.setPhoto(member.getPhoto());
@@ -95,8 +91,6 @@ public class LocationDetailController {
 		boolean flag = service.commentAdd(dto);
 		if(flag){
 			url = "redirect:viewDetailPage?locationSeq="+dto.getLocationSeq();
-			System.out.println("addComment ï¿½ï¿½ï¿½ï¿½");
-			System.out.println("ï¿½ï¿½ï¿½dto : "+dto);
 		}
 		return url;
 	}
@@ -136,7 +130,6 @@ public class LocationDetailController {
 		return url;
 	}
 	
-	//ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value="/viewEditComment",method={RequestMethod.GET,RequestMethod.POST})
 	public String viewEditComment(HttpSession session,Model model,@RequestParam(value="locationSeq2") int locationSeq){
 		String url = null;
@@ -152,31 +145,24 @@ public class LocationDetailController {
 	}
 	
 	
-	//ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½	
 	@RequestMapping(value="/editComment",method=RequestMethod.POST)
 	public String editComment(HttpSession session,Model model,
 			DetailCommentDTO dto){
 		String url = null;
-		System.out.println("editCommentï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		dto.setNickname(member.getNickname());
 		dto.setPhoto(member.getPhoto());
-		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ dto : "+dto);
 		boolean flag = service.commentEdit(dto);
 		if(flag){
 			url = "redirect:viewDetailPage?locationSeq="+dto.getLocationSeq();
-			System.out.println("editComment ï¿½ï¿½ï¿½ï¿½");
-			System.out.println("ï¿½ï¿½ï¿½dto : "+dto);
 		}
 		return url;
 	}
 	
-	//ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value="/deleteComment",method=RequestMethod.POST)
 	public String deleteComment(HttpSession session,Model model,
 			@RequestParam(value="commentSeq") int commentSeq,@RequestParam(value="locationSeq") int locationSeq){
 		String url = null;
-		System.out.println("deleteCommentï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		DetailCommentDTO dto = new DetailCommentDTO();
 		dto.setNickname(member.getNickname());
@@ -184,7 +170,6 @@ public class LocationDetailController {
 		boolean flag = service.commentDelete(dto);
 		if(flag){
 			url = "redirect:viewDetailPage?locationSeq="+locationSeq;
-			System.out.println("deleteComment ï¿½ï¿½ï¿½ï¿½");
 		}
 		return url;
 	}

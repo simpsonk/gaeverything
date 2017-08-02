@@ -22,7 +22,6 @@ public class LocationDetailService {
 	private LocationDetailDAO dao;
 	
 	
-	//locationSeq�� �� ����� DTO �޾ƿ��� 
 	public LocationDTO selectOne(int seq){
 		// TODO Auto-generated method stub
 		LocationDTO dto = null;
@@ -35,7 +34,6 @@ public class LocationDetailService {
 		return dto;
 	}
 	
-	// ������������ ��� �ۼ� 
 	public boolean commentAdd(DetailCommentDTO dto){
 		// TODO Auto-generated method stub
 		boolean flag = false;
@@ -47,7 +45,6 @@ public class LocationDetailService {
 		}
 		return flag;
 	}
-	// ������������ ���� ��� 
 		public boolean photoAdd(DetailPhotoDTO dto){
 			// TODO Auto-generated method stub
 			boolean flag = false;
@@ -61,7 +58,6 @@ public class LocationDetailService {
 		}
 		
 	
-	// ������������ ��� ������ 
 	public List<DetailCommentDTO> commentList(int locseq){
 		// TODO Auto-generated method stub
 		List<DetailCommentDTO> dto = null;
@@ -74,7 +70,6 @@ public class LocationDetailService {
 		return dto;
 	}
 	
-	// �������������� ���� ������ ��۸������� ���䵵 ����
 	public boolean updatePhoto(MemberDTO member){
 		boolean flag = false;
 		try {
@@ -86,21 +81,19 @@ public class LocationDetailService {
 		return flag;
 	}
 	
-	//���� �����ֱ�
-			public List<DetailPhotoDTO> selectPhoto(int locationSeq) {
-				// TODO Auto-generated method stub
-				List<DetailPhotoDTO> list = null;
-				try {
-					list = dao.selectPhoto(locationSeq);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				return list;
-			}
-			
+	public List<DetailPhotoDTO> selectPhoto(int locationSeq) {
+		// TODO Auto-generated method stub
+		List<DetailPhotoDTO> list = null;
+		try {
+			list = dao.selectPhoto(locationSeq);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
 	
-	// ������������ ��� ����  
+	
 	public boolean commentEdit(DetailCommentDTO dto){
 		boolean flag = false;
 		try {
@@ -112,7 +105,6 @@ public class LocationDetailService {
 		return flag;
 	}
 
-	// ������������ ��� ����  
 	public boolean commentDelete(DetailCommentDTO dto){
 		boolean flag = false;
 		try {
@@ -124,7 +116,6 @@ public class LocationDetailService {
 		return flag;
 	}
 	
-	// �Խ��ǿ��� �ۼ��� ���� ���� �������� 
 	public int countReviews(int locationSeq){
 		int count = 0;
 		try {
@@ -136,7 +127,6 @@ public class LocationDetailService {
 		return count;
 	}
 	
-	// �Խ��ǿ��� �ۼ��� ������ ���� ����Ʈ �������� 
 	public List<Double> getRatings(int locationSeq){
 		List<Double> ratings = null;
 		try {
@@ -148,7 +138,6 @@ public class LocationDetailService {
 		return ratings;
 	}	
 	
-	// ������������ ��ۿ��� �ۼ��� ���� �������� 
 	public List<Double> getReplyRatings(int locationSeq){
 		List<Double> ratings = null;
 		try {
@@ -160,7 +149,6 @@ public class LocationDetailService {
 		return ratings;
 	}
 	
-	//�Խ��ǿ��� �ۼ��� ������ ������ ������������ ��ۿ��� �ۼ��� ������ �� ������ ��� ����ϱ�
 	public double getAverageRatings(List<Double> ratings1,List<Double> ratings2){
 		double average = 0;
 		double sum1 = 0;
@@ -175,7 +163,6 @@ public class LocationDetailService {
 		return average;
 	}
 	
-	// ������������ ��� ���� �������� 
 	public int countReplies(int locationSeq){
 		int count = 0;
 		try {
@@ -187,7 +174,6 @@ public class LocationDetailService {
 		return count;
 	}
 	
-	// �Խ��ǿ��� �ۼ��� ���� ��������
 	public List<BoardDTO> getReviews(int locationSeq){
 		List<BoardDTO> dto = null;
 		try {
