@@ -116,7 +116,11 @@ public class LocationDetailController {
 		}
 		boolean flag = service.photoAdd(Pdto);
 		List<DetailPhotoDTO> list = service.selectPhoto(LSeq);
+		//int PCnt = 0;
+		//PCnt = service.photoCnt(LSeq);
+		//System.out.println("PCnt"+PCnt);
 		model.addAttribute("detailphoto",list);
+		//model.addAttribute("detailphotocnt",PCnt);
 		
 		if(flag){
 			url = "redirect:viewDetailPage?locationSeq="+LSeq;

@@ -27,6 +27,11 @@
 		values(#{locationSeq},#{locationPhoto},#{detailPhotoSeq})
 	</insert>
 	
+	<select id="photoCnt">
+		select count(*) from detailphoto
+		where locationSeq = #{locationSeq}
+	</select>
+	
 	<select id="selectPhoto" parameterType="Integer" resultType="DetailPhotoDTO">
 		select * from detailphoto 
 		where locationSeq = #{locationSeq}

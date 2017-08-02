@@ -47,17 +47,30 @@ public class LocationDetailService {
 		}
 		return flag;
 	}
-		public boolean photoAdd(DetailPhotoDTO dto){
-			// TODO Auto-generated method stub
-			boolean flag = false;
-			try {
-				flag = dao.photoAdd(dto);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return flag;
+
+	public boolean photoAdd(DetailPhotoDTO dto) {
+		// TODO Auto-generated method stub
+		boolean flag = false;
+		try {
+			flag = dao.photoAdd(dto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return flag;
+	}
+	
+	// 사진 갯수 보여주기
+	public int photoCnt(int locationSeq){
+		int PCnt = 0;
+		try {
+			PCnt = dao.photoCnt(locationSeq);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return PCnt;
+	}
 		
 	
 	public List<DetailCommentDTO> commentList(int locseq){
