@@ -358,6 +358,31 @@ public class ReviewController {
 		return data;
 	}
 	
+	//이벤트 페이지 내 라이크 처리 ***구현중
+	@RequestMapping(value="/updateEventLike", method={RequestMethod.GET, RequestMethod.POST})
+	public @ResponseBody int updateEventLike(
+							 @RequestParam("like") String like,
+							 @RequestParam("eventNo") int eventNo,
+							 @RequestParam("email") String email){
+		int data = 0;
+		ActUserManager manager = new ActUserManager(aService);
+		ActUserDTO dto = new ActUserDTO(email, ActUserManager.EVENT, eventNo);
+		boolean flag = false;
+		if(like.equals("like-icon")){
+			flag = manager.registLikeStatus(dto);
+			if(!flag){
+				System.out.println("insert fail: ReviewLike");
+			}
+		}else if(like.equals("like-icon liked")){
+			flag = manager.deleteLikeStatus(dto);
+			if(!flag){
+				System.out.println("delete fail: ReviewLike");
+			}
+		}
+		data = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.EVENT, eventNo));
+		return data;
+	}
+	
 	@RequestMapping(value = "viewSearchShop", method = RequestMethod.GET)
 	public String viewSearchShop(HttpSession session, Model model){
 		String url = "review/search_shop";
