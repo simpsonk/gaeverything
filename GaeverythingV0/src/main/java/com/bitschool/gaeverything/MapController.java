@@ -19,6 +19,7 @@ import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MapInfomation;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.service.ActUserService;
+import com.bitschool.service.LocationDetailService;
 import com.bitschool.service.LocationService;
 import com.bitschool.service.PageService;
 import com.bitschool.utils.ActUserManager;
@@ -40,6 +41,9 @@ public class MapController {
 	
 	@Inject
 	private ActUserService aService;
+	
+	@Inject
+	private LocationDetailService dService;
 			
 	@RequestMapping(value = "/searchMapData", method = {RequestMethod.POST,RequestMethod.GET})
 	public @ResponseBody String searchMapData(HttpSession session,
@@ -62,7 +66,6 @@ public class MapController {
 	
 	
 	
-	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value = "/viewTest", method = RequestMethod.GET)
 	public String viewTest(HttpSession session, Model model){
 		String url = "map/test";
@@ -92,11 +95,17 @@ public class MapController {
 		MapInfomation info = new MapInfomation(searchWord, categories1[0], level, lat, lon);
 		List<LocationDTO> list = service.SearchLocation(info);
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		//ï¿½ï¿½ï¿½Æ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		ActUserManager manager = new ActUserManager(aService);
+	
 		if(member!=null){
 			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.SHOP);
-			list= new ActUserManager(aService).checkListLocLikeStatus(aDTO, list);
+			list= manager.checkListLocLikeStatus(aDTO, list);
 		}
+		list = dService.getLocActUserResults(manager, list);
+		
+		System.out.println("check Results:"+list);
+
+		//»ç¿ëÀÚ Æò°¡ ¹Ý¿µ
 		
 		HashMap<String, Object> map = pService.makeSerachList(0, 5, list);
 		HashMap<String, Object> data = new HashMap<String, Object>();
@@ -116,6 +125,7 @@ public class MapController {
 			HttpSession session){
 		String[] temps = categories.split(",");
 		MapInfomation info=null;
+		//Ä«Å×°í¸® ºÐ·ù ÄÚµå
 		if(temps.length==1){
 			info = new MapInfomation(searchWord, temps[0], level, lat, lon);
 		}
@@ -125,11 +135,13 @@ public class MapController {
 		System.out.println(list);
 
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		//ï¿½ï¿½ï¿½Æ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		ActUserManager manager = new ActUserManager(aService);
 		if(member!=null){
 			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.SHOP);
-			list= new ActUserManager(aService).checkListLocLikeStatus(aDTO, list);
+			list= manager.checkListLocLikeStatus(aDTO, list);
 		}
+		list = dService.getLocActUserResults(manager, list);
+		
 		HashMap<String, Object> map = pService.makeSerachList(0, 5, list);
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		data.put("places", list);
@@ -144,7 +156,6 @@ public class MapController {
 		ObjectMapper mapper = new ObjectMapper();
 		List<LocationDTO> list = null;
 		HashMap<String, Object> map = null;
-		System.out.println("locData="+locData);
 		try {
 			list = mapper.readValue(locData, new TypeReference<List<LocationDTO>>(){});
 			map = pService.makeSerachList(page, 5, list);
@@ -155,9 +166,12 @@ public class MapController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		data.put("places", list);
+		
+		data.put("page", page);
 		data.put("pList", map.get("pList"));
 		data.put("infoList", map.get("infoList"));
+		
+		
 		return data;
 	}
 	

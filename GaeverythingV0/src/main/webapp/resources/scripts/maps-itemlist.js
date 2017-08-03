@@ -12,20 +12,20 @@
 	    //페이징 리스트 만들기
 	    for(var i=0;i<infoList.length;i++){
 	    	// 검색 결과 항목 Element를 생성합니다
-		    itemEl = getListItem(i, infoList[i]);
+		    itemEl = getListItem(infoList[i]);
 		 	// 검색결과 항목들을 검색결과 목록 Element에 추가합니다
 		    fragment.appendChild(itemEl);
 		 	
-	        (function(marker, title, imageUrl, address, placeUrl, radius) {
+	        (function(marker, infoList) {
 	        	itemEl.onmouseover =  function(){
-	            	setOverlay(map, makeContent(title, imageUrl, address, placeUrl, radius), marker.getPosition());
+	            	setOverlay(map, makeContent(infoList), marker.getPosition());
 	            	panTo(marker.getPosition());
 	            }; 
 	            
 	            itemEl.onmouseout =  function(){
 	            	closeOverlay();
 	            }; 
-	        })(markers[amount*page+i], infoList[i].title, infoList[i].imageUrl, infoList[i].address, url+infoList[i].locationSeq , infoList[i].radius); 
+	        })(markers[amount*page+i], infoList[i]); 
 	    }
 	    
  	    // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
@@ -41,7 +41,7 @@
 	    map.panTo(moveLatLon);            
 	}    
 	
-	function getListItem(index, places) {
+	function getListItem(places) {
 	    var el = document.createElement('div');
 	    var itemStr ='<div class="listing-item-container list-layout" data-marker-id="1" >';
 	    /*href ="/map/detail/viewDetailPage?locationSeq='+places.locationSeq+'"*/
@@ -63,9 +63,9 @@
 					  			    		'<h3>'+places.title+'</h3>'+
 		  			  						'<span>'+places.address; 
 		  			  	itemStr +=					places.radius!=null?'('+places.radius+'km)':'';
-		  			  	itemStr +=			'</span>'+
-		  			  						'<div class="star-rating" data-rating="3.5">'+
-					  			    			'<div class="rating-counter">(12 reviews)</div>'+
+		  			  	itemStr +=			'</span>'+'<br>'+
+		  			  						'<div class="star-rating" data-rating="'+places.averageRatings+'">'+
+					  			    			'<div class="rating-counter"  style="font-size: 16px"> (<i class="im im-icon-Heart"></i>'+places.countLike+'/<i class="im im-icon-Speach-Bubble"></i>'+places.countReplies+'/'+places.countReview+' reviews)'+'</div>'+
 					  			    		'</div>'+
 					  			    	'</div>'+
 				  			    	'</div>'+
@@ -103,10 +103,12 @@
 	        type:"POST",
 	        success : function(data) {
 	        	/*id.innerHTML=data+' people bookmarked this place'; */
-	        	if(ele.className === 'like-icon'){
-	        		ele.className = 'like-icon liked';
+        		var page = document.getElementById('listPage').value;
+	        	if($("select[name=searchOption]").val()==2){
+	        		searchLocation('like');
+	        		pageClickEvent(page);
 	        	}else{
-	        		ele.className = 'like-icon';
+	        		searchShopname();
 	        	}
 	        },
 	        error : function(request, status, error) {
@@ -118,4 +120,23 @@
 	function no_login_like(locationSeq){
 		alert("로그인을 해주세요!");
 		location.href = "/viewLogin?uri=/map/viewMapList";
+	}
+	
+	function pageClickEvent(page){
+		url = '/map/getPagingData?page='+page;
+		alert(url);
+		document.getElementById('listPage').value=page;
+		var stringLocData = JSON.stringify(locData);
+  		$.ajax({
+			url : url,
+			data: {"data":stringLocData},
+			type:"POST",
+			dataType:"json",
+			success : function(data) {
+				displayInfoList(data.pList, data.infoList, data.page, 5);
+			},
+			error : function(request, status, error) {
+				 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+           }
+		});
 	}

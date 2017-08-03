@@ -330,8 +330,8 @@
 	
 						</fieldset>					
 						<input type="hidden" id="isLogin" value="${member.nickname}">	
-						<input type="button" id="registComment" value="Submit Comment">
-						<input type="button" id="modifyComment" value="Modify Comment" style="display: none;">
+						<button type="button" id="registComment" class = "button margin-top-15" style="height: 50px;">Submit Comment</button>
+						<button type="button" id="modifyComment" class = "button margin-top-15" style="height: 50px; display: none;">Modify Comment</button>
 						<div class="clearfix"></div>
 					</form>
 	
@@ -474,8 +474,8 @@ function go_url(type, commSeq){
 			$('input:radio[name=rating]:input[value="5.0"]').attr("checked", true);		
 		}		
 		commMsg.focus();
- 		$('#modifyComment').show();
 		$('#registComment').hide();
+		$('#modifyComment').show();
 		ment.innerHTML = 'Edit Comment';
 	}else if(type==2){
 		var ds = document.getElementById("add-comment");
@@ -575,12 +575,19 @@ function getListItem(reply) {
 		'</div>'+
 		'<p id="changeMsg'+reply.commentSeq+'">'+reply.message+'</p></div>';
 		if(nickname==reply.nickname){
-				itemStr += '<div class="col-md-8 centered-content" >	'+							
+/* 				itemStr += 
+			'<div class="col-md-8 centered-content" >	'+							
 				'<a onclick="go_url(1, '+reply.commentSeq+');" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-note"></i>Edit</a>'+
 				'<a onclick="go_url(2, '+reply.commentSeq+');" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-close"></i>Delete</a>'+
-			'</div></li>';
-		}
-		el.innerHTML = itemStr;
+			'</div></li>';*/
+			itemStr +=	'<div class="comment-by" >'+
+						'	<a class="reply" style="margin-top: 20px;" " onclick="go_url(1, '+reply.commentSeq+');" return false; ><i class="sl sl-icon-note"></i> Edit</a>'+
+						'</div>';
+			itemStr +=	'<div class="comment-by">'+
+						'	<a class="reply" style="margin-top: 60px;" " onclick="go_url(2, '+reply.commentSeq+');" return false; ><i class="sl sl-icon-note"></i> Delete</a>'+
+						'</div>';		
+ 		}
+		el.innerHTML = itemStr;	
     return el;
 }
 
