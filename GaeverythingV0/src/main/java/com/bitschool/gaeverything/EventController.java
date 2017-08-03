@@ -73,7 +73,7 @@ public class EventController {
 	@RequestMapping(value="/getPagingData", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody HashMap<String, Object> getPagingData(HttpSession session,
 															   @RequestParam("data") String eventData,
-															   @RequestParam("page") int page){
+															   @RequestParam(value="page") int page) {
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		List<EventDTO> list = null; 
 		ObjectMapper mapper = new ObjectMapper();
@@ -98,6 +98,7 @@ public class EventController {
 		data.put("events", list); //
 		data.put("pList", map.get("pList"));
 		data.put("infoList", map.get("infoList"));
+		
 		return data;	
 	}
 

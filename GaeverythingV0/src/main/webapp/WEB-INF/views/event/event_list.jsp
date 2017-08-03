@@ -201,6 +201,7 @@
 	var eventData = [];
 	var points = [];
 	
+	//시작 시 
 	$(document).ready(
 			function() {
 				$.ajax({
@@ -213,9 +214,9 @@
 						var numOfData = data.events.length ;
 						var foundResult = numOfData + ' Results Found';
 						$('#ResultsFound').text(foundResult);
-						eventList(data);
-						setMarkers(map);
-						alert(markers.length);
+						//eventList(data);
+						createOverlay(data.events);
+						displayEvent(data.pList, data.infoList, data.events, 0);
 					},
 					error : function(request, status, error) {
 						alert("code:" + request.status + "\n" + "message:"+ request.responseText + "\n" + "error:"+ error);
@@ -232,9 +233,10 @@
 			type 	 : 'post',
 			dataType : "json",
 			success  : function(data) {
-			//	eventData = data.events; 
-				eventList(data);
-				setMarkers(map);
+				//eventList(data);
+				createOverlay(data.events);
+				displayEvent(data.pList, data.infoList, data.events, page);
+
 			},
 			error : function(request, status, error) {
 				alert("code:" + request.status + "\n" + "message:"+ request.responseText + "\n" + "error:"+ error);
@@ -242,6 +244,7 @@
 		});
 	}
 	
+	//이벤트 검색
 	$(document).ready(function(){
 		$('#search').click(function(){
 			//서치버튼을 클릭하면
@@ -254,95 +257,61 @@
 				dataType : 'json',
 				type	 : 'POST',
 				success  : function(data){
-					//검색결과: events, 페이징: pList, 페이지당 리스트: infoList
 					clearMarkers(); //첫 화면시 불러왔던 모든 마커들을 제거 -> 검색결과 마커만 보여줄것이므로
-					changeBound(data.events);
+				//	changeBound(data.events);
 					eventData = data.events; 
-					eventList(data);
-					setMarkers(map);
+					createOverlay(data.events); //마커같이만듦
+					displayEvent(data.pList, data.infoList, data.events, 0);
 					var numOfData = data.events.length ;
 					var foundResult = numOfData + ' Results Found';
 					$('#ResultsFound').text(foundResult);
-					//지도 내 마커가 해당 결과마커만 남기게
 					//지도표시 레벨 변경
-					
 				}
 			});
 			
 		});
 	});
 		
-	
-	
-	//1. 좌측 리스트만들기(페이징)
-	
-	//2. 우측 마커+오버레이 만들기
-	
-	
-	function changeBound(events){
-		var bounds = new daum.maps.LatLngBounds();
-		// LatLngBounds 객체에 좌표를 추가
-		for(var i=0; i<events.length; i++){
-			bounds.extend(new daum.maps.LatLng(events[i].latitude, events[i].longtitude));
-		}
-		setBounds(bounds);	
-	}
 
-	///*****
-	function eventList(data) {
-		displayEvent(data.pList, data.infoList, data.events);
-	}
-
-	function displayEvent(pList, infoList, events) {
-		
+	function displayEvent(pList, infoList, events, page) {
 		var level = map.getLevel();
-		alert(level); 
 		
+		//좌측 리스트 붙일 태그
 		var listEl = document.getElementById("eventList"), 
 			menuEl = document.getElementById("menu-wrap"), 
 			fragment = document.createDocumentFragment();
 		
+		//페이징만들기
 		var pageList = document.getElementById("pagination");
 			pageList.innerHTML = pList;
 			
 			removeAllChildNods(listEl);
-	
-		for(var i=0; i<events.length; i++){
-			createOverlay(events[i], i, new daum.maps.LatLng(events[i].latitude, events[i].longitude));
-		}	
-			
+
+		//좌측 리스트 만들기(페이징 당 갯수대로)
 		for (var i=0; i<infoList.length; i++) {
-			//리스트보여줄 태그
-			/* alert(data[0].latitude);w
-			alert(data[0].longitude); */
-			//var placePosition = new daum.maps.LatLng(infoList[i].latitude, infoList[i].longitude),
-			
 			itemEl = eventItems(infoList[i]); //좌측 리스트 한덩어리
-
-			//var itemOverlay = 
-			(function(overlay){
-				itemEl.onmouseover = function() {
-					setOverlay(overlay); 			
-					clearStarRating('.star-rating');
-					starRating('.star-rating');
-				};
-				 itemEl.onmouseout = function() {
-					clearOverlay(overlay); 			
-				}; 
-			})(overlays[i]);
-
 			fragment.appendChild(itemEl);
-			
+			mouseEvent(page, i);
 		}//for 
-
+		
 		listEl.appendChild(fragment);
 		starRating('.star-rating');
-		
-		
-		
 	}
 	
-
+	function mouseEvent(page, index){
+		(function(overlay){
+			itemEl.onmouseover = function() {
+				setOverlay(overlay); 			
+				clearStarRating('.star-rating');
+				starRating('.star-rating');
+			};
+			 itemEl.onmouseout = function() {
+				clearOverlay(overlay); 			
+			}; 
+		})(overlays[(page*6)+index]);
+			
+	}
+	
 	//좌측리스트
 	function eventItems(event) {
 		var el = document.createElement("div");
@@ -366,71 +335,100 @@
 		return el;
 	}
 	
-	//이미지크기에따라 오버레이 크기 달라짐!!!!!
-	function createOverlay(event, idx, placePosition) {
-		var contentStr =
-		'<div class="infoBox" style="width: 270px; transform: translateZ(0px); position: absolute; visibility: visible; left: 284.75px; bottom: -185.3px; cursor: default;">' + 
-        '    <div class="map-box">' + 
-        '      <a href="#" class="listing-img-container">'+
-        '         <div class="infoBox-close" onclick="closeOverlay('+ idx+ ')" ><i class="fa fa-times"></i></div>'+
-        '         <img src="/resources/images/event/'+event.thumbnail+'" style="object-fit:cover; height:100%" alt="">'+
-        '         <div class="listing-item-content">'+
-        '            <h3>'+event.eventName+'</h3>'+
-        '            <span>'+event.address+'</span>'+
-        '         </div>'+
-        '      </a>'+
-        '      <div class="listing-content">   '+
-        '         <div class="listing-title">'+
-        '            <div class="star-rating" data-rating="3.5">'+
-        '      		</div>46 Review'+
-        '   </div>'+
-        '</div>';
+	
+	
+/* 	function changeBound(events){
+		var bounds = new daum.maps.LatLngBounds();
+		// LatLngBounds 객체에 좌표를 추가
+		for(var i=0; i<events.length; i++){
+			bounds.extend(new daum.maps.LatLng(events[i].latitude, events[i].longtitude));
+		}
+		setBounds(bounds);	
+	} */
 
-    	
-		//2)오버레이 찍을 위치
-		var overlayPosition = placePosition;
-		
-		//3) 오버레이 생성
-		var overlay = new daum.maps.CustomOverlay({
-			content : contentStr, //보여줄 내용 
-			position : overlayPosition
-		});
-		//4)만든 오버레이 배열에 추가
-		overlays.push(overlay);
-		//5) 마커에 오버레이 표시
-		createMarker(overlayPosition, overlay);
-		
+	
+	//2. 우측 마커+오버레이 만들기
+	function createOverlay(events) {
+		for(var i=0; i<events.length; i++){
+			//예쁘지만 어려운 오버레이............
+			 /* var contentStr =
+				'<div class="infoBox" style="width: 270px; transform: translateZ(0px); position: absolute; visibility: visible; left: 284.75px; bottom: -185.3px; cursor: default;">' + 
+		        '    <div class="map-box">' + 
+		        '      <a href="#" class="listing-img-container">'+
+		        '         <div class="infoBox-close" onclick="closeOverlay('+ i+ ')" ><i class="fa fa-times"></i></div>'+
+		        '         <img src="/resources/images/event/'+events[i].thumbnail+'" style="object-fit:cover; height:100%" alt="">'+
+		        '         <div class="listing-item-content">'+
+		        '            <h3>'+events[i].eventName+'</h3>'+
+		        '            <span>'+events[i].address+'</span>'+
+		        '         </div>'+
+		        '      </a>'+
+		        '      <div class="listing-content">   '+
+		        '         <div class="listing-title">'+
+		        '            <div class="star-rating" data-rating="3.5">'+
+		        '      		</div>46 Review'+
+		        '   </div>'+
+		        '</div>';  */
+		        
+		        var contentStr = 
+		        '<div class="wrap">' + 
+	            '    <div class="info">' + 
+	            '        <div class="title">' +events[i].eventName+ 
+	            '            <div class="close" onclick="closeOverlay('+ i+ ')" title="닫기"></div>' + 
+	            '        </div>' + 
+	            '        <div class="body">' + 
+	            '            <div class="img">' +
+	            '                <img src="/resources/images/event/'+events[i].thumbnail+'" width="73" height="70">' +
+	            '           </div>' + 
+	            '            <div class="desc">' + 
+	            '                <div class="ellipsis">'+events[i].address+'</div>' + 
+	            '                <div class="jibun ellipsis">'+ event.startDate+ '  ~  '+ event.endDate	+ '</div>' + 
+	            '                <div><a href="'+events[i].link+'" target="_blank" class="link">홈페이지</a></div>' + 
+	            '            </div>' + 
+	            '        </div>' + 
+	            '    </div>' +    
+	            '</div>';
+
+			//2)오버레이 찍을 위치
+			var overlayPosition = new daum.maps.LatLng(events[i].latitude, events[i].longitude)		
+			//3) 오버레이 생성
+			var overlay = new daum.maps.CustomOverlay({
+				content  : contentStr, //보여줄 내용 
+				position : overlayPosition
+			});
+			//4)만든 오버레이 배열에 추가
+			overlays.push(overlay);
+			//5) 마커에 오버레이 
+			createMarker(overlayPosition, overlay);
+		}//for
 		return overlay;
 	}
 
 	function closeOverlay(index){
 		 clearOverlay(overlays[index]);
 	}  
-
+	
 	function createMarker(placePosition, overlay) {
-		
 		var markerPostion = placePosition;
 		markerPostions.push(markerPostion);
 		//2) 마커이미지 셋팅
 		var imgSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png', 
 			imgSize = new daum.maps.Size(24, 36), 
-			imgOption = {offset : new daum.maps.Point(27, 69)
+			imgOption = { offset : new daum.maps.Point(27, 69)
 		};
 		//3) 마커이미지 셋팅값 넣어주기
 		var markerImg = new daum.maps.MarkerImage(imgSrc, imgSize,imgOption);
 		//4) 마커만들기(이미지, 위치)
 		var marker = new daum.maps.Marker({
 			position : markerPostion,
-			image : markerImg
+			image 	 : markerImg
 		});
-		
-	
-		
-		
 		//5)마커+오버레이에 클릭이벤트 등록
 		markerClick(marker, overlay);
-		//6)만든 마커를 배열에 추가
+		//6)마커 지도에 배치
+		marker.setMap(map);	
+		//7)마커 배열에 추가
 		markers.push(marker);
+	
 	}
 
 	//마커 이벤트 리스너
@@ -442,18 +440,6 @@
 		}); 
 	}
 
-	///*****
-	// 배열에 추가된 마커들을 지도에 표시
-	function setMarkers(map) {
-		for (var i = 0; i < markers.length; i++) {
-			markers[i].setMap(map);	
-		}
-	}
-	
-	function setBounds(bounds){
-		map.setBounds(bounds);
-	}
-	
 	function clearMarkers(){
 		for (var i = 0; i < markers.length; i++) {
 			markers[i].setMap(null);
@@ -461,6 +447,10 @@
 		markers = [];
 		markerPostions = [];
 	} 
+	
+	function setBounds(bounds){
+		map.setBounds(bounds);
+	}
 
 	function removeAllChildNods(el) {
 		while (el.hasChildNodes()) {
@@ -476,12 +466,6 @@
     	overlay.setMap(null);
     }
 
-	/* function displayPagination(data){
-		
-	} */
-
-
-	 
 	</script>
 	
 </body>
