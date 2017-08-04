@@ -55,41 +55,82 @@ public class CalendarService{
 				c.setStart(list.get(i).getStart());
 				c.setEnd(list.get(i).getEnd());
 				c.setColor(colorType[list.get(i).getDogid()]);
-				c.setSeq(list.get(i).getSeq());
+				c.setSeq(list.get(i).getCalendarseq());
 				calendar.add(c);
 			}else{
 				String repeat = list.get(i).getRepeatdata();
+				//System.out.println(repeat);
 				String[] repeatSplit = repeat.split(",");
-				int week = Integer.parseInt(repeatSplit[0]);
-				String startA = list.get(i).getStart();
-				String[] startB = startA.split("T");
-				try {
-					DateFormat dateF = new SimpleDateFormat("yyyy-MM-dd");
-					Date date = dateF.parse(startB[0]);
-					DateFormat dateF2 = new SimpleDateFormat("yyyy-ww-E");
-					String dateS = dateF2.format(date);
-					String[] dateArray = dateS.split("-");
-					int dateInt = Integer.parseInt(dateArray[1]);
-					for (int k = 0; k < 100; k++) {
-						for(int h=1;h<repeatSplit.length;h++){
-							String dateFinal = dateArray[0] + "-" + dateInt + "-" + repeatSplit[h];
-							System.out.println(dateFinal);
-							Date date2 = dateF2.parse(dateFinal);
-							String dateFinal2 = dateF.format(date2);
-							c = new CalendarFormat();
-							c.setId(list.get(i).getId());
-							c.setTitle(list.get(i).getTitle());
-							c.setStart(dateFinal2+"T00:00");
-							c.setEnd(dateFinal2+"T00:00");
-							c.setColor(colorType[list.get(i).getDogid()]);
-							c.setSeq(list.get(i).getSeq());
-							calendar.add(c);
+				int dateForm = Integer.parseInt(repeatSplit[0]);
+				System.out.println(dateForm);
+				if(dateForm==1){
+					String startA = list.get(i).getStart();
+					String[] startB = startA.split("T");
+					try {
+						DateFormat dateF = new SimpleDateFormat("yyyy-MM-dd");
+						Date date = dateF.parse(startB[0]);
+						DateFormat dateF2 = new SimpleDateFormat("yyyy-D");
+						String dateS = dateF2.format(date);
+						String[] dateArray = dateS.split("-");
+						int dateInt = Integer.parseInt(dateArray[1]);
+						for (int k = 0; k < 100; k++) {
+								String dateFinal = dateArray[0] + "-" + dateInt;
+								System.out.println(dateFinal);
+								Date date2 = dateF2.parse(dateFinal);
+								String dateFinal2 = dateF.format(date2);
+								c = new CalendarFormat();
+								c.setId(list.get(i).getId());
+								c.setTitle(list.get(i).getTitle());
+								c.setStart(dateFinal2+"T00:00");
+								c.setEnd(dateFinal2+"T00:00");
+								c.setColor(colorType[list.get(i).getDogid()]);
+								c.setSeq(list.get(i).getCalendarseq());
+								calendar.add(c);
+							dateInt += dateForm;
 						}
-						dateInt += week;
+					} catch (ParseException ex) {
+						ex.printStackTrace();
 					}
-				} catch (ParseException ex) {
-					ex.printStackTrace();
+				}else if(dateForm==2){
+					String startA = list.get(i).getStart();
+					String[] startB = startA.split("T");
+					try {
+						DateFormat dateF = new SimpleDateFormat("yyyy-MM-dd");
+						Date date = dateF.parse(startB[0]);
+						DateFormat dateF2 = new SimpleDateFormat("yyyy-ww- E");
+						String dateS = dateF2.format(date);
+						String[] dateArray = dateS.split("-");
+						System.out.println("date"+date);
+						System.out.println("dateS"+dateS);
+						System.out.println("dateArray"+dateArray[1]);
+						System.out.println("dateArray"+dateArray[2]);
+						int dateInt = Integer.parseInt(dateArray[1]);
+						for (int k = 0; k < 100; k++) {
+							for(int h=2;h<repeatSplit.length;h++){
+								String dateFinal = dateArray[0] + "-" + dateInt + "-" + repeatSplit[h];
+								System.out.println("dateFinal"+dateFinal);
+								Date date2 = dateF2.parse(dateFinal);
+								String dateFinal2 = dateF.format(date2);
+								c = new CalendarFormat();
+								c.setId(list.get(i).getId());
+								c.setTitle(list.get(i).getTitle());
+								c.setStart(dateFinal2+"T00:00");
+								c.setEnd(dateFinal2+"T00:00");
+								c.setColor(colorType[list.get(i).getDogid()]);
+								c.setSeq(list.get(i).getCalendarseq());
+								calendar.add(c);
+							}
+							dateInt += dateForm;
+						}
+					} catch (ParseException ex) {
+						ex.printStackTrace();
+					}
+				}else if(dateForm==3){
+					
+				}else if(dateForm==4){
+					
 				}
+				
 				
 			}
 		}

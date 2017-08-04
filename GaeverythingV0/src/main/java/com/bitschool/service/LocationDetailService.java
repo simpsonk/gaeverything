@@ -237,4 +237,16 @@ public class LocationDetailService {
 		return dto;
 	}
 
+	public List<DetailPhotoDTO> photoList(int seq){
+		// TODO Auto-generated method stub
+		List<DetailPhotoDTO> dto = null;
+		try {
+			dto = dao.photoList(seq);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dto;
+	}
+
 }

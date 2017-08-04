@@ -128,6 +128,12 @@ public class LocationDetailController {
 		return url;
 	}
 	
+	@RequestMapping(value = "/getPhotoData", method = {RequestMethod.POST,RequestMethod.GET})
+	public @ResponseBody List<DetailPhotoDTO> getPhotoData(@RequestParam(value="locationSeq") int locationSeq){
+		List<DetailPhotoDTO> photoList = service.photoList(locationSeq);	
+		return photoList;
+	}
+	
 	@RequestMapping(value = "/viewPhoto", method = {RequestMethod.POST,RequestMethod.GET})
 	public String getReviewData(){
 		String url = "map/test2";

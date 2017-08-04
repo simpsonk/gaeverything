@@ -115,32 +115,22 @@
 							</div>
 						</div>
 					</div>
-					<div class="mfp-gallery-container" id="">
-						<div class="review-images col-lg-12" style="padding-top: 8px;">
-							<c:forEach var="dp" items="${detailphoto}" varStatus="status">
-								<c:if test="${status.index<4}">	
-									<a href="/resources/upload/${dp.locationPhoto}" class="mfp-gallery listing-item-container">
-									<div class="listing-item">	<img src="/resources/upload/${dp.locationPhoto}" alt=""></div>
-								</a>
-								</c:if>
-							</c:forEach>
-						</div>	
-						<div class="review-images col-lg-12" style="padding-top: 8px;">
-							<c:forEach var="dp" items="${detailphoto}" varStatus="status">
-								<c:if test="${status.index<4}">	
-									<a href="/resources/upload/dog_icon.png" class="mfp-gallery listing-item-container">
-									<div class="listing-item">	<img src="/resources/upload/dog_icon.png" alt=""></div>
-								</a>
-								</c:if>
-							</c:forEach>
-						</div>
+					
+					
+					<div class="mfp-gallery-container" id="photoMoreView">
+						
 					</div>
+					
+					
+					<input type="button" id="photoMore" value="Read More">
+					<input type="button" id="photoHide" value="Hide">
 					<c:if test="${fn:length(detailphoto) > 4}">
 					<div class="row">
 					<div class="col-lg-12">
 					<div class="mfp-gallery-container">
 							<c:forEach var="dp" items="${detailphoto}" varStatus="status">
 									<a href="/resources/upload/${dp.locationPhoto}" style="display: none" class="mfp-gallery"></a>
+									
 							</c:forEach>
 							<a class="read-more mfp-gallery">Read More <i class=""></i></a>
 					</div>
@@ -380,251 +370,31 @@
 <script type="text/javascript" src="<c:url value = '/resources/scripts/jquery-ui.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/tooltips.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/custom.js'/>"></script>
-<script type="text/javascript" src="<c:url value = '/resources/scripts/maps-datailpage.js'/>"></script>
+<script type="text/javascript" src="<c:url value = '/resources/scripts/maps-detailpage.js'/>"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ebfbfbd7a5ec71c10c63936dd90beb22"></script>
-
 <script type="text/javascript">
-	var longitude = document.getElementById('longitude').value;
-	var latitude = document.getElementById('latitude').value;
-	
-	var mapContainer = document.getElementById('singleListingMap'), // 지도를 표시할 div
-		mapOption = { 
-			center: new daum.maps.LatLng(latitude, longitude), // 지도의 중심좌표
-			
-			level: 3 // 지도의 확대 레벨
-		};
-	
-	// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
-	var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-	
-	var markerPosition  = new daum.maps.LatLng(latitude, longitude); 
+var longitude = document.getElementById('longitude').value;
+var latitude = document.getElementById('latitude').value;
+
+var mapContainer = document.getElementById('singleListingMap'), // 지도를 표시할 div
+	mapOption = { 
+		center: new daum.maps.LatLng(latitude, longitude), // 지도의 중심좌표
 		
-	    // 마커를 생성합니다
-	var marker = new daum.maps.Marker({
-		position: markerPosition
-	});
-	map.setCenter(new daum.maps.LatLng(latitude, longitude));
-	marker.setMap(map);
-	
+		level: 3 // 지도의 확대 레벨
+	};
 
-//photo 등록
-function addDetailPhoto(){
-	var url = "/map/detail/addPhoto";
-	addPhoto.action = url;
-	addPhoto.submit();
-}
-	
-	
-	
+// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
-//댓글 등록 버튼 클릭시
-$('#registComment').click(function(){
-	var locationSeq = document.getElementById("locationSeq").value;
-	checkMessage(locationSeq);
-	var ds = document.getElementById("add-comment");
-	var url = "/map/detail/addComment";
-	ds.action = url;
-	if($("#commMsg").val()!='' && 
-			$('input:radio[name="rating"]').is(":checked")){
-		ds.submit();
-	}else{
-		return;
-	}			
+var markerPosition  = new daum.maps.LatLng(latitude, longitude); 
+	
+    // 마커를 생성합니다
+var marker = new daum.maps.Marker({
+	position: markerPosition
 });
+map.setCenter(new daum.maps.LatLng(latitude, longitude));
+marker.setMap(map);
 
-//댓글 수정 버튼 클릭시
-$('#modifyComment').click(function(){
-	var ds = document.getElementById("add-comment");
-	var url = "/map/detail/editComment";
-	ds.action = url;
-	ds.submit();
-});
-
-
-//댓글  Edit, Delete
-function go_url(type, commSeq){	
-	var commentSeq = document.getElementById("commentSeq");
-	var commMsg = document.getElementById("commMsg");
-	var changeMsg = document.getElementById("changeMsg"+commSeq);
-	var ratingVal = document.getElementById("ratingVal"+commSeq);
-	var ment = document.getElementById("ment");
-	if(type==1){		
-		commentSeq.value = commSeq;
-		commMsg.innerHTML = changeMsg.innerHTML;
-		if(ratingVal.value==0.5){
-			$('input:radio[name=rating]:input[value="0.5"]').attr("checked", true);			
-		}else if(ratingVal.value==1.0){
-			$('input:radio[name=rating]:input[value="1.0"]').attr("checked", true);		
-		}else if(ratingVal.value==1.5){
-			$('input:radio[name=rating]:input[value="1.5"]').attr("checked", true);		
-		}else if(ratingVal.value==2.0){
-			$('input:radio[name=rating]:input[value="2.0"]').attr("checked", true);		
-		}else if(ratingVal.value==2.5){
-			$('input:radio[name=rating]:input[value="2.5"]').attr("checked", true);		
-		}else if(ratingVal.value==3.0){
-			$('input:radio[name=rating]:input[value="3.0"]').attr("checked", true);		
-		}else if(ratingVal.value==3.5){
-			$('input:radio[name=rating]:input[value="3.5"]').attr("checked", true);		
-		}else if(ratingVal.value==4.0){
-			$('input:radio[name=rating]:input[value="4.0"]').attr("checked", true);		
-		}else if(ratingVal.value==4.5){
-			$('input:radio[name=rating]:input[value="4.5"]').attr("checked", true);		
-		}else if(ratingVal.value==5.0){
-			$('input:radio[name=rating]:input[value="5.0"]').attr("checked", true);		
-		}		
-		commMsg.focus();
- 		$('#modifyComment').show();
-		$('#registComment').hide();
-		ment.innerHTML = 'Edit Comment';
-	}else if(type==2){
-		var ds = document.getElementById("add-comment");
-		var url = "/map/detail/deleteComment?commentSeq="+commSeq;
-		ds.action = url;
-		ds.submit();
-	}
-}
-
-//등록시 필수항목 체크
-function checkMessage(locationSeq){
-	  var isLogin = document.getElementById("isLogin");
-	  if(isLogin.value==''){
-		  alert("댓글작성은 회원만 가능합니다.");	
-		  location.href = "/viewLogin?uri=/map/detail/viewDetailPage?locationSeq="+locationSeq;
-	  }else{
-		  if($('input:radio[name="rating"]').is(":checked")==false){
-			  alert('별점을 표시해주세요.');
-		  }
-		  if($("#commMsg").val()==''){
-			  alert('코멘트를 입력해주세요.');
-		  }	
-	  }
-}
-
-function box_clicked(locationSeq){
-	alert("댓글작성은 회원만 가능합니다.");	
-	location.href = "/viewLogin?uri=/map/detail/viewDetailPage?locationSeq="+locationSeq;
-}
-
-function like_clicked(){
-	var class_name = document.getElementById("like").className;
-	var locationSeq = document.getElementById("locationSeq").value;
-	var email = document.getElementById("memberEmail").value;
-	var url = '/review/updateDetailPageLike?like='+class_name+'&locationSeq='+locationSeq+'&email='+email;
-	var id = document.getElementById("numOflike");
-	
-	$.ajax({
-        url : url,
-        dataType : 'json',
-        type:"POST",
-        success : function(data) {
-        	id.innerHTML=data+' people bookmarked this place'; 
-        },
-        error : function(request, status, error) {
-            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-          }
-     });
-}
-
-function no_login_like(locationSeq){
-	alert("로그인을 해주세요!");
-	var locationSeq = document.getElementById("locationSeq").value;
-	location.href = "/viewLogin?uri=/map/detail/viewDetailPage?locationSeq="+locationSeq;
-}
-
-
- function displayInfoList(start,end,commentlist){
-    var listEl = document.getElementById('replyList'),
-    fragment = document.createDocumentFragment(),
-    itemEl; 
-	for(var i=start;i<end;i++){
-	    itemEl = getListItem(commentlist[i]);
-	    fragment.appendChild(itemEl);
-	 }    
-    listEl.appendChild(fragment);
-    clearStarRating('.star');
-    starRating('.star');       
-} 
- 
- 
- var commentStart;
- var commentEnd;
-  
- $('#commentMore').click(function(){
-	 displayInfoList(commentStart,commentEnd,list);	
-	 if(commentEnd==list.length){
-		 $('#commentMore').hide();
-	 }	
-	 commentStart = commentStart+5;
-	 commentEnd = commentEnd+5;
-	 commentEnd = commentEnd>list.length?list.length:commentEnd;
- });   
- 
-function getListItem(reply) {
-    var el = document.createElement('div');
-    var nickname = document.getElementById('isLogin').value;
-    var regi = new Date(reply.regiDate); 
-    regi = regi.getFullYear() + '-' + leadingZeros((regi.getMonth()+1),2) + '-' + leadingZeros(regi.getDate(),2)
-    +' '+leadingZeros(regi.getHours(),2)+':'+leadingZeros(regi.getMinutes(),2)+':'+leadingZeros(regi.getSeconds(),2);
-    var itemStr ='	<input type="hidden" id="ratingVal'+reply.commentSeq+'" value="'+reply.rating+'">'+
-	  	'<li><div class="avatar"><img src="/resources/upload/'+reply.photo+'" alt="" /></div>'+
-	'<div class="comment-content"><div class="arrow-comment"></div>'+
-		'<div class="comment-by">'+
-			reply.nickname+'<span class="date">'+regi+'</span>'+
-			'<div class="star star-rating" data-rating="'+reply.rating+'"></div>'+
-		'</div>'+
-		'<p id="changeMsg'+reply.commentSeq+'">'+reply.message+'</p></div>';
-		if(nickname==reply.nickname){
-				itemStr += '<div class="col-md-8 centered-content" >	'+							
-				'<a onclick="go_url(1, '+reply.commentSeq+');" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-note"></i>Edit</a>'+
-				'<a onclick="go_url(2, '+reply.commentSeq+');" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-close"></i>Delete</a>'+
-			'</div></li>';
-		}
-		el.innerHTML = itemStr;
-    return el;
-}
-
-function leadingZeros(n, digits) {
-	  var zero = '';
-	  n = n.toString();
-
-	  if (n.length < digits) {
-	    for (var i = 0; i < digits - n.length; i++)
-	      zero += '0';
-	  }
-	  return zero + n;
-	}
-
-//검색결과 목록의 자식 Element를 제거하는 함수입니다
-function removeAllChildNods(el) {   
-    while (el.hasChildNodes()) {
-        el.removeChild (el.lastChild);
-    }
-}
-
-var list = [];
-
-$(document).ready(function() {
-	var locationSeq = document.getElementById("locationSeq").value;
-	url = '/map/detail/getReviewData?locationSeq='+locationSeq;
-	$.ajax({
-		url : url,
-		dataType : 'json',
-		type:"POST",
-		success : function(commentlist) {
-			list = commentlist;
-			if(commentlist.length<=5){
-				displayInfoList(0,commentlist.length,commentlist);
-			}else{
-				displayInfoList(0,5,commentlist);	
-				commentStart = 5;
-				commentEnd = commentlist.length>10?10:commentlist.length;
-			}
-		},
-		error : function(request, status, error) {
-			 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-       }
-	});		
-});
 
 </script>
 </body>

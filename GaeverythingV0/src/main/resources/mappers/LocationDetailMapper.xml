@@ -99,4 +99,10 @@
 		select * from blog 
 		where locationSeq = #{locationSeq} 
 	</select>	
+	
+	<select id="photoList" parameterType="Integer" resultType="DetailPhotoDTO">
+		select * from detailPhoto 
+		where locationSeq = #{locationSeq} 
+		order by detailPhotoSeq desc
+	</select>
 </mapper>

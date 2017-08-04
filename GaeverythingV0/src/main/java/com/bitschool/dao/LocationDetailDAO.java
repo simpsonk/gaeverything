@@ -147,4 +147,11 @@ public class LocationDetailDAO {
 		return dto;
 	}
 
+	public List<DetailPhotoDTO> photoList(int seq) throws SQLException{
+		// TODO Auto-generated method stub
+		List<DetailPhotoDTO> dto = null;
+		dto = session.selectList(namespace+".photoList",seq);
+		return dto;
+	}
+
 }

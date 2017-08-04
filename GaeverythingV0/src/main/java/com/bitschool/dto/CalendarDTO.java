@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public class CalendarDTO {
 
-	private int seq;
+	private int calendarseq;
 	private String id;
 	private int dogid;
 	private String title;
@@ -20,6 +20,14 @@ public class CalendarDTO {
 	private String repeatview;
 	
 	
+
+	public int getCalendarseq() {
+		return calendarseq;
+	}
+
+	public void setCalendarseq(int calendarseq) {
+		this.calendarseq = calendarseq;
+	}
 
 	public String getRepeatview() {
 		return repeatview;
@@ -39,7 +47,7 @@ public class CalendarDTO {
 
 	@Override
 	public String toString() {
-		return "CalendarDTO [seq=" + seq + ", id=" + id + ", dogid=" + dogid + ", title=" + title + ", place=" + place
+		return "CalendarDTO [seq=" + calendarseq + ", id=" + id + ", dogid=" + dogid + ", title=" + title + ", place=" + place
 				+ ", message=" + message + ", startTime=" + startTime + ", startDate=" + startDate + ", endTime="
 				+ endTime + ", endDate=" + endDate + ", start=" + start + ", end=" + end + "]";
 	}
@@ -106,13 +114,7 @@ public class CalendarDTO {
 		this.endDate = endDate;
 	}
 
-	public int getSeq() {
-		return seq;
-	}
-
-	public void setSeq(int seq) {
-		this.seq = seq;
-	}
+	
 
 	public String getId() {
 		return id;
