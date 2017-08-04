@@ -58,6 +58,8 @@
 		<div class="fs-container">
 			<div class="fs-inner-container content">
 				<div class="fs-content">
+				<input type="hidden" id = "memberEmail" value = "${member.email}">
+				
 					<!-- Search -->
 					<section class="search">
 					<div class="row">
@@ -113,6 +115,7 @@
 					<!-- Listings(ul) -->
 					<div class="row fs-listings" id="eventList">
 						<!-- Listing Item -->
+						
 						<!-- Listing Item / End -->
 					</div>
 					<!-- Listings Container / End --> <!-- Pagination Container -->
@@ -277,20 +280,34 @@
 		});
 	});
 		
-	//좋아요 클릭 핸들러
-/* 	$(document).ready(function(){
-		$('#like').click(function(){
+	 //좋아요 클릭 핸들러
+	function like_clicked(eventNo){
 		
-		//라이크상태 : 클래스이름 받아와서 구분. 
-			var url = "/review/updateEventLike?like=eventNo="+eventNo";
-			
-				 @RequestParam("like") String like,
-				 @RequestParam("eventNo") int eventNo,
-				 @RequestParam("email") String email){
-boolean flag = false;
-
-		});
-	}); */
+		var ele = document.getElementById("like"+eventNo); //어떤 이벤트에 라이크를 눌렀는지 번호 같이 가져옴
+		// alert(eventNo);
+		var class_name = ele.className; //로그인했으면 클래스가 like-icon 좋아요했으면 클래스가 like-icon clicked
+		var email = document.getElementById("memberEmail").value;
+	//	alert(email);
+		var url = "/review/updateEventLike?like="+class_name+"&eventNo="+eventNo+"&email="+email;
+		$.ajax({
+			url 	 : url,
+			dataType : 'json',
+			tyoe 	 : 'POST',
+			success  : function(data){
+				//data: 좋아요개수 
+				if(ele.className === 'like-icon'){
+	        		ele.className = 'like-icon liked';
+	        	}else{
+	        		ele.className = 'like-icon';
+	        	}
+			}
+		})
+	}
+	  
+	function no_login_like(){
+		alert("로그인을 해주세요!");
+		location.href = "/viewLogin?uri=/event/viewEventList";
+	}
 
 	function displayEvent(pList, infoList, events, page) {
 		
@@ -338,27 +355,30 @@ boolean flag = false;
 	//좌측리스트
 	function eventItems(event) {
 		var el = document.createElement("div");
-		var itemStr = '<a href="/event/detail" class="listing-item-container" data-marker-id="1">'
-				+ '		<div class="listing-item">'
-				+ '			<img src="/resources/images/event/'+event.thumbnail+'" alt="">'
-				+ '			<div class="listing-item-content">';
+		var itemStr =  '	<a href="/event/detail" class="listing-item-container" data-marker-id="1">'
+				+ '	   			<div class="listing-item">' 
+				+ '					<img src="/resources/images/event/'+event.thumbnail+'" alt="">'
+				+ '					<div class="listing-item-content">';
 				
 				if(event.eventName.match("축제")||event.eventName.match("페스티벌")){
-					itemStr += 	'				<span class="tag" style="background: #f91942;">Festival</span>' ;
+					itemStr += 			'<span class="tag" style="background: #f91942;">Festival</span>' ;
 				}else{
-					itemStr +=  '				<span class="tag" style="background: #f91942;">Fair</span>' ;
+					itemStr +=  		'<span class="tag" style="background: #f91942;">Fair</span>' ;
 				}
-
 			itemStr += '				<h3>'+ event.eventName + '</h3><br>'
-				+ '				<span><i class="fa fa-map-marker"></i>  '+ event.address+ '</span><br>'
-				+ '				<span><i class="fa fa-calendar-check-o"></i>  '+ event.startDate+ '  ~  '+ event.endDate	+ '</span><br>'
-				+ '				<span><i class="fa fa-dollar"></i>  '+ event.fee+ '   <i class="fa fa-check"></i>  '+ event.discountInfo+ '</span>'
-				+ '			</div>'
-				+ '			<span class="like-icon" id="like"></span>	'
-				+ '		</div>'
-				+ '		<div class="star-rating" data-rating="3.5">'
-				+ '		</div>(12 reviews)' 
-				+ '	   </a>';
+				+ '						<span><i class="fa fa-map-marker"></i>  '+ event.address+ '</span><br>'
+				+ '						<span><i class="fa fa-calendar-check-o"></i>  '+ event.startDate+ '  ~  '+ event.endDate	+ '</span><br>'
+				+ '						<span><i class="fa fa-dollar"></i>  '+ event.fee+ '   <i class="fa fa-check"></i>  '+ event.discountInfo+ '</span>'
+				+ '					</div>'
+                + '			</div>'
+				+ '					<div class="star-rating" data-rating="3.5"><div class="rating-counter"></div></div>(12 reviews)' 
+				+ '	  </a>';
+			if(event.userLikeStatus == null){
+				itemStr += 		   '<span class="like-icon" id="like" onclick="no_login_like()"></span>	';
+			}else{	
+				itemStr +=         '<span class="'+event.userLikeStatus+'" id="like'+event.eventNo+'" onclick="like_clicked('+event.eventNo+')"></span>	';
+			}
+			
 		el.innerHTML = itemStr;
 		el.className = 'col-lg-6 col-md-12';
 		return el;
@@ -383,23 +403,17 @@ boolean flag = false;
 				image 	 : markerImg
 			});
 			
-			//4)마커위에 보여줄 오버레이 만들기
-			//var overlay = createOverlay(events[i], i);
-			//5)마커클릭이벤트
+			//4)마커클릭이벤트
 			markerClick(events[i], marker);
-			//6)마커 지도에 배치
+			//5)마커 지도에 배치
 			marker.setMap(map);	
-			//검색결과 마커에 따른 바운더리 값 지정
+			//6)검색결과 마커에 따른 바운더리 값 지정
 			bounds.extend(markerPostion);
 			//7)마커 배열에 추가
 			markers.push(marker);
 		} 
 		map.setBounds(bounds);
 	}
-	
-	
-
-	
 	
 	function markerClick(event, marker) {
 		daum.maps.event.addListener(marker, 'click', function() {
@@ -410,7 +424,6 @@ boolean flag = false;
 		}); 
 	}
 
-	
 	function createOverlay(event) {
 			//예쁘지만 어려운 오버레이 ............
 			 /* var contentStr =
