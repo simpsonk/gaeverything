@@ -62,7 +62,6 @@ public class MapController {
 	
 	
 	
-	//�������
 	@RequestMapping(value = "/viewTest", method = RequestMethod.GET)
 	public String viewTest(HttpSession session, Model model){
 		String url = "map/test";

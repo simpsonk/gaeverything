@@ -2,12 +2,11 @@ package com.bitschool.service;
 
 import java.sql.SQLException;
 import java.util.List;
-
 import javax.inject.Inject;
-
 import org.springframework.stereotype.Service;
 
 import com.bitschool.dao.BoardDAO;
+
 import com.bitschool.dao.LocationDetailDAO;
 import com.bitschool.dto.BlogDTO;
 import com.bitschool.dto.ActUserDTO;
@@ -17,6 +16,7 @@ import com.bitschool.dto.DetailPhotoDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.utils.ActUserManager;
+
 @Service
 public class LocationDetailService {
 
@@ -209,7 +209,7 @@ public class LocationDetailService {
 		return dto;
 	}
 	
-	// 해당 장소의 블로그 리뷰 불러오기
+
 	public List<BlogDTO> getBlogReviews(int locationSeq){
 		List<BlogDTO> dto = null;
 		try {

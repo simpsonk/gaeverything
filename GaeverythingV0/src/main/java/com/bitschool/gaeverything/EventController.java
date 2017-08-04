@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.EventDTO;
+import com.bitschool.dto.EventSearchDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.service.ActUserService;
 import com.bitschool.service.EventService;
@@ -54,7 +55,6 @@ public class EventController {
 			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.EVENT);
 			list= new ActUserManager(aService).checkLikeStatusEvent(aDTO, list);
 		}
-		//이벤트 데이터를 페이징한 
 		HashMap<String, Object> map = pService.makeEventSerachList(0, 6, list);
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		
@@ -73,11 +73,11 @@ public class EventController {
 	@RequestMapping(value="/getPagingData", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody HashMap<String, Object> getPagingData(HttpSession session,
 															   @RequestParam("data") String eventData,
-															   @RequestParam("page") int page){
+															   @RequestParam(value="page") int page) {
 		HashMap<String, Object> data = new HashMap<String, Object>();
-		List<EventDTO> list = null; //페이지당 리스트담을 것. -> 페이지 서비스에서 받아옴 
+		List<EventDTO> list = null; 
 		ObjectMapper mapper = new ObjectMapper();
-		HashMap<String, Object> map = null; //페이지리스트(스트링), 페이지당 데이터리스트 담을 것 
+		HashMap<String, Object> map = null; 
 		try {
 			list = mapper.readValue(eventData, new TypeReference<List<EventDTO>>(){});
 			map = pService.makeEventSerachList(page, 6, list);
@@ -88,7 +88,6 @@ public class EventController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//클릭했을때 받아온 eventData는 json(스트링)형태임 -> 스트링 밸류를 읽어서 타입을 이벤트dto로 한 후 리스트에 저장.
 		
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		if(member!=null){
@@ -99,7 +98,32 @@ public class EventController {
 		data.put("events", list); //
 		data.put("pList", map.get("pList"));
 		data.put("infoList", map.get("infoList"));
+		
 		return data;	
 	}
 
+	
+	@RequestMapping(value="/searchEvent", method=RequestMethod.POST)
+	public @ResponseBody HashMap<String, Object> searchEvent(@RequestParam("opt") String opt, 
+															 @RequestParam("str") String str,
+															 HttpSession session){
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		List<EventDTO> list = null; 
+		HashMap<String, Object> map = null;
+		
+		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		if(member!=null){
+			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.EVENT);
+			list= new ActUserManager(aService).checkLikeStatusEvent(aDTO, list);
+		}
+		
+		list = service.searchEvent(new EventSearchDTO(opt, str));
+		data.put("events", list);
+		map = pService.makeEventSerachList(0, 6, list);
+		data.put("pList", map.get("pList"));
+		data.put("infoList", map.get("infoList"));
+		
+		
+		return data;
+	}
 }

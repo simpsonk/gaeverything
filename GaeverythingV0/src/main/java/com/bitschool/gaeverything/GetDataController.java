@@ -37,6 +37,61 @@ public class GetDataController {
 	private DataService service;
 	
 	
+	public List<BlogDTO> getBlogImage(){
+		 String clientId = "LEq7OLCKz1iWikgbm3jr";//애플리케이션 클라이언트 아이디값";
+	        String clientSecret = "pNcj27Jve1";//애플리케이션 클라이언트 시크릿값";
+	        List<BlogDTO> list1 = service.selectBlog();
+	        System.out.println("list1 : "+list1);
+	        List<BlogDTO> list2 = null;
+	       /* for(int i=0;i<list1.size();i++){
+		        try {
+		        	String title = null;
+		        	String text = null;
+		        	String apiURL = null;
+		        	
+		        		title = list1.get(i).getTitle();
+		        		text = URLEncoder.encode(title, "UTF-8");
+		        		apiURL = "https://openapi.naver.com/v1/search/image?query=\""+ text + "\""; // json 결과
+		        		URL url = new URL(apiURL);
+			            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+			            con.setRequestMethod("GET");
+			            con.setRequestProperty("X-Naver-Client-Id", clientId);
+			            con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
+			            int responseCode = con.getResponseCode();
+			            BufferedReader br;
+			            if(responseCode==200) { // 정상 호출
+			                br = new BufferedReader(new InputStreamReader(con.getInputStream(),"UTF-8"));
+			            } else {  // 에러 발생
+			                br = new BufferedReader(new InputStreamReader(con.getErrorStream(),"UTF-8"));
+			            }
+			            String inputLine;
+			            StringBuffer response = new StringBuffer();
+			            while ((inputLine = br.readLine()) != null) {
+			                response.append(inputLine);
+			            }
+			            br.close();
+			            ObjectMapper mapper = new ObjectMapper();
+			            HashMap<String,Object> map = null;
+			            map = mapper.readValue(response.toString(),new TypeReference<HashMap<String,Object>>(){});
+			            String itemdata = (String) mapper.writeValueAsString(map.get("items"));
+			            System.out.println(itemdata);
+		            	          
+		         
+		        } catch (Exception e) {
+		            System.out.println(e);
+		        }
+	    	}      */
+	        return list1;
+	}
+	@RequestMapping(value="/insertBlogImage", method=RequestMethod.GET)
+	public String insertBlogData(){
+		String url = null;
+		List<BlogDTO> list = this.getBlogImage();
+		System.out.println(list);
+		return url;
+	}
+	
+	
 	//블로그 데이터 입력
 	   public List<BlogDTO> GetBlogDatum() {
 	        String clientId = "LEq7OLCKz1iWikgbm3jr";//애플리케이션 클라이언트 아이디값";

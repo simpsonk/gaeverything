@@ -114,7 +114,7 @@
     }
 	
     function closeOverlay() {
-        overlay.setMap(null);     
+    	overlay.setMap(null);     
     }
     
     function setOverlay(map, content, position){

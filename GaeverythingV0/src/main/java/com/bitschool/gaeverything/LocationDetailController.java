@@ -37,6 +37,7 @@ public class LocationDetailController {
 	
 	@Inject
 	private ActUserService aService;
+
 		
 	//디테일 리뷰데이터
 	@RequestMapping(value = "/getReviewData", method = {RequestMethod.POST,RequestMethod.GET})
@@ -50,7 +51,6 @@ public class LocationDetailController {
 			@RequestParam(value="locationSeq") int locationSeq, 
 			HttpSession session,
 			Model model){
-		
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		ActUserManager manager = new ActUserManager(aService);
 		String url = "map/map_detailpage";
