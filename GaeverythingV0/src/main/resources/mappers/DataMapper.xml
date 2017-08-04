@@ -8,6 +8,11 @@
  		select title, locationSeq 
  		from location
  	</select>
+ 	
+ 	<!-- 블로그 데이터 불러오기 -->
+ 	<select id="selectBlog" resultType="BlogDTO">
+ 		select * from blog
+ 	</select>
  
 	<!-- 블로그 데이터 넣기 -->
 	<insert id="insertBlog" parameterType="BlogDTO">
