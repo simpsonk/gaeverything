@@ -2,10 +2,10 @@ package com.bitschool.service;
 
 import java.sql.SQLException;
 import java.util.List;
-
 import javax.inject.Inject;
-
 import org.springframework.stereotype.Service;
+
+import com.bitschool.dao.BoardDAO;
 
 import com.bitschool.dao.LocationDetailDAO;
 import com.bitschool.dto.BlogDTO;
@@ -16,6 +16,7 @@ import com.bitschool.dto.DetailPhotoDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.utils.ActUserManager;
+
 @Service
 public class LocationDetailService {
 
@@ -23,6 +24,8 @@ public class LocationDetailService {
 	@Inject
 	private LocationDetailDAO dao;
 	
+	@Inject
+	private BoardDAO bdao;
 	
 	public LocationDTO selectOne(int seq){
 		// TODO Auto-generated method stub
@@ -47,17 +50,30 @@ public class LocationDetailService {
 		}
 		return flag;
 	}
-		public boolean photoAdd(DetailPhotoDTO dto){
-			// TODO Auto-generated method stub
-			boolean flag = false;
-			try {
-				flag = dao.photoAdd(dto);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return flag;
+
+	public boolean photoAdd(DetailPhotoDTO dto) {
+		// TODO Auto-generated method stub
+		boolean flag = false;
+		try {
+			flag = dao.photoAdd(dto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return flag;
+	}
+	
+	// 사진 갯수 보여주기
+	public int photoCnt(int locationSeq){
+		int PCnt = 0;
+		try {
+			PCnt = dao.photoCnt(locationSeq);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return PCnt;
+	}
 		
 	
 	public List<DetailCommentDTO> commentList(int locseq){
@@ -180,6 +196,12 @@ public class LocationDetailService {
 		List<BoardDTO> dto = null;
 		try {
 			dto = dao.getReviews(locationSeq);
+			int countCmt = 0;
+			for(int i=0;i<dto.size();i++){
+				countCmt = bdao.countCmt(dto.get(i).getBoardNo());
+				dto.get(i).setNumOfCmt(countCmt);
+			}
+		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -187,7 +209,7 @@ public class LocationDetailService {
 		return dto;
 	}
 	
-	// 해당 장소의 블로그 리뷰 불러오기
+
 	public List<BlogDTO> getBlogReviews(int locationSeq){
 		List<BlogDTO> dto = null;
 		try {
@@ -222,6 +244,18 @@ public class LocationDetailService {
 			this.getLocActUserResult(manager, list.get(i));
 		}
 		return list;
+	}
+		
+	public List<DetailPhotoDTO> photoList(int seq){
+		// TODO Auto-generated method stub
+		List<DetailPhotoDTO> dto = null;
+		try {
+			dto = dao.photoList(seq);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dto;
 	}
 
 }

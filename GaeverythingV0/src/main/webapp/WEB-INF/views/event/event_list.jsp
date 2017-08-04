@@ -8,7 +8,7 @@
 
 <!-- Basic Page Needs
 ================================================== -->
-<title>gaeverything</title>
+<title>gaverything</title>
 <style type="text/css">
  .wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
     .wrap * {padding: 0;margin: 0;}
@@ -68,8 +68,7 @@
 
 								<!-- Main Search Input -->
 								<div class="col-fs-3">
-									<select class="chosen-select" name="searchOption">
-										
+									<select class="chosen-select" name="searchOption" id="searchOption">
 										<option value="1" selected="selected" ${option==1?'selected="selected"':''}>Title</option>
 										<option value="2" ${option==2?'selected="selected"':''}>Location</option>
 									</select>
@@ -184,7 +183,7 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ebfbfbd7a5ec71c10c63936dd90beb22&libraries=clusterer"></script>
 	
 	<script>
-
+////하.........................................
 	
 	//1. 기본 지도 보이기
 	var container = document.getElementById("map"), //지도띄울 div
@@ -197,10 +196,11 @@
 	/////////////////////////////////////////////////////////////////
 
 	var markers = [];
-	var makerPostions = [];
-	var overlays = [];
 	var eventData = [];
+	var points = [];
+	var overlay = new daum.maps.CustomOverlay();
 	
+	//시작 시 
 	$(document).ready(
 			function() {
 				$.ajax({
@@ -213,8 +213,9 @@
 						var numOfData = data.events.length ;
 						var foundResult = numOfData + ' Results Found';
 						$('#ResultsFound').text(foundResult);
-						eventList(data);
-						setMarkers(map);
+						//eventList(data);
+						createMarker(data.events);
+						displayEvent(data.pList, data.infoList, data.events, 0);
 					},
 					error : function(request, status, error) {
 						alert("code:" + request.status + "\n" + "message:"+ request.responseText + "\n" + "error:"+ error);
@@ -231,87 +232,129 @@
 			type 	 : 'post',
 			dataType : "json",
 			success  : function(data) {
-				eventData = data.events; 
-				eventList(data);
-				setMarkers(map);
+				//eventList(data);
+				createMarker(data.events);
+				displayEvent(data.pList, data.infoList, data.events, page);
+
 			},
 			error : function(request, status, error) {
 				alert("code:" + request.status + "\n" + "message:"+ request.responseText + "\n" + "error:"+ error);
 			}
 		});
 	}
-/* 	
+	
+	//이벤트 검색
 	$(document).ready(function(){
 		$('#search').click(function(){
-			var searchStr = document.getElementById('searchStr').value;
+			//서치버튼을 클릭하면
+			var searchStr = $('#searchStr').val();
+			//스트링밸류와
+			var opt = $('select[name="searchOption"]').val();
+			//선택옵션 밸류를 받아서
+			$.ajax({
+				url  	 : "/event/searchEvent?opt="+opt+"&str="+searchStr, //쿼리스트링으로 보내줌 
+				dataType : 'json',
+				type	 : 'POST',
+				success  : function(data){
+					
+						if(data.events.length == 0){
+							alert("이벤트 검색 결과가 없습니다.");
+							createMarker(data.events); //마커같이만듦
+						}
+					
+						clearMarkers(); //첫 화면시 불러왔던 모든 마커들을 제거 -> 검색결과 마커만 보여줄것이므로
+					//	eventData = data.events; 
+						createMarker(data.events); //마커같이만듦
+						displayEvent(data.pList, data.infoList, data.events, 0);
+						var numOfData = data.events.length ;
+						var foundResult = numOfData + ' Results Found';
+						$('#ResultsFound').text(foundResult);
+					
+				}
+				
+			});
 			
 		});
 	});
-		 */
-	
+		
+	//좋아요 클릭 핸들러
+/* 	$(document).ready(function(){
+		$('#like').click(function(){
+		
+		//라이크상태 : 클래스이름 받아와서 구분. 
+			var url = "/review/updateEventLike?like=eventNo="+eventNo";
+			
+				 @RequestParam("like") String like,
+				 @RequestParam("eventNo") int eventNo,
+				 @RequestParam("email") String email){
+boolean flag = false;
 
-	///*****
-	function eventList(data) {
-		displayEvent(data.pList, data.infoList, data.events);
-		//페이징추가예정
-	//	displayPagination(data.pList, data.infoList);
-	}
+		});
+	}); */
 
-	function displayEvent(pList, infoList, events) {
+	function displayEvent(pList, infoList, events, page) {
+		
+		//좌측 리스트 붙일 태그
 		var listEl = document.getElementById("eventList"), 
 			menuEl = document.getElementById("menu-wrap"), 
 			fragment = document.createDocumentFragment();
+		
+		//페이징만들기
 		var pageList = document.getElementById("pagination");
 			pageList.innerHTML = pList;
-			
+		
 			removeAllChildNods(listEl);
-	
+
+		//좌측 리스트 만들기(페이징 당 갯수대로)
 		for (var i=0; i<infoList.length; i++) {
-			//리스트보여줄 태그
-			/* alert(data[0].latitude);w
-			alert(data[0].longitude); */
-			var placePosition = new daum.maps.LatLng(infoList[i].latitude, infoList[i].longitude),
-			
 			itemEl = eventItems(infoList[i]); //좌측 리스트 한덩어리
-
-			var itemOverlay = createOverlay(infoList[i], i, placePosition);
-
-			(function(overlay){
-				itemEl.onmouseover = function() {
-					setOverlay(overlay); 			
-					clearStarRating('.star-rating');
-					starRating('.star-rating');
-				};
-				
-				 itemEl.onmouseout = function() {
-					clearOverlay(overlay); 			
-				}; 
-			})(overlays[i]);
-
 			fragment.appendChild(itemEl);
+			mouseEvent(infoList[i]);
 		}//for 
-
+		
 		listEl.appendChild(fragment);
 		starRating('.star-rating');
 	}
 	
-
+ 	function mouseEvent(event){
+ 		(function(event){
+			itemEl.onmouseover = function() {
+				setOverlay(event); 		
+				panTo(event);
+				clearStarRating('.star-rating');
+				starRating('.star-rating');
+			};
+			 itemEl.onmouseout = function() {
+				closeOverlay(); 			
+			}; 
+		})(event);
+	} 
+ 	
+ 	function panTo(event) {
+ 	    var moveLatLon = new daum.maps.LatLng(event.latitude, event.longitude);
+ 	    map.panTo(moveLatLon);            
+ 	}  
+	
 	//좌측리스트
 	function eventItems(event) {
 		var el = document.createElement("div");
-		var itemStr = '<a href="#" class="listing-item-container" data-marker-id="1">'
+		var itemStr = '<a href="/event/detail" class="listing-item-container" data-marker-id="1">'
 				+ '		<div class="listing-item">'
 				+ '			<img src="/resources/images/event/'+event.thumbnail+'" alt="">'
-				+
-				//'			<div class="listing-badge now-open">Now Open</div>' + 
-				'			<div class="listing-item-content">'
-				+ '				<span class="tag">Fair</span>' 
-				+ '				<h3>'+ event.eventName + '</h3><br>'
+				+ '			<div class="listing-item-content">';
+				
+				if(event.eventName.match("축제")||event.eventName.match("페스티벌")){
+					itemStr += 	'				<span class="tag" style="background: #f91942;">Festival</span>' ;
+				}else{
+					itemStr +=  '				<span class="tag" style="background: #f91942;">Fair</span>' ;
+				}
+
+			itemStr += '				<h3>'+ event.eventName + '</h3><br>'
 				+ '				<span><i class="fa fa-map-marker"></i>  '+ event.address+ '</span><br>'
 				+ '				<span><i class="fa fa-calendar-check-o"></i>  '+ event.startDate+ '  ~  '+ event.endDate	+ '</span><br>'
 				+ '				<span><i class="fa fa-dollar"></i>  '+ event.fee+ '   <i class="fa fa-check"></i>  '+ event.discountInfo+ '</span>'
 				+ '			</div>'
-				+ '			<span class="like-icon"></span>	'
+				+ '			<span class="like-icon" id="like"></span>	'
 				+ '		</div>'
 				+ '		<div class="star-rating" data-rating="3.5">'
 				+ '		</div>(12 reviews)' 
@@ -320,112 +363,125 @@
 		el.className = 'col-lg-6 col-md-12';
 		return el;
 	}
-
- 	/* function displayPagination(pList, infoList){
-		var pageList = document.getElementById("pagination");
-		
-		pageList.innerHTML = pList;
-	}  */
 	
-	//이미지크기에따라 오버레이 크기 달라짐!!!!!
-	function createOverlay(event, idx, placePosition) {
-		var contentStr =
-		'<div class="infoBox" style="width: 270px; transform: translateZ(0px); position: absolute; visibility: visible; left: 284.75px; bottom: -185.3px; cursor: default;">' + 
-        '    <div class="map-box">' + 
-        '      <a href="#" class="listing-img-container">'+
-        '         <div class="infoBox-close" onclick="closeOverlay('+ idx+ ')" ><i class="fa fa-times"></i></div>'+
-        '         <img src="/resources/images/event/'+event.thumbnail+'" style="object-fit:cover; height:100%" alt="">'+
-        '         <div class="listing-item-content">'+
-        '            <h3>'+event.eventName+'</h3>'+
-        '            <span>'+event.address+'</span>'+
-        '         </div>'+
-        '      </a>'+
-        '      <div class="listing-content">   '+
-        '         <div class="listing-title">'+
-        '            <div class="star-rating" data-rating="3.5">'+
-        '      		</div>46 Review'+
-        '   </div>'+
-        '</div>';
-
-    	
-		//2)오버레이 찍을 위치
-		var overlayPosition = placePosition;
+	//2. 우측 마커+오버레이 만들기
+	function createMarker(events) {
+		var bounds = new daum.maps.LatLngBounds();    
 		
-		//3) 오버레이 생성
-		var overlay = new daum.maps.CustomOverlay({
-			content : contentStr, //보여줄 내용 
-			position : overlayPosition
-		});
-		//4)만든 오버레이 배열에 추가
-		overlays.push(overlay);
-		//5) 마커에 오버레이 표시
-		createMarker(overlayPosition, overlay);
-		
-		return overlay;
+		for(var i=0; i<events.length; i++){
+			//1) 마커이미지 셋팅
+			var imgSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png', 
+				imgSize = new daum.maps.Size(24, 36), 
+				imgOption = { offset : new daum.maps.Point(27, 69)
+			};
+			//2) 마커이미지 셋팅값 넣어주기
+			var markerImg = new daum.maps.MarkerImage(imgSrc, imgSize,imgOption);
+			//3) 마커만들기(이미지, 위치)
+			var markerPostion = new daum.maps.LatLng(events[i].latitude, events[i].longitude); 
+			var marker = new daum.maps.Marker({
+				position : markerPostion,
+				image 	 : markerImg
+			});
+			
+			//4)마커위에 보여줄 오버레이 만들기
+			//var overlay = createOverlay(events[i], i);
+			//5)마커클릭이벤트
+			markerClick(events[i], marker);
+			//6)마커 지도에 배치
+			marker.setMap(map);	
+			//검색결과 마커에 따른 바운더리 값 지정
+			bounds.extend(markerPostion);
+			//7)마커 배열에 추가
+			markers.push(marker);
+		} 
+		map.setBounds(bounds);
 	}
+	
+	
 
-	function closeOverlay(index){
-		 clearOverlay(overlays[index]);
-	}  
-
-	function createMarker(placePosition, overlay) {
-		var markerPostion = placePosition;
-		makerPostions.push(markerPostion);
-		//2) 마커이미지 셋팅
-		var imgSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png', 
-			imgSize = new daum.maps.Size(24, 36), 
-			imgOption = {offset : new daum.maps.Point(27, 69)
-		};
-		//3) 마커이미지 셋팅값 넣어주기
-		var markerImg = new daum.maps.MarkerImage(imgSrc, imgSize,imgOption);
-		//4) 마커만들기(이미지, 위치)
-		var marker = new daum.maps.Marker({
-			position : markerPostion,
-			image : markerImg
-		});
-		//5)마커+오버레이에 클릭이벤트 등록
-		markerClick(marker, overlay);
-		//6)만든 마커를 배열에 추가
-		markers.push(marker);
-	}
-
-	//마커 이벤트 리스너
-	function markerClick(marker, overlay) {
+	
+	
+	function markerClick(event, marker) {
 		daum.maps.event.addListener(marker, 'click', function() {
+			setOverlay(event);
 			overlay.setMap(map);
 			clearStarRating('.star-rating');
 			starRating('.star-rating');
 		}); 
 	}
 
-	///*****
-	// 배열에 추가된 마커들을 지도에 표시
-	function setMarkers(map) {
-		for (var i = 0; i < markers.length; i++) {
-			markers[i].setMap(map);
-		}
+	
+	function createOverlay(event) {
+			//예쁘지만 어려운 오버레이 ............
+			 /* var contentStr =
+				'<div class="infoBox" style="width: 270px; transform: translateZ(0px); position: absolute; visibility: visible; left: 284.75px; bottom: -185.3px; cursor: default;">' + 
+		        '    <div class="map-box">' + 
+		        '      <a href="#" class="listing-img-container">'+
+		        '         <div class="infoBox-close" onclick="closeOverlay('+ i+ ')" ><i class="fa fa-times"></i></div>'+
+		        '         <img src="/resources/images/event/'+events[i].thumbnail+'" style="object-fit:cover; height:100%" alt="">'+
+		        '         <div class="listing-item-content">'+
+		        '            <h3>'+events[i].eventName+'</h3>'+
+		        '            <span>'+events[i].address+'</span>'+
+		        '         </div>'+
+		        '      </a>'+
+		        '      <div class="listing-content">   '+
+		        '         <div class="listing-title">'+
+		        '            <div class="star-rating" data-rating="3.5">'+
+		        '      		</div>46 Review'+
+		        '   </div>'+
+		        '</div>';  */
+		        
+		        var contentStr = 
+		        '<div class="wrap">' + 
+	            '    <div class="info">' + 
+	            '        <div class="title">' +event.eventName+ 
+	            '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
+	            '        </div>' + 
+	            '        <div class="body">' + 
+	            '            <div class="img">' +
+	            '                <img src="/resources/images/event/'+event.thumbnail+'" width="73" height="70">' +
+	            '           </div>' + 
+	            '            <div class="desc">' + 
+	            '                <div class="ellipsis">'+event.address+'</div>' + 
+	            '                <div class="jibun ellipsis">'+ event.startDate+ '  ~  '+ event.endDate	+ '</div>' + 
+	            '                <div><a href="'+event.link+'" target="_blank" class="link">홈페이지</a></div>' + 
+	            '            </div>' + 
+	            '        </div>' + 
+	            '    </div>' +    
+	            '</div>';
+
+			//2)오버레이 찍을 위치
+			var overlayPosition = new daum.maps.LatLng(event.latitude, event.longitude)		
+			//3) 오버레이 생성
+			overlay.setContent(contentStr);
+			overlay.setPosition(overlayPosition);
 	}
 
+	 function closeOverlay(){
+		overlay.setMap(null);
+	}   
+
+	function clearMarkers(){
+		for (var i = 0; i < markers.length; i++) {
+			markers[i].setMap(null);
+		}
+		markers = [];
+		
+	} 
+	
 	function removeAllChildNods(el) {
 		while (el.hasChildNodes()) {
 			el.removeChild(el.lastChild);
 		}
 	}
 	
-	function setOverlay(overlay){
+	function setOverlay(event){
+		createOverlay(event);
     	overlay.setMap(map);
     }
+
 	
-	function clearOverlay(overlay){
-    	overlay.setMap(null);
-    }
 
-	/* function displayPagination(data){
-		
-	} */
-
-
-	 
 	</script>
 	
 </body>

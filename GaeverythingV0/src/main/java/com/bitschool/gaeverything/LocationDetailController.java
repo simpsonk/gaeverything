@@ -37,6 +37,7 @@ public class LocationDetailController {
 	
 	@Inject
 	private ActUserService aService;
+
 		
 	//디테일 리뷰데이터
 	@RequestMapping(value = "/getReviewData", method = {RequestMethod.POST,RequestMethod.GET})
@@ -50,7 +51,6 @@ public class LocationDetailController {
 			@RequestParam(value="locationSeq") int locationSeq, 
 			HttpSession session,
 			Model model){
-		
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		ActUserManager manager = new ActUserManager(aService);
 		String url = "map/map_detailpage";
@@ -116,12 +116,22 @@ public class LocationDetailController {
 		}
 		boolean flag = service.photoAdd(Pdto);
 		List<DetailPhotoDTO> list = service.selectPhoto(LSeq);
+		//int PCnt = 0;
+		//PCnt = service.photoCnt(LSeq);
+		//System.out.println("PCnt"+PCnt);
 		model.addAttribute("detailphoto",list);
+		//model.addAttribute("detailphotocnt",PCnt);
 		
 		if(flag){
 			url = "redirect:viewDetailPage?locationSeq="+LSeq;
 		}
 		return url;
+	}
+	
+	@RequestMapping(value = "/getPhotoData", method = {RequestMethod.POST,RequestMethod.GET})
+	public @ResponseBody List<DetailPhotoDTO> getPhotoData(@RequestParam(value="locationSeq") int locationSeq){
+		List<DetailPhotoDTO> photoList = service.photoList(locationSeq);	
+		return photoList;
 	}
 	
 	@RequestMapping(value = "/viewPhoto", method = {RequestMethod.POST,RequestMethod.GET})

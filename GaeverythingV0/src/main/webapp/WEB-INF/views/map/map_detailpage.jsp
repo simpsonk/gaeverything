@@ -92,18 +92,18 @@
 				<div class="col-lg-12" style="padding-left: 0px;">
 					
 					<!-- Uplaod Photos -->
-					<c:choose>
-					<c:when test="${detailphoto==null}">
 					
 					<div class="col-lg-2" style="padding-left: 0px;">
-						<h3 class="listing-desc-headline ">Photo</h3>
+						<h3 class="listing-desc-headline ">Photo <span>(${detailphoto.size()})</span></h3>
 					</div>
 					
 					<div class="col-lg-10">
 						<div style="height: 50px;margin-top: 34px;">
+						<c:if test="${empty detailphoto}">
 							<div class = "col-lg-8" style="padding-top: 8px;">
 								<span>이 장소의 사진을 첫 번째로 등록해주세요.</span>
 							</div>
+						</c:if>
 							<div class="add-review-photos col-lg-4" style="position:static;">
 								<form id="addPhoto" action="" class="addPhoto" method="post"enctype="multipart/form-data">
 									<input type="hidden" id="locationSeq" name="locationSeq" value="${detail.locationSeq}">
@@ -116,46 +116,28 @@
 						</div>
 					</div>
 					
-					</c:when>	
-						<c:otherwise>
+					
+					<div class="mfp-gallery-container" id="photoMoreView">
 						
-						<div class="col-lg-2" style="padding-left: 0px;">
-							<h3 class="listing-desc-headline ">Photo</h3>
-						</div>
-						
-						<div class="col-lg-10">
-							<div style="height: 50px;margin-top: 34px;">
-								<div class="add-review-photos col-lg-4" style="position:static;">
-									<form id="addPhoto" action="" class="addPhoto" method="post"enctype="multipart/form-data">
-										<input type="hidden" id="locationSeq" name="locationSeq" value="${detail.locationSeq}">
-										<div class="photoUpload">
-											<span><i class="sl sl-icon-arrow-up-circle"></i> Upload Photos</span>
-											<input name="photo" type="file" onchange="addDetailPhoto()" class="upload" />
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-						
-						<div class="review-images mfp-gallery-container col-lg-12" style="padding-top: 8px;">
-							<c:forEach var="dp" items="${detailphoto}" begin='0' end='3' step='1' varStatus="status">
-								<a href="/resources/upload/${dp.locationPhoto}" class="mfp-gallery">
-								<img src="/resources/upload/${dp.locationPhoto}" alt=""></a>
-								<div class="col-lg-12">
-							<div style="height: 50px;margin-top: 34px;">
-								<div class="add-review-photos col-lg-4" style="position:static;">
-										<div class="photoUpload">
-											<span><i class="sl sl-icon-arrow-up-circle"></i> 더 보기</span>
-											<input name="photo" type="file" onchange="addDetailPhoto()" class="upload" />
-										</div>
-								</div>
-							</div>
-						</div>
+					</div>
+					
+					<c:if test="${fn:length(detailphoto)>4}">
+					<input type="button" id="photoMore" value="Read More">
+					<input type="button" id="photoHide" value="Hide">
+					</c:if>
+					<c:if test="${fn:length(detailphoto) > 4}">
+					<div class="row">
+					<div class="col-lg-12">
+					<div class="mfp-gallery-container">
+							<c:forEach var="dp" items="${detailphoto}" varStatus="status">
+									<a href="/resources/upload/${dp.locationPhoto}" style="display: none" class="mfp-gallery"></a>
+									
 							</c:forEach>
-						</div>
-						
-						</c:otherwise>
-					</c:choose>
+							<a class="read-more mfp-gallery">Read More <i class=""></i></a>
+					</div>
+					</div>
+					</div>
+					</c:if>
 				</div>
 			</div>
 			<!-- regist photo / End -->
@@ -163,7 +145,7 @@
 			<!-- regist photo test push case-->
 			<div id="regist-review" class="listing-section margin-top-70 margin-bottom-30">
 				<div class="col-lg-2" style="padding-left: 0px;">				
-					<h3 class="listing-desc-headline ">Review <span>(${countReview})</span></h3>							
+					<h3 class="listing-desc-headline ">Review <span>(${reviewList.size()})</span></h3>							
 				</div>
 				<div class="col-lg-10">
 					<div style="height: 50px;margin-top: 34px;">
@@ -174,7 +156,9 @@
 						</c:if>	
 						<div class="add-review-photos col-lg-4" style="position:static;">		
 							<div class="photoUpload">
-								<span><i class="im im-icon-Pencil"></i> Write Review</span>
+								<span>
+								<a href="/review/viewReviewRegist?locationSeq=${detail.locationSeq}&boardCategory=${boardCategory}&address=${detail.title}">
+								<i class="im im-icon-Pencil"></i> Write Review</span></a>
 							</div>
 						</div>	
 					</div>
@@ -202,7 +186,8 @@
 												<span>${reviews.regiDate}</span>
 											</div>
 										</div>
-										<span class="star-rating" data-rating="${reviews.rating}">${reviews.rating}</span>															
+										<span class="star-rating" data-rating="${reviews.rating}">(${reviews.numOfCmt} comments)</span>															
+								
 									</a>
 								</div>
 								</c:if>
@@ -253,7 +238,7 @@
 				
 			<!-- Comment -->
 			<div id="listing-reviews" class="listing-section">
-				<h3 class="listing-desc-headline margin-top-75 margin-bottom-20">Comment <span>(${countReplies})</span></h3>
+				<h3 class="listing-desc-headline margin-top-75 margin-bottom-20">Comment <span>(${commentlist.size()})</span></h3>
 
 				<!-- Add Review Box -->
 				<div id="add-review" class="add-review-box" style="margin-top: 0px;">
@@ -306,10 +291,10 @@
 	   							<input type="radio" id="starhalf" name="rating" value="0.5" />
 	   							<label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
 							</fieldset>
-													
+											
 						</div>
 						</div>
-	
+				
 					</div>
 		
 					<!-- Review Comment -->
@@ -386,62 +371,20 @@
 <script type="text/javascript" src="<c:url value = '/resources/scripts/jquery-ui.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/tooltips.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/custom.js'/>"></script>
+<script type="text/javascript" src="<c:url value = '/resources/scripts/maps-detailpage.js'/>"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ebfbfbd7a5ec71c10c63936dd90beb22"></script>
-
 <script type="text/javascript">
-	var longitude = document.getElementById('longitude').value;
-	var latitude = document.getElementById('latitude').value;
-	
-	var mapContainer = document.getElementById('singleListingMap'), // 지도를 표시할 div
-		mapOption = { 
-			center: new daum.maps.LatLng(latitude, longitude), // 지도의 중심좌표
-			
-			level: 3 // 지도의 확대 레벨
-		};
-	
-	// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
-	var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-	
-	var markerPosition  = new daum.maps.LatLng(latitude, longitude); 
+var longitude = document.getElementById('longitude').value;
+var latitude = document.getElementById('latitude').value;
+
+var mapContainer = document.getElementById('singleListingMap'), // 지도를 표시할 div
+	mapOption = { 
+		center: new daum.maps.LatLng(latitude, longitude), // 지도의 중심좌표
 		
-	    // 마커를 생성합니다
-	var marker = new daum.maps.Marker({
-		position: markerPosition
-	});
-	map.setCenter(new daum.maps.LatLng(latitude, longitude));
-	marker.setMap(map);
-	
+		level: 3 // 지도의 확대 레벨
+	};
 
-	//photo 등록
-	function addDetailPhoto(){
-		var url = "/map/detail/addPhoto";
-		addPhoto.action = url;
-		addPhoto.submit();
-	}
-//댓글 등록 버튼 클릭시
-$('#registComment').click(function(){
-	var locationSeq = document.getElementById("locationSeq").value;
-	checkMessage(locationSeq);
-	var ds = document.getElementById("add-comment");
-	var url = "/map/detail/addComment";
-	ds.action = url;
-	if($("#commMsg").val()!='' && 
-			$('input:radio[name="rating"]').is(":checked")){
-		ds.submit();
-	}else{
-		return;
-	}			
-});
-
-//댓글 수정 버튼 클릭시
-$('#modifyComment').click(function(){
-	var ds = document.getElementById("add-comment");
-	var url = "/map/detail/editComment";
-	ds.action = url;
-	ds.submit();
-});
-
-
+<<<<<<< HEAD
 //댓글  Edit, Delete
 function go_url(type, commSeq){	
 	var commentSeq = document.getElementById("commentSeq");
@@ -505,14 +448,14 @@ function box_clicked(locationSeq){
 	alert("댓글작성은 회원만 가능합니다.");	
 	location.href = "/viewLogin?uri=/map/detail/viewDetailPage?locationSeq="+locationSeq;
 }
+=======
+// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+>>>>>>> 1c59fbfc5481c66b65c82f3c297497b667fe672b
 
-function like_clicked(){
-	var class_name = document.getElementById("like").className;
-	var locationSeq = document.getElementById("locationSeq").value;
-	var email = document.getElementById("memberEmail").value;
-	var url = '/review/updateDetailPageLike?like='+class_name+'&locationSeq='+locationSeq+'&email='+email;
-	var id = document.getElementById("numOflike");
+var markerPosition  = new daum.maps.LatLng(latitude, longitude); 
 	
+<<<<<<< HEAD
 	$.ajax({
         url : url,
         dataType : 'json',
@@ -632,7 +575,15 @@ $(document).ready(function() {
 			 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
        }
 	});		
+=======
+    // 마커를 생성합니다
+var marker = new daum.maps.Marker({
+	position: markerPosition
+>>>>>>> 1c59fbfc5481c66b65c82f3c297497b667fe672b
 });
+map.setCenter(new daum.maps.LatLng(latitude, longitude));
+marker.setMap(map);
+
 
 </script>
 </body>

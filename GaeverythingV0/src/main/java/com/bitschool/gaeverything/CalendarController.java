@@ -93,7 +93,7 @@ public class CalendarController {
 	}
 	
 	@RequestMapping(value="/remove",method=RequestMethod.POST)
-	public String removeCalendar(@RequestParam("seq") int seq){
+	public String removeCalendar(@RequestParam("calendarseq") int seq){
 		String url = null;
 		boolean flag = service.removeCalendar(seq);
 		if(flag){

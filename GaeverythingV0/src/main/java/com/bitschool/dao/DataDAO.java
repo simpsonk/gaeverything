@@ -20,6 +20,14 @@ public class DataDAO {
 	
 	private final static String namespace = "com.bitschool.bootstrap.DataMapper";
 	
+	//블로그 데이터 불러오기
+	public List<BlogDTO> selectBlog() throws SQLException{
+		List<BlogDTO> list = null;
+		list = session.selectList(namespace+".selectBlog");
+		return list;
+	}
+	
+	
 	public List<LocationDTO> selectLocation() throws SQLException{
 		List<LocationDTO> list = null;
 		list = session.selectList(namespace+".selectLocation");

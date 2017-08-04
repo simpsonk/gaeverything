@@ -49,6 +49,7 @@ public class PageService {
 		map.put("infoList", infoList);
 		System.out.println("infoList size: "+infoList.size());
 		
+		
 		return map;
 	}
 

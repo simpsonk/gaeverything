@@ -18,6 +18,18 @@ public class DataService {
 	@Inject
 	private DataDAO dao;
 	
+	//블로그 데이터 불러오기
+	public List<BlogDTO> selectBlog(){
+		List<BlogDTO> list = null;
+		try {
+			list = dao.selectBlog();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
 	public List<LocationDTO> selectLocation(){
 		List<LocationDTO> list = null;
 		try {

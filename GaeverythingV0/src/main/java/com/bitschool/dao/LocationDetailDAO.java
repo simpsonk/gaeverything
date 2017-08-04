@@ -42,23 +42,29 @@ public class LocationDetailDAO {
 		return flag;
 	}	
 	// 디테일페이지 사진 등록 
-		public boolean photoAdd(DetailPhotoDTO dto) throws SQLException{
-			// TODO Auto-generated method stub
-			boolean flag = false;
-			int aCnt = session.insert(namespace+".photoAdd",dto);
-			if(aCnt>0){
-				flag = true;
-			}
-			return flag;
-		}	
-		
-		//사진 보여주기
-		public List<DetailPhotoDTO> selectPhoto(int locationSeq) throws SQLException{
-			// TODO Auto-generated method stub
-			List<DetailPhotoDTO> list = null;
-			list = session.selectList(namespace+".selectPhoto",locationSeq);
-			return list;
+	public boolean photoAdd(DetailPhotoDTO dto) throws SQLException {
+		// TODO Auto-generated method stub
+		boolean flag = false;
+		int aCnt = session.insert(namespace + ".photoAdd", dto);
+		if (aCnt > 0) {
+			flag = true;
 		}
+		return flag;
+	}
+
+	// 사진 보여주기
+	public List<DetailPhotoDTO> selectPhoto(int locationSeq) throws SQLException {
+		// TODO Auto-generated method stub
+		List<DetailPhotoDTO> list = null;
+		list = session.selectList(namespace + ".selectPhoto", locationSeq);
+		return list;
+	}
+	// 사진 갯수 보여주기
+	public int photoCnt(int locationSeq) throws SQLException{
+		int PCnt = 0;
+		PCnt = session.selectOne(namespace+".photoCnt", locationSeq);
+		return PCnt;
+	}
 		
 
 	// 디테일페이지 댓글 리스팅 
@@ -138,6 +144,13 @@ public class LocationDetailDAO {
 	public List<BlogDTO> getBlogReviews(int locationSeq) throws SQLException{
 		List<BlogDTO> dto = null;
 		dto = session.selectList(namespace+".getBlogReviews",locationSeq);
+		return dto;
+	}
+
+	public List<DetailPhotoDTO> photoList(int seq) throws SQLException{
+		// TODO Auto-generated method stub
+		List<DetailPhotoDTO> dto = null;
+		dto = session.selectList(namespace+".photoList",seq);
 		return dto;
 	}
 
