@@ -18,8 +18,16 @@ public class CalendarDTO {
 	private String end;
 	private String repeatdata;
 	private String repeatview;
+	private int locationseq;
 	
 	
+	public int getLocationseq() {
+		return locationseq;
+	}
+
+	public void setLocationseq(int locationseq) {
+		this.locationseq = locationseq;
+	}
 
 	public int getCalendarseq() {
 		return calendarseq;

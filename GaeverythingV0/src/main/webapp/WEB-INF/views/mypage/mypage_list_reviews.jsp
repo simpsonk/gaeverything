@@ -73,7 +73,7 @@
 			<!-- Listings -->
 			<div class="col-lg-12 col-md-12">
 				<div class="dashboard-list-box margin-top-0">
-					<h4>Your Reviews</h4>
+					<h4>Reviews (${reviewList.size()})</h4>
 					<ul>
 
 						<li>
@@ -88,14 +88,18 @@
 								</c:choose>	
 									<c:forEach var="list" items="${reviewList}">        								
 									<li>
-										<div class="avatar"><img src="/resources/upload/${member.photo}" alt="" /> </div>
+										<div class="avatar"><img src="/resources/upload/${member.photo}" alt=""/> </div>
 										<div class="comment-content"><div class="arrow-comment"></div>
-											<div class="comment-by">Your review <div class="comment-by-listing own-comment">on <a href="#"><b>${list.address}</b></a></div> <span class="date">${list.regiDate}</span>
+										<a href="/review/readPost?boardNo=${list.boardNo}&page=1">
+										<span><h3>${list.title}</h3></span></a>
+											<div class="comment-by">review <div class="comment-by-listing own-comment">on 
+											<a href="/map/detail/viewDetailPage?locationSeq=${list.locationSeq}"><b>${list.address}</b></a></div> 
+											<span class="date">${list.regiDate}</span>
 												<div class="star-rating" data-rating="${list.rating}"></div>
 											</div>
 											<p>${list.onlyText}</p>
-											<a href="#" class="rate-review"><i class="sl sl-icon-note"></i> Edit</a>										
-											<a href="#" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>						
+											<a href="/review/clickModify?page=1&boardNo=${list.boardNo}" class="rate-review"><i class="sl sl-icon-note"></i> Edit</a>										
+											<a href="/review/delete?boardNo=${list.boardNo}&mylisting=1&page=1" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>						
 										</div>
 
 									</li>

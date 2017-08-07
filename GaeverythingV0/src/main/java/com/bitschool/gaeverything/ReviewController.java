@@ -227,12 +227,19 @@ public class ReviewController {
 	}
 	
 	
-	@RequestMapping(value="/delete", method=RequestMethod.POST)
-	public String delete(@RequestParam("boardNo") int boardNo, @RequestParam("page") int page){
+	@RequestMapping(value="/delete", method={RequestMethod.POST,RequestMethod.GET})
+	public String delete(@RequestParam("boardNo") int boardNo, @RequestParam("page") int page,
+			@RequestParam(value="mylisting", defaultValue="0") int mylisting,
+			@RequestParam(value="category", defaultValue="0") int category){
 		String url = null; 
 		boolean flag = service.remove(boardNo);
 		if(flag){
 			url = "redirect:/review/viewReviewList?page="+page;
+			if(mylisting==1){
+				url = "redirect:/mypage/viewMypageList";
+			}else if(category!=0){
+				url = "redirect:/mypage/viewMypageList?category="+category;
+			}
 		}
 		return url;
 	}

@@ -43,7 +43,7 @@
 ===============================	=================== -->
 <div class="container">
 	<div class="row sticky-wrapper">
-		<div class="col-lg-8 col-md-8 padding-right-100 padding-left-100 ">
+		<div class="col-lg-8 col-md-8 padding-right-10 padding-left-10 ">
 			<input type="hidden" id = "memberEmail" value="${member.email}" >
 			<!-- Titlebar -->
 			<div id="titlebar" class="listing-titlebar " style="padding-bottom: 30px;">
@@ -69,22 +69,16 @@
 				</c:otherwise>
 			</c:choose>								
 			
-			<!-- Overview -->
-			<div id="detail-Info" class="listing-section">
-				<div style="padding-bottom: 30px; padding-left: 30px;">
-					<span style="font-size: 16px;">
-						<a href="#location" class="listing-address">
-							<i class="fa fa-map-marker"></i>
-							${detail.address}
-						</a>
-					</span>
+			<!-- Location -->
+			<input type="hidden" id="longitude" value="${detail.longitude}">
+			<input type="hidden" id="latitude" value="${detail.latitude}">
+			
+			<div id="Location" class="listing-section">
+				<h3 class="listing-desc-headline margin-top-60 margin-bottom-30">Location</h3>
+	
+				<div id="singleListingMap-container" align="center">
+					<div id="singleListingMap" style="width: 750px; "></div>
 				</div>
-				<div style="padding-bottom: 30px; padding-left: 30px;">
-					<span>
-						<i class="fa fa-phone"></i>
-						${detail.phone}
-					</span>			
-				</div>			
 			</div>
 						
 			<!-- regist photo -->
@@ -203,7 +197,7 @@
 
 			<!-- Blog review -->
 			<div id="blog-review" class="listing-section margin-top-70 margin-bottom-30">
-				<div class="col-lg-2" style="padding-left: 0px;">				
+				<div class="col-lg-3" style="padding-left: 0px;">				
 					<h3 class="listing-desc-headline ">Blog Review </h3>							
 				</div>				
 			<div class="col-lg-12" style="padding-left: 0px;">
@@ -223,17 +217,7 @@
 					</div>
 			<!-- Blog Review END -->
 		
-			<!-- Location -->
-			<input type="hidden" id="longitude" value="${detail.longitude}">
-			<input type="hidden" id="latitude" value="${detail.latitude}">
 			
-			<div id="Location" class="listing-section">
-				<h3 class="listing-desc-headline margin-top-60 margin-bottom-30">Location</h3>
-	
-				<div id="singleListingMap-container" align="center">
-					<div id="singleListingMap" style="width: 750px; "></div>
-				</div>
-			</div>
 				
 			<!-- Comment -->
 			<div id="listing-reviews" class="listing-section">
@@ -328,28 +312,18 @@
  					
 					 <ul>
 					 <div class="row fs-listings" id = "replyList" >
-					 
-				
 					 </div>
-			  	
-			 
-				  	
 				  	<c:if test="${fn:length(commentlist) > 5}">
 					<div class="row" style="float:center;">
 						<input type="button" id="commentMore" value="Read More">
 							<!-- <a id="commentMore" href="" class="read-more">Read More <i class="fa fa-angle-right"></i></a> -->
 					</div>
 					</c:if>
-				
 					 </ul>
-			 
 				</section> 
 			</form>
-
 			</div>
 		</div>
-
-
 	</div>
 </div>
 		<div class="col-lg-4 col-md-4 margin-top-75 sticky">
@@ -358,17 +332,19 @@
 			<div class="boxed-widget">
 				<h3><i class="fa fa-calendar-check-o "></i> Book a Table</h3>
 				<div class="row with-forms  margin-top-0">
-
-					<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
-					<div class="col-lg-6 col-md-12">
-						<input type="text" id="booking-date" data-lang="ko" data-large-mode="true" data-min-year="2017" data-max-year="2020">
-					</div>
-
-					<!-- Time Picker - docs: http://www.vasterad.com/docs/listeo/#!/time_picker -->
-					<div class="col-lg-6 col-md-12">
-						<input type="text" id="booking-time" value="9:00 am">
-					</div>
-
+					<form method="post" action="" id="booking-calendar">
+						<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
+						<div class="col-lg-6 col-md-12">
+							<input type="text" id="booking-date" name="bookDate" data-format="Y-m-d" data-lang="ko" data-large-mode="true" data-min-year="2017" data-max-year="2020">
+						</div>
+	
+						<!-- Time Picker - docs: http://www.vasterad.com/docs/listeo/#!/time_picker -->
+						<div class="col-lg-6 col-md-12">
+							<input type="text" id="booking-time" name="bookTime" value="9:00 am">
+						</div>
+						<input type="hidden" id="isLogin3" name="bookEmail" value="${member.nickname}">
+						<input type="hidden" id="locationSeq3" name="locationSeq" value="${detail.locationSeq}">
+					</form>
 				</div>
 				
 				<!-- progress button animation handled via custom.js -->
@@ -381,29 +357,9 @@
 			<div class="boxed-widget margin-top-35">
 				<h3><i class="sl sl-icon-pin"></i> Contact</h3>
 				<ul class="listing-details-sidebar">
-					<li><i class="sl sl-icon-phone"></i> (123) 123-456</li>
-					<li><i class="sl sl-icon-globe"></i> <a href="#">http://example.com</a></li>
-					<li><i class="fa fa-envelope-o"></i> <a href="#">info@example.com</a></li>
+					<li><i class="fa fa-phone"></i> ${detail.phone}</li>
+					<li><i class="fa fa-map-marker"></i> <a href="#location" class="listing-address">${detail.address}</a></li>
 				</ul>
-
-				<ul class="listing-details-sidebar social-profiles">
-					<li><a href="#" class="facebook-profile"><i class="fa fa-facebook-square"></i> Facebook</a></li>
-					<li><a href="#" class="twitter-profile"><i class="fa fa-twitter"></i> Twitter</a></li>
-					<!-- <li><a href="#" class="gplus-profile"><i class="fa fa-google-plus"></i> Google Plus</a></li> -->
-				</ul>
-
-				<!-- Reply to review popup -->
-				<div id="small-dialog" class="zoom-anim-dialog mfp-hide">
-					<div class="small-dialog-header">
-						<h3>Send Message</h3>
-					</div>
-					<div class="message-reply margin-top-0">
-						<textarea cols="40" rows="3" placeholder="Your message to Burger House"></textarea>
-						<button class="button">Send Message</button>
-					</div>
-				</div>
-
-				<a href="#small-dialog" class="send-message-to-owner button popup-with-zoom-anim"><i class="sl sl-icon-envelope-open"></i> Send Message</a>
 			</div>
 			<!-- Contact / End-->
 			
@@ -427,8 +383,19 @@
 
 			<!-- Share / Like -->
 			<div class="listing-share margin-top-40 margin-bottom-40 no-border">
-				<button class="like-button"><span class="like-icon"></span> Bookmark this listing</button> 
-				<span>159 people bookmarked this place</span>
+				<c:choose>
+				<c:when test="${member.nickname == null }">
+					<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
+						<button type="button" class="like-button" onclick="no_login_like()"><span class="like-icon"></span> Bookmark this listing</button> 
+					</div>	
+				</c:when>
+				<c:otherwise>
+					<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
+						<button type="button" class="like-button" onclick="like_clicked()"><span id = "like" class="${detail.userLikeStatus }"></span> Bookmark this listing</button> 
+					</div>	
+				</c:otherwise>
+				</c:choose> 
+				<span>${detail.countLike} people bookmarked this place</span>
 
 					<!-- Share Buttons -->
 					<ul class="share-buttons margin-top-40 margin-bottom-0">
@@ -473,17 +440,15 @@
 <script>
 this.$('#booking-time').timeDropper({
 	setCurrentTime: false,
-	meridians: true,
+	meridians: false,
 	primaryColor: "#f91942",
 	borderColor: "#f91942",
-	minutesInterval: '15'
-});
-
-var $clocks = $('.td-input');
-	_.each($clocks, function(clock){
-	clock.value = null;
+	minutesInterval: '15',
+	format: "hh:mm a"
 });
 </script> 
+<!-- //////////////////////////////////////////////////////////////////////////// -->
+
 
 <script type="text/javascript">
 var longitude = document.getElementById('longitude').value;
@@ -510,8 +475,21 @@ map.setCenter(new daum.maps.LatLng(latitude, longitude));
 marker.setMap(map);
 
 $('#bookNow').on('click',function(){
-	alert(document.getElementById('booking-date').value);
+	var locationSeq = document.getElementById("locationSeq3").value;
+	checkBooking(locationSeq);
+	var book = document.getElementById("booking-calendar");
+	var url = "/map/detail/addBooking";
+	book.action = url;
+	book.submit();
 });
+
+function checkBooking(locationSeq){
+	var isLogin = document.getElementById("isLogin3");
+	if(isLogin.value==''){
+		alert("일정등록은 회원만 가능합니다.");
+		location.href = "/viewLogin?uri=/map/detail/viewDetailPage?locationSeq="+locationSeq;
+	}
+}
 </script>
 </body>
 </html>

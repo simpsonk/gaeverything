@@ -208,9 +208,18 @@ footer {
 									eventLimit : true, // allow "more" link when too many events
 									events : data,
 									eventClick: function(calEvent, jsEvent, view) {
-										var sd = document.getElementById('seq').value=calEvent.seq;
-										submitSeq.action = "/mypage/calendar/viewDetailCalendar";
-										submitSeq.submit();
+										document.getElementById('seq').value=calEvent.seq;
+										
+										if(calEvent.color=='#0045C6'){//#A20082 #0045C6
+											document.getElementById('longitude').value=calEvent.longitude;
+											document.getElementById('latitude').value=calEvent.latitude;
+											submitSeq.action = "/mypage/calendar/viewDetailCalendarLoc";
+											submitSeq.submit();
+										}else{
+											submitSeq.action = "/mypage/calendar/viewDetailCalendar";
+											submitSeq.submit();
+										}
+										
 									}
 								});
 			      		  }
@@ -222,6 +231,8 @@ footer {
 </form>
 <form method="post" id="submitSeq">
 	<input type="hidden" name="seq" id="seq" value=''>
+	<input type="hidden" name="longitude" id="longitude" value='0'>
+	<input type="hidden" name="latitude" id="latitude" value='0'>
 </form>
 
 </body>

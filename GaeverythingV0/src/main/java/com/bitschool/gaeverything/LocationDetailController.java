@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BlogDTO;
 import com.bitschool.dto.BoardDTO;
+import com.bitschool.dto.BookCalendarDTO;
 import com.bitschool.dto.DetailCommentDTO;
 import com.bitschool.dto.DetailPhotoDTO;
 import com.bitschool.dto.LocationDTO;
@@ -182,7 +183,18 @@ public class LocationDetailController {
 		return url;
 	}
 	
-
+	@RequestMapping(value="/addBooking",method=RequestMethod.POST)
+	public String addBooking(HttpSession session,Model model,
+			BookCalendarDTO dto){
+		String url = null;
+		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		boolean flag = service.bookingAdd(dto,member.getEmail());
+		System.out.println("controller");
+		if(flag){
+			url = "redirect:viewDetailPage?locationSeq="+dto.getLocationSeq();
+		}
+		return url;
+	}
 	
 
 }
