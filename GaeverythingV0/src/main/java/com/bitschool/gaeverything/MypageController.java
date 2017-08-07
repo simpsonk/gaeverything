@@ -330,8 +330,14 @@ public class MypageController {
 	
 	
 	@RequestMapping(value = "/viewMypageList", method = RequestMethod.GET)
-	public String viewMypageList(HttpSession session, Model model){
+	public String viewMypageList(HttpSession session, Model model,
+			@RequestParam(value="category", defaultValue="0") int category){
 		String url = "mypage/mypage_list";
+		if(category==1){
+			url = "mypage/mypage_list_reviews";
+		}else if(category==2){
+			url = "mypage/mypage_list_comments";
+		}
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		boolean isLogin = member!=null?true:false;
 		if(!isLogin){

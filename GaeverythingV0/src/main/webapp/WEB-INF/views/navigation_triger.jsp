@@ -14,9 +14,8 @@
 				<li><a href="/mypage/calendar/viewCalendar"><i class="fa fa-calendar"></i> Calendar</a></li>
 				<li class="active"><a><i class="sl sl-icon-layers"></i> My Listings</a>
 					<ul>
-						<li><a href="/mypage/viewMypageList">Active <span class="nav-tag green">6</span></a></li>
-						<li><a href="/mypage/viewMypageList">Pending <span class="nav-tag yellow">1</span></a></li>
-						<li><a href="/mypage/viewMypageList">Expired <span class="nav-tag red">2</span></a></li>
+						<li><a href="/mypage/viewMypageList?category=1">Reviews <span class="nav-tag green">6</span></a></li>
+						<li><a href="/mypage/viewMypageList?category=2">Comments <span class="nav-tag yellow">1</span></a></li>
 					</ul>	
 				</li>
 				<li><a href="/mypage/viewMypageReviews/"><i class="sl sl-icon-star"></i>Reviews</a></li>
