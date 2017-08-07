@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BoardDTO;
+import com.bitschool.dto.DetailCommentDTO;
 import com.bitschool.dto.EventDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
@@ -339,11 +340,15 @@ public class MypageController {
 			url = "mypage/mypage_list_comments";
 		}
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		List<BoardDTO> reviewList = service.selectMyReviews(member.getNickname());
+		List<DetailCommentDTO> commentList = service.selectMyDetailComments(member.getNickname());
 		boolean isLogin = member!=null?true:false;
 		if(!isLogin){
 			url = "login_page";
 		}else{
 			model.addAttribute("member", member);
+			model.addAttribute("reviewList",reviewList);
+			model.addAttribute("commentList",commentList);			
 		}
 		return url;
 	}

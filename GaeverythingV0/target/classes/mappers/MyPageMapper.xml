@@ -4,6 +4,22 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.bitschool.bootstrap.MyPageMapper">
 
+	<!-- 상호명 지정해주기 위해 -->
+	<select id="selectShopName" parameterType="Integer" resultType="String">
+		select title from location where locationseq = #{locationSeq}
+	</select>
+	
+	<!-- 내가 쓴 댓글(맵디테일) 모아보기 -->
+	<select id="selectMyDetailComments" parameterType="String" resultType="DetailCommentDTO">
+		select * from detailcomment 
+		where nickname = #{nickname}
+	</select>
+	
+	<!-- 내가 쓴 리뷰 모아보기 -->
+	<select id="selectMyReviews" parameterType="String" resultType="BoardDTO">
+		select * from board 
+		where nickname = #{nickname}
+	</select>
 	
 	<!-- 회원가입 때 입력한 email을 mypage 테이블에 추가 -->
    	<insert id="insert" parameterType="MemberDTO">

@@ -12,6 +12,15 @@ public class DetailCommentDTO {
 
 	private String photo;
 	
+	//댓글모아보기할때 상호명을 보여주기위해
+	private String address;
+	
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
 	public int getLocationSeq() {
 		return locationSeq;
 	}
