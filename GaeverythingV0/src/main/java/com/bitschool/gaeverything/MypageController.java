@@ -414,6 +414,10 @@ public class MypageController {
 		String url = "mypage/mypage_bookmarks";
 		if(category==1){
 			url = "mypage/mypage_bookmarks_reviews";
+		}else if(category==2){
+			url = "mypage/mypage_bookmarks_map";
+		}else if(category==3){
+			url = "mypage/mypage_bookmarks_events";
 		}
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		List<BoardDTO> reviewList = aservice.selectReviewBookmark(member.getEmail());	
