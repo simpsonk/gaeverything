@@ -358,7 +358,6 @@ public class ReviewController {
 		return data;
 	}
 	
-	//이벤트 페이지 내 라이크 처리 ***구현중
 	@RequestMapping(value="/updateEventLike", method={RequestMethod.GET, RequestMethod.POST})
 	public @ResponseBody int updateEventLike(
 							 @RequestParam("like") String like,
@@ -380,6 +379,7 @@ public class ReviewController {
 			}
 		}
 		data = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.EVENT, eventNo));
+		System.out.println("좋아요개수: " + data);
 		return data;
 	}
 	

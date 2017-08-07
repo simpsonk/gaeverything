@@ -47,6 +47,12 @@ public class EventController {
 	public String viewEventList(HttpSession session, Model model){
 		String url = "event/event_list";
 		boolean isLogin = new LoginFilter().isLogin(session, model);
+		/*if(isLogin){
+			MemberDTO member = (MemberDTO)session.getAttribute("member");
+			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.REVIEW);
+			list= new ActUserManager(aService).checkListReLikeStatus(aDTO, list);
+		}
+		*/
 		return url;
 	}
 	
