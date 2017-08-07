@@ -67,7 +67,6 @@
 				</div>
 			</div>
 		</div>
-
 		<div class="row">
 			
 			<!-- Listings -->
@@ -104,8 +103,10 @@
 								</div>
 							</div>
 							<div class="buttons-to-right">
-								<a href="#" class="button gray"><i class="sl sl-icon-close"></i> Delete</a>
-							</div>
+							 	<a href="/mypage/deleteBookmarks?contentno=${list.boardNo}" class="button gray"> 
+							 	<i class="sl sl-icon-close"></i> Delete
+							 	</a> 
+							 </div>
 						</li>
 						</c:forEach>
 
