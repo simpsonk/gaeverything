@@ -88,6 +88,7 @@ public class MapController {
 			@RequestParam("level") int level,
 			@RequestParam("lat") double lat,
 			@RequestParam("lon") double lon,
+			@RequestParam( value = "page", defaultValue="0") int page,
 			HttpSession session){
 		
 		String[] categories1 = categories.split(",");
@@ -103,11 +104,9 @@ public class MapController {
 		}
 		list = dService.getLocActUserResults(manager, list);
 		
-		System.out.println("check Results:"+list);
-
 		//사용자 평가 반영
 		
-		HashMap<String, Object> map = pService.makeSerachList(0, 5, list);
+		HashMap<String, Object> map = pService.makeSerachList(page, 5, list);
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		data.put("places", list);
 		data.put("pList", map.get("pList"));
@@ -151,13 +150,20 @@ public class MapController {
 	}
 	
 	@RequestMapping(value = "getPagingData", method = {RequestMethod.POST,RequestMethod.GET})
-	public @ResponseBody HashMap<String, Object> getPagingData(@RequestParam("data") String locData, @RequestParam("page") int page){
+	public @ResponseBody HashMap<String, Object> getPagingData(@RequestParam("data") String locData, @RequestParam("page") int page, HttpSession session){
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		ObjectMapper mapper = new ObjectMapper();
 		List<LocationDTO> list = null;
 		HashMap<String, Object> map = null;
+		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		ActUserManager manager = new ActUserManager(aService);
 		try {
 			list = mapper.readValue(locData, new TypeReference<List<LocationDTO>>(){});
+			if(member!=null){
+				ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.SHOP);
+				list= manager.checkListLocLikeStatus(aDTO, list);
+			}
+			list = dService.getLocActUserResults(manager, list);
 			map = pService.makeSerachList(page, 5, list);
 		} catch (JsonParseException e) {
 			e.printStackTrace();
@@ -167,6 +173,8 @@ public class MapController {
 			e.printStackTrace();
 		}
 		
+		
+		data.put("places", list);
 		data.put("page", page);
 		data.put("pList", map.get("pList"));
 		data.put("infoList", map.get("infoList"));
