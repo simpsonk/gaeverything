@@ -179,9 +179,7 @@
 	<script type="text/javascript" src="<c:url value = '/resources/scripts/jquery-ui.min.js'/>"></script>
 	<script type="text/javascript" src="<c:url value = '/resources/scripts/tooltips.min.js'/>"></script>
 	<script type="text/javascript" src="<c:url value = '/resources/scripts/custom.js'/>"></script>
-	<script type="text/javascript" src="<c:url value = '/resources/scripts/infobox.min.js'/>"></script>
-	<script type="text/javascript" src="<c:url value = '/resources/scripts/maps1.js'/>"></script>
-
+	
 	<!-- Maps -->
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ebfbfbd7a5ec71c10c63936dd90beb22&libraries=clusterer"></script>
 	
@@ -338,8 +336,11 @@
 			itemEl.onmouseover = function() {
 				setOverlay(event); 		
 				panTo(event);
-				clearStarRating('.star-rating');
-				starRating('.star-rating');
+				/* clearStarRating('.star-rating');
+				starRating('.star-rating'); */
+				/* var el = document.getElmentById("star-rating");
+				var counter = '<div class="rating-counter">(12 reviews)</div>';
+				el.appendChild(counter); */
 			};
 			 itemEl.onmouseout = function() {
 				closeOverlay(); 			
@@ -355,9 +356,10 @@
 	//좌측리스트
 	function eventItems(event) {
 		var el = document.createElement("div");
-		var itemStr =  '	<a href="/event/detail" class="listing-item-container" data-marker-id="1">'
+		var itemStr =  '	<div class="listing-item-container" data-marker-id="1">'
 				+ '	   			<div class="listing-item">' 
 				+ '					<img src="/resources/images/event/'+event.thumbnail+'" alt="">'
+				+ '				<a href = "/event/detail">'
 				+ '					<div class="listing-item-content">';
 				
 				if(event.eventName.match("축제")||event.eventName.match("페스티벌")){
@@ -370,17 +372,27 @@
 				+ '						<span><i class="fa fa-calendar-check-o"></i>  '+ event.startDate+ '  ~  '+ event.endDate	+ '</span><br>'
 				+ '						<span><i class="fa fa-dollar"></i>  '+ event.fee+ '   <i class="fa fa-check"></i>  '+ event.discountInfo+ '</span>'
 				+ '					</div>'
-                + '			</div>'
-				+ '					<div class="star-rating" data-rating="3.5"><div class="rating-counter"></div></div>(12 reviews)' 
-				+ '	  </a>';
-			if(event.userLikeStatus == null){
+				+ '				</a>';
+				
+				if(event.userLikeStatus == null){
+					itemStr += 		   '<span class="like-icon" id="like" onclick="no_login_like()"></span>	';
+				}else{	
+					itemStr +=         '<span class="'+event.userLikeStatus+'" id="like'+event.eventNo+'" onclick="like_clicked('+event.eventNo+')"></span>	';
+				}
+				
+				itemStr += '			</div>'
+				+		   '			<div class="star-rating" data-rating="3.5">'
+				+		   '           		<div class="rating-counter">(12 reviews)</div>' 
+			 	+		   ' 			</div>';
+			 	/*	if(event.userLikeStatus == null){
 				itemStr += 		   '<span class="like-icon" id="like" onclick="no_login_like()"></span>	';
 			}else{	
 				itemStr +=         '<span class="'+event.userLikeStatus+'" id="like'+event.eventNo+'" onclick="like_clicked('+event.eventNo+')"></span>	';
 			}
-			
+			 */
 		el.innerHTML = itemStr;
 		el.className = 'col-lg-6 col-md-12';
+		
 		return el;
 	}
 	
@@ -419,8 +431,8 @@
 		daum.maps.event.addListener(marker, 'click', function() {
 			setOverlay(event);
 			overlay.setMap(map);
-			clearStarRating('.star-rating');
-			starRating('.star-rating');
+			/* clearStarRating('.star-rating');
+			starRating('.star-rating'); */
 		}); 
 	}
 
