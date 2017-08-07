@@ -311,7 +311,6 @@ function go_url(type, commSeq){
 		}else if(ratingVal.value==2.5){
 			$('input:radio[name=rating]:input[value="2.5"]').attr("checked", true);		
 		}else if(ratingVal.value==3.0){
-			$('input:radio[name=rating]:input[value="3.0"]').attr("checked", true);		
 		}else if(ratingVal.value==3.5){
 			$('input:radio[name=rating]:input[value="3.5"]').attr("checked", true);		
 		}else if(ratingVal.value==4.0){
