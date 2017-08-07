@@ -75,22 +75,30 @@
 				<div class="dashboard-list-box margin-top-0">
 					<h4>Your Comments</h4>
 					<ul>
-
 						<li>
 							<div class="comments listing-reviews">
 								<ul>
+								<c:choose>
+								<c:when test="${commentList.size()==0}">
+								<li>
+								<span>작성한 리뷰가 없습니다.</span>
+								</li>
+								</c:when>
+								</c:choose>	
+									<c:forEach var="list" items="${commentList}">        								
 									<li>
-										<div class="avatar"><img src="/resources/images/reviews-avatar.jpg" alt="" /> </div>
+										<div class="avatar"><img src="/resources/upload/${member.photo}" alt="" /> </div>
 										<div class="comment-content"><div class="arrow-comment"></div>
-											<div class="comment-by">Your review <div class="comment-by-listing own-comment">on <a href="#">Tom's Restaurant</a></div> <span class="date">May 2017</span>
-												<div class="star-rating" data-rating="4.5"></div>
+											<div class="comment-by">Your Comments <div class="comment-by-listing own-comment">on <a href="#"><b>${list.address}</b></a></div> <span class="date">${list.regiDate}</span>
+												<div class="star-rating" data-rating="${list.rating}"></div>
 											</div>
-											<p>Commodo est luctus eget. Proin in nunc laoreet justo volutpat blandit enim. Sem felis, ullamcorper vel aliquam non, varius eget justo. Duis quis nunc tellus sollicitudin mauris.</p>
+											<p>${list.message}</p>
 											<a href="#" class="rate-review"><i class="sl sl-icon-note"></i> Edit</a>										
 											<a href="#" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>						
 										</div>
 
 									</li>
+									</c:forEach>
 								</ul>
 							</div>
 						</li>
