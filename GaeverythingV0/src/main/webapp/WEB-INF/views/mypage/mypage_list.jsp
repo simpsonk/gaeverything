@@ -90,9 +90,13 @@
 									<c:forEach var="list" items="${reviewList}" varStatus="status">									    
 									<c:if test="${status.index<5}">	
 									<li>
-										<div class="avatar"><img src="/resources/upload/${member.photo}" alt="" /> </div>
+										<div class="avatar"><img src="/resources/upload/${member.photo}" alt=""/> </div>
 										<div class="comment-content"><div class="arrow-comment"></div>
-											<div class="comment-by">Your review <div class="comment-by-listing own-comment">on <a href="#"><b>${list.address}</b></a></div> <span class="date">${list.regiDate}</span>
+										<a href="/review/readPost?boardNo=${list.boardNo}&page=1">
+										<span><h3>${list.title}</h3></span></a>
+											<div class="comment-by">review <div class="comment-by-listing own-comment">on 
+											<a href="/map/detail/viewDetailPage?locationSeq=${list.locationSeq}"><b>${list.address}</b></a></div> 
+											<span class="date">${list.regiDate}</span>
 												<div class="star-rating" data-rating="${list.rating}"></div>
 											</div>
 											<p>${list.onlyText}</p>
