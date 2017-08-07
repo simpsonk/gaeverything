@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -73,7 +74,7 @@
 			<div class="col-lg-4 col-md-12">
 				<div class="dashboard-list-box margin-top-0">
 					<h4>Bookmarked Reviews</h4>
-					<ul>
+					<ul>						
 						<c:choose>
 						<c:when test="${reviewList.size()==0}">
 						<li>
@@ -81,7 +82,8 @@
 						</li>
 						</c:when>
 						</c:choose>
-						<c:forEach var="list" items="${reviewList}">        
+						<c:forEach var="list" items="${reviewList}" varStatus="status">        
+						<c:if test="${status.index<3}">	
 						<li>							
 							<div class="list-box-listing">
 								<div class="list-box-listing-img"><a href="/review/readPost?boardNo=${list.boardNo}&page=1">
@@ -107,8 +109,17 @@
 							 	<i class="sl sl-icon-close"></i> Delete
 							 	</a> 
 							 </div>
+							 
 						</li>
+						</c:if>
 						</c:forEach>
+						<c:choose>
+						<c:when test="${fn:length(reviewList) > 3}">
+						<li>						
+								<a href="#" class="read-more">Read More <i class="fa fa-angle-right"></i></a>		
+						</li>				
+						</c:when>
+						</c:choose>
 
 
 					</ul>
@@ -154,7 +165,13 @@
 							 </div>
 						</li>
 						</c:forEach>
-
+						<c:choose>
+						<c:when test="${fn:length(mapList) > 3}">
+						<li>						
+								<a href="#" class="read-more">Read More <i class="fa fa-angle-right"></i></a>		
+						</li>				
+						</c:when>
+						</c:choose>
 
 					</ul>
 				</div>
@@ -197,7 +214,13 @@
 							 </div>
 						</li>
 						</c:forEach>
-
+						<c:choose>
+						<c:when test="${fn:length(eventList) > 3}">
+						<li>						
+								<a href="#" class="read-more">Read More <i class="fa fa-angle-right"></i></a>		
+						</li>				
+						</c:when>
+						</c:choose>
 
 					</ul>
 				</div>

@@ -19,7 +19,9 @@
 	<!-- 북마크한 리뷰 보여주기 -->
 	<select id="selectReviewBookmark" parameterType="String" resultType="BoardDTO">
 		select * from board where boardno in 
-		(select contentno from act_user where email = #{email} and actType = '00')
+		(select a.contentno from 
+			(select contentno,actno from act_user where email = #{email} and actType = '00' order by actno desc) a
+		)
 	</select>
 
 	<select id="selectStatus" parameterType="ActUserDTO" resultType="Integer">
