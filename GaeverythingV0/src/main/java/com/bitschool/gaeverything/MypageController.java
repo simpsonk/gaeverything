@@ -409,8 +409,12 @@ public class MypageController {
 	
 	//마이페이지-북마크탭 보기
 	@RequestMapping(value = "/viewMypageBookmarks", method = RequestMethod.GET)
-	public String viewMypageBookmarks(HttpSession session, Model model){
+	public String viewMypageBookmarks(HttpSession session, Model model,
+			@RequestParam(value="category",defaultValue="0") int category){
 		String url = "mypage/mypage_bookmarks";
+		if(category==1){
+			url = "mypage/mypage_bookmarks_reviews";
+		}
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		List<BoardDTO> reviewList = aservice.selectReviewBookmark(member.getEmail());	
 		List<LocationDTO> mapList = aservice.selectShopBookmark(member.getEmail());

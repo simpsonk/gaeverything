@@ -20,7 +20,13 @@
 					</ul>	
 				</li>
 				<li><a href="/mypage/viewMypageReviews/"><i class="sl sl-icon-star"></i>Reviews</a></li>
-				<li><a href="/mypage/viewMypageBookmarks"><i class="sl sl-icon-heart"></i>Bookmarks</a></li>
+				<li class="active"><a href="/mypage/viewMypageBookmarks"><i class="sl sl-icon-heart"></i>Bookmarks</a>
+					<ul>
+						<li><a href="/mypage/viewMypageBookmarks">Reviews <span class="nav-tag green">6</span></a></li>
+						<li><a href="/mypage/viewMypageBookmarks">Hospitals <span class="nav-tag yellow">1</span></a></li>
+						<li><a href="/mypage/viewMypageBookmarks?category=1">Events <span class="nav-tag red">2</span></a></li>
+					</ul>	
+				</li>
 				<li><a href="#"><i class="sl sl-icon-plus"></i>Add Listing</a></li>
 			</ul>	
 
