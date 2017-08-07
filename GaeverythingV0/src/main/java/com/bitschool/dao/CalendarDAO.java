@@ -20,6 +20,13 @@ public class CalendarDAO {
 	@Inject
 	private SqlSession session;
 
+	public List<CalendarDTO> selectId(String id) {
+		// TODO Auto-generated method stub
+		List<CalendarDTO> list = null;
+		list = session.selectList(namespace+".selectId",id);
+		return list;
+	}
+	
 	public List<CalendarDTO> selectAll() {
 		// TODO Auto-generated method stub
 		List<CalendarDTO> list = null;
