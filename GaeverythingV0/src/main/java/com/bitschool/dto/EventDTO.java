@@ -20,6 +20,8 @@ public class EventDTO {
 	private String regist;
 	private String thumbnail;
 	private String userLikeStatus;
+	private int countLike;
+	
 	
 	public int getEventNo() {
 		return eventNo;
@@ -131,6 +133,12 @@ public class EventDTO {
 	}
 	public void setUserLikeStatus(String userLikeStatus) {
 		this.userLikeStatus = userLikeStatus;
+	}
+	public int getCountLike() {
+		return countLike;
+	}
+	public void setCountLike(int countLike) {
+		this.countLike = countLike;
 	}
 	
 	

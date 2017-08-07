@@ -99,6 +99,7 @@ public class ActUserManager {
 				userLikeStatus = "like-icon liked";
 			}
 			list.get(i).setUserLikeStatus(userLikeStatus);
+			list.get(i).setCountLike(service.getLikeCount(aDTO));
 		}
 		return list;
 	}
