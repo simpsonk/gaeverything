@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -67,72 +68,164 @@
 				</div>
 			</div>
 		</div>
-
 		<div class="row">
 			
 			<!-- Listings -->
-			<div class="col-lg-12 col-md-12">
+			<div class="col-lg-4 col-md-12">
 				<div class="dashboard-list-box margin-top-0">
-					<h4>Bookmarked Listings</h4>
-					<ul>
-
+					<h4>Bookmarked Reviews</h4>
+					<ul>						
+						<c:choose>
+						<c:when test="${reviewList.size()==0}">
 						<li>
+						<span>북마크한 리뷰가 없습니다.</span>
+						</li>
+						</c:when>
+						</c:choose>
+						<c:forEach var="list" items="${reviewList}" varStatus="status">        
+						<c:if test="${status.index<3}">	
+						<li>							
 							<div class="list-box-listing">
-								<div class="list-box-listing-img"><a href="#"><img src="/resources/images/listing-item-02.jpg" alt=""></a></div>
+								<div class="list-box-listing-img"><a href="/review/readPost?boardNo=${list.boardNo}&page=1">
+								<c:choose>
+								<c:when test="${list.uploadImg!=null}">
+											<img src="/resources/upload/${list.uploadImg}" alt="">	
+											</c:when>	
+											<c:otherwise>
+											<img src="/resources/images/hospital.jpg" alt="">	
+											</c:otherwise></c:choose>	</a></div>
 								<div class="list-box-listing-content">
 									<div class="inner">
-										<h3>Sticky Band</h3>
-										<span>Bishop Avenue, New York</span>
-										<div class="star-rating" data-rating="5.0">
-											<div class="rating-counter">(23 reviews)</div>
+										<h3>${list.title}</h3>
+										<span>${list.address}</span>
+										<div class="star-rating" data-rating="${list.rating}">
+											<div class="rating-counter">(${list.numOfCmt} comments)</div>
 										</div>
 									</div>
 								</div>
 							</div>
 							<div class="buttons-to-right">
-								<a href="#" class="button gray"><i class="sl sl-icon-close"></i> Delete</a>
-							</div>
+							 	<a href="/mypage/deleteBookmarks?contentno=${list.boardNo}" class="button gray"> 
+							 	<i class="sl sl-icon-close"></i> Delete
+							 	</a> 
+							 </div>
+							 
 						</li>
+						</c:if>
+						</c:forEach>
+						<c:choose>
+						<c:when test="${fn:length(reviewList) > 3}">
+						<li>						
+								<a href="#" class="read-more">Read More <i class="fa fa-angle-right"></i></a>		
+						</li>				
+						</c:when>
+						</c:choose>
 
-						<li>
-							<div class="list-box-listing">
-								<div class="list-box-listing-img"><a href="#"><img src="/resources/images/listing-item-04.jpg" alt=""></a></div>
-								<div class="list-box-listing-content">
-									<div class="inner">
-										<h3>Burger House</h3>
-										<span>2726 Shinn Street, New York</span>
-										<div class="star-rating" data-rating="5.0">
-											<div class="rating-counter">(31 reviews)</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="buttons-to-right">
-								<a href="#" class="button gray"><i class="sl sl-icon-close"></i> Delete</a>
-							</div>
-						</li>
-
-						<li>
-							<div class="list-box-listing">
-								<div class="list-box-listing-img"><a href="#"><img src="/resources/images/listing-item-06.jpg" alt=""></a></div>
-								<div class="list-box-listing-content">
-									<div class="inner">
-										<h3>Think Coffee</h3>
-										<span>215 Terry Lane, New York</span>
-										<div class="star-rating" data-rating="5.0">
-											<div class="rating-counter">(31 reviews)</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="buttons-to-right">
-								<a href="#" class="button gray"><i class="sl sl-icon-close"></i> Delete</a>
-							</div>
-						</li>
 
 					</ul>
 				</div>
 			</div>
+			
+			<div class="col-lg-4 col-md-12">
+				<div class="dashboard-list-box margin-top-0">
+					<h4>Bookmarked Hospitals</h4>
+					<ul>
+						<c:choose>
+						<c:when test="${mapList.size()==0}">
+						<li>
+						<span>북마크한 병원이 없습니다.</span>
+						</li>
+						</c:when>
+						</c:choose>
+						<c:forEach var="list" items="${mapList}">        
+						<li>							
+							<div class="list-box-listing">
+								<div class="list-box-listing-img"><a href="/map/detail/viewDetailPage?locationSeq=${list.locationSeq}">
+								<c:choose>
+								<c:when test="${list.imageUrl!=null}">
+											<img src="${list.imageUrl}" alt="">	
+											</c:when>	
+											<c:otherwise>
+											<img src="/resources/images/hospital.jpg" alt="">	
+											</c:otherwise></c:choose>	</a></div>
+								<div class="list-box-listing-content">
+									<div class="inner">
+										<h3>${list.title}</h3>
+										<span>${list.address}</span>
+										 <div class="star-rating" data-rating="${list.averageRatings}">
+											<div class="rating-counter">(${list.countRatings} ratings)</div>
+										</div> 
+									</div>
+								</div>
+							</div>
+							<div class="buttons-to-right">
+							 	<a href="/mypage/deleteShopBookmarks?contentno=${list.locationSeq}" class="button gray"> 
+							 	<i class="sl sl-icon-close"></i> Delete
+							 	</a> 
+							 </div>
+						</li>
+						</c:forEach>
+						<c:choose>
+						<c:when test="${fn:length(mapList) > 3}">
+						<li>						
+								<a href="#" class="read-more">Read More <i class="fa fa-angle-right"></i></a>		
+						</li>				
+						</c:when>
+						</c:choose>
+
+					</ul>
+				</div>
+			</div>
+			
+				<div class="col-lg-4 col-md-12">
+				<div class="dashboard-list-box margin-top-0">
+					<h4>Bookmarked Events</h4>
+					<ul>
+						<c:choose>
+						<c:when test="${eventList.size()==0}">
+						<li>
+						<span>북마크한 이벤트가 없습니다.</span>
+						</li>
+						</c:when>
+						</c:choose>
+						<c:forEach var="list" items="${eventList}">        
+						<li>							
+							<div class="list-box-listing">
+								<div class="list-box-listing-img"><a href="/event/detail/viewDetailPage?eventNo=${list.eventNo}">
+								<img src="/resources/images/event/${list.thumbnail}" alt=""></a></div>
+								<div class="list-box-listing-content">
+									<div class="inner">
+										<h3>${list.eventName}</h3>
+										<span>${list.location}</span>
+										<span><i class="fa fa-calendar-check-o"></i>${list.startDate} ~ ${list.endDate}</span>
+										 <%-- <div class="star-rating" data-rating="${list.averageRatings}">
+											<div class="rating-counter">(${list.countRatings} ratings)</div>
+										</div> 아직 아래에 하드코딩으로 돼있음--%>
+										<div class="star-rating" data-rating="3.5">
+											<div class="rating-counter">(12 ratings)</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="buttons-to-right">
+							 	<a href="/mypage/deleteEventBookmarks?contentno=${list.eventNo}" class="button gray"> 
+							 	<i class="sl sl-icon-close"></i> Delete
+							 	</a> 
+							 </div>
+						</li>
+						</c:forEach>
+						<c:choose>
+						<c:when test="${fn:length(eventList) > 3}">
+						<li>						
+								<a href="#" class="read-more">Read More <i class="fa fa-angle-right"></i></a>		
+						</li>				
+						</c:when>
+						</c:choose>
+
+					</ul>
+				</div>
+				</div>
+			
 
 
 			<!-- Copyrights -->

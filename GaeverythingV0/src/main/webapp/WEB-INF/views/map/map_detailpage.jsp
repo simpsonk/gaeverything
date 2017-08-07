@@ -43,7 +43,7 @@
 ===============================	=================== -->
 <div class="container">
 	<div class="row sticky-wrapper">
-		<div class="col-lg-12 col-md-12 padding-right-100 padding-left-100 ">
+		<div class="col-lg-8 col-md-8 padding-right-100 padding-left-100 ">
 			<input type="hidden" id = "memberEmail" value="${member.email}" >
 			<!-- Titlebar -->
 			<div id="titlebar" class="listing-titlebar " style="padding-bottom: 30px;">
@@ -353,8 +353,97 @@
 
 	</div>
 </div>
-</div>
+		<div class="col-lg-4 col-md-4 margin-top-75 sticky">
 
+			<!-- Book Now -->
+			<div class="boxed-widget">
+				<h3><i class="fa fa-calendar-check-o "></i> Book a Table</h3>
+				<div class="row with-forms  margin-top-0">
+
+					<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
+					<div class="col-lg-6 col-md-12">
+						<input type="text" id="booking-date" data-lang="ko" data-large-mode="true" data-min-year="2017" data-max-year="2020">
+					</div>
+
+					<!-- Time Picker - docs: http://www.vasterad.com/docs/listeo/#!/time_picker -->
+					<div class="col-lg-6 col-md-12">
+						<input type="text" id="booking-time" value="9:00 am">
+					</div>
+
+				</div>
+				
+				<!-- progress button animation handled via custom.js -->
+				<button class="progress-button button fullwidth margin-top-5" id="bookNow"><span>Book Now</span></button>
+			</div>
+			<!-- Book Now / End -->
+
+
+			<!-- Contact -->
+			<div class="boxed-widget margin-top-35">
+				<h3><i class="sl sl-icon-pin"></i> Contact</h3>
+				<ul class="listing-details-sidebar">
+					<li><i class="sl sl-icon-phone"></i> (123) 123-456</li>
+					<li><i class="sl sl-icon-globe"></i> <a href="#">http://example.com</a></li>
+					<li><i class="fa fa-envelope-o"></i> <a href="#">info@example.com</a></li>
+				</ul>
+
+				<ul class="listing-details-sidebar social-profiles">
+					<li><a href="#" class="facebook-profile"><i class="fa fa-facebook-square"></i> Facebook</a></li>
+					<li><a href="#" class="twitter-profile"><i class="fa fa-twitter"></i> Twitter</a></li>
+					<!-- <li><a href="#" class="gplus-profile"><i class="fa fa-google-plus"></i> Google Plus</a></li> -->
+				</ul>
+
+				<!-- Reply to review popup -->
+				<div id="small-dialog" class="zoom-anim-dialog mfp-hide">
+					<div class="small-dialog-header">
+						<h3>Send Message</h3>
+					</div>
+					<div class="message-reply margin-top-0">
+						<textarea cols="40" rows="3" placeholder="Your message to Burger House"></textarea>
+						<button class="button">Send Message</button>
+					</div>
+				</div>
+
+				<a href="#small-dialog" class="send-message-to-owner button popup-with-zoom-anim"><i class="sl sl-icon-envelope-open"></i> Send Message</a>
+			</div>
+			<!-- Contact / End-->
+			
+
+			<!-- Opening Hours -->
+			<div class="boxed-widget opening-hours margin-top-35">
+				<div class="listing-badge now-open">Now Open</div>
+				<h3><i class="sl sl-icon-clock"></i> Opening Hours</h3>
+				<ul>
+					<li>Monday <span>9 AM - 5 PM</span></li>
+					<li>Tuesday <span>9 AM - 5 PM</span></li>
+					<li>Wednesday <span>9 AM - 5 PM</span></li>
+					<li>Thursday <span>9 AM - 5 PM</span></li>
+					<li>Friday <span>9 AM - 5 PM</span></li>
+					<li>Saturday <span>9 AM - 3 PM</span></li>
+					<li>Sunday <span>Closed</span></li>
+				</ul>
+			</div>
+			<!-- Opening Hours / End -->
+
+
+			<!-- Share / Like -->
+			<div class="listing-share margin-top-40 margin-bottom-40 no-border">
+				<button class="like-button"><span class="like-icon"></span> Bookmark this listing</button> 
+				<span>159 people bookmarked this place</span>
+
+					<!-- Share Buttons -->
+					<ul class="share-buttons margin-top-40 margin-bottom-0">
+						<li><a class="fb-share" href="#"><i class="fa fa-facebook"></i> Share</a></li>
+						<li><a class="twitter-share" href="#"><i class="fa fa-twitter"></i> Tweet</a></li>
+						<li><a class="gplus-share" href="#"><i class="fa fa-google-plus"></i> Share</a></li>
+						<!-- <li><a class="pinterest-share" href="#"><i class="fa fa-pinterest-p"></i> Pin</a></li> -->
+					</ul>
+					<div class="clearfix"></div>
+			</div>
+
+		</div>
+</div>
+</div>
 
 <!-- Wrapper / End -->
 
@@ -373,6 +462,30 @@
 <script type="text/javascript" src="<c:url value = '/resources/scripts/custom.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/maps-detailpage.js'/>"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ebfbfbd7a5ec71c10c63936dd90beb22"></script>
+
+<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
+<link rel="stylesheet" href= "<c:url value = '/resources/css/plugins/datedropper.css'/>">
+<script type="text/javascript" src="<c:url value = '/resources/scripts/datedropper.js'/>"></script>
+<script>$('#booking-date').dateDropper();</script> 
+
+<!-- Time Picker - docs: http://www.vasterad.com/docs/listeo/#!/time_picker -->
+<link rel="stylesheet" href= "<c:url value = '/resources/css/plugins/timedropper.css'/>">
+<script type="text/javascript" src="<c:url value = '/resources/scripts/timedropper.js'/>"></script>
+<script>
+this.$('#booking-time').timeDropper({
+	setCurrentTime: false,
+	meridians: true,
+	primaryColor: "#f91942",
+	borderColor: "#f91942",
+	minutesInterval: '15'
+});
+
+var $clocks = $('.td-input');
+	_.each($clocks, function(clock){
+	clock.value = null;
+});
+</script> 
+
 <script type="text/javascript">
 var longitude = document.getElementById('longitude').value;
 var latitude = document.getElementById('latitude').value;
@@ -397,7 +510,9 @@ var marker = new daum.maps.Marker({
 map.setCenter(new daum.maps.LatLng(latitude, longitude));
 marker.setMap(map);
 
-
+$('#bookNow').on('click',function(){
+	alert(document.getElementById('booking-date').value);
+});
 </script>
 </body>
 </html>

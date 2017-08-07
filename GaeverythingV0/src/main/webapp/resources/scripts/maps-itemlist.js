@@ -65,7 +65,7 @@
 		  			  	itemStr +=					places.radius!=null?'('+places.radius+'km)':'';
 		  			  	itemStr +=			'</span>'+'<br>'+
 		  			  						'<div class="star-rating" data-rating="'+places.averageRatings+'">'+
-					  			    			'<div class="rating-counter"  style="font-size: 16px"> (<i class="im im-icon-Heart"></i>'+places.countLike+'/<i class="im im-icon-Speach-Bubble"></i>'+places.countReplies+'/'+places.countReview+' reviews)'+'</div>'+
+					  			    			'<div class="rating-counter"  style="font-size: 16px"> (<i class="im im-icon-Heart"></i>'+places.countLike+'  <i class="im im-icon-Speach-Bubble"></i>'+places.countReplies+'  '+places.countReview+' reviews)'+'</div>'+
 					  			    		'</div>'+
 					  			    	'</div>'+
 				  			    	'</div>'+

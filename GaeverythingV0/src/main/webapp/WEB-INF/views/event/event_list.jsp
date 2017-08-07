@@ -179,9 +179,7 @@
 	<script type="text/javascript" src="<c:url value = '/resources/scripts/jquery-ui.min.js'/>"></script>
 	<script type="text/javascript" src="<c:url value = '/resources/scripts/tooltips.min.js'/>"></script>
 	<script type="text/javascript" src="<c:url value = '/resources/scripts/custom.js'/>"></script>
-	<script type="text/javascript" src="<c:url value = '/resources/scripts/infobox.min.js'/>"></script>
-	<script type="text/javascript" src="<c:url value = '/resources/scripts/maps1.js'/>"></script>
-
+	
 	<!-- Maps -->
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ebfbfbd7a5ec71c10c63936dd90beb22&libraries=clusterer"></script>
 	
@@ -204,27 +202,9 @@
 	var overlay = new daum.maps.CustomOverlay();
 	
 	//시작 시 
-	$(document).ready(
-			function() {
-				$.ajax({
-					url		 : "/event/getAllEvents",
-					dataType : "json",
-					type 	 : 'post',
-					success  : function(data) {
-						eventData = data.events; //전체이벤트리스트
-						//data : 맵형식 -> 이벤트리스트, 페이징리스트, 
-						var numOfData = data.events.length ;
-						var foundResult = numOfData + ' Results Found';
-						$('#ResultsFound').text(foundResult);
-						//eventList(data);
-						createMarker(data.events);
-						displayEvent(data.pList, data.infoList, data.events, 0);
-					},
-					error : function(request, status, error) {
-						alert("code:" + request.status + "\n" + "message:"+ request.responseText + "\n" + "error:"+ error);
-					}
-				});
-			});
+	$(document).ready(function(){
+		listAll();
+	});
 
 	
 	function pageClickEvent(page) {
@@ -236,8 +216,9 @@
 			dataType : "json",
 			success  : function(data) {
 				//eventList(data);
-				createMarker(data.events);
+				
 				displayEvent(data.pList, data.infoList, data.events, page);
+				createMarker(data.events);
 
 			},
 			error : function(request, status, error) {
@@ -246,6 +227,27 @@
 		});
 	}
 	
+	function listAll() {
+		$.ajax({
+			url		 : "/event/getAllEvents",
+			dataType : "json",
+			type 	 : 'post',
+			success  : function(data) {
+				eventData = data.events; //전체이벤트리스트
+				//data : 맵형식 -> 이벤트리스트, 페이징리스트, 
+				var numOfData = data.events.length ;
+				var foundResult = numOfData + ' Results Found';
+				$('#ResultsFound').text(foundResult);
+				//eventList(data);
+				
+				displayEvent(data.pList, data.infoList, data.events, 0);
+				createMarker(data.events);
+			},
+			error : function(request, status, error) {
+				alert("code:" + request.status + "\n" + "message:"+ request.responseText + "\n" + "error:"+ error);
+			}
+		});
+	}
 	//이벤트 검색
 	$(document).ready(function(){
 		$('#search').click(function(){
@@ -264,15 +266,11 @@
 							alert("이벤트 검색 결과가 없습니다.");
 							createMarker(data.events); //마커같이만듦
 						}
-					
-						clearMarkers(); //첫 화면시 불러왔던 모든 마커들을 제거 -> 검색결과 마커만 보여줄것이므로
-					//	eventData = data.events; 
-						createMarker(data.events); //마커같이만듦
 						displayEvent(data.pList, data.infoList, data.events, 0);
+						createMarker(data.events); //마커같이만듦
 						var numOfData = data.events.length ;
 						var foundResult = numOfData + ' Results Found';
 						$('#ResultsFound').text(foundResult);
-					
 				}
 				
 			});
@@ -283,25 +281,47 @@
 	 //좋아요 클릭 핸들러
 	function like_clicked(eventNo){
 		
-		var ele = document.getElementById("like"+eventNo); //어떤 이벤트에 라이크를 눌렀는지 번호 같이 가져옴
-		// alert(eventNo);
+		var ele = document.getElementById("like"+eventNo); //어떤 이벤트에 라이크를 눌렀는지 해당 이벤트번호 같이 가져옴
 		var class_name = ele.className; //로그인했으면 클래스가 like-icon 좋아요했으면 클래스가 like-icon clicked
 		var email = document.getElementById("memberEmail").value;
-	//	alert(email);
 		var url = "/review/updateEventLike?like="+class_name+"&eventNo="+eventNo+"&email="+email;
 		$.ajax({
 			url 	 : url,
 			dataType : 'json',
 			tyoe 	 : 'POST',
 			success  : function(data){
+				listAll();
+				//alert(data);
+				//alert(eventNo);
 				//data: 좋아요개수 
-				if(ele.className === 'like-icon'){
+			/* 	if(ele.className === 'like-icon'){
 	        		ele.className = 'like-icon liked';
+	        		/* var count = document.getElementById("star-rating"); //새 태그 삽입할 부모태그
+		        	
+	        		var icon = document.createElement('i');
+	        		
+	        		var span = document.createElement("span"); //하위태그
+	        		span.innerHTML = "  "+data; //span 태그에 들어갈 내용 
+	        		
+	        		var rating = document.createElement("div");
+	        		rating.className = "rating-counter";
+	        		rating.innerHTML = "10 reviews   ";
+	        		
+	        		count.innerHTML = ""; 		
+	        		count.appendChild(rating);
+	        		count.appendChild(icon); //상위태그에 붙이기
+	        		count.appendChild(span); //상위태그에 붙이기
+	       			
+	       			clearStarRating('.star-rating');
+	       			starRating('.star-rating'); 
+	        		
 	        	}else{
 	        		ele.className = 'like-icon';
-	        	}
+	        	} */
+				
+				
 			}
-		})
+		});
 	}
 	  
 	function no_login_like(){
@@ -310,7 +330,8 @@
 	}
 
 	function displayEvent(pList, infoList, events, page) {
-		
+		closeOverlay();
+		clearMarkers();
 		//좌측 리스트 붙일 태그
 		var listEl = document.getElementById("eventList"), 
 			menuEl = document.getElementById("menu-wrap"), 
@@ -338,8 +359,11 @@
 			itemEl.onmouseover = function() {
 				setOverlay(event); 		
 				panTo(event);
-				clearStarRating('.star-rating');
-				starRating('.star-rating');
+				/* clearStarRating('.star-rating');
+				starRating('.star-rating'); */
+				/* var el = document.getElmentById("star-rating");
+				var counter = '<div class="rating-counter">(12 reviews)</div>';
+				el.appendChild(counter); */
 			};
 			 itemEl.onmouseout = function() {
 				closeOverlay(); 			
@@ -354,10 +378,12 @@
 	
 	//좌측리스트
 	function eventItems(event) {
+		//alert(event.countLike)
 		var el = document.createElement("div");
-		var itemStr =  '	<a href="/event/detail" class="listing-item-container" data-marker-id="1">'
+		var itemStr =  '	<div class="listing-item-container" data-marker-id="1">'
 				+ '	   			<div class="listing-item">' 
 				+ '					<img src="/resources/images/event/'+event.thumbnail+'" alt="">'
+				+ '				<a href = "/event/detail">'
 				+ '					<div class="listing-item-content">';
 				
 				if(event.eventName.match("축제")||event.eventName.match("페스티벌")){
@@ -370,17 +396,28 @@
 				+ '						<span><i class="fa fa-calendar-check-o"></i>  '+ event.startDate+ '  ~  '+ event.endDate	+ '</span><br>'
 				+ '						<span><i class="fa fa-dollar"></i>  '+ event.fee+ '   <i class="fa fa-check"></i>  '+ event.discountInfo+ '</span>'
 				+ '					</div>'
-                + '			</div>'
-				+ '					<div class="star-rating" data-rating="3.5"><div class="rating-counter"></div></div>(12 reviews)' 
-				+ '	  </a>';
-			if(event.userLikeStatus == null){
+				+ '				</a>';
+				
+				if(event.userLikeStatus == null){
+					itemStr += 		   '<span class="like-icon" id="like" onclick="no_login_like()"></span>	';
+				}else{	
+					itemStr +=         '<span class="'+event.userLikeStatus+'" id="like'+event.eventNo+'" onclick="like_clicked('+event.eventNo+')"></span>	';
+				}
+				
+				itemStr += '			</div>'
+				+		   '			<div class="star-rating" id="star-rating" data-rating="3.5">'
+				+		   '           		<div class="rating-counter">(12 reviews)</div> '
+				+		   '           		<span><i class="sl sl-icon-heart"></i>'+event.countLike+'</span> '
+			 	+		   ' 			</div>';
+			 	/*	if(event.userLikeStatus == null){
 				itemStr += 		   '<span class="like-icon" id="like" onclick="no_login_like()"></span>	';
 			}else{	
 				itemStr +=         '<span class="'+event.userLikeStatus+'" id="like'+event.eventNo+'" onclick="like_clicked('+event.eventNo+')"></span>	';
 			}
-			
+			 */
 		el.innerHTML = itemStr;
 		el.className = 'col-lg-6 col-md-12';
+		
 		return el;
 	}
 	
@@ -419,8 +456,8 @@
 		daum.maps.event.addListener(marker, 'click', function() {
 			setOverlay(event);
 			overlay.setMap(map);
-			clearStarRating('.star-rating');
-			starRating('.star-rating');
+			/* clearStarRating('.star-rating');
+			starRating('.star-rating'); */
 		}); 
 	}
 

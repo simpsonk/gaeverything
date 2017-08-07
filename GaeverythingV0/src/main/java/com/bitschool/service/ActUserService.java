@@ -1,6 +1,7 @@
 package com.bitschool.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -8,12 +9,48 @@ import org.springframework.stereotype.Service;
 
 import com.bitschool.dao.ActUserDAO;
 import com.bitschool.dto.ActUserDTO;
+import com.bitschool.dto.BoardDTO;
+import com.bitschool.dto.EventDTO;
+import com.bitschool.dto.LocationDTO;
 
 @Service
 public class ActUserService {
 	
 	@Inject
-	private ActUserDAO dao;
+	private ActUserDAO dao;	
+	
+	public List<EventDTO> selectEventBookmark(String email){
+		List<EventDTO> list = null;
+		try {
+			list = dao.selectEventBookmark(email);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public List<LocationDTO> selectShopBookmark(String email){
+		List<LocationDTO> list = null;
+		try {
+			list = dao.selectShopBookmark(email);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public List<BoardDTO> selectReviewBookmark(String email){
+		List<BoardDTO> list = null;
+		try {
+			list = dao.selectReviewBookmark(email);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
 	
 	public boolean isCheckedLikeStatus(ActUserDTO dto) {
 		boolean flag = false;

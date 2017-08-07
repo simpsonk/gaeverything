@@ -59,8 +59,9 @@ public class CalendarController {
 	}
 	
 	@RequestMapping(value="/listAll",method=RequestMethod.POST)
-	public @ResponseBody String calendarList(HttpServletResponse response){
-		List<CalendarFormat> list = service.jsonAll();
+	public @ResponseBody String calendarList(HttpServletResponse response, HttpSession session){
+		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		List<CalendarFormat> list = service.jsonAll(member.getEmail());
 		String data = new Gson().toJson(list);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
