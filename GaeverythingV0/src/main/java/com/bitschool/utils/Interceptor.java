@@ -14,6 +14,9 @@ public class Interceptor extends HandlerInterceptorAdapter {
 		// TODO Auto-generated method stub
 		MemberDTO member = (MemberDTO)request.getSession().getAttribute("member");
 		String requestURI = request.getRequestURI().toString();
+		if(request.getQueryString()!=null){
+			requestURI+="?"+request.getQueryString();
+		}
 		boolean isLogin = member!=null?true:false;
 		if(!isLogin){
 			String url = "/viewLogin";

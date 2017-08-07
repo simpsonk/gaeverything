@@ -157,8 +157,7 @@
 						<div class="add-review-photos col-lg-4" style="position:static;">		
 							<div class="photoUpload">
 								<span>
-								<a href="/review/viewReviewRegist?locationSeq=${detail.locationSeq}&boardCategory=${boardCategory}&address=${detail.title}">
-								<i class="im im-icon-Pencil"></i> Write Review</span></a>
+								<a href="/review/viewReviewRegist?locationSeq=${detail.locationSeq}&boardCategory=${detail.categoryCode}&address=${detail.title}"><i class="im im-icon-Pencil"></i> Write Review</span></a>
 							</div>
 						</div>	
 					</div>
@@ -213,9 +212,9 @@
 							<%-- <c:if test="${status.index<10}"> --%>
 								<div class="col-md-4">
 									<a href="${reviews.link}" class="listing-item-container">																
-												<h4>${reviews.title}</h4>												
-												<span>${reviews.bloggername}</span><br>
-												<span>${reviews.postdate}</span>																				
+										<h4>${reviews.title}</h4>												
+										<span>${reviews.bloggername}</span><br>
+										<span>${reviews.postdate}</span>																				
 									</a>
 								</div>	
 							<%-- </c:if>			 --%>

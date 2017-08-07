@@ -105,9 +105,10 @@ public class ReviewController {
 	}
 
 	@RequestMapping(value = "/viewReviewRegist", method = {RequestMethod.GET, RequestMethod.POST})
-	public String viewReviewRegist(HttpSession session, Model model,@RequestParam(value="locationSeq") int locationSeq,
-			@RequestParam(value="boardCategory",defaultValue="1") int boardCategory,
-			@RequestParam(value="address") String address){
+	public String viewReviewRegist(HttpSession session, Model model,@RequestParam(value="locationSeq", defaultValue = "0") int locationSeq,
+			@RequestParam(value="boardCategory",defaultValue="") String boardCategory,
+			@RequestParam(value="address", defaultValue = "") String address){
+		System.out.println("check"+locationSeq);
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		String url = "review/review_regist";
 		model.addAttribute("locationSeq",locationSeq);
