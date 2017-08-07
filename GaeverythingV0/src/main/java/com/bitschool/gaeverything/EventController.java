@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.lang.UsesSunHttpServer;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,7 @@ import com.bitschool.service.ActUserService;
 import com.bitschool.service.EventService;
 import com.bitschool.service.PageService;
 import com.bitschool.utils.ActUserManager;
+import com.bitschool.utils.LoginFilter;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -42,8 +44,9 @@ public class EventController {
 	private ActUserService aService;
 	
 	@RequestMapping(value = "/viewEventList", method = RequestMethod.GET)
-	public String viewEventList(){
+	public String viewEventList(HttpSession session, Model model){
 		String url = "event/event_list";
+		boolean isLogin = new LoginFilter().isLogin(session, model);
 		return url;
 	}
 	
@@ -65,8 +68,10 @@ public class EventController {
 	}
 	
 	@RequestMapping(value="/detail", method=RequestMethod.GET)
-	public String detail (){
+	public String detail (HttpSession session, Model model){
 		String url = "event/event_detail";
+		boolean isLogin = new LoginFilter().isLogin(session, model);
+
 		return url;
 	}
 	
