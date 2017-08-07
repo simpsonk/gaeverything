@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -86,12 +87,13 @@
 								</li>
 								</c:when>
 								</c:choose>	
-									<c:forEach var="list" items="${reviewList}">        								
+									<c:forEach var="list" items="${reviewList}" varStatus="status">									    
+									<c:if test="${status.index<5}">	
 									<li>
-										<div class="avatar"><img src="/resources/images/reviews-avatar.jpg" alt="" /> </div>
+										<div class="avatar"><img src="/resources/upload/${member.photo}" alt="" /> </div>
 										<div class="comment-content"><div class="arrow-comment"></div>
 											<div class="comment-by">Your review <div class="comment-by-listing own-comment">on <a href="#"><b>${list.address}</b></a></div> <span class="date">${list.regiDate}</span>
-												<div class="star-rating" data-rating="4.5"></div>
+												<div class="star-rating" data-rating="${list.rating}"></div>
 											</div>
 											<p>${list.onlyText}</p>
 											<a href="#" class="rate-review"><i class="sl sl-icon-note"></i> Edit</a>										
@@ -99,7 +101,15 @@
 										</div>
 
 									</li>
+									</c:if>
 									</c:forEach>
+									<c:choose>
+									<c:when test="${fn:length(reviewList) > 5}">
+									<li>						
+											<a href="/mypage/viewMypageList?category=1" class="read-more">Read More <i class="fa fa-angle-right"></i></a>		
+									</li>				
+									</c:when>
+									</c:choose>
 								</ul>
 							</div>
 						</li>
@@ -122,12 +132,13 @@
 								</li>
 								</c:when>
 								</c:choose>	
-									<c:forEach var="list" items="${commentList}">        								
+									<c:forEach var="list" items="${commentList}" varStatus="status">									    
+									<c:if test="${status.index<5}">	       								
 									<li>
-										<div class="avatar"><img src="/resources/images/reviews-avatar.jpg" alt="" /> </div>
+										<div class="avatar"><img src="/resources/upload/${member.photo}" alt="" /> </div>
 										<div class="comment-content"><div class="arrow-comment"></div>
 											<div class="comment-by">Your Comments <div class="comment-by-listing own-comment">on <a href="#"><b>${list.address}</b></a></div> <span class="date">${list.regiDate}</span>
-												<div class="star-rating" data-rating="4.5"></div>
+												<div class="star-rating" data-rating="${list.rating}"></div>
 											</div>
 											<p>${list.message}</p>
 											<a href="#" class="rate-review"><i class="sl sl-icon-note"></i> Edit</a>										
@@ -135,7 +146,15 @@
 										</div>
 
 									</li>
+									</c:if>
 									</c:forEach>
+									<c:choose>
+									<c:when test="${fn:length(commentList) > 5}">
+									<li>						
+											<a href="/mypage/viewMypageList?category=2" class="read-more">Read More <i class="fa fa-angle-right"></i></a>		
+									</li>				
+									</c:when>
+									</c:choose>
 								</ul>
 							</div>
 						</li>

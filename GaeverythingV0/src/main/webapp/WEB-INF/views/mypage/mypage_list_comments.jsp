@@ -87,10 +87,10 @@
 								</c:choose>	
 									<c:forEach var="list" items="${commentList}">        								
 									<li>
-										<div class="avatar"><img src="/resources/images/reviews-avatar.jpg" alt="" /> </div>
+										<div class="avatar"><img src="/resources/upload/${member.photo}" alt="" /> </div>
 										<div class="comment-content"><div class="arrow-comment"></div>
 											<div class="comment-by">Your Comments <div class="comment-by-listing own-comment">on <a href="#"><b>${list.address}</b></a></div> <span class="date">${list.regiDate}</span>
-												<div class="star-rating" data-rating="4.5"></div>
+												<div class="star-rating" data-rating="${list.rating}"></div>
 											</div>
 											<p>${list.message}</p>
 											<a href="#" class="rate-review"><i class="sl sl-icon-note"></i> Edit</a>										
