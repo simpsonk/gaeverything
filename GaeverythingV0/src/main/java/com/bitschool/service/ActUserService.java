@@ -10,12 +10,24 @@ import org.springframework.stereotype.Service;
 import com.bitschool.dao.ActUserDAO;
 import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BoardDTO;
+import com.bitschool.dto.LocationDTO;
 
 @Service
 public class ActUserService {
 	
 	@Inject
-	private ActUserDAO dao;
+	private ActUserDAO dao;	
+	
+	public List<LocationDTO> selectShopBookmark(String email){
+		List<LocationDTO> list = null;
+		try {
+			list = dao.selectShopBookmark(email);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
 	
 	public List<BoardDTO> selectReviewBookmark(String email){
 		List<BoardDTO> list = null;

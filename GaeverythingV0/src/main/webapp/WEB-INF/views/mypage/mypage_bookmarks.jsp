@@ -115,7 +115,51 @@
 				</div>
 			</div>
 			
-			
+			<div class="col-lg-4 col-md-12">
+				<div class="dashboard-list-box margin-top-0">
+					<h4>Bookmarked Hospitals</h4>
+					<ul>
+						<c:choose>
+						<c:when test="${mapList.size()==0}">
+						<li>
+						<span>북마크한 병원이 없습니다.</span>
+						</li>
+						</c:when>
+						</c:choose>
+						<c:forEach var="list" items="${mapList}">        
+						<li>							
+							<div class="list-box-listing">
+								<div class="list-box-listing-img"><a href="/map/detail/viewDetailPage?locationSeq=${list.locationSeq}">
+								<c:choose>
+								<c:when test="${list.imageUrl!=null}">
+											<img src="/resources/upload/${list.imageUrl}" alt="">	
+											</c:when>	
+											<c:otherwise>
+											<img src="/resources/images/hospital.jpg" alt="">	
+											</c:otherwise></c:choose>	</a></div>
+								<div class="list-box-listing-content">
+									<div class="inner">
+										<h3>${list.title}</h3>
+										<span>${list.address}</span>
+										 <div class="star-rating" data-rating="${list.averageRatings}">
+											<div class="rating-counter">(${list.countRatings} ratings)</div>
+										</div> 
+									</div>
+								</div>
+							</div>
+							<div class="buttons-to-right">
+							<%--  	<a href="/mypage/deleteMapBookmarks?contentno=${list.locationSeq}" class="button gray">  --%>
+							 	<i class="sl sl-icon-close"></i> Delete
+							 	</a> 
+							 </div>
+						</li>
+						</c:forEach>
+
+
+					</ul>
+				</div>
+				
+				
 
 
 			<!-- Copyrights -->
