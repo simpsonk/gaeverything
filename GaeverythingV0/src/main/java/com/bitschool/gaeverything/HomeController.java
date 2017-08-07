@@ -65,14 +65,18 @@ public class HomeController {
 	}
 	@RequestMapping(value = "login", method = {RequestMethod.POST, RequestMethod.GET})
 	public String login(@RequestParam("email") String email, @RequestParam("pw") String pw, 
-			HttpSession session, @RequestParam(value="uri", defaultValue="/") String uri){
+			HttpSession session, @RequestParam(value="uri", defaultValue="/") String uri,
+			@RequestParam(value = "url") String loginUrl){
 		String url = null;
 		boolean flag = logService.loginCheckService(email, pw);
-		System.out.println(flag+"/"+uri);
 		if(flag){
 			MemberDTO member = sigService.getMemberInfo(email);
-			url = "redirect:"+uri;
 			session.setAttribute("member", member);
+			if(uri.equals("/")){
+				url = "redirect:"+loginUrl;
+			}else{
+				url = "redirect:"+uri;
+			}
 		}
 		return url;
 	}

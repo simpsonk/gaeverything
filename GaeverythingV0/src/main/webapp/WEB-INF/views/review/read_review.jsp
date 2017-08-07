@@ -110,6 +110,7 @@
 	function like_clicked(){
 		var ele = document.getElementById("like");
 		var class_name = ele.className;
+		//alert(class_name);
 		var boardNo = document.getElementById("boardNo").value;
 		var email = document.getElementById("memberEmail").value
 		var url = '/review/updateLike?like='+class_name+'&boardNo='+boardNo+"&email="+email;

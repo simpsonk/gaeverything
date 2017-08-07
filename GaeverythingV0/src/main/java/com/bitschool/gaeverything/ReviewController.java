@@ -195,7 +195,7 @@ public class ReviewController {
 		if(bDTO1!=null){
 			prevTitle = bDTO1.getTitle();
 		}else{
-			prevTitle = "(이전글이 없습니다.)";
+			prevTitle = "(이전 글이 없습니다.)";
 		}
 		
 		BoardDTO bDTO2 = service.searchNext(boardNo);
@@ -203,7 +203,7 @@ public class ReviewController {
 		if(bDTO2!=null){
 			nextTitle = bDTO2.getTitle();
 		}else{
-			nextTitle = "(다음글이 없습니다.)";
+			nextTitle = "(다음 글이 없습니다.)";
 		}
 		
 		model.addAttribute("numOfCmt", numOfCmt);

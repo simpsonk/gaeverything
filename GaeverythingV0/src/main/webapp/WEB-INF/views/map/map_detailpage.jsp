@@ -315,8 +315,8 @@
 	
 						</fieldset>					
 						<input type="hidden" id="isLogin" value="${member.nickname}">	
-						<input type="button" id="registComment" value="Submit Comment">
-						<input type="button" id="modifyComment" value="Modify Comment" style="display: none;">
+						<button type="button" id="registComment" class = "button margin-top-15" style="height: 50px;">Submit Comment</button>
+						<button type="button" id="modifyComment" class = "button margin-top-15" style="height: 50px; display: none;">Modify Comment</button>
 						<div class="clearfix"></div>
 					</form>
 	
@@ -496,6 +496,7 @@ var mapContainer = document.getElementById('singleListingMap'), // 지도를 표
 		
 		level: 3 // 지도의 확대 레벨
 	};
+
 
 // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
 var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다

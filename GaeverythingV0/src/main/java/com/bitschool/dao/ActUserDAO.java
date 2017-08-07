@@ -2,6 +2,7 @@ package com.bitschool.dao;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -9,12 +10,20 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.bitschool.dto.ActUserDTO;
+import com.bitschool.dto.BoardDTO;
 
 @Repository
 public class ActUserDAO {
 	@Inject
 	private SqlSession session;
 	private static String nameSpace = "com.bitschool.gaeverything.ActUserMapper";
+	
+	public List<BoardDTO> selectReviewBookmark(String email) throws SQLException{
+		List<BoardDTO> list = null;
+		list = session.selectList(nameSpace+".selectReviewBookmark", email);
+		return list;
+	}
+	
 
 	public boolean searchStatus(ActUserDTO dto) throws SQLException{
 		boolean flag = false;

@@ -47,9 +47,12 @@
 					</div>
 				</div>
 				<input type="hidden" name ="uri" value="${param.uri}">
+				<input type="hidden" name = "url" id = "url" >
+				<script type="text/javascript">
+					document.getElementById("url").value = location.pathname;
+				</script> 
 			</form>
 		</div>
-
 		<!-- Register -->
 		<div class="tab-content" id="tab2" style="display: none;">
 			<form action="/signUp/registMember" name="signform" id="signform" method="post" class="register"> 

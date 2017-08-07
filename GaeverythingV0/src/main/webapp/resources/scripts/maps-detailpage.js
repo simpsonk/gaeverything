@@ -290,6 +290,71 @@ function getPhotoList(photo) {
     return itemStr;
 }
 
+//댓글  Edit, Delete
+function go_url(type, commSeq){	
+	var commentSeq = document.getElementById("commentSeq");
+	var commMsg = document.getElementById("commMsg");
+	var changeMsg = document.getElementById("changeMsg"+commSeq);
+	var ratingVal = document.getElementById("ratingVal"+commSeq);
+	var ment = document.getElementById("ment");
+	if(type==1){		
+		commentSeq.value = commSeq;
+		commMsg.innerHTML = changeMsg.innerHTML;
+		if(ratingVal.value==0.5){
+			$('input:radio[name=rating]:input[value="0.5"]').attr("checked", true);			
+		}else if(ratingVal.value==1.0){
+			$('input:radio[name=rating]:input[value="1.0"]').attr("checked", true);		
+		}else if(ratingVal.value==1.5){
+			$('input:radio[name=rating]:input[value="1.5"]').attr("checked", true);		
+		}else if(ratingVal.value==2.0){
+			$('input:radio[name=rating]:input[value="2.0"]').attr("checked", true);		
+		}else if(ratingVal.value==2.5){
+			$('input:radio[name=rating]:input[value="2.5"]').attr("checked", true);		
+		}else if(ratingVal.value==3.0){
+		}else if(ratingVal.value==3.5){
+			$('input:radio[name=rating]:input[value="3.5"]').attr("checked", true);		
+		}else if(ratingVal.value==4.0){
+			$('input:radio[name=rating]:input[value="4.0"]').attr("checked", true);		
+		}else if(ratingVal.value==4.5){
+			$('input:radio[name=rating]:input[value="4.5"]').attr("checked", true);		
+		}else if(ratingVal.value==5.0){
+			$('input:radio[name=rating]:input[value="5.0"]').attr("checked", true);		
+		}		
+		commMsg.focus();
+		$('#registComment').hide();
+		$('#modifyComment').show();
+		ment.innerHTML = 'Edit Comment';
+	}else if(type==2){
+		var ds = document.getElementById("add-comment");
+		var url = "/map/detail/deleteComment?commentSeq="+commSeq;
+		ds.action = url;
+		ds.submit();
+	}
+}
+
+//등록시 필수항목 체크
+function checkMessage(locationSeq){
+	  var isLogin = document.getElementById("isLogin");
+	  if(isLogin.value==''){
+		  alert("댓글작성은 회원만 가능합니다.");	
+		  location.href = "/viewLogin?uri=/map/detail/viewDetailPage?locationSeq="+locationSeq;
+	  }else{
+		  if($('input:radio[name="rating"]').is(":checked")==false){
+			  alert('별점을 표시해주세요.');
+		  }
+		  if($("#commMsg").val()==''){
+			  alert('코멘트를 입력해주세요.');
+		  }	
+	  }
+}
+
+function box_clicked(locationSeq){
+	alert("댓글작성은 회원만 가능합니다.");	
+	location.href = "/viewLogin?uri=/map/detail/viewDetailPage?locationSeq="+locationSeq;
+}
+
+
+
 /*
 <div class="review-images col-lg-12" style="padding-top: 8px;" id="mfp-${status.count}">
 		<a href="/resources/upload/${dp[s.count].locationPhoto}" class="mfp-gallery listing-item-container">
