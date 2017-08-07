@@ -2,6 +2,7 @@ package com.bitschool.gaeverything;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -22,6 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BoardDTO;
+import com.bitschool.dto.DetailCommentDTO;
+import com.bitschool.dto.EventDTO;
+import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.dto.MyPageDTO;
 import com.bitschool.dto.PetPageDTO;
@@ -327,14 +331,24 @@ public class MypageController {
 	
 	
 	@RequestMapping(value = "/viewMypageList", method = RequestMethod.GET)
-	public String viewMypageList(HttpSession session, Model model){
+	public String viewMypageList(HttpSession session, Model model,
+			@RequestParam(value="category", defaultValue="0") int category){
 		String url = "mypage/mypage_list";
+		if(category==1){
+			url = "mypage/mypage_list_reviews";
+		}else if(category==2){
+			url = "mypage/mypage_list_comments";
+		}
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		List<BoardDTO> reviewList = service.selectMyReviews(member.getNickname());
+		List<DetailCommentDTO> commentList = service.selectMyDetailComments(member.getNickname());
 		boolean isLogin = member!=null?true:false;
 		if(!isLogin){
 			url = "login_page";
 		}else{
 			model.addAttribute("member", member);
+			model.addAttribute("reviewList",reviewList);
+			model.addAttribute("commentList",commentList);			
 		}
 		return url;
 	}
@@ -365,28 +379,75 @@ public class MypageController {
 		return url;
 	}
 	
+	//북마크한 이벤트 제거
+		@RequestMapping(value = "/deleteEventBookmarks", method = RequestMethod.GET)
+		public String deleteEventBookmarks(HttpSession session, Model model,
+				@RequestParam(value="contentno") int contentno,
+				@RequestParam(value="category",defaultValue="0") int category){
+			String url = null;
+			MemberDTO member = (MemberDTO)session.getAttribute("member");
+			ActUserDTO aDTO = new ActUserDTO(member.getEmail(),"20",contentno);
+			aservice.deleteDetailPageLikeStatus(aDTO);
+			System.out.println("deleteBookmarks : "+aDTO);
+			url = "redirect:viewMypageBookmarks?category="+category;	
+			return url;
+		}	
+	
+	//북마크한 병원 제거
+	@RequestMapping(value = "/deleteShopBookmarks", method = RequestMethod.GET)
+	public String deleteShopBookmarks(HttpSession session, Model model,
+			@RequestParam(value="contentno") int contentno,
+			@RequestParam(value="category",defaultValue="0") int category){
+		String url = null;
+		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		ActUserDTO aDTO = new ActUserDTO(member.getEmail(),"10",contentno);
+		aservice.deleteDetailPageLikeStatus(aDTO);
+		System.out.println("deleteBookmarks : "+aDTO);
+		url = "redirect:viewMypageBookmarks?category="+category;	
+		return url;
+	}	
+	
 	//북마크한 리뷰 제거
 	@RequestMapping(value = "/deleteBookmarks", method = RequestMethod.GET)
 	public String deleteBookmarks(HttpSession session, Model model,
-			@RequestParam(value="contentno") int contentno){
+			@RequestParam(value="contentno") int contentno,
+			@RequestParam(value="category",defaultValue="0") int category){
 		String url = null;
+		System.out.println("category : "+category);
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		ActUserDTO aDTO = new ActUserDTO(member.getEmail(),"00",contentno);
 		aservice.deleteDetailPageLikeStatus(aDTO);
 		System.out.println("deleteBookmarks : "+aDTO);
-		url = "redirect:viewMypageBookmarks";
+		url = "redirect:viewMypageBookmarks?category="+category;		
 		return url;
 	}	
 	
 	//마이페이지-북마크탭 보기
 	@RequestMapping(value = "/viewMypageBookmarks", method = RequestMethod.GET)
-	public String viewMypageBookmarks(HttpSession session, Model model){
+	public String viewMypageBookmarks(HttpSession session, Model model,
+			@RequestParam(value="category",defaultValue="0") int category){
 		String url = "mypage/mypage_bookmarks";
+		if(category==1){
+			url = "mypage/mypage_bookmarks_reviews";
+		}else if(category==2){
+			url = "mypage/mypage_bookmarks_map";
+		}else if(category==3){
+			url = "mypage/mypage_bookmarks_events";
+		}
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		List<BoardDTO> reviewList = aservice.selectReviewBookmark(member.getEmail());		
+		List<BoardDTO> reviewList = aservice.selectReviewBookmark(member.getEmail());	
+		List<LocationDTO> mapList = aservice.selectShopBookmark(member.getEmail());
+		List<LocationDTO> mapList2 = new ArrayList<LocationDTO>();
+		LocationDTO dto = null;
+		ActUserManager manager = new ActUserManager(aservice);
+		List<EventDTO> eventList = aservice.selectEventBookmark(member.getEmail());
 		for(int i=0;i<reviewList.size();i++){
 			int boardNo = reviewList.get(i).getBoardNo();
 			reviewList.get(i).setNumOfCmt(bservice.getNumOfCmts(boardNo));
+		}
+		for(int i=0;i<mapList.size();i++){
+			dto = lservice.getLocActUserResult(manager, mapList.get(i));
+			mapList2.add(dto);
 		}
 		boolean isLogin = member!=null?true:false;
 		if(!isLogin){
@@ -394,6 +455,8 @@ public class MypageController {
 		}else{
 			model.addAttribute("member", member);
 			model.addAttribute("reviewList",reviewList);
+			model.addAttribute("mapList",mapList2);
+			model.addAttribute("eventList",eventList);
 		}
 		return url;
 	}	

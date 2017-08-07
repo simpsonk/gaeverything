@@ -1,11 +1,11 @@
-
+	var listPage = 0;
+	
 	function displayInfoList(pList, infoList, amount, page){
 	    var listEl = document.getElementById('placesList'), 
 	    menuEl = document.getElementById('menu_wrap'),
 	    fragment = document.createDocumentFragment(),
 	    pageList = document.getElementById('pageList'),
 	    itemEl;
-	    	    
 	    // 검색 결과 목록에 추가된 항목들을 제거합니다
 	    removeAllChildNods(listEl);
 	    var url = '/map/detail/viewDetailPage?locationSeq=';
@@ -65,7 +65,7 @@
 		  			  	itemStr +=					places.radius!=null?'('+places.radius+'km)':'';
 		  			  	itemStr +=			'</span>'+'<br>'+
 		  			  						'<div class="star-rating" data-rating="'+places.averageRatings+'">'+
-					  			    			'<div class="rating-counter"  style="font-size: 16px"> (<i class="im im-icon-Heart"></i>'+places.countLike+'/<i class="im im-icon-Speach-Bubble"></i>'+places.countReplies+'/'+places.countReview+' reviews)'+'</div>'+
+					  			    			'<div class="rating-counter"  style="font-size: 16px"> (<i class="im im-icon-Heart"></i>'+places.countLike+'  <i class="im im-icon-Speach-Bubble"></i>'+places.countReplies+'  '+places.countReview+' reviews)'+'</div>'+
 					  			    		'</div>'+
 					  			    	'</div>'+
 				  			    	'</div>'+
@@ -90,23 +90,21 @@
 	    }
 	}
 	
+	
 	function like_clicked(locationSeq){
 		var ele = document.getElementById("like"+locationSeq);
 		var class_name = ele.className;
 		var email = document.getElementById("memberEmail").value;
 		var url = '/review/updateDetailPageLike?like='+class_name+'&locationSeq='+locationSeq+'&email='+email;
 		/*var id = document.getElementById("numOflike");*/
-		
 		$.ajax({
 	        url : url,
 	        dataType : 'json',
 	        type:"POST",
 	        success : function(data) {
 	        	/*id.innerHTML=data+' people bookmarked this place'; */
-        		var page = document.getElementById('listPage').value;
 	        	if($("select[name=searchOption]").val()==2){
-	        		searchLocation('like');
-	        		pageClickEvent(page);
+	        		searchLocation('like', listPage);
 	        	}else{
 	        		searchShopname();
 	        	}
@@ -122,10 +120,11 @@
 		location.href = "/viewLogin?uri=/map/viewMapList";
 	}
 	
+	
+
 	function pageClickEvent(page){
 		url = '/map/getPagingData?page='+page;
-		alert(url);
-		document.getElementById('listPage').value=page;
+		listPage = page;
 		var stringLocData = JSON.stringify(locData);
   		$.ajax({
 			url : url,
@@ -133,7 +132,8 @@
 			type:"POST",
 			dataType:"json",
 			success : function(data) {
-				displayInfoList(data.pList, data.infoList, data.page, 5);
+				locData = data.places;
+				displayInfoList(data.pList, data.infoList, 5, listPage);
 			},
 			error : function(request, status, error) {
 				 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);

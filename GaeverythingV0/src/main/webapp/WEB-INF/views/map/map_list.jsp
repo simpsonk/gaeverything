@@ -53,7 +53,6 @@
 	<div class="fs-inner-container content">
 		<div class="fs-content">
 			<input type="hidden" id = "memberEmail" value = "${member.email}">
-			<input type="hidden" id = "listPage" value = "0">
 			<!-- Search -->
 			<section class="search">
 				<div class="row">
@@ -247,7 +246,7 @@
 							var result = length+' Results Found';
 							$('#resultCount').text(result);
 							displayPlaces(data.places);
-							displayInfoList(data.pList, data.infoList, 0, 5);
+							displayInfoList(data.pList, data.infoList, 5, 0);
 							clusterer.clear();
 							clusterer.addMarkers(markers);
 						},
@@ -277,7 +276,7 @@
 		
 		$("#search").click(function() {
 			if(option==2){
-				searchLocation();
+				searchLocation("start", 0);
 			}else if(option==1){
 				searchShopname();
 			}
@@ -318,7 +317,7 @@
 				var result = length+' Results Found';
 				$('#resultCount').text(result);
 				displaySearhPlaces(data.places);
-				displayInfoList(data.pList, data.infoList, 0, 5);
+				displayInfoList(data.pList, data.infoList, 5, 0);
 				clusterer.clear();
 				clusterer.addMarkers(markers);
 				},
@@ -334,7 +333,7 @@
 		}
 	}
 	
-	function searchLocation(type){
+	function searchLocation(type, page){
 		searchWord = document.getElementById('seachword').value;
 	
 		option = $("select[name=searchOption]").val();
@@ -356,7 +355,7 @@
 			longitude = loc.getLng();
 		}
 	
-		url = '/map/getSearchLocationData?searchWord='+searchWord+'&level='+level+'&lat='+latitude+'&lon='+longitude+"&option="+option+'&categories='+categories;
+		url = '/map/getSearchLocationData?searchWord='+searchWord+'&level='+level+'&lat='+latitude+'&lon='+longitude+"&option="+option+'&categories='+categories+'&page='+page;
 		$.ajax({
 			url : url,
 			dataType : 'json',
@@ -367,7 +366,7 @@
 				var result = length+' Results Found';
 				$('#resultCount').text(result);
 				displayPlaces(data.places);
-				displayInfoList(data.pList, data.infoList, 0, 5);
+				displayInfoList(data.pList, data.infoList, 5, page);
 				clusterer.clear();
 				clusterer.addMarkers(markers);
 				},

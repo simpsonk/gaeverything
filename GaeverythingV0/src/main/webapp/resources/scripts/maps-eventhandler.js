@@ -22,7 +22,7 @@
 				$('#resultCount').text(result);
 				
 				displayPlaces(data.places);
-				displayInfoList(data.pList, data.infoList, 0, 5);
+				displayInfoList(data.pList, data.infoList, 5, 0);
 				clusterer.clear();
 				clusterer.addMarkers(markers);
 			},
