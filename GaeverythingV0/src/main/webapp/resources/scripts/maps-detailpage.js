@@ -151,29 +151,31 @@ function no_login_like(locationSeq){
 	 commentEnd = commentEnd>list.length?list.length:commentEnd;
  });   
  
-function getListItem(reply) {
-    var el = document.createElement('div');
-    var nickname = document.getElementById('isLogin').value;
-    var regi = new Date(reply.regiDate); 
-    regi = regi.getFullYear() + '-' + leadingZeros((regi.getMonth()+1),2) + '-' + leadingZeros(regi.getDate(),2)
-    +' '+leadingZeros(regi.getHours(),2)+':'+leadingZeros(regi.getMinutes(),2)+':'+leadingZeros(regi.getSeconds(),2);
-    var itemStr ='	<input type="hidden" id="ratingVal'+reply.commentSeq+'" value="'+reply.rating+'">'+
-	  	'<li><div class="avatar"><img src="/resources/upload/'+reply.photo+'" alt="" /></div>'+
-	'<div class="comment-content"><div class="arrow-comment"></div>'+
-		'<div class="comment-by">'+
-			reply.nickname+'<span class="date">'+regi+'</span>'+
-			'<div class="star star-rating" data-rating="'+reply.rating+'"></div>'+
-		'</div>'+
-		'<p id="changeMsg'+reply.commentSeq+'">'+reply.message+'</p></div>';
-		if(nickname==reply.nickname){
-				itemStr += '<div class="col-md-8 centered-content" >	'+							
-				'<a onclick="go_url(1, '+reply.commentSeq+');" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-note"></i>Edit</a>'+
-				'<a onclick="go_url(2, '+reply.commentSeq+');" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-close"></i>Delete</a>'+
-			'</div></li>';
-		}
-		el.innerHTML = itemStr;
-    return el;
-}
+ function getListItem(reply) {
+	    var el = document.createElement('div');
+	    var nickname = document.getElementById('isLogin').value;
+	    var regi = new Date(reply.regiDate); 
+	    regi = regi.getFullYear() + '-' + leadingZeros((regi.getMonth()+1),2) + '-' + leadingZeros(regi.getDate(),2)
+	    +' '+leadingZeros(regi.getHours(),2)+':'+leadingZeros(regi.getMinutes(),2)+':'+leadingZeros(regi.getSeconds(),2);
+	    var itemStr ='	<input type="hidden" id="ratingVal'+reply.commentSeq+'" value="'+reply.rating+'">'+
+		  	'<li><div class="avatar"><img src="/resources/upload/'+reply.photo+'" alt="" /></div>'+
+		'<div class="comment-content"><div class="arrow-comment"></div>'+
+			'<div class="comment-by">'+
+				reply.nickname+'<span class="date">'+regi+'</span>'+
+				'<div class="star star-rating" data-rating="'+reply.rating+'"></div>'+
+			'</div>'+
+			'<p id="changeMsg'+reply.commentSeq+'">'+reply.message+'</p></div>';
+			if(nickname==reply.nickname){
+				itemStr +=	'<div class="comment-by" >'+
+							'	<a class="reply" style="margin-top: 20px;" " onclick="go_url(1, '+reply.commentSeq+');" return false; ><i class="sl sl-icon-note"></i> Edit</a>'+
+							'</div>';
+				itemStr +=	'<div class="comment-by">'+
+							'	<a class="reply" style="margin-top: 60px;" " onclick="go_url(2, '+reply.commentSeq+');" return false; ><i class="sl sl-icon-note"></i> Delete</a>'+
+							'</div>';		
+	 		}
+			el.innerHTML = itemStr;	
+	    return el;
+	}	
 
 function leadingZeros(n, digits) {
 	  var zero = '';
