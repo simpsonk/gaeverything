@@ -14,7 +14,7 @@ import com.bitschool.dto.MemberDTO;
 public class PageService {
 	public HashMap<String, Object> makeSerachList(int page, int amount, List<LocationDTO> list){
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		System.out.println(amount+"--->"+list.size());
+		System.out.println(amount+"--->"+list.size()+"page-->"+page);
 		//page:0, amount 5;
 		int pageCount = (int)Math.ceil(list.size()/(double)amount);
 		int pageUnit = page/amount;

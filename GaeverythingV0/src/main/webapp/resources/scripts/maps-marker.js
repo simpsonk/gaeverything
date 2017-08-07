@@ -3,13 +3,10 @@
 		removeMarker();
 	    
 	    closeOverlay();
-	    
-	    var url = '/map/detail/viewDetailPage?locationSeq=';
-	    
+	    	    
 	    bounds = new daum.maps.LatLngBounds();
 	    
 	    for ( var i=0; i<places.length; i++ ) {
-	    	
 	    	var placePosition = new daum.maps.LatLng(places[i].latitude, places[i].longitude),
             marker = addMarker(placePosition, i); 
 	    	
@@ -17,11 +14,11 @@
 	    	
 	        var detailUrl = url+places[i].locationSeq; //마커에 상세정보 클릭시 이동할 Url
 
-	        (function(marker, title, imageUrl, address, detailUrl, radius) {
+	        (function(marker, places) {
 	            daum.maps.event.addListener(marker, 'click', function() {
-	            	setOverlay(map, makeContent(title, imageUrl, address, detailUrl, radius), marker.getPosition());
+	            	setOverlay(map, makeContent(places), marker.getPosition());
 	            });
-	        })(marker, places[i].title, places[i].imageUrl, places[i].address, url+places[i].locationSeq , places[i].radius);
+	        })(marker, places[i]);
 	    }
 	    map.setBounds(bounds);
 	}
@@ -45,11 +42,11 @@
 	        // 마커와 검색결과 항목에 mouseover 했을때
 	        // 해당 장소에 인포윈도우에 장소명을 표시합니다
 	        // mouseout 했을 때는 인포윈도우를 닫습니다
-	        (function(marker, title, imageUrl, address, detailUrl, radius) {
+	        (function(marker, places) {
 	            daum.maps.event.addListener(marker, 'click', function() {
-	            	setOverlay(map, makeContent(title, imageUrl, address, detailUrl, radius), marker.getPosition());
+	            	setOverlay(map, makeContent(places), marker.getPosition());
 	            });
-	        })(marker, places[i].title, places[i].imageUrl, places[i].address, url+places[i].locationSeq , places[i].radius);
+	        })(marker, places[i]);
 	    }
 	    
 	}
@@ -141,7 +138,7 @@
 				        '			<div class="listing-title">'+
 				        '				<div class="star-rating" data-rating="3.5	">46 Review<div>'+		
 				        '			</div>'+
-				        '		</div>'+
+				        '		</div>'+	
 				        '	</div>'+
 				        '</div>';	        
     	return content;
@@ -150,28 +147,33 @@
    
     	     
     
-    function makeContent(title, imageUrl, address, placeUrl, radius){
+    function makeContent(places){
     	var content = 	'<div class="wrap">' + 
 				        '    <div class="info">' + 
-				        '        <div class="title">' + title+ 
+				        '        <div class="title">' + places.title+ 
 				        '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
 				        '        </div>' + 
 				        '        <div class="body">' + 
 				        '           <div class="img">';
-    	if(imageUrl){
-    		content+=	'                <img src="'+imageUrl+'" width="73" height="70">';
+    	if(places.imageUrl){
+    		content+=	'                <img src="'+places.imageUrl+'" width="73" height="70">';
     	}else {
     		content+=	'                <img src="/resources/images/hospital.jpg" width="73" height="70">';
     	}
     		content+=   '			</div>' + 
 				        '           <div class="desc">'+ 
-				        '				<div class="ellipsis">'+address;
-    		content +=					radius!=null?'('+radius+'km)':''; 
-			content +=  '				<div><a href="'+placeUrl+'" target="_blank" class="link">상세정보</a></div>' + 
+				        '				<div class="ellipsis">'+places.address;
+    		content +=					places.radius!=null?'('+places.radius+'km) <br>':'<br>';
+    					
+    		content +=	'				<div class="star-rating" data-rating="'+places.averageRatings+'">'+
+  						'					<div class="rating-counter"  style="font-size: 13px;padding-left: 0px;">(<i class="im im-icon-Heart"></i>'+places.countLike+'/<i class="im im-icon-Speach-Bubble"></i>'+places.countReplies+'/'+places.countReview+' reviews)'+'</div>'+
+  						'				</div>'+
+    					'				<div><a href="/map/detail/viewDetailPage?locationSeq='+places.locationSeq	+'" target="_blank" class="link">상세정보</a></div>' + 
 				        '            </div>' + 
 				        '        </div>' + 
 				        '    </div>' +    
 				        '</div>';
+
     	return content;
     }
     	

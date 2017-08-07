@@ -16,11 +16,19 @@
 					<a href="/"><img src="/resources/images/logo_gae.png" alt=""></a>
 					<a href="/" class="dashboard-logo"><img src="/resources/images/logo_gae.png" alt=""></a>
 				</div> -->
-				 
+				
+			
+				
 				<div id="logo">
-					<a href="/"><img src="/resources/images/1_black.png" alt=""></a>
-					<a href="/" class="dashboard-logo"><img src="/resources/images/1_white.png" alt=""></a> 
 				</div>  
+				<script type="text/javascript">
+					var logo = document.getElementById("logo");
+					if(location.pathname.includes("mypage")){
+						logo.innerHTML = '<a href="/" class="dashboard-logo"><img src="/resources/images/1_white.png" alt=""></a>';
+					}else{
+						logo.innerHTML = '<a href="/"><img src="/resources/images/1_black.png" alt=""></a>';
+					}
+				</script>
 
 				<!-- Mobile Navigation -->
 				<div class="menu-responsive">
@@ -63,7 +71,7 @@
 				<c:when test="${empty member}">
 					<!-- Right Side Content / End -->
 					<div class="right-side" style= 'padding-top: 5px;'>
-						<div class="header-widget">
+						<div class="header-widget" >
 							<a href="#sign-in-dialog" class="sign-in popup-with-zoom-anim"><i class="sl sl-icon-login"></i> Sign In</a>
 						</div>
 					</div>
@@ -85,7 +93,7 @@
 					<!-- Right Side Content / End -->
 					<div class="right-side">
 						<!-- Header Widget -->
-						<div class="header-widget">
+						<div class="header-widget" style="padding-top: 10px;"	>
 							
 							<!-- User Menu -->
 							<div class="user-menu">

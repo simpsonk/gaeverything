@@ -15,7 +15,7 @@
     .wrap * {padding: 0;margin: 0;}
     .wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
     .wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
-    .info .title {padding: 5px 0 0 10px;height: 30px;background: #eee;border-bottom: 1px solid #ddd;font-size: 18px;font-weight: bold;}
+    .info .title {padding: 2px 0 0 10px;height: 30px;background: #eee;border-bottom: 1px solid #ddd;font-size: 18px;font-weight: bold;}
     .info .close {position: absolute;top: 10px;right: 10px;color: #888;width: 17px;height: 17px;background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
     .info .close:hover {cursor: pointer;}
     .info .body {position: relative;overflow: hidden;}
@@ -53,16 +53,16 @@
 	<div class="fs-inner-container content">
 		<div class="fs-content">
 			<input type="hidden" id = "memberEmail" value = "${member.email}">
+			<input type="hidden" id = "listPage" value = "0">
 			<!-- Search -->
 			<section class="search">
 				<div class="row">
 					<div class="col-fs-12">
 						<div class="row with-forms">
 							<div class="col-fs-3">	
-								<select data-placeholder="Option" class="chosen-select" name="searchOption">
-									<option value="0" selected="selected">Option</option>
+								<select  class="chosen-select" name="searchOption" onchange="changeAction()">
+									<option value="2"  selected="selected" ${option==2?'selected="selected"':''}>Location</option>
 									<option value="1" ${option==1?'selected="selected"':''}>Shop name</option>
-									<option value="2" ${option==2?'selected="selected"':''}>Location</option>
 								</select>
 							</div>
 							<div class="col-fs-6">
@@ -107,11 +107,11 @@
          </div>
          <!-- Listings Container / End -->
 
-
+		
          <!-- Pagination Container -->
          <div class="row fs-listings">
             <div class="col-md-12">
-
+			
                <!-- Pagination -->
                <div class="clearfix"></div>
                <div class="row">
@@ -207,142 +207,186 @@
 
 	
 	//현재 위치에 따라 마커를 생성한다.
-	(function() {
-		  if (!navigator.geolocation){
-		  	alert('현재 위치를 확인할 수 없습니다.');
-		  }
-		  function success(position) {
-			    latitude  = position.coords.latitude;
-			    longitude = position.coords.longitude;
-				searchWord = document.getElementById('seachword').value;
-				var categories = "";
-				$('input[name="check"]:checked').each(function() {
-					categories+= $(this).val()+",";
-				 });
+	
+	
+	function currentPostionSet() {
+			  if (!navigator.geolocation){
+			  	alert('현재 위치를 확인할 수 없습니다.');
+			  }
+			  function success(position) {
+				    latitude  = position.coords.latitude;
+				    longitude = position.coords.longitude;
+					searchWord = document.getElementById('seachword').value;
+					var categories = "";
+					$('input[name="check"]:checked').each(function() {
+						categories+= $(this).val()+",";
+					 });
 
-			 // 마커가 표시될 위치입니다 
-			    var markerPosition  = new daum.maps.LatLng(latitude, longitude); 
-				
-			    // 마커를 생성합니다
-			    var marker = new daum.maps.Marker({
-			        position: markerPosition
-			    });
-			    map.setCenter(new daum.maps.LatLng(latitude, longitude));
-			    marker.setMap(map);
-			    
-			    var level = map.getLevel();
-			    
-				url = '/map/getSearchLocationData?searchWord='+searchWord+'&level='+level+'&lat='+latitude+'&lon='+longitude+'&categories='+categories;
-				
-				$.ajax({
-					url : url,
-					dataType : 'json',
-					type:"POST",
-					success : function(data) {
-						locData = data.places;
-						var length = data.places.length;
-						var result = length+' Results Found';
-						$('#resultCount').text(result);
-						displayPlaces(data.places);
-						displayInfoList(data.pList, data.infoList, 0, 5);
-						clusterer.clear();
-						clusterer.addMarkers(markers);
-					},
-					error : function(request, status, error) {
-						 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-		           }
-				});
-				//이전 이벤트 삭제
-				if(searchCount!=0){
-					wheelEventRemove();
-					moveEventRemove();	
-				}
-				//이전 이벤트 등록
-				wheelEventAdd();
-				moveEventAdd();
-				searchCount++;
-		  }
-		  navigator.geolocation.getCurrentPosition(success);
-		}
-	)();
+				 // 마커가 표시될 위치입니다 
+				    var markerPosition  = new daum.maps.LatLng(latitude, longitude); 
+					
+				    // 마커를 생성합니다
+				    var marker = new daum.maps.Marker({
+				        position: markerPosition
+				    });
+				    map.setCenter(new daum.maps.LatLng(latitude, longitude));
+				    marker.setMap(map);
+				    
+				    var level = 4;
+				    map.setLevel(level);
+				    
+					url = '/map/getSearchLocationData?searchWord='+searchWord+'&level='+level+'&lat='+latitude+'&lon='+longitude+'&categories='+categories;
+					
+					$.ajax({
+						url : url,
+						dataType : 'json',
+						type:"POST",
+						success : function(data) {
+							locData = data.places;
+							var length = data.places.length;
+							var result = length+' Results Found';
+							$('#resultCount').text(result);
+							displayPlaces(data.places);
+							displayInfoList(data.pList, data.infoList, 0, 5);
+							clusterer.clear();
+							clusterer.addMarkers(markers);
+						},
+						error : function(request, status, error) {
+							 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			           }
+					});
+					//이전 이벤트 삭제
+					if(searchCount!=0){
+						wheelEventRemove();
+						moveEventRemove();	
+					}
+					//이전 이벤트 등록
+					wheelEventAdd();
+					moveEventAdd();
+					searchCount++;
+			  }
+			  navigator.geolocation.getCurrentPosition(success);
+			}
+	
+	
 	
 	
 	$(document).ready(function() {
+		currentPostionSet();
+		option = $("select[name=searchOption]").val();
+		
 		$("#search").click(function() {
-			searchWord = document.getElementById('seachword').value;
-
-			option = $("select[name=searchOption]").val();
-			var categories = "";
-
-			$('input[name="check"]:checked').each(function() {
-				categories+= $(this).val()+",";
-			 });
-			
-			var level = map.getLevel();
-			
 			if(option==2){
-				url = '/map/getSearchLocationData?searchWord='+searchWord+'&level='+level+'&lat='+latitude+'&lon='+longitude+"&option="+option+'&categories='+categories;
-
-				$.ajax({
-					url : url,
-					dataType : 'json',
-					type:"POST",
-					success : function(data) {
-						locData = data.places;
-						var length = data.places.length;
-						var result = length+' Results Found';
-						$('#resultCount').text(result);
-						displayPlaces(data.places);
-						displayInfoList(data.pList, data.infoList, 0, 5);
-						clusterer.clear();
-						clusterer.addMarkers(markers);
- 					},
-					error : function(request, status, error) {
-						 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-		           }
-				});
-				//이전 이벤트 삭제
-				if(searchCount!=0){
-					wheelEventRemove();
-					moveEventRemove();	
-				}
-				//이전 이벤트 등록
-				wheelEventAdd();
-				moveEventAdd();
-				searchCount++;
+				searchLocation();
 			}else if(option==1){
-				if(searchWord===""){
-					alert("검색어를 입력하세요!");
-					return;
-				}
-				url = '/map/getSearchShopNameData?searchWord='+searchWord+'&level='+level+'&lat='+latitude+'&lon='+longitude+'&categories='+categories;
-				
-				//초기 휠 이벤트 및 마우스 이벤트 삭제
-				wheelEventRemove();
-				moveEventRemove();	
-
-				$.ajax({
-					url : url,
-					dataType : 'json',
-					type:"POST",
-					success : function(data) {
- 						locData = data.places;
-						var length = data.places.length;
-						var result = length+' Results Found';
-						$('#resultCount').text(result);
-						displaySearhPlaces(data.places);
-						displayInfoList(data.pList, data.infoList, 0, 5);
-						clusterer.clear();
-						clusterer.addMarkers(markers);
- 					},
-					error : function(request, status, error) {
-						 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-		           }
-				});
+				searchShopname();
 			}
 		});
 	});
+	
+	function changeAction(){
+		option = $("select[name=searchOption]").val();
+		
+		if(option==2){
+			currentPostionSet();
+		}
+	}
+	
+	function searchShopname(){
+		searchWord = document.getElementById('seachword').value;
 
+		var categories = "";
+
+		$('input[name="check"]:checked').each(function() {
+			categories+= $(this).val()+",";
+		 });
+		
+		var level = map.getLevel();
+		if(searchWord===""){
+			alert("검색어를 입력하세요!");
+			return;
+		}
+		url = '/map/getSearchShopNameData?searchWord='+searchWord+'&level='+level+'&lat='+latitude+'&lon='+longitude+'&categories='+categories;
+		
+		$.ajax({
+			url : url,
+			dataType : 'json',
+			type:"POST",
+			success : function(data) {
+					locData = data.places;
+				var length = data.places.length;
+				var result = length+' Results Found';
+				$('#resultCount').text(result);
+				displaySearhPlaces(data.places);
+				displayInfoList(data.pList, data.infoList, 0, 5);
+				clusterer.clear();
+				clusterer.addMarkers(markers);
+				},
+			error : function(request, status, error) {
+				 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+           }
+		});
+		
+		//이전 이벤트 삭제
+		if(searchCount!=0){
+			wheelEventRemove();
+			moveEventRemove();	
+		}
+	}
+	
+	function searchLocation(type){
+		searchWord = document.getElementById('seachword').value;
+	
+		option = $("select[name=searchOption]").val();
+		var categories = "";
+
+		$('input[name="check"]:checked').each(function() {
+			categories+= $(this).val()+",";
+		 });
+		
+		var level = map.getLevel();
+		
+		if(level<4){
+		    map.setLevel(4);
+		}
+		
+		if(!(type =='like')){
+			var loc = map.getCenter();	
+			latitude = loc.getLat();
+			longitude = loc.getLng();
+		}
+	
+		url = '/map/getSearchLocationData?searchWord='+searchWord+'&level='+level+'&lat='+latitude+'&lon='+longitude+"&option="+option+'&categories='+categories;
+		$.ajax({
+			url : url,
+			dataType : 'json',
+			type:"POST",
+			success : function(data) {
+				locData = data.places;
+				var length = data.places.length;
+				var result = length+' Results Found';
+				$('#resultCount').text(result);
+				displayPlaces(data.places);
+				displayInfoList(data.pList, data.infoList, 0, 5);
+				clusterer.clear();
+				clusterer.addMarkers(markers);
+				},
+			error : function(request, status, error) {
+				 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	       }
+		});
+		//이전 이벤트 삭제
+		if(searchCount!=0){
+			wheelEventRemove();
+			moveEventRemove();	
+		}
+		//이전 이벤트 등록
+		wheelEventAdd();
+		moveEventAdd();
+		searchCount++;
+	}
+	
+	
 </script>
 </body>
 </html>
