@@ -94,8 +94,8 @@
 												<div class="star-rating" data-rating="${list.rating}"></div>
 											</div>
 											<p>${list.onlyText}</p>
-											<a href="#" class="rate-review"><i class="sl sl-icon-note"></i> Edit</a>										
-											<a href="#" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>						
+											<a href="/review/clickModify?page=1&boardNo=${list.boardNo}" class="rate-review"><i class="sl sl-icon-note"></i> Edit</a>										
+											<a href="/review/delete?boardNo=${list.boardNo}&category=1&page=1" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>										
 										</div>
 
 									</li>
