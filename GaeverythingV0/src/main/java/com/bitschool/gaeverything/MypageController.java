@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BoardDTO;
+import com.bitschool.dto.EventDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.dto.MyPageDTO;
@@ -403,6 +404,7 @@ public class MypageController {
 		List<LocationDTO> mapList2 = new ArrayList<LocationDTO>();
 		LocationDTO dto = null;
 		ActUserManager manager = new ActUserManager(aservice);
+		List<EventDTO> eventList = aservice.selectEventBookmark(member.getEmail());
 		for(int i=0;i<reviewList.size();i++){
 			int boardNo = reviewList.get(i).getBoardNo();
 			reviewList.get(i).setNumOfCmt(bservice.getNumOfCmts(boardNo));
@@ -419,6 +421,7 @@ public class MypageController {
 			model.addAttribute("member", member);
 			model.addAttribute("reviewList",reviewList);
 			model.addAttribute("mapList",mapList2);
+			model.addAttribute("eventList",eventList);
 		}
 		return url;
 	}	
