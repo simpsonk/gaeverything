@@ -1,4 +1,4 @@
-	var listPage = 0;
+
 	
 	function displayInfoList(pList, infoList, amount, page){
 	    var listEl = document.getElementById('placesList'), 
@@ -91,52 +91,3 @@
 	}
 	
 	
-	function like_clicked(locationSeq){
-		var ele = document.getElementById("like"+locationSeq);
-		var class_name = ele.className;
-		var email = document.getElementById("memberEmail").value;
-		var url = '/review/updateDetailPageLike?like='+class_name+'&locationSeq='+locationSeq+'&email='+email;
-		/*var id = document.getElementById("numOflike");*/
-		$.ajax({
-	        url : url,
-	        dataType : 'json',
-	        type:"POST",
-	        success : function(data) {
-	        	/*id.innerHTML=data+' people bookmarked this place'; */
-	        	if($("select[name=searchOption]").val()==2){
-	        		searchLocation('like', listPage);
-	        	}else{
-	        		searchShopname();
-	        	}
-	        },
-	        error : function(request, status, error) {
-	            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	          }
-	     });
-	}
-
-	function no_login_like(locationSeq){
-		alert("로그인을 해주세요!");
-		location.href = "/viewLogin?uri=/map/viewMapList";
-	}
-	
-	
-
-	function pageClickEvent(page){
-		url = '/map/getPagingData?page='+page;
-		listPage = page;
-		var stringLocData = JSON.stringify(locData);
-  		$.ajax({
-			url : url,
-			data: {"data":stringLocData},
-			type:"POST",
-			dataType:"json",
-			success : function(data) {
-				locData = data.places;
-				displayInfoList(data.pList, data.infoList, 5, listPage);
-			},
-			error : function(request, status, error) {
-				 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-           }
-		});
-	}

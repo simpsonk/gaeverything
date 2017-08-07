@@ -186,7 +186,9 @@
 	var option=0;
 	var locData=[];
 	var markers = [];//지도 마커
-	
+	var listPage = 0;
+	var currentMarker;
+
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 		mapOption = { 
 		center: new daum.maps.LatLng(37.4946444, 127.02759279999998), // 지도의 중심좌표
@@ -207,85 +209,80 @@
 	
 	//현재 위치에 따라 마커를 생성한다.
 	
-	
-	function currentPostionSet() {
-			  if (!navigator.geolocation){
-			  	alert('현재 위치를 확인할 수 없습니다.');
-			  }
-			  function success(position) {
-				    latitude  = position.coords.latitude;
-				    longitude = position.coords.longitude;
-					searchWord = document.getElementById('seachword').value;
-					var categories = "";
-					$('input[name="check"]:checked').each(function() {
-						categories+= $(this).val()+",";
-					 });
-
-				 // 마커가 표시될 위치입니다 
-				    var markerPosition  = new daum.maps.LatLng(latitude, longitude); 
-					
-				    // 마커를 생성합니다
-				    var marker = new daum.maps.Marker({
-				        position: markerPosition
-				    });
-				    map.setCenter(new daum.maps.LatLng(latitude, longitude));
-				    marker.setMap(map);
-				    
-				    var level = 4;
-				    map.setLevel(level);
-				    
-					url = '/map/getSearchLocationData?searchWord='+searchWord+'&level='+level+'&lat='+latitude+'&lon='+longitude+'&categories='+categories;
-					
-					$.ajax({
-						url : url,
-						dataType : 'json',
-						type:"POST",
-						success : function(data) {
-							locData = data.places;
-							var length = data.places.length;
-							var result = length+' Results Found';
-							$('#resultCount').text(result);
-							displayPlaces(data.places);
-							displayInfoList(data.pList, data.infoList, 5, 0);
-							clusterer.clear();
-							clusterer.addMarkers(markers);
-						},
-						error : function(request, status, error) {
-							 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-			           }
-					});
-					//이전 이벤트 삭제
-					if(searchCount!=0){
-						wheelEventRemove();
-						moveEventRemove();	
-					}
-					//이전 이벤트 등록
-					wheelEventAdd();
-					moveEventAdd();
-					searchCount++;
-			  }
-			  navigator.geolocation.getCurrentPosition(success);
-			}
-	
-	
-	
-	
 	$(document).ready(function() {
 		currentPostionSet();
 		option = $("select[name=searchOption]").val();
 		
 		$("#search").click(function() {
 			if(option==2){
-				searchLocation("start", 0);
+				searchLocation("location", 0);
 			}else if(option==1){
 				searchShopname();
 			}
 		});
 	});
 	
+	function currentPostionSet() {
+		  if (!navigator.geolocation){
+		  	alert('현재 위치를 확인할 수 없습니다.');
+		  }
+		  function success(position) {
+			    latitude  = position.coords.latitude;
+			    longitude = position.coords.longitude;
+				searchWord = document.getElementById('seachword').value;
+				var categories = "";
+				$('input[name="check"]:checked').each(function() {
+					categories+= $(this).val()+",";
+				 });
+
+			 // 마커가 표시될 위치입니다 
+			    var markerPosition  = new daum.maps.LatLng(latitude, longitude); 
+				
+			    // 마커를 생성합니다
+			    currentMarker = new daum.maps.Marker({
+			        position: markerPosition
+			    });
+			    map.setCenter(new daum.maps.LatLng(latitude, longitude));
+			    
+			    var level = 4;
+			    map.setLevel(level);
+			    
+				url = '/map/getSearchLocationData?searchWord='+searchWord+'&level='+level+'&lat='+latitude+'&lon='+longitude+'&categories='+categories;
+				
+				$.ajax({
+					url : url,
+					dataType : 'json',
+					type:"POST",
+					success : function(data) {
+						locData = data.places;
+						var length = data.places.length;
+						var result = length+' Results Found';
+						$('#resultCount').text(result);
+						displayPlaces(data.places);
+						displayInfoList(data.pList, data.infoList, 5, 0);
+						currnetMarkerSet();
+						clusterer.clear();
+						clusterer.addMarkers(markers);
+					},
+					error : function(request, status, error) {
+						 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		           }
+				});
+				//이전 이벤트 삭제
+				if(searchCount!=0){
+					wheelEventRemove();
+					moveEventRemove();	
+				}
+				//이전 이벤트 등록
+				wheelEventAdd();
+				moveEventAdd();
+				searchCount++;
+		  }
+		  navigator.geolocation.getCurrentPosition(success);
+		}
+	
 	function changeAction(){
-		option = $("select[name=searchOption]").val();
-		
+		option = $("select[name=searchOption]").val();	
 		if(option==2){
 			currentPostionSet();
 		}
@@ -293,9 +290,11 @@
 	
 	function searchShopname(){
 		searchWord = document.getElementById('seachword').value;
-
+		listPage = 0;
 		var categories = "";
-
+		
+	    currentMarker.setMap(null);
+	    
 		$('input[name="check"]:checked').each(function() {
 			categories+= $(this).val()+",";
 		 });
@@ -317,7 +316,7 @@
 				var result = length+' Results Found';
 				$('#resultCount').text(result);
 				displaySearhPlaces(data.places);
-				displayInfoList(data.pList, data.infoList, 5, 0);
+				displayInfoList(data.pList, data.infoList, 5, listPage);
 				clusterer.clear();
 				clusterer.addMarkers(markers);
 				},
@@ -385,6 +384,54 @@
 		searchCount++;
 	}
 	
+	function like_clicked(locationSeq){
+		var ele = document.getElementById("like"+locationSeq);
+		var class_name = ele.className;
+		var email = document.getElementById("memberEmail").value;
+		var url = '/review/updateDetailPageLike?like='+class_name+'&locationSeq='+locationSeq+'&email='+email;
+		/*var id = document.getElementById("numOflike");*/
+		$.ajax({
+	        url : url,
+	        dataType : 'json',
+	        type:"POST",
+	        success : function(data) {
+	        	/*id.innerHTML=data+' people bookmarked this place'; */
+	        	if($("select[name=searchOption]").val()==2){
+	        		searchLocation('like', listPage);
+	        	}else{
+	        		searchShopname();
+	        	}
+	        },
+	        error : function(request, status, error) {
+	            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	          }
+	     });
+	}
+	
+	function no_login_like(locationSeq){
+		alert("로그인을 해주세요!");
+		location.href = "/viewLogin?uri=/map/viewMapList";
+	}	
+	
+	
+	function pageClickEvent(page){
+		url = '/map/getPagingData?page='+page;
+		listPage = page;
+		var stringLocData = JSON.stringify(locData);
+  		$.ajax({
+			url : url,
+			data: {"data":stringLocData},
+			type:"POST",
+			dataType:"json",
+			success : function(data) {
+				locData = data.places;
+				displayInfoList(data.pList, data.infoList, 5, listPage);
+			},
+			error : function(request, status, error) {
+				 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+           }
+		});
+	}
 	
 </script>
 </body>
