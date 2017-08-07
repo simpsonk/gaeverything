@@ -132,7 +132,7 @@
 								<div class="list-box-listing-img"><a href="/map/detail/viewDetailPage?locationSeq=${list.locationSeq}">
 								<c:choose>
 								<c:when test="${list.imageUrl!=null}">
-											<img src="/resources/upload/${list.imageUrl}" alt="">	
+											<img src="${list.imageUrl}" alt="">	
 											</c:when>	
 											<c:otherwise>
 											<img src="/resources/images/hospital.jpg" alt="">	
@@ -148,7 +148,7 @@
 								</div>
 							</div>
 							<div class="buttons-to-right">
-							<%--  	<a href="/mypage/deleteMapBookmarks?contentno=${list.locationSeq}" class="button gray">  --%>
+							 	<a href="/mypage/deleteShopBookmarks?contentno=${list.locationSeq}" class="button gray"> 
 							 	<i class="sl sl-icon-close"></i> Delete
 							 	</a> 
 							 </div>

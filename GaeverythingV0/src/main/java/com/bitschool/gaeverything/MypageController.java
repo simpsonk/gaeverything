@@ -367,6 +367,19 @@ public class MypageController {
 		return url;
 	}
 	
+	//북마크한 병원 제거
+	@RequestMapping(value = "/deleteShopBookmarks", method = RequestMethod.GET)
+	public String deleteShopBookmarks(HttpSession session, Model model,
+			@RequestParam(value="contentno") int contentno){
+		String url = null;
+		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		ActUserDTO aDTO = new ActUserDTO(member.getEmail(),"10",contentno);
+		aservice.deleteDetailPageLikeStatus(aDTO);
+		System.out.println("deleteBookmarks : "+aDTO);
+		url = "redirect:viewMypageBookmarks";
+		return url;
+	}	
+	
 	//북마크한 리뷰 제거
 	@RequestMapping(value = "/deleteBookmarks", method = RequestMethod.GET)
 	public String deleteBookmarks(HttpSession session, Model model,
