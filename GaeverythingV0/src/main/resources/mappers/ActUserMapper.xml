@@ -3,6 +3,11 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bitschool.gaeverything.ActUserMapper">
+	<select id="selectReviewBookmark" parameterType="String" resultType="BoardDTO">
+		select * from board where boardno in 
+		(select contentno from act_user where email = #{email} and actType = '00')
+	</select>
+
 	<select id="selectStatus" parameterType="ActUserDTO" resultType="Integer">
 		select count(*) from act_user where email = #{email} and contentNo = #{contentNo} and actType = #{actType}
 	</select>

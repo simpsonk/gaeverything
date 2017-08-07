@@ -71,20 +71,34 @@
 		<div class="row">
 			
 			<!-- Listings -->
-			<div class="col-lg-12 col-md-12">
+			<div class="col-lg-4 col-md-12">
 				<div class="dashboard-list-box margin-top-0">
-					<h4>Bookmarked Listings</h4>
+					<h4>Bookmarked Reviews</h4>
 					<ul>
-
+						<c:choose>
+						<c:when test="${reviewList.size()==0}">
 						<li>
+						<span>북마크한 리뷰가 없습니다.</span>
+						</li>
+						</c:when>
+						</c:choose>
+						<c:forEach var="list" items="${reviewList}">        
+						<li>							
 							<div class="list-box-listing">
-								<div class="list-box-listing-img"><a href="#"><img src="/resources/images/listing-item-02.jpg" alt=""></a></div>
+								<div class="list-box-listing-img"><a href="/review/readPost?boardNo=${list.boardNo}&page=1">
+								<c:choose>
+								<c:when test="${list.uploadImg!=null}">
+											<img src="/resources/upload/${list.uploadImg}" alt="">	
+											</c:when>	
+											<c:otherwise>
+											<img src="/resources/images/hospital.jpg" alt="">	
+											</c:otherwise></c:choose>	</a></div>
 								<div class="list-box-listing-content">
 									<div class="inner">
-										<h3>Sticky Band</h3>
-										<span>Bishop Avenue, New York</span>
-										<div class="star-rating" data-rating="5.0">
-											<div class="rating-counter">(23 reviews)</div>
+										<h3>${list.title}</h3>
+										<span>${list.address}</span>
+										<div class="star-rating" data-rating="${list.rating}">
+											<div class="rating-counter">(${list.numOfCmt} comments)</div>
 										</div>
 									</div>
 								</div>
@@ -93,46 +107,14 @@
 								<a href="#" class="button gray"><i class="sl sl-icon-close"></i> Delete</a>
 							</div>
 						</li>
+						</c:forEach>
 
-						<li>
-							<div class="list-box-listing">
-								<div class="list-box-listing-img"><a href="#"><img src="/resources/images/listing-item-04.jpg" alt=""></a></div>
-								<div class="list-box-listing-content">
-									<div class="inner">
-										<h3>Burger House</h3>
-										<span>2726 Shinn Street, New York</span>
-										<div class="star-rating" data-rating="5.0">
-											<div class="rating-counter">(31 reviews)</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="buttons-to-right">
-								<a href="#" class="button gray"><i class="sl sl-icon-close"></i> Delete</a>
-							</div>
-						</li>
-
-						<li>
-							<div class="list-box-listing">
-								<div class="list-box-listing-img"><a href="#"><img src="/resources/images/listing-item-06.jpg" alt=""></a></div>
-								<div class="list-box-listing-content">
-									<div class="inner">
-										<h3>Think Coffee</h3>
-										<span>215 Terry Lane, New York</span>
-										<div class="star-rating" data-rating="5.0">
-											<div class="rating-counter">(31 reviews)</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="buttons-to-right">
-								<a href="#" class="button gray"><i class="sl sl-icon-close"></i> Delete</a>
-							</div>
-						</li>
 
 					</ul>
 				</div>
 			</div>
+			
+			
 
 
 			<!-- Copyrights -->
