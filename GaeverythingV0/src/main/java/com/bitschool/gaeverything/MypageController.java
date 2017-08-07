@@ -20,14 +20,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.multipart.MultipartFile;
 
-
+import com.bitschool.dto.ActUserDTO;
+import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.dto.MyPageDTO;
 import com.bitschool.dto.PetPageDTO;
+import com.bitschool.service.ActUserService;
+import com.bitschool.service.BoardService;
 import com.bitschool.service.LocationDetailService;
 import com.bitschool.service.MyPageService;
 import com.bitschool.service.PetPageService;
 import com.bitschool.service.SignUpService;
+import com.bitschool.utils.ActUserManager;
 
 
 
@@ -46,6 +50,12 @@ public class MypageController {
 	
 	@Inject
 	private LocationDetailService lservice;
+	
+	@Inject
+	private ActUserService aservice;
+	
+	@Inject
+	private BoardService bservice;
 	   
 	   
 
@@ -359,11 +369,17 @@ public class MypageController {
 	public String viewMypageBookmarks(HttpSession session, Model model){
 		String url = "mypage/mypage_bookmarks";
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		List<BoardDTO> reviewList = aservice.selectReviewBookmark(member.getEmail());		
+		for(int i=0;i<reviewList.size();i++){
+			int boardNo = reviewList.get(i).getBoardNo();
+			reviewList.get(i).setNumOfCmt(bservice.getNumOfCmts(boardNo));
+		}
 		boolean isLogin = member!=null?true:false;
 		if(!isLogin){
 			url = "login_page";
 		}else{
 			model.addAttribute("member", member);
+			model.addAttribute("reviewList",reviewList);
 		}
 		return url;
 	}	

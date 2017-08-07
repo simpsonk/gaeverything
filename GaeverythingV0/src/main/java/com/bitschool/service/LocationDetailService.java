@@ -234,9 +234,18 @@ public class LocationDetailService {
 		int countLike = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.SHOP, dto.getLocationSeq()));
 		
 		dto.setActUserResult(countReview, temp, countRatings, countReplies, countLike);
+		
 		return dto;
 	}
 
+	public List<LocationDTO> getLocActUserResults(ActUserManager manager, List<LocationDTO> list) {
+		// TODO Auto-generated method stub
+		for(int i=0;i<list.size();i++){
+			this.getLocActUserResult(manager, list.get(i));
+		}
+		return list;
+	}
+		
 	public List<DetailPhotoDTO> photoList(int seq){
 		// TODO Auto-generated method stub
 		List<DetailPhotoDTO> dto = null;
