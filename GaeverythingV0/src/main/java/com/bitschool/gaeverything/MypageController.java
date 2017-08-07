@@ -371,39 +371,43 @@ public class MypageController {
 	//북마크한 이벤트 제거
 		@RequestMapping(value = "/deleteEventBookmarks", method = RequestMethod.GET)
 		public String deleteEventBookmarks(HttpSession session, Model model,
-				@RequestParam(value="contentno") int contentno){
+				@RequestParam(value="contentno") int contentno,
+				@RequestParam(value="category",defaultValue="0") int category){
 			String url = null;
 			MemberDTO member = (MemberDTO)session.getAttribute("member");
 			ActUserDTO aDTO = new ActUserDTO(member.getEmail(),"20",contentno);
 			aservice.deleteDetailPageLikeStatus(aDTO);
 			System.out.println("deleteBookmarks : "+aDTO);
-			url = "redirect:viewMypageBookmarks";
+			url = "redirect:viewMypageBookmarks?category="+category;	
 			return url;
 		}	
 	
 	//북마크한 병원 제거
 	@RequestMapping(value = "/deleteShopBookmarks", method = RequestMethod.GET)
 	public String deleteShopBookmarks(HttpSession session, Model model,
-			@RequestParam(value="contentno") int contentno){
+			@RequestParam(value="contentno") int contentno,
+			@RequestParam(value="category",defaultValue="0") int category){
 		String url = null;
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		ActUserDTO aDTO = new ActUserDTO(member.getEmail(),"10",contentno);
 		aservice.deleteDetailPageLikeStatus(aDTO);
 		System.out.println("deleteBookmarks : "+aDTO);
-		url = "redirect:viewMypageBookmarks";
+		url = "redirect:viewMypageBookmarks?category="+category;	
 		return url;
 	}	
 	
 	//북마크한 리뷰 제거
 	@RequestMapping(value = "/deleteBookmarks", method = RequestMethod.GET)
 	public String deleteBookmarks(HttpSession session, Model model,
-			@RequestParam(value="contentno") int contentno){
+			@RequestParam(value="contentno") int contentno,
+			@RequestParam(value="category",defaultValue="0") int category){
 		String url = null;
+		System.out.println("category : "+category);
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		ActUserDTO aDTO = new ActUserDTO(member.getEmail(),"00",contentno);
 		aservice.deleteDetailPageLikeStatus(aDTO);
 		System.out.println("deleteBookmarks : "+aDTO);
-		url = "redirect:viewMypageBookmarks";
+		url = "redirect:viewMypageBookmarks?category="+category;		
 		return url;
 	}	
 	
@@ -434,7 +438,6 @@ public class MypageController {
 			dto = lservice.getLocActUserResult(manager, mapList.get(i));
 			mapList2.add(dto);
 		}
-		System.out.println("mapList2 :" +mapList2);
 		boolean isLogin = member!=null?true:false;
 		if(!isLogin){
 			url = "login_page";

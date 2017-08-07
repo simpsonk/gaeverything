@@ -104,7 +104,7 @@
 								</div>
 							</div>
 							<div class="buttons-to-right">
-							 	<a href="/mypage/deleteBookmarks?contentno=${list.boardNo}" class="button gray"> 
+							 	<a href="/mypage/deleteBookmarks?contentno=${list.boardNo}&category=1" class="button gray"> 
 							 	<i class="sl sl-icon-close"></i> Delete
 							 	</a> 
 							 </div>
