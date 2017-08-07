@@ -41,9 +41,9 @@ public class CalendarService{
 		return dto;
 	}
 
-	public List<CalendarFormat> jsonAll() {
+	public List<CalendarFormat> jsonAll(String id) {
 		// TODO Auto-generated method stub
-		List<CalendarDTO> list = dao.selectAll();
+		List<CalendarDTO> list = dao.selectId(id);
 		List<CalendarFormat> calendar = new ArrayList<CalendarFormat>();
 		CalendarFormat c = null;
 		String[] colorType = {"#0045C6","#A20082","#C40000","#F5A9A9"};
