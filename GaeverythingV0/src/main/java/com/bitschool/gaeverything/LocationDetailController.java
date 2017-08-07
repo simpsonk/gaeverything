@@ -20,7 +20,6 @@ import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BlogDTO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.BookCalendarDTO;
-import com.bitschool.dto.CalendarDTO;
 import com.bitschool.dto.DetailCommentDTO;
 import com.bitschool.dto.DetailPhotoDTO;
 import com.bitschool.dto.LocationDTO;
