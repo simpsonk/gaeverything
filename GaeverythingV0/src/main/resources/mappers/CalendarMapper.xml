@@ -12,6 +12,9 @@
 		values (#{calendarseq},#{id},#{dogid},#{title},#{place},#{message},#{startTime},
 		#{startDate},#{endTime},#{endDate},#{repeatdata},#{repeatview})
 	</insert>
+	<select id="selectId" parameterType="String" resultType="com.bitschool.dto.CalendarDTO">
+		select * from calendar where id = #{id}
+	</select>
 	<select id="selectAll" resultType="com.bitschool.dto.CalendarDTO">
 		select * from calendar
 	</select>

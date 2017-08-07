@@ -68,8 +68,6 @@ public class LocationDetailController {
 			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.SHOP, locationSeq);
 			dto= manager.checkLocLikeStatus(aDTO, dto);
 		}
-		
-		
 		model.addAttribute("commentlist",list);
 		model.addAttribute("detail", dto);
 		model.addAttribute("reviewList",reviewList);

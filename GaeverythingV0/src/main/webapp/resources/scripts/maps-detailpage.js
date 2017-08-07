@@ -241,11 +241,11 @@ function photoListView(start,end,photoList){
 var photoStart;
 var photoEnd;
 
-$('#photoHide').click(function(){
+/*$('#photoHide').click(function(){
 	for(var i=2;i<count;i++){
 		$('#mfp-'+i).hide();
 	}
-});
+});*/
 
 $('#photoMore').click(function(){
 	 photoListView(photoStart,photoEnd,pList);	
