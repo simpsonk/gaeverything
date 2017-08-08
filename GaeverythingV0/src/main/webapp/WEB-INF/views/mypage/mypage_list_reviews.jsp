@@ -55,7 +55,7 @@
 		<div id="titlebar">
 			<div class="row">
 				<div class="col-md-12">
-					<h2>My Listings</h2>
+					<h2>My Reviews</h2>
 					<!-- Breadcrumbs -->
 					<nav id="breadcrumbs">
 						<ul>
