@@ -34,18 +34,20 @@ public class LocationDAO {
 		return list;
 	}
 
-	public List<LocationDTO> selectShopName(MapInfomation info)throws SQLException {
+	public List<LocationDTO> selectName(MapInfomation info)throws SQLException {
 		// TODO Auto-generated method stub
 		List<LocationDTO> list = null;
-		list = session.selectList(namespace+".selectShopName", info);
+		list = session.selectList(namespace+".selectName", info);
 		return list;
 	}
-	
-	public LocationDTO selectLocationSeq(Integer LSeq) throws SQLException{
+
+	public LocationDTO selectLocationSeq(int locationSeq)throws SQLException {
+		// TODO Auto-generated method stub
 		LocationDTO dto = null;
-		dto = session.selectOne(namespace+".selectLocationSeq",LSeq);
+		dto = session.selectOne(namespace+".selectLocationSeq", locationSeq);
 		return dto;
 	}
 	
+
 
 }

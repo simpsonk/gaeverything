@@ -10,7 +10,7 @@
 			    height: 80px;
 			    padding-top: 10px;
 			    padding-bottom: 10px;">
-				
+	
 				<!-- Logo -->
 				<!-- <div id="logo">
 					<a href="/"><img src="/resources/images/logo_gae.png" alt=""></a>
@@ -42,12 +42,13 @@
 						<div></div>
 						<li><a href="/">Home</a></li>
 						<li><a href="/map/viewMapList">Map</a></li>
+						<li><a href="/event/viewEventList">Event</a></li>
 						<li><a href="/review/viewReviewList">Review</a>
 							<ul>
-								<li><a href="/review/viewReviewList">병원/뷰티</a></li>
+								<li><a href="/review/viewReviewList">Map</a></li>
+								<li><a href="/review/viewReviewList">Event</a></li>
 							</ul>
 						</li>
-						<li><a href="/event/viewEventList">Event</a></li>
 						<li><a href="/mypage/viewMypageDashboard">MyPage</a>
 							<ul>
 								<li><a href="/mypage/viewMypageDashboard">Dashboard</a></li>

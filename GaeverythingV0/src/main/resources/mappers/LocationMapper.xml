@@ -50,16 +50,13 @@
 		select * from location 
 	</select>
 	
-	<select id="selectShopName" resultType="LocationDTO" parameterType="MapInfomation">
+	<select id="selectName" resultType="LocationDTO" parameterType="MapInfomation">
 		select * from location where categoryCode = #{categories} and title like '%'||#{searchWord}||'%'
 	</select>
 	
-	<select id="selectLocation" resultType="LocationDTO">
-		select * from location where categoryCode = #{categories} and address like '%'||#{searchWord}||'%'
-	</select>
-	
 	<select id="selectLocationSeq" parameterType="Integer" resultType="LocationDTO">
-		select * from location where locationSeq = #{LSeq}
-	</select>
+		select * from location where locationSeq = #{locationSeq}
+   	</select>
+
 
 </mapper>

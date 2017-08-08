@@ -22,29 +22,20 @@
 <body>
 <!--Tabs -->
 <div class="sign-in-form style-1" style="margin-top: 100px;margin-left: 100px;margin-right: 100px;">
-	<ul class="tabs-nav">
-		<li><a href="#tab1">shop name</a></li>
-	</ul>
 	<div class="tabs-container alt" style="margin-bottom: 100px;">
 		<!-- Login -->
 		<div class="tab-content" id="tab1" style="display: none;">
 			<div class="col-fs-12">
 				<form action="" method="post" id="dataset">
 					<div class="row with-forms">
-						<div class="col-fs-2">	
-							<select data-placeholder="Option" class="chosen-select" name="selectOp1" id = "selectOp1">
-								<option value="1" ${searchData['selectOp1']=='1'?'selected="selected"':''}>Shop Name</option>
-								<option value="2" ${searchData['selectOp1']=='2'?'selected="selected"':''}>Location</option>
+						<div id = "hiddenOption" class="col-fs-3">	
+							<select class="chosen-select" name="selectOp1" id = "selectOp1">
+								<option value="0">Category</option>
+								<option value="HP8">Hospital</option>
+								<option value="EVENT">Event</option>
 							</select>
 						</div>
-						<div id = "hiddenOption" class="col-fs-2">	
-							<select class="chosen-select" name="selectOp2" id = "selectOp2">
-								<option value="0" ${searchData['selectOp2']=='0'?'selected="selected"':''}>Category</option>
-								<option value="HP8" ${searchData['selectOp2']=='HP8'?'selected="selected"':''}>Hospital</option>
-								<option value="3">#######</option>
-							</select>
-						</div>
-						<div id = "textContainer" class="col-fs-6">
+						<div id = "textContainer" class="col-fs-7">
 							<div class="input-with-icon">
 								<i class="sl sl-icon-magnifier"></i>
 								<input type="text" placeholder="What are you looking for?" value="${searchData['searchWord']}" id="searchWord" name = "searchWord">
@@ -91,7 +82,6 @@ $(document).ready(function() {
 	$("#search").click(function() {
 		var searchWord = document.getElementById('searchWord').value;
 		var selectOp1 = $("select[id='selectOp1']").val();
-		var selectOp2 = $("select[id='selectOp2']").val();
 		var formEle = document.getElementById('dataset');
 		
 		if(searchWord===''){
@@ -100,16 +90,11 @@ $(document).ready(function() {
 		}
 		
 		if(selectOp1==0){
-			alert('옵션을 선택하세요.');
-			return;
-		}
-		
-		if(selectOp2==0){
 			alert('카테고리를 선택하세요.');
 			return;
 		}
 		
-		if((searchWord!='')&&(selectOp1!=0)&&(selectOp2!=0)){
+		if((searchWord!='')&&(selectOp1!=0)){
 			formEle.action = "/review/getSearhShopname";
 			formEle.submit();
 		}
