@@ -21,6 +21,8 @@ public class MyPageDAO {
 	private SqlSession session;
 	
 	private static final String namespace = "com.bitschool.bootstrap.MyPageMapper";
+
+	
 	// 내가 쓴 댓글(게시판리뷰)의 원글 제목 가져오기
 	public String selectBoardTitle(int groupno) throws SQLException{
 		String title = null;

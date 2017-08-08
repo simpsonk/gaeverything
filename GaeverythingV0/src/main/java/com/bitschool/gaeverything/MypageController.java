@@ -460,29 +460,39 @@ public class MypageController {
 		return url;
 	}	
 	
-	//마이페이지에서 내가작성한 댓글(리뷰게시판) 수정하기(하는중,. , , )
+	//마이페이지에서 내가작성한 댓글(리뷰게시판) 수정하기
 	@RequestMapping(value="/modifyCmt", method={RequestMethod.GET, RequestMethod.POST})
 	public String modifyCmt(BoardDTO dto, CommentDTO cDTO,  
-		@RequestParam("groupNo") int groupNo,
-		@RequestParam("commentNo") int commentNo,
-		@RequestParam(value="page", defaultValue="1") int page,
-		Model model, 
-		HttpSession session){
-
+							@RequestParam("groupNo") int groupNo,
+							@RequestParam("commentNo") int commentNo,
+							@RequestParam(value="page", defaultValue="1") int page,
+							Model model, 
+							HttpSession session){
 		dto = bservice.selectToRead(groupNo);
 		int numOfCmt = cservice.countCmt(groupNo);
-		List<CommentDTO> commentList = cservice.getAllComment(groupNo);
-		
-		boolean isLogin = new LoginFilter().isLogin(session, model);
-		
+		List<CommentDTO> commentList = cservice.getAllComment(groupNo);		
+		boolean isLogin = new LoginFilter().isLogin(session, model);		
 		model.addAttribute("commentList", commentList);
 		model.addAttribute("numOfCmt", numOfCmt);
 		model.addAttribute("dto", dto);
-		model.addAttribute("modifyNo", commentNo);
-		
+		model.addAttribute("modifyNo", commentNo);		
 		String url = "mypage/mypage_list_comments_modify";
 		
 		return url;
 	}
+	
+	//cservice.removeCmt
+	@RequestMapping(value="/removeMyBoardCmt" ,method = {RequestMethod.POST,RequestMethod.GET})
+	public String removeMyBoardCmt(HttpSession session, Model model,
+								   @RequestParam("commentNo") int commentNo,
+								   @RequestParam(value="category", defaultValue="0") int category){
+		String url = null;
+		boolean flag = cservice.removeCmt(commentNo);
+		if(flag){
+			url = "redirect:viewMypageList?category="+category;
+		}
+		return url;
+	}
+	
 
 }

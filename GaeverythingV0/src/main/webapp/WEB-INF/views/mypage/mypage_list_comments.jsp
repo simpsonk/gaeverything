@@ -125,8 +125,8 @@
 											<div class="comment-by">Your Comments <div class="comment-by-listing own-comment">on <a href="/review/readPost?boardNo=${list.groupNo}&page=1"><b>${list.title}</b></a></div> <span class="date">${list.regiDate}</span>
 											</div>
 											<p>${list.commentBody}</p>
-											<a href="#" class="rate-review" onclick="cmt_url(1, ${loop.index},1);"><i class="sl sl-icon-note"></i> Edit</a>										
-											<a href="#" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>						
+											<a class="rate-review" onclick="cmt_url(1, ${loop.index},1);"><i class="sl sl-icon-note"></i> Edit</a>										
+											<a href="/mypage/removeMyBoardCmt?commentNo=${list.commentNo}&category=2" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>						
 											<input type="hidden" name="commentNo" value ="${list.commentNo}">
 											<input type="hidden" name="groupNo" value ="${list.groupNo}">
 									</li>
