@@ -13,4 +13,8 @@
 		<if test = "opt == 1"> where eventname like '%'||#{str}||'%'</if>
 		<if test = "opt == 2"> where address like '%'||#{str}||'%'</if>
 	</select>
+	
+	<select id="getOne" parameterType="Integer" resultType="EventDTO">
+		select * from event where eventNo = #{eventNo}
+	</select>
 </mapper>
