@@ -36,7 +36,7 @@
 <!-- Banner
 ================================================== -->
 <form action="/map/homeSearchResult" method="post">
-<div class="main-search-container" data-background-image="/resources/images/main-search-background-02.jpg">
+<div class="main-search-container" data-background-image="/resources/images/main-search-background-03.jpg">
 	<div class="main-search-inner">
 		<div class="container">
 			<div class="row">
@@ -350,7 +350,7 @@
 		<div class="col-md-4">
 			<div class="icon-box-2 with-line">
 				<i class="im im-icon-Map2"></i>
-				<h3>Find Interesting Place</h3>
+				<h3 class="fff" style="color:white;">Find Interesting Place</h3>
 				<p>Proin dapibus nisl ornare diam varius tempus. Aenean a quam luctus, finibus tellus ut, convallis eros sollicitudin turpis.</p>
 			</div>
 		</div>

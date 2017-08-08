@@ -56,13 +56,13 @@
 		<div id="titlebar">
 			<div class="row">
 				<div class="col-md-12">
-					<h2>My Listings</h2>
+					<h2>My Activities</h2>
 					<!-- Breadcrumbs -->
 					<nav id="breadcrumbs">
 						<ul>
 							<li><a href="#">Home</a></li>
 							<li><a href="#">Dashboard</a></li>
-							<li>My Listings</li>
+							<li>My Activities</li>
 						</ul>
 					</nav>
 				</div>

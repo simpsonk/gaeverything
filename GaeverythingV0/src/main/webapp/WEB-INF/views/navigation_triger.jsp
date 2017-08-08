@@ -12,7 +12,7 @@
 			
 			<ul data-submenu-title="Listings">
 				<li><a href="/mypage/calendar/viewCalendar"><i class="fa fa-calendar"></i> Calendar</a></li>
-				<li class="active"><a href="/mypage/viewMypageList"><i class="sl sl-icon-layers"></i> My Listings</a>
+				<li class="active"><a href="/mypage/viewMypageList"><i class="sl sl-icon-layers"></i> My Activities</a>
 					<ul>						
 						<li><a href="/mypage/viewMypageList?category=2">Comments <span class="nav-tag yellow">${member.myCommentSize}</span></a></li>
 						<li><a href="/mypage/viewMypageList?category=1">Reviews <span class="nav-tag green">${member.myReviewSize}</span></a></li>
