@@ -383,7 +383,7 @@
 		var itemStr =  '	<div class="listing-item-container" data-marker-id="1">'
 				+ '	   			<div class="listing-item">' 
 				+ '					<img src="/resources/images/event/'+event.thumbnail+'" alt="">'
-				+ '				<a href = "/event/detail?no=' +event.eventNo + '">'
+				+ '				<a href = "/event/detail/view?no='+event.eventNo + '">'
 				+ '					<div class="listing-item-content">';
 				
 				if(event.eventName.match("축제")||event.eventName.match("페스티벌")){

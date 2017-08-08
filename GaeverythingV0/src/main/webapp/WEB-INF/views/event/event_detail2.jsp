@@ -17,7 +17,6 @@
 <link rel="stylesheet" href= "<c:url value = '/resources/css/style.css'/>">
 <link rel="stylesheet" href= "<c:url value = '/resources/css/colors/main.css'/>" id="colors">
 
-
 </head>
 
 <body>
@@ -53,9 +52,9 @@
 					<div>
 						<div class="star-rating" data-rating="${averageRatings}">
 							<div class="rating-counter">${countRatings} </div>
-						</div><br>
+						</div>
 						<div>${countReview}  Reviews</div>
-						<div><i class="sl sl-icon-bubble"></i>${countReplies} Comments</div>
+						<div><i class="sl sl-icon-bubble"></i>${commentlist.size()} Comments</div>
 					</div>					
 				</div>
 			</div>
@@ -63,17 +62,16 @@
 			<c:choose>
 				<c:when test="${member.nickname == null }">
 					<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
-						<button type="button" class="like-button" onclick="no_login_like()"><span class="like-icon"></span> Bookmark this listing</button> 
+						<button type="button" class="like-button" onclick="no_login_like()"><span class="like-icon"></span> Bookmark this event</button> <span>${dto.countLike} people bookmarked this event.</span>
 					</div>	
 				</c:when>
 				<c:otherwise>
 					<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
-						<button type="button" class="like-button" onclick="like_clicked()"><span id = "like" class="${detail.userLikeStatus }"></span> Bookmark this listing</button> 
+						<button type="button" class="like-button" onclick="like_clicked()"><span id = "like" class="${dto.userLikeStatus }"></span> Bookmark this event</button> ${dto.countLike} people bookmarked this event.</span>
 					</div>	
 				</c:otherwise>
-			</c:choose>				
+			</c:choose>	
 			
-						
 			<!-- Overview -->
 			<div id="detail-Info" class="listing-section">
 				<div style="padding-bottom: 30px; padding-left: 30px;">
@@ -91,18 +89,28 @@
 				</div>
 				<div style="padding-bottom: 30px; padding-left: 30px;">
 					<span><i class="fa fa-arrow-circle-o-right"></i> <a href=${dto.regist}>사전접수하러 가기</a> </span>		
+				</div>	
+			</div>
+										
+			
+			<!-- Location -->
+			<input type="hidden" id="longitude" value="${dto.longitude}">
+			<input type="hidden" id="latitude" value="${dto.latitude}">
+			
+			<div id="Location" class="listing-section">
+				<h3 class="listing-desc-headline margin-top-60 margin-bottom-30">Location</h3>
+	
+				<div id="singleListingMap-container" align="center">
+					<div id="singleListingMap" style="width: 750px; "></div>
 				</div>
-				
-				
-						
 			</div>
 						
 			<!-- regist photo -->
 			<div id="regist-photo" class="listing-section margin-top-70 margin-bottom-30">
 				<div class="col-lg-12" style="padding-left: 0px;">
-				
-				<!-- Uplaod Photos -->
-				
+					
+					<!-- Uplaod Photos -->
+					
 					<div class="col-lg-2" style="padding-left: 0px;">
 						<h3 class="listing-desc-headline ">Photo <span>(${eventphoto.size()})</span></h3>
 					</div>
@@ -119,12 +127,13 @@
 									<input type="hidden" id="eventNo" name="eventNo" value="${dto.eventNo}">
 									<div class="photoUpload">
 										<span><i class="sl sl-icon-arrow-up-circle"></i> Upload Photos</span>
-										<input name="photo" type="file" onchange="addDetailPhoto()" class="upload" />
+										<input name="photo" type="file" onchange="addEventPhoto()" class="upload" />
 									</div>
 								</form>
 							</div>
 						</div>
 					</div>
+					
 					
 					<div class="mfp-gallery-container" id="photoMoreView">
 						
@@ -147,41 +156,31 @@
 					</div>
 					</div>
 					</c:if>
-					
 				</div>
 			</div>
 			<!-- regist photo / End -->
 			
 			<!-- regist photo test push case-->
 			<div id="regist-review" class="listing-section margin-top-70 margin-bottom-30">
-				<!--<div class="col-lg-12" style="padding-left: 0px;">	-->
 				<div class="col-lg-2" style="padding-left: 0px;">				
-					<h3 class="listing-desc-headline ">Review <span>(${countReview})</span></h3>							
+					<h3 class="listing-desc-headline ">Review <span>(${reviewList.size()})</span></h3>							
 				</div>
-				</div>				
 				<div class="col-lg-10">
 					<div style="height: 50px;margin-top: 34px;">
 						<c:if test="${empty reviewList}">
 						<div class = "col-lg-8" style="padding-top: 8px;">							
-							<span>이 장소의 리뷰를 첫 번째로 등록해주세요.</span> 							
+						 	<span>이 장소의 리뷰를 첫 번째로 등록해주세요.</span> 							
 						</div>
 						</c:if>	
 						<div class="add-review-photos col-lg-4" style="position:static;">		
 							<div class="photoUpload">
 								<span>
-								<a href="/review/viewReviewRegist?eventNo=${dto.eventNo}&boardCategory=${dto.categoryCode}&address=${detail.title}">
-								<i class="im im-icon-Pencil"></i> Write Review</span></a>
+								<i class="im im-icon-Pencil"></i> Write Review</span>
 							</div>
 						</div>	
 					</div>
 				</div>
-						
-				<div class="col-lg-12" style="padding-left: 0px;">
-					<!-- Uplaod Photos 
-					<div class="col-lg-12">
-						<div style="height: 50px;margin-top: 34px;">
-							<div class = "col-lg-12" style="padding-top: 8px;">	-->				
-					
+			<div class="col-lg-12" style="padding-left: 0px;">
 					<div class="row">
 							<c:forEach var="reviews" items="${reviewList}" varStatus="status">
 								<c:if test="${status.index<3}">							
@@ -204,35 +203,23 @@
 												<span>${reviews.regiDate}</span>
 											</div>
 										</div>
-										<span class="star-rating" data-rating="${reviews.rating}">${reviews.rating}</span>															
+										<span class="star-rating" data-rating="${reviews.rating}">(${reviews.numOfCmt} comments)</span>															
+								
 									</a>
 								</div>
 								</c:if>
 							</c:forEach>	
-					</div>	
-						<c:if test="${fn:length(reviewList) > 3}">
+					</div>
+					<c:if test="${fn:length(reviewList) > 3}">
 					<div class="row">
-							<a href="/review/viewDetailReviews?locationSeq=${detail.locationSeq}&page=1" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
+						<a href="/review/viewDetailReviews?eventNo=${dto.eventNo}&page=1" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
 					</div>
 					</c:if>
 					</div>
 			<!-- write Review / End -->
 
-		
-			<!-- Location -->
-			<input type="hidden" id="longitude" value="${dto.longitude}">
-			<input type="hidden" id="latitude" value="${dto.latitude}">
-			
-			<div id="Location" class="listing-section">
-				<h3 class="listing-desc-headline margin-top-60 margin-bottom-30">Location</h3>
-	
-				<div id="singleListingMap-container" align="center">
-					<div id="singleListingMap" style="width: 750px; "></div>
-				</div>
-			</div>
-			<!-- Location / End -->
-			
-			<!-- Blog review 
+
+			<!-- Blog review -->
 			<div id="blog-review" class="listing-section margin-top-70 margin-bottom-30">
 				<div class="col-lg-3" style="padding-left: 0px;">				
 					<h3 class="listing-desc-headline ">Blog Review </h3>							
@@ -252,10 +239,8 @@
 							</c:forEach>	
 					</div>				
 					</div>
-			 Blog Review END -->
-			
-	
-			
+			<!-- Blog Review END -->
+		
 			
 				
 			<!-- Comment -->
@@ -273,13 +258,15 @@
 					<!-- Rating / Upload Button -->
 					<form id="add-comment" action="" class="add-comment" method="post">
 						<input type="hidden" id="eventNo" name="eventNo" value="${dto.eventNo}">
-						<input type="hidden" id="commentSeq" name = "commentSeq" value = "0" >
+						<input type="hidden" id="commentNo" name = "commentNo" value = "0" >
 					
 					<div class="row">
 						<div class="col-md-6">
 							<!-- Leave Rating -->
 								<!-- rating -->
-						<div class = "rating col-md-12" style="padding-bottom: 10px;">		
+						<div class = "rating col-md-12" style="padding-bottom: 10px;">	
+							<h5>Rating</h5>					
+								
 							<fieldset class="rating">
   								<input type="radio" id="star5" name="rating" value="5.0"  />
   								<label class = "full" for="star5" title="Awesome - 5 stars"></label>
@@ -296,9 +283,9 @@
 	   							<input type="radio" id="star3" name="rating" value="3.0" />
 	   							<label class = "full" for="star3" title="Meh - 3 stars"></label>
 	   							
-	   							<input type="radio" id="star2half" name="rating" value="2.5" }/>
+	   							<input type="radio" id="star2half" name="rating" value="2.5" />
 	   							<label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-	   							
+	   									
   		 						<input type="radio" id="star2" name="rating" value="2.0" />
   		 						<label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
 	  		 						
@@ -311,10 +298,10 @@
 	   							<input type="radio" id="starhalf" name="rating" value="0.5" />
 	   							<label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
 							</fieldset>
-													
+											
 						</div>
 						</div>
-	
+				
 					</div>
 		
 					<!-- Review Comment -->
@@ -342,74 +329,50 @@
 	
 				</div>
 				<!-- Add Review Box / End -->
-				
 				<!-- Reviews -->
 			<form id="commentData" method="post">
 				<input type="hidden" id="eventNo2" name="eventNo2" value="${dto.eventNo}">
 				<section class="comments listing-reviews">
  					
 					 <ul>
-					<div class="row fs-listings" id = "replyList" ></div>
+					 <div class="row fs-listings" id = "replyList" >
+					 </div>
 				  	<c:if test="${fn:length(commentlist) > 5}">
 					<div class="row" style="float:center;">
 						<input type="button" id="commentMore" value="Read More">
 							<!-- <a id="commentMore" href="" class="read-more">Read More <i class="fa fa-angle-right"></i></a> -->
 					</div>
-					</c:if>  
-						
+					</c:if>
 					 </ul>
-			 
 				</section> 
 			</form>
-				<!-- Pagination -->
-				<div class="clearfix"></div>
-				<div class="row">
-					<div class="col-md-12">
-						<!-- Pagination -->
-						<div class="pagination-container margin-top-30">
-							<nav class="pagination">
-								<ul>
-									<li><a href="#" class="current-page">1</a></li>
-
-									<li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
-								</ul>
-							</nav>
-						</div>
-					</div>
-				</div>
-				<div class="clearfix"></div>
-				<!-- Pagination / End -->
 			</div>
 		</div>
-
-
 	</div>
-	
-	
-	
-			<!-- Sidebar
-		================================================== -->
+</div>
 		<div class="col-lg-4 col-md-4 margin-top-75 sticky">
 
 			<!-- Book Now -->
 			<div class="boxed-widget">
 				<h3><i class="fa fa-calendar-check-o "></i> Add to Calendar</h3>
 				<div class="row with-forms  margin-top-0">
-
-					<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
-					<div class="col-lg-6 col-md-12">
-						<input type="text" value = "${dto.startDate}" id="booking-date"  data-lang="en" data-large-mode="true" data-min-year="2017" data-max-year="2020">
-					</div>
-
-					<!-- Time Picker - docs: http://www.vasterad.com/docs/listeo/#!/time_picker -->
-					<div class="col-lg-6 col-md-12">
-						<input type="text" id="booking-time" value="9:00 am">
-					</div>
-
+					<form method="post" action="" id="booking-calendar">
+						<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
+						<div class="col-lg-6 col-md-12">
+							<input type="text" id="booking-date" name="bookDate" data-format="Y-m-d" data-lang="ko" data-large-mode="true" data-min-year="2017" data-max-year="2020">
+						</div>
+	
+						<!-- Time Picker - docs: http://www.vasterad.com/docs/listeo/#!/time_picker -->
+						<div class="col-lg-6 col-md-12">
+							<input type="text" id="booking-time" name="bookTime" value="9:00 am">
+						</div>
+						<input type="hidden" id="isLogin3" name="bookEmail" value="${member.nickname}">
+						<input type="hidden" id="eventNo3" name="eventNo" value="${dto.eventNo}">
+					</form>
 				</div>
 				
 				<!-- progress button animation handled via custom.js -->
-				<button class="progress-button button fullwidth margin-top-5"><span>Add</span></button>
+				<button class="progress-button button fullwidth margin-top-5" id="bookNow"><span>Add</span></button>
 			</div>
 			<!-- Book Now / End -->
 
@@ -418,33 +381,15 @@
 			<div class="boxed-widget margin-top-35">
 				<h3><i class="sl sl-icon-pin"></i> Contact</h3>
 				<ul class="listing-details-sidebar">
-					<li><i class="sl sl-icon-phone"></i> ${dto.call}</li>
-					<li><i class="sl sl-icon-globe"></i> <a href="${dto.link}">${dto.link}</a></li>
+					<li><i class="fa fa-phone"></i> ${dto.call}</li>
+					<li><i class="fa fa-map-marker"></i> <a href="#location" class="listing-address">${dto.address}</a></li>
+					<li><i class="fa fa-link"></i> <a href="${dto.link}" class="listing-address">홈페이지 확인</a></li>
 				</ul>
-
-				<ul class="listing-details-sidebar social-profiles">
-					<li><a href="#" class="facebook-profile"><i class="fa fa-facebook-square"></i> Facebook</a></li>
-					<li><a href="#" class="twitter-profile"><i class="fa fa-twitter"></i> Twitter</a></li>
-					<!-- <li><a href="#" class="gplus-profile"><i class="fa fa-google-plus"></i> Google Plus</a></li> -->
-				</ul>
-
-				<!-- Reply to review popup -->
-				<div id="small-dialog" class="zoom-anim-dialog mfp-hide">
-					<div class="small-dialog-header">
-						<h3>Send Message</h3>
-					</div>
-					<div class="message-reply margin-top-0">
-						<textarea cols="40" rows="3" placeholder="Your message to Burger House"></textarea>
-						<button class="button">Send Message</button>
-					</div>
-				</div>
-	
-				<a href="#small-dialog" class="send-message-to-owner button popup-with-zoom-anim"><i class="sl sl-icon-envelope-open"></i> Send Message</a>
 			</div>
 			<!-- Contact / End-->
 			
 
-			<!-- Opening Hours 
+			<!-- Opening Hours
 			<div class="boxed-widget opening-hours margin-top-35">
 				<div class="listing-badge now-open">Now Open</div>
 				<h3><i class="sl sl-icon-clock"></i> Opening Hours</h3>
@@ -458,13 +403,24 @@
 					<li>Sunday <span>Closed</span></li>
 				</ul>
 			</div>
-			<!-- Opening Hours / End -->
+			Opening Hours / End -->
 
 
 			<!-- Share / Like -->
 			<div class="listing-share margin-top-40 margin-bottom-40 no-border">
-				<button class="like-button"><span class="like-icon"></span> Bookmark this listing</button> 
-				<span>${dto.countLike} people bookmarked this place</span>
+				<!--<c:choose>
+				<c:when test="${member.nickname == null }">
+					<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
+						<button type="button" class="like-button" onclick="no_login_like()"><span class="like-icon"></span> Bookmark this listing</button> 
+					</div>	
+				</c:when>
+				<c:otherwise>
+					<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
+						<button type="button" class="like-button" onclick="like_clicked()"><span id = "like" class="${dto.userLikeStatus }"></span> Bookmark this listing</button> 
+					</div>	
+				</c:otherwise>
+				</c:choose> -->
+			
 
 					<!-- Share Buttons -->
 					<ul class="share-buttons margin-top-40 margin-bottom-0">
@@ -477,12 +433,8 @@
 			</div>
 
 		</div>
-		<!-- Sidebar / End -->
-	
-	
 </div>
 </div>
-
 
 <!-- Wrapper / End -->
 
@@ -500,64 +452,71 @@
 <script type="text/javascript" src="<c:url value = '/resources/scripts/tooltips.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/custom.js'/>"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ebfbfbd7a5ec71c10c63936dd90beb22"></script>
+
 <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
-<link rel="stylesheet" type="text/css" href="<c:url value = '/resources/css/plugins/datedropper.css'/>" >
+<link rel="stylesheet" href= "<c:url value = '/resources/css/plugins/datedropper.css'/>">
 <script type="text/javascript" src="<c:url value = '/resources/scripts/datedropper.js'/>"></script>
 <script>$('#booking-date').dateDropper();</script> 
 
 <!-- Time Picker - docs: http://www.vasterad.com/docs/listeo/#!/time_picker -->
-<script type="text/javascript" src="<c:url value = '/resources/scripts/timedropper.js'/>"></script>
 <link rel="stylesheet" href= "<c:url value = '/resources/css/plugins/timedropper.css'/>">
+<script type="text/javascript" src="<c:url value = '/resources/scripts/timedropper.js'/>"></script>
 <script>
-
 this.$('#booking-time').timeDropper({
 	setCurrentTime: false,
-	meridians: true,
+	meridians: false,
 	primaryColor: "#f91942",
 	borderColor: "#f91942",
 	minutesInterval: '15',
-	format: "h:mm a"
+	format: "hh:mm a"
 });
-
-/* var $clocks = $('.td-input');
-_.each($clocks, function(clock){
-clock.value = null;
-}); */
 </script> 
+<!-- //////////////////////////////////////////////////////////////////////////// -->
 
 
 <script type="text/javascript">
-	var longitude = document.getElementById('longitude').value;
-	var latitude = document.getElementById('latitude').value;
-	
-	var mapContainer = document.getElementById('singleListingMap'), // 지도를 표시할 div
-		mapOption = { 
-			center: new daum.maps.LatLng(latitude, longitude), // 지도의 중심좌표
-			level: 3 // 지도의 확대 레벨
-		};
-	
-	// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
-	var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-	
-	var markerPosition  = new daum.maps.LatLng(latitude, longitude); 
-		
-	    // 마커를 생성합니다
-	var marker = new daum.maps.Marker({
-		position: markerPosition
-	});
-	map.setCenter(new daum.maps.LatLng(latitude, longitude));
-	marker.setMap(map);
-	
+var longitude = document.getElementById('longitude').value;
+var latitude = document.getElementById('latitude').value;
+
+var mapContainer = document.getElementById('singleListingMap'), // 지도를 표시할 div
+	mapOption = { 
+		center: new daum.maps.LatLng(latitude, longitude), // 지도의 중심좌표
+		level: 3 // 지도의 확대 레벨
+	};
+var map = new daum.maps.Map(mapContainer, mapOption); 
+var markerPosition  = new daum.maps.LatLng(latitude, longitude); 
+var marker = new daum.maps.Marker({
+	position: markerPosition
+});
+map.setCenter(new daum.maps.LatLng(latitude, longitude));
+marker.setMap(map);
+
+$('#bookNow').on('click',function(){
+	var eventNo = document.getElementById("eventNo3").value;
+	checkBooking(eventNo);
+	var book = document.getElementById("booking-calendar");
+	var url = "/map/detail/addBooking";
+	book.action = url;
+	book.submit();
+});
+
+function checkBooking(eventNo){
+	var isLogin = document.getElementById("isLogin3");
+	if(isLogin.value==''){
+		alert("일정등록은 회원만 가능합니다.");
+		location.href = "/viewLogin?uri=/map/detail/viewDetailPage?eventNo="+eventNo;
+	}
+}
 
 //댓글 등록 버튼 클릭시
 $('#registComment').click(function(){
 	var eventNo = document.getElementById("eventNo").value;
-	//checkMessage(eventNo);
-	var ds = document.getElementById("add-comment"); //폼에 입력한 정보
+	checkMessage(eventNo);
+	var ds = document.getElementById("add-comment");
 	var url = "/event/detail/addComment";
 	ds.action = url;
-	if($("#commMsg").val()!='' && //메세지 작성했고
-			$('input:radio[name="rating"]').is(":checked")){ //별점 눌렀으면 
+	if($("#commMsg").val()!='' && 
+			$('input:radio[name="rating"]').is(":checked")){
 		ds.submit();
 	}else{
 		return;
@@ -572,16 +531,15 @@ $('#modifyComment').click(function(){
 	ds.submit();
 });
 
-
 //댓글  Edit, Delete
-function go_url(type, commSeq){	
-	var commentSeq = document.getElementById("commentSeq");
+function go_url(type, commNo){	
+	var commentNo = document.getElementById("commentNo");
 	var commMsg = document.getElementById("commMsg");
 	var changeMsg = document.getElementById("changeMsg"+commSeq);
 	var ratingVal = document.getElementById("ratingVal"+commSeq);
 	var ment = document.getElementById("ment");
 	if(type==1){		
-		commentSeq.value = commSeq;
+		commentNo.value = commSeq;
 		commMsg.innerHTML = changeMsg.innerHTML;
 		if(ratingVal.value==0.5){
 			$('input:radio[name=rating]:input[value="0.5"]').attr("checked", true);			
@@ -610,11 +568,49 @@ function go_url(type, commSeq){
 		ment.innerHTML = 'Edit Comment';
 	}else if(type==2){
 		var ds = document.getElementById("add-comment");
-		var url = "/event/detail/deleteComment?commentSeq="+commSeq;
+		var url = "/event/detail/deleteComment?commentNo="+commNo;
 		ds.action = url;
 		ds.submit();
 	}
 }
+
+function addEventPhoto(){
+	var url = "/event/detail/addPhoto";
+	addPhoto.action = url;
+	addPhoto.submit();
+}
+
+function box_clicked(eventNo){
+	alert("댓글작성은 회원만 가능합니다.");	
+	location.href = "/viewLogin?uri=/event/detail/view?no="+eventNo;
+}
+
+function no_login_like(eventNo){
+	alert("로그인을 해주세요!");
+	var eventNo = document.getElementById("eventNo").value;
+	location.href = "/viewLogin?uri=/event/detail/view?no="+eventNo;
+}
+
+function like_clicked(){
+	var class_name = document.getElementById("like").className;
+	var eventNo = document.getElementById("eventNo").value;
+	var email = document.getElementById("memberEmail").value;
+	var url = '/review/updateEventDetailLike?like='+class_name+'&eventNo='+eventNo+'&email='+email;
+	var id = document.getElementById("numOflike");
+	
+	$.ajax({
+        url 	 : url,
+        dataType : 'json',
+        type	 : "POST",
+        success  : function(data) {
+        	id.innerHTML=data+' people bookmarked this event.'; 
+        },
+        error : function(request, status, error) {
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+          }
+     });
+}
+
 
 //등록시 필수항목 체크
 function checkMessage(eventNo){
@@ -632,12 +628,173 @@ function checkMessage(eventNo){
 	  }
 }
 
-function box_clicked(eventNo){
-	alert("댓글작성은 회원만 가능합니다.");	
-	location.href = "/viewLogin?uri=/event/detail/view?no="+eventNo;
+$(document).ready(function() {
+	var eventNo = document.getElementById("eventNo").value;
+	url = '/event/detail/getCmtData?eventNo='+eventNo;
+	$.ajax({
+		url 	 : url,
+		dataType : 'json',
+		type	 :"POST",
+		success  : function(commentlist) {
+			list = commentlist;
+			if(commentlist.length<=5){
+				displayInfoList(0,commentlist.length,commentlist);
+			}else{
+				displayInfoList(0,5,commentlist);	
+				commentStart = 5;
+				commentEnd = commentlist.length>10?10:commentlist.length;
+			}
+		},
+		error : function(request, status, error) {
+			 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+       }
+	});		
+});
+
+function displayInfoList(start,end,commentlist){
+    var listEl = document.getElementById('replyList'),
+    fragment = document.createDocumentFragment(),
+    itemEl; 
+	for(var i=start;i<end;i++){
+	    itemEl = getListItem(commentlist[i]);
+	    fragment.appendChild(itemEl);
+	 }    
+    listEl.appendChild(fragment);
+    clearStarRating('.star');
+    starRating('.star');       
+} 
+
+var commentStart;
+var commentEnd;
+ 
+$('#commentMore').click(function(){
+	 displayInfoList(commentStart,commentEnd,list);	
+	 if(commentEnd==list.length){
+		 $('#commentMore').hide();
+	 }	
+	 commentStart = commentStart+5;
+	 commentEnd = commentEnd+5;
+	 commentEnd = commentEnd>list.length?list.length:commentEnd;
+});   
+
+function getListItem(reply) {
+	    var el = document.createElement('div');
+	    var nickname = document.getElementById('isLogin').value;
+	    var regi = new Date(reply.regiDate); 
+	    regi = regi.getFullYear() + '-' + leadingZeros((regi.getMonth()+1),2) + '-' + leadingZeros(regi.getDate(),2)
+	    +' '+leadingZeros(regi.getHours(),2)+':'+leadingZeros(regi.getMinutes(),2)+':'+leadingZeros(regi.getSeconds(),2);
+	    var itemStr ='	<input type="hidden" id="ratingVal'+reply.commentNo+'" value="'+reply.rating+'">'+
+		  	'<li><div class="avatar"><img src="/resources/upload/'+reply.photo+'" alt="" /></div>'+
+		'<div class="comment-content"><div class="arrow-comment"></div>'+
+			'<div class="comment-by">'+
+				reply.nickname+'<span class="date">'+regi+'</span>'+
+				'<div class="star star-rating" data-rating="'+reply.rating+'"></div>'+
+			'</div>'+
+			'<p id="changeMsg'+reply.commentSeq+'">'+reply.message+'</p></div>';
+			if(nickname==reply.nickname){
+				itemStr +=	'<div class="comment-by" >'+
+							'	<a class="reply" style="margin-top: 20px;" " onclick="go_url(1, '+reply.commentNo+');" return false; ><i class="sl sl-icon-note"></i> Edit</a>'+
+							'</div>';
+				itemStr +=	'<div class="comment-by">'+
+							'	<a class="reply" style="margin-top: 60px;" " onclick="go_url(2, '+reply.commentNo+');" return false; ><i class="sl sl-icon-note"></i> Delete</a>'+
+							'</div>';		
+	 		}
+			el.innerHTML = itemStr;	
+	    return el;
+	}	
+
+function leadingZeros(n, digits) {
+	  var zero = '';
+	  n = n.toString();
+
+	  if (n.length < digits) {
+	    for (var i = 0; i < digits - n.length; i++)
+	      zero += '0';
+	  }
+	  return zero + n;
+	}
+
+//검색결과 목록의 자식 Element를 제거하는 함수입니다
+function removeAllChildNods(el) {   
+   while (el.hasChildNodes()) {
+       el.removeChild (el.lastChild);
+   }
 }
 
-</script>
+var list = [];
 
+var count=1;
+
+function photoListView(start,end,photoList){
+    var photoListEl = document.getElementById('photoMoreView'),
+    photoFragment = document.createDocumentFragment(),
+    photoEl; 
+    var El = document.createElement('div');
+    photoEl = '<div class="review-images col-lg-12" style="padding-top: 8px;" id="mfp-'+count+'">';
+	
+	for(var i=start;i<end;i++){
+		photoEl += getPhotoList(photoList[i]);
+	 }  
+	photoEl += '</div>';
+	El.innerHTML = photoEl;
+    photoFragment.appendChild(El);
+    count++;
+    photoListEl.appendChild(photoFragment);
+} 
+
+var photoStart;
+var photoEnd;
+
+/*$('#photoHide').click(function(){
+	for(var i=2;i<count;i++){
+		$('#mfp-'+i).hide();
+	}
+});*/
+
+$('#photoMore').click(function(){
+	 photoListView(photoStart,photoEnd,pList);	
+	 if(photoEnd==pList.length){
+		 $('#photoMore').hide();
+	 }	
+	 photoStart = photoStart+4;
+	 photoEnd = photoEnd+4;
+	 photoEnd = photoEnd>pList.length?pList.length:photoEnd;
+});  
+
+var pList = [];
+
+$(document).ready(function() {
+	var eventNo = document.getElementById("eventNo").value;
+	url = '/event/detail/getPhotoData?eventNo='+eventNo;
+	$.ajax({
+		url 	 : url,
+		dataType : 'json',
+		type	 :"POST",
+		success  : function(photoList) {
+			pList = photoList;
+			if(pList.length<=4){
+				photoListView(0,pList.length,pList);
+			}else{
+				photoListView(0,4,pList);	
+				photoStart = 4;
+				photoEnd = pList.length>8?8:pList.length;
+			}
+		},
+		error : function(request, status, error) {
+			 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+       }
+	});		
+});
+
+function getPhotoList(photo) {
+    var itemStr ='<a href="/resources/upload/'+photo.eventPhoto+'" class="mfp-gallery listing-item-container">'
+    			+'<div class="listing-item">'
+    			+'<img src="/resources/upload/'+photo.eventPhoto+'" alt="">'
+    			+'</div> </a>';
+    return itemStr;
+}
+
+
+</script>
 </body>
 </html>

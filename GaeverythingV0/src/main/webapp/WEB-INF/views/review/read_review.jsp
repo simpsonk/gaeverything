@@ -290,7 +290,7 @@
 					</div>
 							
 					<!-- edit, delete -->
-					<c:if test="${member.nickname == dto.nickname}">
+					<c:if test="${tom.nickname == dto.nickname}">
 						<div class="col-md-8 centered-content" >
 							<a onclick="go_url(1, ${param.page})" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-note"></i>Edit</a>
 							<a onclick="go_url(2, ${param.page})" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-close"></i>Delete</a>
@@ -306,16 +306,16 @@
 		<!-- 작성자 프로필 -->
 		<div class="about-author col-md-12" style=" padding-left: 10px; padding-right: 10px;">
 			<div class="profile col-md-3" style="width: 150px;height: 150px; padding-top: 15px; padding-bottom: 15px;">
-				<img src="/resources/images/user-avatar.jpg" alt="" />
+				<img src="/resources/images/${member.photo}" alt="" />
 			</div>
 			<div class="about-description">
 				<div class="writer">
 					<h4>${dto.nickname}&nbsp;&nbsp;&nbsp;<a href="/review/follow"><i class="sl sl-icon-user-follow"></i></a></h4>
 				</div>
 			</div>
-				<a href="#">tom@example.com</a> 
+				<a href="#"></a> 
 			<div class="intro col-md-9" style="padding-left: 0px;padding-right: 0px;">	
-				<p>Nullam ultricies, velit ut varius molestie, ante metus condimentum nisi, dignissim facilisis turpis ex in libero. Sed porta ante tortor, a pulvinar mi facilisis nec. Proin finibus dolor ac convallis congue.</p>
+				<p>멤버프로필</p>
 			</div>
 		</div>
 	</form>

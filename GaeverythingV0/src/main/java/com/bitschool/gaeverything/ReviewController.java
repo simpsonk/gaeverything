@@ -391,6 +391,31 @@ public class ReviewController {
 		return data;
 	}
 	
+	@RequestMapping(value="/updateEventDetailLike", method={RequestMethod.GET, RequestMethod.POST})
+	public @ResponseBody int updateEventDetailLike(
+							 @RequestParam("like") String like,
+							 @RequestParam("eventNo") int eventNo,
+							 @RequestParam("email") String email){
+		boolean flag = false;
+		int data = 0;
+		ActUserManager manager = new ActUserManager(aService);
+		ActUserDTO dto = new ActUserDTO(email, ActUserManager.EVENT, eventNo);
+		if(like.equals("like-icon")){
+			flag = manager.registLikeStatus(dto);
+			if(!flag){
+				System.out.println("insert fail: DetailPageLike");
+			}
+		}else if(like.equals("like-icon liked")){
+			flag = manager.deleteLikeStatus(dto);
+			if(!flag){
+				System.out.println("delete fail: DetailPageLike");
+			}
+		}
+		data = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.EVENT, eventNo));
+		return data;
+	}
+	
+	
 	@RequestMapping(value = "viewSearchShop", method = RequestMethod.GET)
 	public String viewSearchShop(HttpSession session, Model model){
 		String url = "review/search_shop";

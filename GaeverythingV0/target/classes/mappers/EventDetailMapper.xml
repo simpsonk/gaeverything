@@ -20,8 +20,7 @@
 	</insert>
 	
 	<!-- 디테일페이지 사진 등록 -->
-	<insert id="photoA
-	dd" parameterType="EventPhotoDTO">
+	<insert id="photoAdd" parameterType="EventPhotoDTO">
 		<selectKey resultType="Integer" order="BEFORE" keyProperty="eventPhotoNo">
 			select eventphoto_seq.nextval from dual
 		</selectKey>

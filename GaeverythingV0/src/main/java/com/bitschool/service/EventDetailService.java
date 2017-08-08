@@ -196,21 +196,21 @@ public class EventDetailService {
 			e.printStackTrace();
 		}
 		return dto;
-	}
+	}*/
 
 	public EventDTO getEventActUserResult(ActUserManager manager, EventDTO dto) {
 		// TODO Auto-generated method stub
-		int countReview = this.countReviews(dto.getEventNo());	
+		//int countReview = this.countReviews(dto.getEventNo());	
 		
-		double averageRatings = this.getAverageRatings(this.getRatings(dto.getEventNo()),this.getReplyRatings(dto.getEventNo()));
-		averageRatings=(Double.isNaN(averageRatings))?0:averageRatings;
-		String temp = String.format("%.2f", averageRatings);
+		//double averageRatings = this.getAverageRatings(this.getRatings(dto.getEventNo()),this.getReplyRatings(dto.getEventNo()));
+		//averageRatings=(Double.isNaN(averageRatings))?0:averageRatings;
+		//String temp = String.format("%.2f", averageRatings);
 		
-		int countRatings = this.getRatings(dto.getEventNo()).size()+this.getReplyRatings(dto.getEventNo()).size();
+		//int countRatings = this.getRatings(dto.getEventNo()).size()+this.getReplyRatings(dto.getEventNo()).size();
 		int countReplies = this.countReplies(dto.getEventNo());
-		int countLike = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.SHOP, dto.getEventNo()));
+		int countLike = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.EVENT, dto.getEventNo()));
 		
-		dto.setActUserResult(countReview, temp, countRatings, countReplies, countLike);
+		dto.setActUserResult( countReplies, countLike);
 		
 		return dto;
 	}
@@ -220,7 +220,7 @@ public class EventDetailService {
 			this.getEventActUserResult(manager, list.get(i));
 		}
 		return list;
-	}*/
+	}
 		
 	public List<EventPhotoDTO> photoList(int seq){
 		List<EventPhotoDTO> dto = null;
