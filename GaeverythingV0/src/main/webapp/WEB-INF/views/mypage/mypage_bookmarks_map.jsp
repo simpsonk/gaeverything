@@ -74,7 +74,7 @@
 
 			<div class="col-lg-12 col-md-12">			
 				<div class="dashboard-list-box margin-top-0">
-					<h4>Bookmarked Hospitals</h4>
+					<h4>Hospitals (${mapList.size()})</h4>
 					<ul>
 						<c:choose>
 						<c:when test="${mapList.size()==0}">

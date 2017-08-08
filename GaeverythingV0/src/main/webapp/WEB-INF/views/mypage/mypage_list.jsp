@@ -89,22 +89,35 @@
 								</c:choose>	
 									<c:forEach var="list" items="${reviewList}" varStatus="status">									    
 									<c:if test="${status.index<5}">	
-									<li>
-										<div class="avatar"><img src="/resources/upload/${member.photo}" alt=""/> </div>
-										<div class="comment-content"><div class="arrow-comment"></div>
+										<li>
+										<div class="list-box-listing">
+											<div class="list-box-listing-img"><a href="/review/readPost?boardNo=${list.boardNo}&page=1">
+											<c:choose>
+											<c:when test="${list.uploadImg!=null}">
+											<img src="/resources/upload/${list.uploadImg}" alt="">	
+											</c:when>	
+											<c:otherwise>
+											<img src="/resources/images/hospital.jpg" alt="">	
+											</c:otherwise>	
+											</c:choose>
+											</a></div>
+											<div class="list-box-listing-content">
+												<div class="inner">
+												
 										<a href="/review/readPost?boardNo=${list.boardNo}&page=1">
 										<span><h3>${list.title}</h3></span></a>
 											<div class="comment-by">review <div class="comment-by-listing own-comment">on 
 											<a href="/map/detail/viewDetailPage?locationSeq=${list.locationSeq}"><b>${list.address}</b></a></div> 
 											<span class="date">${list.regiDate}</span>
-												<div class="star-rating" data-rating="${list.rating}"></div>
+											<div class="star-rating" data-rating="${list.rating}"></div>
 											</div>
 											<p>${list.onlyText}</p>
 											<a href="/review/clickModify?page=1&boardNo=${list.boardNo}" class="rate-review"><i class="sl sl-icon-note"></i> Edit</a>										
 											<a href="/review/delete?boardNo=${list.boardNo}&mylisting=1&page=1" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>						
-										</div>
-
-									</li>
+											</div>
+											</div>
+										</div>									
+										</li>
 									</c:if>
 									</c:forEach>
 									<c:choose>
@@ -132,23 +145,19 @@
 								<c:choose>
 								<c:when test="${commentList.size()==0}">
 								<li>
-								<span>작성한 리뷰가 없습니다.</span>
+								<span>작성한 댓글이 없습니다.</span>
 								</li>
 								</c:when>
 								</c:choose>	
 									<c:forEach var="list" items="${commentList}" varStatus="status">									    
 									<c:if test="${status.index<5}">	       								
-									<li>
-										<div class="avatar"><img src="/resources/upload/${member.photo}" alt="" /> </div>
-										<div class="comment-content"><div class="arrow-comment"></div>
+									<li>										
 											<div class="comment-by">Your Comments <div class="comment-by-listing own-comment">on <a href="#"><b>${list.address}</b></a></div> <span class="date">${list.regiDate}</span>
 												<div class="star-rating" data-rating="${list.rating}"></div>
 											</div>
 											<p>${list.message}</p>
 											<a href="#" class="rate-review"><i class="sl sl-icon-note"></i> Edit</a>										
 											<a href="#" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>						
-										</div>
-
 									</li>
 									</c:if>
 									</c:forEach>

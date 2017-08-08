@@ -81,22 +81,18 @@
 								<c:choose>
 								<c:when test="${commentList.size()==0}">
 								<li>
-								<span>작성한 리뷰가 없습니다.</span>
+								<span>작성한 댓글이 없습니다.</span>
 								</li>
 								</c:when>
 								</c:choose>	
 									<c:forEach var="list" items="${commentList}">        								
-									<li>
-										<div class="avatar"><img src="/resources/upload/${member.photo}" alt="" /> </div>
-										<div class="comment-content"><div class="arrow-comment"></div>
+									<li>										
 											<div class="comment-by">Your Comments <div class="comment-by-listing own-comment">on <a href="#"><b>${list.address}</b></a></div> <span class="date">${list.regiDate}</span>
 												<div class="star-rating" data-rating="${list.rating}"></div>
 											</div>
 											<p>${list.message}</p>
 											<a href="#" class="rate-review"><i class="sl sl-icon-note"></i> Edit</a>										
 											<a href="#" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>						
-										</div>
-
 									</li>
 									</c:forEach>
 								</ul>

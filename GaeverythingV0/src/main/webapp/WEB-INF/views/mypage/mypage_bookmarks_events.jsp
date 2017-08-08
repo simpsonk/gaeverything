@@ -73,7 +73,7 @@
 			<!-- Listings -->
 				<div class="col-lg-12 col-md-12">
 				<div class="dashboard-list-box margin-top-0">
-					<h4>Bookmarked Events</h4>
+					<h4>Events (${eventList.size()})</h4>
 					<ul>
 						<c:choose>
 						<c:when test="${eventList.size()==0}">
