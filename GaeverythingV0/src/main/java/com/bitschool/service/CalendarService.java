@@ -1,5 +1,6 @@
 package com.bitschool.service;
 
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,14 +13,19 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.bitschool.dao.CalendarDAO;
+import com.bitschool.dao.LocationDAO;
 import com.bitschool.dto.CalendarDTO;
 import com.bitschool.dto.CalendarFormat;
+import com.bitschool.dto.LocationDTO;
 
 @Service
 public class CalendarService{
 
 	@Inject
 	private CalendarDAO dao;
+	
+	@Inject
+	private LocationDAO ldao;
 	
 	public List<CalendarDTO> listCalendarAll() {
 		// TODO Auto-generated method stub
@@ -56,13 +62,23 @@ public class CalendarService{
 				c.setEnd(list.get(i).getEnd());
 				c.setColor(colorType[list.get(i).getDogid()]);
 				c.setSeq(list.get(i).getCalendarseq());
+				if(list.get(i).getDogid()==0){
+					LocationDTO ldto;
+					try {
+						ldto = ldao.selectLocationSeq(list.get(i).getLocationseq());
+						c.setLongitude(ldto.getLongitude());
+						c.setLatitude(ldto.getLatitude());
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 				calendar.add(c);
 			}else{
 				String repeat = list.get(i).getRepeatdata();
 				//System.out.println(repeat);
 				String[] repeatSplit = repeat.split(",");
 				int dateForm = Integer.parseInt(repeatSplit[0]);
-				System.out.println(dateForm);
 				if(dateForm==1){
 					String startA = list.get(i).getStart();
 					String[] startB = startA.split("T");
@@ -75,7 +91,6 @@ public class CalendarService{
 						int dateInt = Integer.parseInt(dateArray[1]);
 						for (int k = 0; k < 100; k++) {
 								String dateFinal = dateArray[0] + "-" + dateInt;
-								System.out.println(dateFinal);
 								Date date2 = dateF2.parse(dateFinal);
 								String dateFinal2 = dateF.format(date2);
 								c = new CalendarFormat();
@@ -100,15 +115,10 @@ public class CalendarService{
 						DateFormat dateF2 = new SimpleDateFormat("yyyy-ww- E");
 						String dateS = dateF2.format(date);
 						String[] dateArray = dateS.split("-");
-						System.out.println("date"+date);
-						System.out.println("dateS"+dateS);
-						System.out.println("dateArray"+dateArray[1]);
-						System.out.println("dateArray"+dateArray[2]);
 						int dateInt = Integer.parseInt(dateArray[1]);
 						for (int k = 0; k < 100; k++) {
 							for(int h=2;h<repeatSplit.length;h++){
 								String dateFinal = dateArray[0] + "-" + dateInt + "-" + repeatSplit[h];
-								System.out.println("dateFinal"+dateFinal);
 								Date date2 = dateF2.parse(dateFinal);
 								String dateFinal2 = dateF.format(date2);
 								c = new CalendarFormat();

@@ -87,14 +87,14 @@
 					<c:when test="${locationSeq!=null}">
 					<select class="chosen-select" name = "boardCategory">
 						<option value ="0">Categories</option>
-						<option value ="1" ${boardCategory == '1'?'selected="selected"':''}>병원, 뷰티</option>
+						<option value ="1" ${boardCategory == 'HP8'?'selected="selected"':''}>병원, 뷰티</option>
 						<option value ="2" ${boardCategory == '2'?'selected="selected"':''}>애견동반 식당, 카페</option>
 					</select>	
 					</c:when>
 					<c:otherwise>
 					<select class="chosen-select" name = "boardCategory">
 						<option value ="0">Categories</option>
-						<option value ="1" ${dto.boardCategory == '1'?'selected="selected"':''}>병원, 뷰티</option>
+						<option value ="1" ${dto.boardCategory == 'HP8'?'selected="selected"':''}>병원, 뷰티</option>
 						<option value ="2" ${dto.boardCategory == '2'?'selected="selected"':''}>애견동반 식당, 카페</option>
 					</select>	
 					</c:otherwise>

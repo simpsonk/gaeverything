@@ -41,5 +41,11 @@ public class LocationDAO {
 		return list;
 	}
 	
+	public LocationDTO selectLocationSeq(Integer LSeq) throws SQLException{
+		LocationDTO dto = null;
+		dto = session.selectOne(namespace+".selectLocationSeq",LSeq);
+		return dto;
+	}
+	
 
 }

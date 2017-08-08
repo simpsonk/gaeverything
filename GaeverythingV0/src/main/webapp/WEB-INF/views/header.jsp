@@ -101,7 +101,7 @@
 								<ul>
 									<li><a href="/mypage/viewMypageDashboard"><i class="sl sl-icon-settings"></i> Dashboard</a></li>
 									<li><a href="/mypage/viewMypageProfile"><i class="sl sl-icon-user"></i> My Profile</a></li>
-									<li><a href="/mypage/viewMypagePetProfile"><i class="im im-icon-Dog"></i> Pet Profile</a></li>
+									<li><a href="/mypage/viewPetList"><i class="im im-icon-Dog"></i> Pet Profile</a></li>
 									<li><a href="/logout"><i class="sl sl-icon-power"></i> Logout</a></li>
 								</ul>
 							</div>

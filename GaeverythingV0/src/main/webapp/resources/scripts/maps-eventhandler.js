@@ -1,5 +1,6 @@
-	var wheelHandler = function zoomHandler(){
+var wheelHandler = function zoomHandler(){
 	    // 지도의 현재 레벨을 얻어옵니다
+		listPage = 0;
 	    var eLevel = map.getLevel();
 	    var center = map.getCenter(); 
 	    latitude = center.getLat();
@@ -22,7 +23,7 @@
 				$('#resultCount').text(result);
 				
 				displayPlaces(data.places);
-				displayInfoList(data.pList, data.infoList, 0, 5);
+				displayInfoList(data.pList, data.infoList, 5, 0);
 				clusterer.clear();
 				clusterer.addMarkers(markers);
 			},

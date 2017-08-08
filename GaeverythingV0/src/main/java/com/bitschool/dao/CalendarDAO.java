@@ -49,6 +49,15 @@ public class CalendarDAO {
 		}
 		return flag;
 	}
+	public boolean insert2(CalendarDTO dto) {
+		// TODO Auto-generated method stub
+		boolean flag = false;
+		int aCnt = session.insert(namespace+".insert2",dto);
+		if(aCnt>0){
+			flag = true;
+		}
+		return flag;
+	}
 
 	public boolean update(CalendarDTO dto) {
 		// TODO Auto-generated method stub

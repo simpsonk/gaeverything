@@ -1,12 +1,15 @@
 package com.bitschool.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.bitschool.dto.BoardDTO;
+import com.bitschool.dto.DetailCommentDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.dto.MyPageDTO;
 
@@ -18,6 +21,26 @@ public class MyPageDAO {
 	
 	private static final String namespace = "com.bitschool.bootstrap.MyPageMapper";
 	
+	// 상호명 지정해주기 위해 
+	public String selectShopName(int locationSeq) throws SQLException{
+		String address = null;
+		address = session.selectOne(namespace+".selectShopName",locationSeq);
+		return address;
+	}
+		
+	// 내가 쓴 댓글(맵디테일) 모아보기 
+	public List<DetailCommentDTO> selectMyDetailComments(String nickname) throws SQLException{
+		List<DetailCommentDTO> list = null;
+		list = session.selectList(namespace+".selectMyDetailComments",nickname);
+		return list;
+	}	
+	
+	// 내가 쓴 리뷰 모아보기 
+	public List<BoardDTO> selectMyReviews(String nickname) throws SQLException{
+		List<BoardDTO> list = null;
+		list = session.selectList(namespace+".selectMyReviews",nickname);
+		return list;
+	}
 	
 	public boolean modifyMemData(MyPageDTO dto) throws SQLException{
 		// TODO Auto-generated method stub

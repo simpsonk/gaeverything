@@ -105,9 +105,10 @@ public class ReviewController {
 	}
 
 	@RequestMapping(value = "/viewReviewRegist", method = {RequestMethod.GET, RequestMethod.POST})
-	public String viewReviewRegist(HttpSession session, Model model,@RequestParam(value="locationSeq") int locationSeq,
-			@RequestParam(value="boardCategory",defaultValue="1") int boardCategory,
-			@RequestParam(value="address") String address){
+	public String viewReviewRegist(HttpSession session, Model model,@RequestParam(value="locationSeq", defaultValue = "0") int locationSeq,
+			@RequestParam(value="boardCategory",defaultValue="") String boardCategory,
+			@RequestParam(value="address", defaultValue = "") String address){
+		System.out.println("check"+locationSeq);
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		String url = "review/review_regist";
 		model.addAttribute("locationSeq",locationSeq);
@@ -226,12 +227,19 @@ public class ReviewController {
 	}
 	
 	
-	@RequestMapping(value="/delete", method=RequestMethod.POST)
-	public String delete(@RequestParam("boardNo") int boardNo, @RequestParam("page") int page){
+	@RequestMapping(value="/delete", method={RequestMethod.POST,RequestMethod.GET})
+	public String delete(@RequestParam("boardNo") int boardNo, @RequestParam("page") int page,
+			@RequestParam(value="mylisting", defaultValue="0") int mylisting,
+			@RequestParam(value="category", defaultValue="0") int category){
 		String url = null; 
 		boolean flag = service.remove(boardNo);
 		if(flag){
 			url = "redirect:/review/viewReviewList?page="+page;
+			if(mylisting==1){
+				url = "redirect:/mypage/viewMypageList";
+			}else if(category!=0){
+				url = "redirect:/mypage/viewMypageList?category="+category;
+			}
 		}
 		return url;
 	}

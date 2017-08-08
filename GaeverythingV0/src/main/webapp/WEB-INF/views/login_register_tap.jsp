@@ -49,7 +49,8 @@
 				<input type="hidden" name ="uri" value="${param.uri}">
 				<input type="hidden" name = "url" id = "url" >
 				<script type="text/javascript">
-					document.getElementById("url").value = location.pathname;
+					var path = document.location.pathname+document.location.search;
+					document.getElementById("url").value = path;
 				</script> 
 			</form>
 		</div>
