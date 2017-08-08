@@ -92,19 +92,17 @@
 											<div class="comment-by">Your Comments <div class="comment-by-listing own-comment">on <a href="/map/detail/viewDetailPage?locationSeq=${list.locationSeq}"><b>${list.address}</b></a></div> <span class="date">${list.regiDate}</span>
 												<div class="star-rating" data-rating="${list.rating}"></div>
 											</div>
-											<p>${list.message}</p>
-											<a href="#" class="rate-review"><i class="sl sl-icon-note"></i> Edit</a>										
-											<a href="#" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>						
+											<p>${list.message}</p>	
 									</li>
 									</c:if>
 									</c:forEach>
-									<c:choose>
-									<c:when test="${fn:length(commentList) > 2}">
+									<%-- <c:choose>
+									<c:when test="${fn:length(commentList) > 2}"> --%>
 									<li>						
 											<a href="/mypage/viewMypageList?category=2" class="read-more">Read More <i class="fa fa-angle-right"></i></a>		
 									</li>				
-									</c:when>
-									</c:choose>
+									<%-- </c:when>
+									</c:choose> --%>
 								</ul>
 							</div>
 						</li>
@@ -132,19 +130,14 @@
 									<li>										
 											<div class="comment-by">Your Comments <div class="comment-by-listing own-comment">on <a href="/review/readPost?boardNo=${list.groupNo}&page=1"><b>${list.title}</b></a></div> <span class="date">${list.regiDate}</span>
 											</div>
-											<p>${list.commentBody}</p>
-											<a href="#" class="rate-review"><i class="sl sl-icon-note"></i> Edit</a>										
-											<a href="#" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>						
+											<p>${list.commentBody}</p>			
 									</li>
 									</c:if>
 									</c:forEach>
-									<c:choose>
-									<c:when test="${fn:length(bCommentList) > 2}">
 									<li>						
 											<a href="/mypage/viewMypageList?category=2" class="read-more">Read More <i class="fa fa-angle-right"></i></a>		
 									</li>				
-									</c:when>
-									</c:choose>
+									
 								</ul>
 							</div>
 						</li>
@@ -193,23 +186,17 @@
 											<span class="date">${list.regiDate}</span>
 											<div class="star-rating" data-rating="${list.rating}"></div>
 											</div>
-											<p>${list.onlyText}</p>
-											<a href="/review/clickModify?page=1&boardNo=${list.boardNo}" class="rate-review"><i class="sl sl-icon-note"></i> Edit</a>										
-											<a href="/review/delete?boardNo=${list.boardNo}&mylisting=1&page=1" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>						
+											<p>${list.onlyText}</p>			
 									
 											</div>
 											</div>
 										</div>									
 										</li>
 									</c:if>
-									</c:forEach>
-									<c:choose>
-									<c:when test="${fn:length(reviewList) > 2}">
+									</c:forEach>									
 									<li>						
 											<a href="/mypage/viewMypageList?category=1" class="read-more">Read More <i class="fa fa-angle-right"></i></a>		
-									</li>				
-									</c:when>
-									</c:choose>
+									</li>
 								</ul>
 							</div>
 						</li>
