@@ -407,13 +407,12 @@ public class ReviewController {
 	
 	@RequestMapping(value = "getSearhShopname", method = RequestMethod.POST)
 	public String getSearhShopname(@RequestParam(value = "searchWord") String searchWord, @RequestParam(value = "selectOp1") String selectOp1, 
-			@RequestParam(value = "selectOp2") String selectOp2, Model model,  HttpSession session){
+			Model model,  HttpSession session){
 		String url = "redirect:/review/viewSearchShop";
 		HashMap<String, Object> searchData = new HashMap<String, Object>();
 		
 		searchData.put("searchWord", searchWord);
 		searchData.put("selectOp1", selectOp1);
-		searchData.put("selectOp2", selectOp2);
 		
 		List<LocationDTO> list = locService.getSearchData(searchData);
 		System.out.println(list);
