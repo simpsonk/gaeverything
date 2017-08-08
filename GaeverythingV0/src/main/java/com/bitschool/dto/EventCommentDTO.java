@@ -2,26 +2,26 @@ package com.bitschool.dto;
 
 import java.sql.Timestamp;
 
-public class DetailCommentDTO {
-	private int locationSeq;
-	private int commentSeq;
+public class EventCommentDTO {
+	
+	private int eventNo;
+	private int commentNo;
 	private String nickname;
 	private String message;
 	private double rating;
 	private Timestamp regiDate;
 	private String photo;
-	
-	public int getLocationSeq() {
-		return locationSeq;
+	public int getEventNo() {
+		return eventNo;
 	}
-	public void setLocationSeq(int locationSeq) {
-		this.locationSeq = locationSeq;
+	public void setEventNo(int eventNo) {
+		this.eventNo = eventNo;
 	}
-	public int getCommentSeq() {
-		return commentSeq;
+	public int getCommentNo() {
+		return commentNo;
 	}
-	public void setCommentSeq(int commentSeq) {
-		this.commentSeq = commentSeq;
+	public void setCommentNo(int commentNo) {
+		this.commentNo = commentNo;
 	}
 	public String getNickname() {
 		return nickname;
@@ -47,7 +47,6 @@ public class DetailCommentDTO {
 	public void setRegiDate(Timestamp regiDate) {
 		this.regiDate = regiDate;
 	}
-		
 	public String getPhoto() {
 		return photo;
 	}
@@ -55,9 +54,8 @@ public class DetailCommentDTO {
 		this.photo = photo;
 	}
 	
-	@Override
-	public String toString() {
-		return "DetailCommentDTO [locationSeq=" + locationSeq + ", commentSeq=" + commentSeq + ", nickname=" + nickname
-				+ ", message=" + message + ", rating=" + rating + ", regiDate=" + regiDate + ", photo=" + photo + "]";
-	}
+	
+	
+	
+
 }

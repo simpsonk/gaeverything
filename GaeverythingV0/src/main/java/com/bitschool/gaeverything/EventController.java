@@ -62,8 +62,10 @@ public class EventController {
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		if(member!=null){
 			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.EVENT);
-			list= new ActUserManager(aService).checkLikeStatusEvent(aDTO, list);
+			list = new ActUserManager(aService).checkLikeStatusEvent(aDTO, list);
+			//유저라이크스테이터스, 라이크갯수
 		}
+		//list = 
 		HashMap<String, Object> map = pService.makeEventSerachList(0, 6, list);
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		
@@ -74,10 +76,13 @@ public class EventController {
 	}
 	
 	@RequestMapping(value="/detail", method=RequestMethod.GET)
-	public String detail (HttpSession session, Model model){
+	public String detail (HttpSession session, Model model, @RequestParam("no") int eventNo){
 		String url = "event/event_detail";
 		boolean isLogin = new LoginFilter().isLogin(session, model);
-
+		System.out.println(eventNo);
+		EventDTO detail = service.readOne(eventNo);
+		model.addAttribute("dto", detail);
+		System.out.println("해당이벤트 좋아요 수:" + detail.getCountLike());
 		return url;
 	}
 	

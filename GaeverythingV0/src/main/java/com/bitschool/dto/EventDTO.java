@@ -21,6 +21,13 @@ public class EventDTO {
 	private String thumbnail;
 	private String userLikeStatus;
 	private int countLike;
+
+	
+	private int countReview;
+	private String averageRatings;
+	private int countRatings;
+	private int countReplies;
+
 	
 	
 	public int getEventNo() {
@@ -50,18 +57,7 @@ public class EventDTO {
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
-	/*public Timestamp getStartDate() {
-		return startDate;
-	}
-	public void setStartDate(Timestamp startDate) {
-		this.startDate = startDate;
-	}
-	public Timestamp getEndDate() {
-		return endDate;
-	}
-	public void setEndDate(Timestamp endDate) {
-		this.endDate = endDate;
-	}*/
+
 	public String getLocation() {
 		return location;
 	}
@@ -139,6 +135,41 @@ public class EventDTO {
 	}
 	public void setCountLike(int countLike) {
 		this.countLike = countLike;
+	}
+	
+	
+	
+	public int getCountReview() {
+		return countReview;
+	}
+	public void setCountReview(int countReview) {
+		this.countReview = countReview;
+	}
+	public String getAverageRatings() {
+		return averageRatings;
+	}
+	public void setAverageRatings(String averageRatings) {
+		this.averageRatings = averageRatings;
+	}
+	public int getCountRatings() {
+		return countRatings;
+	}
+	public void setCountRatings(int countRatings) {
+		this.countRatings = countRatings;
+	}
+	public int getCountReplies() {
+		return countReplies;
+	}
+	public void setCountReplies(int countReplies) {
+		this.countReplies = countReplies;
+	}
+	public void setActUserResult(int countReview, String averageRatings, int countRatings, int countReplies, int countLike) {
+		this.countReview = countReview ;
+		this.averageRatings = averageRatings;
+		this.countRatings = countRatings;
+		this.countReplies = countReplies;
+		this.countLike = countLike;
+		
 	}
 	
 	

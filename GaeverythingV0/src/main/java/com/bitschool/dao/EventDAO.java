@@ -25,6 +25,12 @@ public class EventDAO {
 		List<EventDTO> list = session.selectList(namespace+".search", sDTO);
 		return list;
 	}
+
+	public EventDTO getOneEvent(int eventNo) throws SQLException {
+		EventDTO detail = session.selectOne(namespace+".getOne", eventNo);
+		System.out.println("이벤트 디테일ok");
+		return detail;
+	}
 	
 	
 

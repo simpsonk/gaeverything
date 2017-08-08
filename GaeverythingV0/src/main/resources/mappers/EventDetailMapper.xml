@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bitschool.event.eventDetail">
+	
+	<!-- eventNo로 한 장소의 DTO 받아오기 -->
+	<select id="selectOne" parameterType="Integer" resultType="EventDTO">
+		select * from event 
+		where eventNo = #{eventNo} 
+	</select>
+	
+	<!-- 디테일페이지 댓글 작성 -->
+	<insert id="commentAdd" parameterType="EventCommentDTO">
+		<selectKey resultType="Integer" order="BEFORE" keyProperty="commentNo">
+			select eventcomment_seq.nextval from dual
+		</selectKey>
+		insert into eventcomment (eventno,commentno,nickname,message,rating,photo) 
+		values(#{eventNo},#{commentNo},#{nickname},#{message},#{rating},#{photo})
+	</insert>
+	
+	<!-- 디테일페이지 사진 등록 -->
+	<insert id="photoA
+	dd" parameterType="EventPhotoDTO">
+		<selectKey resultType="Integer" order="BEFORE" keyProperty="eventPhotoNo">
+			select eventphoto_seq.nextval from dual
+		</selectKey>
+		insert into eventphoto (eventNo,eventphoto,eventphotono) 
+		values(#{eventNo},#{eventPhoto},#{eventPhotoNo})
+	</insert>
+	
+	<select id="photoCnt">
+		select count(*) from eventphoto
+		where eventNo = #{eventNo}
+	</select>
+	
+	<select id="selectPhoto" parameterType="Integer" resultType="EventPhotoDTO">
+		select * from eventphoto 
+		where eventNo = #{eventNo}
+	</select>
+
+	<!-- 디테일페이지 댓글 리스팅 -->
+	<select id="commentList" parameterType="Integer" resultType="EventCommentDTO">
+		select * from eventcomment 
+		where eventNo = #{eventNo} 
+		order by commentNo desc
+	</select>
+	
+	<!-- 마이페이지에서 포토 수정시 댓글리스팅의 포토도 수정-->
+	<update id="updatePhoto" parameterType="MemberDTO">
+		update eventcomment set photo = #{photo} 
+		where nickname = #{nickname}
+	</update>
+	
+	<!-- 디테일페이지 댓글 수정  -->
+	<update id="commentEdit" parameterType="EventCommentDTO">
+		update eventcomment 
+		set message = #{message}, rating = #{rating} 
+		where commentNo = #{commentNo}
+	</update>
+	
+	<!-- 디테일페이지 댓글 삭제  -->
+	<delete id="commentDelete" parameterType="EventCommentDTO">
+		delete from eventcomment 
+		where nickname = #{nickname} and commentNo = #{commentNo}
+	</delete>
+	
+	<!-- 게시판에서 작성한 리뷰 개수 가져오기 
+	<select id="countReviews" parameterType="Integer" resultType="Integer">
+		select count(*) from board 
+		where eventNo = #{eventNo}
+	</select>
+	
+	 게시판에서 작성한 리뷰의 별점 가져오기 
+	<select id="getRatings" parameterType="Integer" resultType="Double">
+		select rating from board 
+		where eventNo = #{eventNo}
+	</select> -->
+	
+	<!-- 디테일페이지 댓글에서 작성한 별졈 가져오기 -->
+	<select id="getReplyRatings" parameterType="Integer" resultType="Double">
+		select rating from eventcomment 
+		where eventNo = #{eventNo}
+	</select>	
+	
+	<!-- 디테일페이지 댓글 개수 가져오기 -->
+	<select id="countReplies" parameterType="Integer" resultType="Integer">
+		select count(*) from eventcomment 
+		where eventNo = #{eventNo}
+	</select>	
+	
+	<!-- 게시판에서 작성한 리뷰 가져오기 
+	<select id="getReviews" parameterType="Integer" resultType="BoardDTO">
+		select * from board 
+		where eventNo = #{eventNo}
+		order by boardno desc
+	</select>	
+		
+	 해당 장소의 블로그 리뷰 불러오기
+	<select id="getBlogReviews" parameterType="Integer" resultType="BlogDTO">
+		select * from blog 
+		where eventNo = #{eventNo} 
+	</select>	-->
+	
+	<select id="photoList" parameterType="Integer" resultType="EventPhotoDTO">
+		select * from eventPhoto 
+		where eventNo = #{eventNo} 
+		order by eventphotono desc
+	</select>
+</mapper>

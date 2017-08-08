@@ -16,6 +16,7 @@
 <link rel="stylesheet" href= "<c:url value = '/resources/css/style.css'/>">
 <link rel="stylesheet" href= "<c:url value = '/resources/css/colors/main.css'/>" id="colors">
 
+
 </head>
 
 <body>
@@ -42,39 +43,47 @@
 ===============================	=================== -->
 <div class="container">
 	<div class="row sticky-wrapper">
-		<div class="col-lg-12 col-md-12 padding-right-100 padding-left-100 ">
+		<div class="col-lg-8 col-md-8 padding-right-100 padding-left-100 ">
 
 			<!-- Titlebar -->
 			<div id="titlebar" class="listing-titlebar " style="padding-bottom: 30px;">
 				<div class="listing-titlebar-title">
-					<h2>${detail.title} <span class="listing-tag"> Hospital </span></h2>
+					<h2>${dto.eventName} <span class="listing-tag"> Event </span></h2>
 					<div>
-						<span>average rating: ${averageRatings} (${countRatings})</span><span style="margin-left: 20px;">${countReview} Reviews</span>
-						<span>${countReplies} Comments</span><span style="margin-left: 20px;">159 people bookmarked this place</span>
+						<div class="star-rating" data-rating="${averageRatings}">
+							<div class="rating-counter">${countRatings} </div>
+						</div><br>
+						<div>${countReview} 0 Reviews</div>
+						<div><i class="sl sl-icon-bubble"></i>${countReplies} Comments</div>
 					</div>					
 				</div>
 			</div>
 			<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
-				<button class="like-button"><span class="like-icon"></span> Bookmark this listing</button> 
+				<button class="like-button"><span class="like-icon"></span> Bookmark this listing</button> ${dto.countLike}  people bookmarked this place
 			</div>
 		
 			
 			<!-- Overview -->
 			<div id="detail-Info" class="listing-section">
 				<div style="padding-bottom: 30px; padding-left: 30px;">
-					<span style="font-size: 16px;">
-						<a href="#location" class="listing-address">
-							<i class="fa fa-map-marker"></i>
-							${detail.address}
-						</a>
-					</span>
+					<span style="font-size: 16px;"><i class="fa fa-info-circle"></i> ${dto.eventDetail}</span>			
 				</div>
 				<div style="padding-bottom: 30px; padding-left: 30px;">
-					<span>
-						<i class="fa fa-phone"></i>
-						${detail.phone}
+					<span><a href="#location" class="listing-address"><i class="fa fa-map-marker"></i> ${dto.address}</a></span>
+				</div>
+				<div style="padding-bottom: 30px; padding-left: 30px;">
+					<span><i class="fa fa-won"></i> ${dto.fee}
 					</span>			
-				</div>			
+				</div>	
+				<div style="padding-bottom: 30px; padding-left: 30px;">
+					<span><i class="fa fa-smile-o"></i> ${dto.discountInfo}</span>			
+				</div>
+				<div style="padding-bottom: 30px; padding-left: 30px;">
+					<span><i class="fa fa-arrow-circle-o-right"></i> <a href=${dto.regist}>사전접수하러 가기</a> </span>		
+				</div>
+				
+				
+						
 			</div>
 						
 			<!-- regist photo -->
@@ -167,8 +176,8 @@
 
 		
 			<!-- Location -->
-			<input type="hidden" id="longitude" value="${detail.longitude}">
-			<input type="hidden" id="latitude" value="${detail.latitude}">
+			<input type="hidden" id="longitude" value="${dto.longitude}">
+			<input type="hidden" id="latitude" value="${dto.latitude}">
 			
 			<div id="Location" class="listing-section">
 				<h3 class="listing-desc-headline margin-top-60 margin-bottom-30">Location</h3>
@@ -191,17 +200,15 @@
 					<span class="leave-rating-title">Your rating for this listing</span>
 					
 					<!-- Rating / Upload Button -->
-					<form id="add-comment" action="" class="add-comment" method="post">
-						<input type="hidden" id="locationSeq" name="locationSeq" value="${detail.locationSeq}">
+				<form id="add-comment" action="" class="add-comment" method="post">
+						<input type="hidden" id="eventNo" name="eventNo" value="${dto.eventNo}">
 						<input type="hidden" id="commentSeq" name = "commentSeq" value = "0" >
 					
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-6" style="padding-left: 0px;">
 							<!-- Leave Rating -->
 								<!-- rating -->
-						<div class = "rating col-md-12" style="padding-bottom: 10px;">	
-							<h5>Rating</h5>					
-								
+						<div class = "rating col-md-12" style="padding-bottom: 10px;">		
 							<fieldset class="rating">
   								<input type="radio" id="star5" name="rating" value="5.0"  />
   								<label class = "full" for="star5" title="Awesome - 5 stars"></label>
@@ -246,7 +253,7 @@
 								<label>Comment:	</label>
 								<c:choose>
 										<c:when test="${member.nickname == null}">
-											<textarea cols="40" rows="3" id="commMsg" name="message" onclick="box_clicked(${detail.locationSeq})" placeholder="로그인 후 댓글작성이 가능합니다."></textarea>
+											<textarea cols="40" rows="3" id="commMsg" name="message" onclick="box_clicked(${dto.eventNo})" placeholder="로그인 후 댓글작성이 가능합니다."></textarea>
 										</c:when>
 										<c:otherwise>
 											<textarea cols="40" rows="3" id="commMsg" name="message" placeholder="댓글을 작성해주세요 :)"></textarea>
@@ -264,14 +271,15 @@
 	
 				</div>
 				<!-- Add Review Box / End -->
+				
 				<!-- Reviews -->
 			<form id="commentData" method="post">
-				<input type="hidden" id="locationSeq2" name="locationSeq2" value="${detail.locationSeq}">
+				<input type="hidden" id="eventNo2" name="eventNo2" value="${dto.eventNo}">
 				<section class="comments listing-reviews">
  					
 					 <ul>
 					  <c:forEach var="comm" items="${commentlist}">
-					  	<input type="hidden" id="ratingVal${comm.commentSeq}" value="${comm.rating}">
+					  	<input type="hidden" id="ratingVal${comm.commentNo}" value="${comm.rating}">
 					  	<li>
 							<div class="avatar"><img src="/resources/upload/${comm.photo}" alt="" /></div> 
 							<div class="comment-content"><div class="arrow-comment"></div>
@@ -279,7 +287,7 @@
 									${comm.nickname}<span class="date">${comm.regiDate}</span>
 									<div class="star-rating" data-rating="${comm.rating}"></div>
 								</div>
-								<p id="changeMsg${comm.commentSeq}">${comm.message}</p>							
+								<p id="changeMsg${comm.commentNo}">${comm.message}</p>							
 							</div>
 							
 							
@@ -294,8 +302,8 @@
 						  
 						 
 							  <div class="col-md-8 centered-content" >								
-								<a onclick="go_url(1, ${comm.commentSeq});" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-note"></i>Edit</a>
-								<a onclick="go_url(2, ${comm.commentSeq});" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-close"></i>Delete</a>
+								<a onclick="go_url(1, ${comm.commentNo});" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-note"></i>Edit</a>
+								<a onclick="go_url(2, ${comm.commentNo});" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-close"></i>Delete</a>
 							</div>  
 						 </c:if> 
 						</li>
@@ -314,7 +322,7 @@
 							<nav class="pagination">
 								<ul>
 									<li><a href="#" class="current-page">1</a></li>
-									<li><a href="#">2</a></li>
+
 									<li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
 								</ul>
 							</nav>
@@ -328,6 +336,102 @@
 
 
 	</div>
+	
+	
+	
+			<!-- Sidebar
+		================================================== -->
+		<div class="col-lg-4 col-md-4 margin-top-75 sticky">
+
+			<!-- Book Now -->
+			<div class="boxed-widget">
+				<h3><i class="fa fa-calendar-check-o "></i> Add to Calendar</h3>
+				<div class="row with-forms  margin-top-0">
+
+					<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
+					<div class="col-lg-6 col-md-12">
+						<input type="text" value = "${dto.startDate}" id="booking-date"  data-lang="en" data-large-mode="true" data-min-year="2017" data-max-year="2020">
+					</div>
+
+					<!-- Time Picker - docs: http://www.vasterad.com/docs/listeo/#!/time_picker -->
+					<div class="col-lg-6 col-md-12">
+						<input type="text" id="booking-time" value="9:00 am">
+					</div>
+
+				</div>
+				
+				<!-- progress button animation handled via custom.js -->
+				<button class="progress-button button fullwidth margin-top-5"><span>Add</span></button>
+			</div>
+			<!-- Book Now / End -->
+
+
+			<!-- Contact -->
+			<div class="boxed-widget margin-top-35">
+				<h3><i class="sl sl-icon-pin"></i> Contact</h3>
+				<ul class="listing-details-sidebar">
+					<li><i class="sl sl-icon-phone"></i> ${dto.call}</li>
+					<li><i class="sl sl-icon-globe"></i> <a href="${dto.link}">${dto.link}</a></li>
+				</ul>
+
+				<ul class="listing-details-sidebar social-profiles">
+					<li><a href="#" class="facebook-profile"><i class="fa fa-facebook-square"></i> Facebook</a></li>
+					<li><a href="#" class="twitter-profile"><i class="fa fa-twitter"></i> Twitter</a></li>
+					<!-- <li><a href="#" class="gplus-profile"><i class="fa fa-google-plus"></i> Google Plus</a></li> -->
+				</ul>
+
+				<!-- Reply to review popup -->
+				<div id="small-dialog" class="zoom-anim-dialog mfp-hide">
+					<div class="small-dialog-header">
+						<h3>Send Message</h3>
+					</div>
+					<div class="message-reply margin-top-0">
+						<textarea cols="40" rows="3" placeholder="Your message to Burger House"></textarea>
+						<button class="button">Send Message</button>
+					</div>
+				</div>
+	
+				<a href="#small-dialog" class="send-message-to-owner button popup-with-zoom-anim"><i class="sl sl-icon-envelope-open"></i> Send Message</a>
+			</div>
+			<!-- Contact / End-->
+			
+
+			<!-- Opening Hours 
+			<div class="boxed-widget opening-hours margin-top-35">
+				<div class="listing-badge now-open">Now Open</div>
+				<h3><i class="sl sl-icon-clock"></i> Opening Hours</h3>
+				<ul>
+					<li>Monday <span>9 AM - 5 PM</span></li>
+					<li>Tuesday <span>9 AM - 5 PM</span></li>
+					<li>Wednesday <span>9 AM - 5 PM</span></li>
+					<li>Thursday <span>9 AM - 5 PM</span></li>
+					<li>Friday <span>9 AM - 5 PM</span></li>
+					<li>Saturday <span>9 AM - 3 PM</span></li>
+					<li>Sunday <span>Closed</span></li>
+				</ul>
+			</div>
+			<!-- Opening Hours / End -->
+
+
+			<!-- Share / Like -->
+			<div class="listing-share margin-top-40 margin-bottom-40 no-border">
+				<button class="like-button"><span class="like-icon"></span> Bookmark this listing</button> 
+				<span>${dto.countLike} people bookmarked this place</span>
+
+					<!-- Share Buttons -->
+					<ul class="share-buttons margin-top-40 margin-bottom-0">
+						<li><a class="fb-share" href="#"><i class="fa fa-facebook"></i> Share</a></li>
+						<li><a class="twitter-share" href="#"><i class="fa fa-twitter"></i> Tweet</a></li>
+						<li><a class="gplus-share" href="#"><i class="fa fa-google-plus"></i> Share</a></li>
+						<!-- <li><a class="pinterest-share" href="#"><i class="fa fa-pinterest-p"></i> Pin</a></li> -->
+					</ul>
+					<div class="clearfix"></div>
+			</div>
+
+		</div>
+		<!-- Sidebar / End -->
+	
+	
 </div>
 </div>
 
@@ -348,6 +452,7 @@
 <script type="text/javascript" src="<c:url value = '/resources/scripts/tooltips.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/custom.js'/>"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ebfbfbd7a5ec71c10c63936dd90beb22"></script>
+<script type="text/javascript" src="<c:url value = '/resources/scripts/datedropper.js'/>"></script>
 
 <script type="text/javascript">
 	var longitude = document.getElementById('longitude').value;
@@ -356,7 +461,6 @@
 	var mapContainer = document.getElementById('singleListingMap'), // 지도를 표시할 div
 		mapOption = { 
 			center: new daum.maps.LatLng(latitude, longitude), // 지도의 중심좌표
-			
 			level: 3 // 지도의 확대 레벨
 		};
 	
@@ -375,13 +479,13 @@
 
 //댓글 등록 버튼 클릭시
 $('#registComment').click(function(){
-	var locationSeq = document.getElementById("locationSeq").value;
-	checkMessage(locationSeq);
-	var ds = document.getElementById("add-comment");
-	var url = "/map/detail/addComment";
+	var eventNo = document.getElementById("eventNo").value;
+	//checkMessage(eventNo);
+	var ds = document.getElementById("add-comment"); //폼에 입력한 정보
+	var url = "/event/detail/addComment";
 	ds.action = url;
-	if($("#commMsg").val()!='' && 
-			$('input:radio[name="rating"]').is(":checked")){
+	if($("#commMsg").val()!='' && //메세지 작성했고
+			$('input:radio[name="rating"]').is(":checked")){ //별점 눌렀으면 
 		ds.submit();
 	}else{
 		return;
@@ -391,7 +495,7 @@ $('#registComment').click(function(){
 //댓글 수정 버튼 클릭시
 $('#modifyComment').click(function(){
 	var ds = document.getElementById("add-comment");
-	var url = "/map/detail/editComment";
+	var url = "/event/detail/editComment";
 	ds.action = url;
 	ds.submit();
 });
@@ -434,18 +538,18 @@ function go_url(type, commSeq){
 		ment.innerHTML = 'Edit Comment';
 	}else if(type==2){
 		var ds = document.getElementById("add-comment");
-		var url = "/map/detail/deleteComment?commentSeq="+commSeq;
+		var url = "/event/detail/deleteComment?commentSeq="+commSeq;
 		ds.action = url;
 		ds.submit();
 	}
 }
 
 //등록시 필수항목 체크
-function checkMessage(locationSeq){
+function checkMessage(eventNo){
 	  var isLogin = document.getElementById("isLogin");
 	  if(isLogin.value==''){
 		  alert("댓글작성은 회원만 가능합니다.");	
-		  location.href = "/viewLogin?uri=/map/detail/viewDetailPage?locationSeq="+locationSeq;
+		  location.href = "/viewLogin?uri=/event/detail/view?no="+eventNo;
 	  }else{
 		  if($('input:radio[name="rating"]').is(":checked")==false){
 			  alert('별점을 표시해주세요.');
@@ -456,9 +560,9 @@ function checkMessage(locationSeq){
 	  }
 }
 
-function box_clicked(locationSeq){
+function box_clicked(eventNo){
 	alert("댓글작성은 회원만 가능합니다.");	
-	location.href = "/viewLogin?uri=/map/detail/viewDetailPage?locationSeq="+locationSeq;
+	location.href = "/viewLogin?uri=/event/detail/view?no="+eventNo;
 }
 
 </script>
