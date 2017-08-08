@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BoardDTO;
+import com.bitschool.dto.CommentDTO;
 import com.bitschool.dto.DetailCommentDTO;
 import com.bitschool.dto.EventDTO;
 import com.bitschool.dto.LocationDTO;
@@ -31,11 +32,13 @@ import com.bitschool.dto.MyPageDTO;
 import com.bitschool.dto.PetPageDTO;
 import com.bitschool.service.ActUserService;
 import com.bitschool.service.BoardService;
+import com.bitschool.service.ICommentService;
 import com.bitschool.service.LocationDetailService;
 import com.bitschool.service.MyPageService;
 import com.bitschool.service.PetPageService;
 import com.bitschool.service.SignUpService;
 import com.bitschool.utils.ActUserManager;
+import com.bitschool.utils.LoginFilter;
 
 
 
@@ -61,6 +64,8 @@ public class MypageController {
 	@Inject
 	private BoardService bservice;
 	   
+	@Inject
+	private ICommentService cservice;
 	   
 
 	
@@ -341,14 +346,18 @@ public class MypageController {
 		}
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		List<BoardDTO> reviewList = service.selectMyReviews(member.getNickname());
+		member.setMyReviewSize(reviewList.size());
 		List<DetailCommentDTO> commentList = service.selectMyDetailComments(member.getNickname());
+		List<CommentDTO> bCommentList = service.selectMyBoardComments(member.getNickname());
+		member.setMyCommentSize(commentList.size()+bCommentList.size());
 		boolean isLogin = member!=null?true:false;
 		if(!isLogin){
 			url = "login_page";
 		}else{
 			model.addAttribute("member", member);
 			model.addAttribute("reviewList",reviewList);
-			model.addAttribute("commentList",commentList);			
+			model.addAttribute("commentList",commentList);	
+			model.addAttribute("bCommentList",bCommentList);
 		}
 		return url;
 	}
@@ -356,19 +365,6 @@ public class MypageController {
 	@RequestMapping(value = "/viewMypageDashboard", method = RequestMethod.GET)
 	public String viewDashBoard(HttpSession session, Model model){
 		String url = "mypage/mypage_dashboard";
-		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		boolean isLogin = member!=null?true:false;
-		if(!isLogin){
-			url = "login_page";
-		}else{
-			model.addAttribute("member", member);
-		}
-		return url;
-	}
-	
-	@RequestMapping(value = "/viewMypageReviews", method = RequestMethod.GET)
-	public String viewMypageReviews(HttpSession session, Model model){
-		String url = "mypage/mypage_reviews";
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		boolean isLogin = member!=null?true:false;
 		if(!isLogin){
@@ -437,10 +433,13 @@ public class MypageController {
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		List<BoardDTO> reviewList = aservice.selectReviewBookmark(member.getEmail());	
 		List<LocationDTO> mapList = aservice.selectShopBookmark(member.getEmail());
-		List<LocationDTO> mapList2 = new ArrayList<LocationDTO>();
+		List<LocationDTO> mapList2 = new ArrayList<LocationDTO>();		
+		member.setBookmarkMapSize(mapList.size());
+		member.setBookmarkReviewSize(reviewList.size());
 		LocationDTO dto = null;
 		ActUserManager manager = new ActUserManager(aservice);
 		List<EventDTO> eventList = aservice.selectEventBookmark(member.getEmail());
+		member.setBookmarkEventSize(eventList.size());
 		for(int i=0;i<reviewList.size();i++){
 			int boardNo = reviewList.get(i).getBoardNo();
 			reviewList.get(i).setNumOfCmt(bservice.getNumOfCmts(boardNo));
@@ -460,5 +459,30 @@ public class MypageController {
 		}
 		return url;
 	}	
+	
+	//마이페이지에서 내가작성한 댓글(리뷰게시판) 수정하기(하는중,. , , )
+	@RequestMapping(value="/modifyCmt", method={RequestMethod.GET, RequestMethod.POST})
+	public String modifyCmt(BoardDTO dto, CommentDTO cDTO,  
+		@RequestParam("groupNo") int groupNo,
+		@RequestParam("commentNo") int commentNo,
+		@RequestParam(value="page", defaultValue="1") int page,
+		Model model, 
+		HttpSession session){
+
+		dto = bservice.selectToRead(groupNo);
+		int numOfCmt = cservice.countCmt(groupNo);
+		List<CommentDTO> commentList = cservice.getAllComment(groupNo);
+		
+		boolean isLogin = new LoginFilter().isLogin(session, model);
+		
+		model.addAttribute("commentList", commentList);
+		model.addAttribute("numOfCmt", numOfCmt);
+		model.addAttribute("dto", dto);
+		model.addAttribute("modifyNo", commentNo);
+		
+		String url = "mypage/mypage_list_comments_modify";
+		
+		return url;
+	}
 
 }

@@ -68,12 +68,11 @@
 			</div>
 		</div>
 
-		<div class="row">
-
+		<div class="row" >
 			<!-- Listings -->
-			<div class="col-lg-12 col-md-12">
+			<div class="col-lg-12 col-md-12" >
 				<div class="dashboard-list-box margin-top-0">
-					<h4>Reviews (${reviewList.size()})</h4>
+					<h4 style="background: #F91942; color: white;">Reviews (${reviewList.size()})</h4>
 					<ul>
 
 						<li>
@@ -88,22 +87,39 @@
 								</c:choose>	
 									<c:forEach var="list" items="${reviewList}">        								
 									<li>
-										<div class="avatar"><img src="/resources/upload/${member.photo}" alt=""/> </div>
-										<div class="comment-content"><div class="arrow-comment"></div>
+										<div class="list-box-listing">
+											<div class="list-box-listing-img"><a href="/review/readPost?boardNo=${list.boardNo}&page=1">
+											<c:choose>
+											<c:when test="${list.uploadImg!=null}">
+											<img src="/resources/upload/${list.uploadImg}" alt="">	
+											</c:when>	
+											<c:otherwise>
+											<img src="/resources/images/hospital.jpg" alt="">	
+											</c:otherwise>	
+											</c:choose>
+											</a></div>
+											<div class="list-box-listing-content">
+												<div class="inner">
+												
 										<a href="/review/readPost?boardNo=${list.boardNo}&page=1">
 										<span><h3>${list.title}</h3></span></a>
 											<div class="comment-by">review <div class="comment-by-listing own-comment">on 
 											<a href="/map/detail/viewDetailPage?locationSeq=${list.locationSeq}"><b>${list.address}</b></a></div> 
 											<span class="date">${list.regiDate}</span>
-												<div class="star-rating" data-rating="${list.rating}"></div>
+											<div class="star-rating" data-rating="${list.rating}"></div>
 											</div>
 											<p>${list.onlyText}</p>
+											<div class="buttons-to-right">
 											<a href="/review/clickModify?page=1&boardNo=${list.boardNo}" class="rate-review"><i class="sl sl-icon-note"></i> Edit</a>										
 											<a href="/review/delete?boardNo=${list.boardNo}&mylisting=1&page=1" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>						
-										</div>
-
-									</li>
+											</div>
+											</div>
+											</div>
+										</div>									
+										</li>
+									
 									</c:forEach>
+									
 								</ul>
 							</div>
 						</li>
@@ -111,11 +127,12 @@
 					</ul>
 				</div>
 			</div>
+			
 
 
 			<!-- Copyrights -->
 			<div class="col-md-12">
-				<div class="copyrights">© 2017 Listeo. All Rights Reserved.</div>
+				<div class="copyrights">© 2017 gaeverything. All Rights Reserved.</div>
 			</div>
 		</div>
 

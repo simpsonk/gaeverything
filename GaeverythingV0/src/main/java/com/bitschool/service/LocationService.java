@@ -57,7 +57,7 @@ public class LocationService {
 		// TODO Auto-generated method stub
 		List<LocationDTO> list  = null;
 		try {
-			list = dao.selectShopName(info);
+			list = dao.selectName(info);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -132,24 +132,15 @@ public class LocationService {
 		// TODO Auto-generated method stub
 		List<LocationDTO> list = null;
 		MapInfomation info = new MapInfomation();
-		info.setCategories((String)searchData.get("selectOp2"));
+		info.setCategories((String)searchData.get("selectOp1"));
 		info.setSearchWord((String)searchData.get("searchWord"));
-		System.out.println(info);
-		if(searchData.get("selectOp1").equals("1")){
-			try {
-				list = dao.selectShopName(info);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}else if(searchData.get("selectOp1").equals("2")){
-			try {
-				list = dao.selectLocation(info);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		try {
+			list = dao.selectName(info);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
 		return list;
 	}
 

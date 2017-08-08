@@ -14,11 +14,20 @@ public class CommentDTO {
 	private int orderNo;
 	private int depth;
 	private int index;
-	
+	//내가쓴 댓글의 원글제목을 가져오기위해
+	private String title;
 	
 	public CommentDTO(){
 	}
 	
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	public CommentDTO(int boardNo){
 		this.groupNo = boardNo;
 	}

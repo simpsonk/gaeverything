@@ -100,7 +100,7 @@
                	<!-- Profile2 -->
 			<div class="col-lg-3 col-md-12">
 				<div class="dashboard-list-box margin-top-0">
-					<h4 class="gray">${petpage.petname}</h4>
+					<h4 style="background: #F91942; color: white;">${petpage.petname}</h4>
 					<div class="dashboard-list-box-static">			
 
 						<!-- Avatar -->
