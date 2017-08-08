@@ -114,6 +114,7 @@
 											<p>${list.onlyText}</p>
 											<a href="/review/clickModify?page=1&boardNo=${list.boardNo}" class="rate-review"><i class="sl sl-icon-note"></i> Edit</a>										
 											<a href="/review/delete?boardNo=${list.boardNo}&mylisting=1&page=1" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>						
+									
 											</div>
 											</div>
 										</div>									
@@ -137,7 +138,7 @@
 		<!-- Listings -->
 			<div class="col-lg-6 col-md-12">
 				<div class="dashboard-list-box margin-top-0">
-					<h4>Comments (${commentList.size()})</h4>
+					<h4>Comments in Map (${commentList.size()})</h4>
 					<ul>
 						<li>
 							<div class="comments listing-reviews">
@@ -151,8 +152,8 @@
 								</c:choose>	
 									<c:forEach var="list" items="${commentList}" varStatus="status">									    
 									<c:if test="${status.index<5}">	       								
-									<li>										
-											<div class="comment-by">Your Comments <div class="comment-by-listing own-comment">on <a href="#"><b>${list.address}</b></a></div> <span class="date">${list.regiDate}</span>
+										<li>										
+											<div class="comment-by">Your Comments <div class="comment-by-listing own-comment">on <a href="/map/detail/viewDetailPage?locationSeq=${list.locationSeq}"><b>${list.address}</b></a></div> <span class="date">${list.regiDate}</span>
 												<div class="star-rating" data-rating="${list.rating}"></div>
 											</div>
 											<p>${list.message}</p>

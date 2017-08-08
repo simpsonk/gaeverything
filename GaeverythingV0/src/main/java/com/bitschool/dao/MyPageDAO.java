@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.bitschool.dto.BoardDTO;
+import com.bitschool.dto.CommentDTO;
 import com.bitschool.dto.DetailCommentDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.dto.MyPageDTO;
@@ -20,6 +21,19 @@ public class MyPageDAO {
 	private SqlSession session;
 	
 	private static final String namespace = "com.bitschool.bootstrap.MyPageMapper";
+	// 내가 쓴 댓글(게시판리뷰)의 원글 제목 가져오기
+	public List<String> selectBoardTitle(int groupno) throws SQLException{
+		List<String> list = null;
+		
+		return list;
+	}
+ 	
+	// 내가 쓴 댓글(게시판리뷰) 모아보기 
+	public List<CommentDTO> selectMyBoardComments(String nickname) throws SQLException{
+		List<CommentDTO> list = null;
+		list = session.selectList(namespace+".selectMyBoardComments",nickname);
+		return list;
+	}
 	
 	// 상호명 지정해주기 위해 
 	public String selectShopName(int locationSeq) throws SQLException{

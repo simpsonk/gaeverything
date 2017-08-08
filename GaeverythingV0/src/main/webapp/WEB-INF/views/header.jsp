@@ -54,9 +54,7 @@
 								<li><a href="/mypage/viewMypageDashboard">Dashboard</a></li>
 								<li><a href="/mypage/calendar/viewCalendar">Calendar</a></li>
 								<li><a href="/mypage/viewMypageList">My Listings</a></li>
-								<li><a href="/mypage/viewMypageReviews">Reviews</a></li>
 								<li><a href="/mypage/viewMypageBookmarks">Bookmarks</a></li>
-								<li><a href="#">Add Listing</a></li>
 								<li><a href="/mypage/viewMypageProfile">My Profile</a></li>
 								<li><a href="/mypage/viewPetList">Pet Profile</a></li>
 							</ul>

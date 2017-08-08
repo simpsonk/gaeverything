@@ -70,10 +70,10 @@
 
 		<div class="row">
 
-			<!-- Listings -->
-			<div class="col-lg-12 col-md-12">
+			<!-- Listings --><!-- 맵디테일의 코멘트 -->
+			<div class="col-lg-6 col-md-12">
 				<div class="dashboard-list-box margin-top-0">
-					<h4>Comments (${commentList.size()})</h4>
+					<h4>Comments in Map (${commentList.size()})</h4>
 					<ul>
 						<li>
 							<div class="comments listing-reviews">
@@ -87,7 +87,7 @@
 								</c:choose>	
 									<c:forEach var="list" items="${commentList}">        								
 									<li>										
-											<div class="comment-by">Your Comments <div class="comment-by-listing own-comment">on <a href="#"><b>${list.address}</b></a></div> <span class="date">${list.regiDate}</span>
+											<div class="comment-by">Your Comments <div class="comment-by-listing own-comment">on <a href="/map/detail/viewDetailPage?locationSeq=${list.locationSeq}"><b>${list.address}</b></a></div> <span class="date">${list.regiDate}</span>
 												<div class="star-rating" data-rating="${list.rating}"></div>
 											</div>
 											<p>${list.message}</p>
@@ -103,6 +103,38 @@
 				</div>
 			</div>
 
+
+	 		<!-- Listings --><!-- 리뷰게시판의 코멘트 -->
+			<div class="col-lg-6 col-md-12">
+				<div class="dashboard-list-box margin-top-0">
+					<h4>Comments in Review (${bCommentList.size()})</h4>
+					<ul>
+						<li>
+							<div class="comments listing-reviews">
+								<ul>
+								<c:choose>
+								<c:when test="${bCommentList.size()==0}">
+								<li>
+								<span>작성한 댓글이 없습니다.</span>
+								</li>
+								</c:when>
+								</c:choose>	
+									<c:forEach var="list" items="${bCommentList}">        								
+									<li>										
+											<div class="comment-by">Your Comments <div class="comment-by-listing own-comment">on <a href="#"><b>글제목..</b></a></div> <span class="date">${list.regiDate}</span>
+											</div>
+											<p>${list.commentBody}</p>
+											<a href="#" class="rate-review"><i class="sl sl-icon-note"></i> Edit</a>										
+											<a href="#" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>						
+									</li>
+									</c:forEach>
+								</ul>
+							</div>
+						</li>
+
+					</ul>
+				</div>
+			</div>
 
 			<!-- Copyrights -->
 			<div class="col-md-12">
