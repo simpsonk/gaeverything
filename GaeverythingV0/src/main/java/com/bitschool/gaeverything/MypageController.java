@@ -342,8 +342,10 @@ public class MypageController {
 		}
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		List<BoardDTO> reviewList = service.selectMyReviews(member.getNickname());
+		member.setMyReviewSize(reviewList.size());
 		List<DetailCommentDTO> commentList = service.selectMyDetailComments(member.getNickname());
 		List<CommentDTO> bCommentList = service.selectMyBoardComments(member.getNickname());
+		member.setMyCommentSize(commentList.size()+bCommentList.size());
 		boolean isLogin = member!=null?true:false;
 		if(!isLogin){
 			url = "login_page";
@@ -440,10 +442,13 @@ public class MypageController {
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		List<BoardDTO> reviewList = aservice.selectReviewBookmark(member.getEmail());	
 		List<LocationDTO> mapList = aservice.selectShopBookmark(member.getEmail());
-		List<LocationDTO> mapList2 = new ArrayList<LocationDTO>();
+		List<LocationDTO> mapList2 = new ArrayList<LocationDTO>();		
+		member.setBookmarkMapSize(mapList.size());
+		member.setBookmarkReviewSize(reviewList.size());
 		LocationDTO dto = null;
 		ActUserManager manager = new ActUserManager(aservice);
 		List<EventDTO> eventList = aservice.selectEventBookmark(member.getEmail());
+		member.setBookmarkEventSize(eventList.size());
 		for(int i=0;i<reviewList.size();i++){
 			int boardNo = reviewList.get(i).getBoardNo();
 			reviewList.get(i).setNumOfCmt(bservice.getNumOfCmts(boardNo));
