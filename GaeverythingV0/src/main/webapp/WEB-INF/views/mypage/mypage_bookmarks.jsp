@@ -73,7 +73,7 @@
 			<!-- Listings -->
 			<div class="col-lg-4 col-md-12">
 				<div class="dashboard-list-box margin-top-0">
-					<h4>Bookmarked Reviews</h4>
+					<h4 style="background: #F91942; color: white;">Reviews (${reviewList.size()})</h4>
 					<ul>						
 						<c:choose>
 						<c:when test="${reviewList.size()==0}">
@@ -128,7 +128,7 @@
 			
 			<div class="col-lg-4 col-md-12">
 				<div class="dashboard-list-box margin-top-0">
-					<h4>Bookmarked Hospitals</h4>
+					<h4 style="background: #F91942; color: white;">Hospitals (${mapList.size()})</h4>
 					<ul>
 						<c:choose>
 						<c:when test="${mapList.size()==0}">
@@ -181,7 +181,7 @@
 			
  			 <div class="col-lg-4 col-md-12">
 				<div class="dashboard-list-box margin-top-0">
-					<h4>Bookmarked Events</h4>
+					<h4 style="background: #F91942; color: white;">Events (${eventList.size()})</h4>
 					<ul>
 						<c:choose>
 						<c:when test="${eventList.size()==0}">
@@ -234,7 +234,7 @@
 
 			<!-- Copyrights -->
 			<div class="col-md-12">
-				<div class="copyrights">© 2017 Listeo. All Rights Reserved.</div>
+				<div class="copyrights">© 2017 gaeverything. All Rights Reserved.</div>
 			</div>
 		</div>
 

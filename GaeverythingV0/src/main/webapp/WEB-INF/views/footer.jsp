@@ -7,9 +7,9 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-5 col-sm-6">
-				<img class="footer-logo" src="/resources/images/logo.png" alt="">
+				<img class="footer-logo" src="/resources/images/1_black.png" alt="">
 				<br><br>
-				<p>Morbi convallis bibendum urna ut viverra. Maecenas quis consequat libero, a feugiat eros. Nunc ut lacinia tortor morbi ultricies laoreet ullamcorper phasellus semper.</p>
+				<p>Gaeverything loves you.</p>
 			</div>
 
 			<div class="col-md-4 col-sm-6 ">

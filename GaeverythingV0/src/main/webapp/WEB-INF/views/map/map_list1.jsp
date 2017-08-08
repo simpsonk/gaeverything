@@ -7,7 +7,7 @@
 
 <!-- Basic Page Needs
 ================================================== -->
-<title>Listeo</title>
+<title>gaeverything</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -114,7 +114,7 @@
 					<!-- Pagination / End -->
 					
 					<!-- Copyrights -->
-					<div class="copyrights margin-top-0">© 2017 Listeo. All Rights Reserved.</div>
+					<div class="copyrights margin-top-0">© 2017 gaeverything. All Rights Reserved.</div>
 
 				</div>
 			</div>
