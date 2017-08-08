@@ -55,7 +55,7 @@
 		<div id="titlebar">
 			<div class="row">
 				<div class="col-md-12">
-					<h2>My Listings</h2>
+					<h2>My Comments</h2>
 					<!-- Breadcrumbs -->
 					<nav id="breadcrumbs">
 						<ul>
@@ -69,10 +69,15 @@
 		</div>
 
 		<div class="row">
+			<ul class="listing-nav">
+					<li><a href="#listing-map" class="">in Map</a></li>
+					<li><a href="#listing-review">in Review</a></li>
+			</ul>
+
 
 			<!-- Listings --><!-- 맵디테일의 코멘트 -->
-			<div class="col-lg-6 col-md-12">
-				<div class="dashboard-list-box margin-top-0">
+			<div id="listing-map" class="col-lg-12 col-md-12">
+				<div class="dashboard-list-box margin-top-20">
 					<h4 style="background: #F91942; color: white;">Comments in Map (${commentList.size()})</h4>
 					<ul>
 						<li>
@@ -91,8 +96,10 @@
 												<div class="star-rating" data-rating="${list.rating}"></div>
 											</div>
 											<p>${list.message}</p>
+											<div class="buttons-to-right">
 											<a href="#" class="rate-review"><i class="sl sl-icon-note"></i> Edit</a>										
-											<a href="#" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>						
+											<a href="#" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>		
+											</div>				
 									</li>
 									</c:forEach>
 								</ul>
@@ -105,8 +112,8 @@
 
 
 	 		<!-- Listings --><!-- 리뷰게시판의 코멘트 -->
-			<div class="col-lg-6 col-md-12">
-				<div class="dashboard-list-box margin-top-0">
+			<div id="listing-review" class="col-lg-12 col-md-12">
+				<div class="dashboard-list-box margin-top-20">
 					<h4 style="background: #F91942; color: white;">Comments in Review (${bCommentList.size()})</h4>
 					<ul>
 						<li>
@@ -125,8 +132,10 @@
 											<div class="comment-by">Your Comments <div class="comment-by-listing own-comment">on <a href="/review/readPost?boardNo=${list.groupNo}&page=1"><b>${list.title}</b></a></div> <span class="date">${list.regiDate}</span>
 											</div>
 											<p>${list.commentBody}</p>
+											<div class="buttons-to-right">
 											<a class="rate-review" onclick="cmt_url(1, ${loop.index},1);"><i class="sl sl-icon-note"></i> Edit</a>										
 											<a href="/mypage/removeMyBoardCmt?commentNo=${list.commentNo}&category=2" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>						
+											</div>
 											<input type="hidden" name="commentNo" value ="${list.commentNo}">
 											<input type="hidden" name="groupNo" value ="${list.groupNo}">
 									</li>
@@ -156,7 +165,7 @@
 
 </div>
 <!-- Wrapper / End -->
-
+<div id="backtotop" class="visible"><a href="#"></a></div>
 
 <!-- Scripts
 ================================================== -->
