@@ -73,7 +73,7 @@
 			<!-- Listings --><!-- 맵디테일의 코멘트 -->
 			<div class="col-lg-6 col-md-12">
 				<div class="dashboard-list-box margin-top-0">
-					<h4>Comments in Map (${commentList.size()})</h4>
+					<h4 style="background: #F91942; color: white;">Comments in Map (${commentList.size()})</h4>
 					<ul>
 						<li>
 							<div class="comments listing-reviews">
@@ -107,7 +107,7 @@
 	 		<!-- Listings --><!-- 리뷰게시판의 코멘트 -->
 			<div class="col-lg-6 col-md-12">
 				<div class="dashboard-list-box margin-top-0">
-					<h4>Comments in Review (${bCommentList.size()})</h4>
+					<h4 style="background: #F91942; color: white;">Comments in Review (${bCommentList.size()})</h4>
 					<ul>
 						<li>
 							<div class="comments listing-reviews">
