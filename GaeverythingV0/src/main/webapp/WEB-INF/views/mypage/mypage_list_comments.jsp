@@ -121,7 +121,7 @@
 								</c:choose>	
 									<c:forEach var="list" items="${bCommentList}">        								
 									<li>										
-											<div class="comment-by">Your Comments <div class="comment-by-listing own-comment">on <a href="#"><b>글제목..</b></a></div> <span class="date">${list.regiDate}</span>
+											<div class="comment-by">Your Comments <div class="comment-by-listing own-comment">on <a href="/review/readPost?boardNo=${list.groupNo}&page=1"><b>${list.title}</b></a></div> <span class="date">${list.regiDate}</span>
 											</div>
 											<p>${list.commentBody}</p>
 											<a href="#" class="rate-review"><i class="sl sl-icon-note"></i> Edit</a>										
