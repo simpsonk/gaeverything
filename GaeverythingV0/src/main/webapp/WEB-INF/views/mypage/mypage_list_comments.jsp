@@ -195,7 +195,7 @@ function cmt_url(type, index, page){
 	
 function cmt_url2(commentSeq, index, locationSeq){
 	var data = document.getElementById("listOfMapComment"+index);		
-	url = "/mypage/modifyMapCmt?commentSeq="+commentSeq+"&locationSeq="+locationSeq+"&index="+index;
+	url = "/mypage/viewModifyMapCmt?commentSeq="+commentSeq+"&locationSeq="+locationSeq+"&index="+index;
 	data.action = url;
 	data.submit();
 }
