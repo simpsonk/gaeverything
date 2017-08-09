@@ -85,7 +85,7 @@
 						<c:forEach var="list" items="${eventList}">        
 						<li>							
 							<div class="list-box-listing">
-								<div class="list-box-listing-img"><a href="/event/detail/viewDetailPage?eventNo=${list.eventNo}">
+								<div class="list-box-listing-img"><a href="/event/detail/view?no=${list.eventNo}"=${list.eventNo}">
 								<img src="/resources/images/event/${list.thumbnail}" alt=""></a></div>
 								<div class="list-box-listing-content">
 									<div class="inner">
