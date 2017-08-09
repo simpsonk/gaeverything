@@ -22,9 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bitschool.dto.ActUserDTO;
+import com.bitschool.dto.BlogDTO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.CommentDTO;
 import com.bitschool.dto.DetailCommentDTO;
+import com.bitschool.dto.DetailPhotoDTO;
 import com.bitschool.dto.EventDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
@@ -460,7 +462,7 @@ public class MypageController {
 		return url;
 	}	
 	
-	//마이페이지에서 내가작성한 댓글(리뷰게시판) 수정하기
+	//MyActivity에서  내가작성한 댓글(리뷰게시판) 수정하기
 	@RequestMapping(value="/modifyCmt", method={RequestMethod.GET, RequestMethod.POST})
 	public String modifyCmt(BoardDTO dto, CommentDTO cDTO,  
 							@RequestParam("groupNo") int groupNo,
@@ -476,8 +478,7 @@ public class MypageController {
 		model.addAttribute("numOfCmt", numOfCmt);
 		model.addAttribute("dto", dto);
 		model.addAttribute("modifyNo", commentNo);		
-		String url = "mypage/mypage_list_comments_modify";
-		
+		String url = "mypage/mypage_list_comments_modify";		
 		return url;
 	}
 	
@@ -491,6 +492,39 @@ public class MypageController {
 		if(flag){
 			url = "redirect:viewMypageList?category="+category;
 		}
+		return url;
+	}
+	
+	//MyActivity에서 내가쓴 병원댓글 수정(하는중)
+	@RequestMapping(value="/modifyMapCmt", method={RequestMethod.GET, RequestMethod.POST})
+	public String modifyMapCmt(HttpServletRequest request, 
+			@RequestParam(value="locationSeq") int locationSeq, 
+			HttpSession session,Model model){
+		boolean isLogin = new LoginFilter().isLogin(session, model);
+		ActUserManager manager = new ActUserManager(aservice);
+		String url = "map/map_detailpage";
+		
+		LocationDTO dto	 = lservice.selectOne(locationSeq);		
+		List<BoardDTO> reviewList = lservice.getReviews(locationSeq);
+		List<DetailCommentDTO> list = lservice.commentList(locationSeq);		
+		dto = lservice.getLocActUserResult(manager, dto);
+		List<DetailPhotoDTO> photoList = lservice.selectPhoto(locationSeq);
+		List<BlogDTO> blogList = lservice.getBlogReviews(locationSeq);
+		//좋아요 상태 유지
+		if(isLogin){
+			MemberDTO member = (MemberDTO)session.getAttribute("member");
+			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.SHOP, locationSeq);
+			dto= manager.checkLocLikeStatus(aDTO, dto);
+		}
+		boolean flag = true;
+		if(flag){
+			url = "mypage/mypage_list_comments_modifymap";
+		}
+		model.addAttribute("commentlist",list);
+		model.addAttribute("detail", dto);
+		model.addAttribute("reviewList",reviewList);
+		model.addAttribute("detailphoto",photoList);
+		model.addAttribute("blogList",blogList);		
 		return url;
 	}
 	

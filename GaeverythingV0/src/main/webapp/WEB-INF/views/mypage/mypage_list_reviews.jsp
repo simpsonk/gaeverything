@@ -72,7 +72,7 @@
 			<!-- Listings -->
 			<div class="col-lg-12 col-md-12" >
 				<div class="dashboard-list-box margin-top-0">
-					<h4 style="background: #F91942; color: white;">Reviews (${reviewList.size()})</h4>
+					<h4 style="background: #fa5b0f; color: white;">Reviews (${reviewList.size()})</h4>
 					<ul>
 
 						<li>
