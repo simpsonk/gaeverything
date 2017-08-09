@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.EventDTO;
 import com.bitschool.dto.EventSearchDTO;
+import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.service.ActUserService;
 import com.bitschool.service.EventDetailService;
@@ -73,6 +74,7 @@ public class EventController {
 		list = eService.getEventActUserResults(manager, list);
 		HashMap<String, Object> map = pService.makeEventSerachList(0, 6, list);
 		HashMap<String, Object> data = new HashMap<String, Object>();
+	
 		
 		System.out.println("일자포맷변경: " + list.get(1).getAddDate());
 		System.out.println("일자포맷변경 전: " + list.get(1).getStartDate());

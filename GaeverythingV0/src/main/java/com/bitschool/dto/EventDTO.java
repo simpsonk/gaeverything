@@ -100,6 +100,10 @@ public class EventDTO {
 	public void setCall(String call) {
 		this.call = call;
 	}
+	
+	
+	
+	
 	public String getLatitude() {
 		return latitude;
 	}

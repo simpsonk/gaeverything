@@ -53,4 +53,14 @@ public class DataDAO {
 		}
 		return flag;
 	}
+
+
+	public boolean insertEventData(Location2DTO dto) throws SQLException{
+		boolean flag = false;
+		int aCnt = session.insert(namespace+".insert",dto);
+		if(aCnt>0){
+			flag = true;
+		}
+		return flag;
+	}
 }

@@ -170,7 +170,7 @@ public class GetDataController {
 	// "OO구 동물병원" /  page= 1,2,3 / substring 140~160 알아서 맞추기   
 	// http://localhost:5050/data/insertData 
 	
-	public List<Location2DTO> GetDatum(){
+/*	public List<Location2DTO> GetDatum(){
     	List<Location2DTO> list = null;
         try {
             String text = URLEncoder.encode("안양시 동물병원", "UTF-8");      
@@ -210,7 +210,7 @@ public class GetDataController {
         } 
         System.out.println();
         return list;
-    }        
+    }  */      
 	
 	
 	@RequestMapping(value="/insertData", method=RequestMethod.GET)
@@ -220,9 +220,55 @@ public class GetDataController {
 		String url = null;
 		boolean flag = false;
 		for(int i=0;i<list.size();i++){
-			flag = service.insertData(list.get(i));
+			//flag = service.insertData(list.get(i));
+			flag = service.insertEventData(list.get(i));
 		}
 		System.out.println(flag);
 		return url;
 	}
+	
+	public List<Location2DTO> GetDatum(){
+    	List<Location2DTO> list = null;
+        try {
+            String text = URLEncoder.encode("서초구 애견카페", "UTF-8");      
+            String apiURL = "https://dapi.kakao.com/v2/local/search/keyword.json?query="+text+"&page=2&appkey=ebfbfbd7a5ec71c10c63936dd90beb22&size=15";
+           
+            URL url = new URL(apiURL);
+            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+            con.setRequestMethod("GET");
+            BufferedReader br;  
+            br = new BufferedReader(new InputStreamReader(con.getInputStream(),"UTF-8"));    
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+            br.close();
+            System.out.println("response.toString() : "+response.toString());
+            String data = response.toString();
+            String docudata = data.substring(144, data.length()-1);
+            System.out.println("docudata : "+docudata);
+    		ObjectMapper mapper = new ObjectMapper();  
+    		try {
+    			list = mapper.readValue(docudata, new TypeReference<List<Location2DTO>>(){});
+    			Location2DTO ldto = list.get(0);
+    			System.out.println("list : "+list);
+    			System.out.println("ldto : "+ldto);
+    		} catch (JsonParseException e) {
+    			e.printStackTrace();
+    		} catch (JsonMappingException e) {
+    			e.printStackTrace();
+    		} catch (IOException e) {
+    			e.printStackTrace();
+    		}
+            
+        } catch (Exception e) {
+            System.out.println(e);
+        } 
+        System.out.println();
+        return list;
+    }        
+	
+	
+	
 }

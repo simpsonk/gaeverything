@@ -68,5 +68,8 @@
 		#{x},
 		#{y})
  	</insert>  	
+ 	
+ 		
+ 	
 		
  </mapper>

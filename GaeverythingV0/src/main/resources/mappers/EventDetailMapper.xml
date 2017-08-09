@@ -106,4 +106,8 @@
 		where eventNo = #{eventNo} 
 		order by eventphotono desc
 	</select>
+	
+	<select id="cafe" resultType = "LocationDTO">
+		select * from location where categorycode like 'CE7'
+	</select>
 </mapper>
