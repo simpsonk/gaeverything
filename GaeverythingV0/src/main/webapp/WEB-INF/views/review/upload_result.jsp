@@ -11,7 +11,7 @@
  	if(window.parent.document.getElementById("upload").value==""){
  		window.parent.document.getElementById("upload").value ='${filename}';	
  	}
-	alert('${filename}');
+	//alert('${filename}');
 </script>
 </head>
 <body>

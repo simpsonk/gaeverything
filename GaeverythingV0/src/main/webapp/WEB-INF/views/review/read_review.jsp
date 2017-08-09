@@ -10,8 +10,7 @@
 ================================================== -->
 <title>gaeverything</title>
 <meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <script src="<c:url value = '/resources/ckeditor/ckeditor.js'/>"></script>
 
 <script type="text/javascript">
@@ -227,7 +226,7 @@
 						<div class="listing-titlebar-title">
 							<h3>${dto.title} 
 								<c:if test="${dto.boardCategory=='1'}">
-									<span class = "listing-tag">Hospital & Beauty</span>
+									<span class = "listing-tag">Hospital</span>
 								</c:if>
 							</h3>
 						</div>	

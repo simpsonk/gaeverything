@@ -82,7 +82,7 @@
 					<div class="listing-titlebar-title">
 						<h3><a href = "/review/readPost?boardNo=${board.boardNo}&page=${page}">${board.title}</a>
 							<c:if test="${board.boardCategory=='1'}">
-								<span class = "listing-tag">Hospital & Beauty</span>
+								<span class = "listing-tag">Hospital</span>
 							</c:if>
 						</h3>
 					</div>	
