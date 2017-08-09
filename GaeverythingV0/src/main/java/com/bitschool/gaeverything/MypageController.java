@@ -481,13 +481,30 @@ public class MypageController {
 		return url;
 	}
 	
-	//cservice.removeCmt
+	//MyActivity에서  내가쓴 리뷰댓글 삭제하기
 	@RequestMapping(value="/removeMyBoardCmt" ,method = {RequestMethod.POST,RequestMethod.GET})
 	public String removeMyBoardCmt(HttpSession session, Model model,
 								   @RequestParam("commentNo") int commentNo,
 								   @RequestParam(value="category", defaultValue="0") int category){
 		String url = null;
 		boolean flag = cservice.removeCmt(commentNo);
+		if(flag){
+			url = "redirect:viewMypageList?category="+category;
+		}
+		return url;
+	}
+	
+	//MyActivity에서 내가쓴 병원댓글 삭제하기
+	@RequestMapping(value="/removeMyMapCmt",method=RequestMethod.GET)
+	public String removeMyMapCmt(HttpSession session,Model model,
+			@RequestParam(value="commentSeq") int commentSeq,
+			 @RequestParam(value="category", defaultValue="0") int category){
+		String url = null;
+		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		DetailCommentDTO dto = new DetailCommentDTO();
+		dto.setNickname(member.getNickname());
+		dto.setCommentSeq(commentSeq);
+		boolean flag = lservice.commentDelete(dto);
 		if(flag){
 			url = "redirect:viewMypageList?category="+category;
 		}
