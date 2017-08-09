@@ -20,10 +20,10 @@ public class BoardPageService implements IPagerService{
 	private BoardDAO dao;
 	
 	@Override
-	public int totalPosts() {
+	public int totalPosts(PageDTO pDTO) {
 		int total = 0;
 		try {
-			total = dao.getTotalNumber();
+			total = dao.getTotalNumber(pDTO);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -47,7 +47,7 @@ public class BoardPageService implements IPagerService{
 	public String pageList(PageDTO pDTO) {
 		//List<String> pList = null;
 		
-		int numOfPage = (int)Math.ceil(this.totalPosts()/(double)pDTO.getAmount());
+		int numOfPage = (int)Math.ceil(this.totalPosts(pDTO)/(double)pDTO.getAmount());
 		int pageUnit = (pDTO.getPage()/10)*10;
 		int startPage = pageUnit+1;
 		int lastPage = pageUnit+10;

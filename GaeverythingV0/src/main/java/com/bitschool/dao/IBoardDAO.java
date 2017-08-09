@@ -19,7 +19,7 @@ public interface IBoardDAO {
 	public boolean updateReadCount(int boardNo)throws SQLException;
 	public boolean update(BoardDTO dto) throws SQLException;
 	public boolean removePost(int boardNo) throws SQLException;
-	public int getTotalNumber() throws SQLException;
+	public int getTotalNumber(PageDTO pDTO) throws SQLException;
 	public List<BoardDTO> readPerPage(PageDTO page) throws SQLException;
 	public List<BoardDTO> searchData(SearchDTO sDTO)throws SQLException;
 	public int getSearchTotal(SearchDTO sDTO) throws SQLException;

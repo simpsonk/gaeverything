@@ -130,7 +130,7 @@ public class MapController {
 		}
 		
 		System.out.println("info:"+info);
-		List<LocationDTO> list = service.SearchShopName(info);
+		List<LocationDTO> list = service.SearchCategory(info);
 		System.out.println(list);
 
 		MemberDTO member = (MemberDTO)session.getAttribute("member");

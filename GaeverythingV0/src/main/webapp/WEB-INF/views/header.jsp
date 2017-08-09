@@ -45,8 +45,8 @@
 						<li><a href="/event/viewEventList">Event</a></li>
 						<li><a href="/review/viewReviewList">Review</a>
 							<ul>
-								<li><a href="/review/viewReviewList">Map</a></li>
-								<li><a href="/review/viewReviewList">Event</a></li>
+								<li><a href="/review/viewReviewList?categoryCode=MAP">Map</a></li>
+								<li><a href="/review/viewReviewList?categoryCode=EVENT">Event</a></li>
 							</ul>
 						</li>
 						<li><a href="/mypage/viewMypageDashboard">MyPage</a>
