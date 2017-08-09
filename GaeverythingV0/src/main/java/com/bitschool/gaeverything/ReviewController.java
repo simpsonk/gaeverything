@@ -5,15 +5,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.test.util.JsonExpectationsHelper;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,8 +21,10 @@ import com.bitschool.dao.ReviewFileBean;
 import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.CommentDTO;
+import com.bitschool.dto.EventDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
+import com.bitschool.dto.MyPageDTO;
 import com.bitschool.dto.PageDTO;
 import com.bitschool.service.ActUserService;
 import com.bitschool.service.IBoardService;
@@ -35,7 +34,6 @@ import com.bitschool.service.LocationDetailService;
 import com.bitschool.service.LocationService;
 import com.bitschool.utils.ActUserManager;
 import com.bitschool.utils.LoginFilter;
-import com.fasterxml.jackson.core.JsonFactory;
 
 
 @RequestMapping(value = "review")
@@ -72,13 +70,18 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value = "/viewReviewList", method = {RequestMethod.GET, RequestMethod.POST})
-	public String viewReviewList(Model model, HttpSession session, @RequestParam(value="page", defaultValue="1") int page){
+	public String viewReviewList(Model model, HttpSession session, @RequestParam(value="page", defaultValue="1") int page,
+			@RequestParam(value = "categoryCode", defaultValue = "0") String categoryCode){
 		
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		
 		int amount = 5;
-		PageDTO pDTO = new PageDTO(page, amount);
-		
+		PageDTO pDTO = null;
+		if(categoryCode.equals("0")){
+			pDTO = new PageDTO(page, amount, null);
+		}else{
+			pDTO = new PageDTO(page, amount, categoryCode);
+		}
 		String pList = pService.pageList(pDTO);
 		model.addAttribute("pList", pList);
 		
@@ -183,10 +186,10 @@ public class ReviewController {
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		String url = null;
 		BoardDTO dto = service.selectToRead(boardNo);
-
+		MemberDTO member = null;
 		//user like status like
 		if(isLogin){
-			MemberDTO member = (MemberDTO)session.getAttribute("member");
+			member = (MemberDTO)session.getAttribute("member");
 			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.REVIEW, dto.getBoardNo());
 			dto= new ActUserManager(aService).checkReLikeStatus(aDTO, dto);
 		}
@@ -209,12 +212,18 @@ public class ReviewController {
 			nextTitle = "(다음 글이 없습니다.)";
 		}
 		
+		//글쓴이 닉네임으로 프로필 불러오기
+		//글쓴이 닉넴 -> 이메일 찾고(사인업) -> 프로필에서 찾기
+		MyPageDTO mDTO = service.getWriter(dto.getNickname());
+		
 		model.addAttribute("numOfCmt", numOfCmt);
 		model.addAttribute("dto", dto);
 		model.addAttribute("cList", cList);
 		model.addAttribute("page", page);
 		model.addAttribute("prevTitle", prevTitle);
 		model.addAttribute("nextTitle",nextTitle);
+		model.addAttribute("profile",mDTO);
+		
 		url = "review/read_review";
 		return url;
 	}
@@ -424,29 +433,38 @@ public class ReviewController {
 		HashMap<String, Object> map = (HashMap<String, Object>)session.getAttribute("map");
 		if(map!=null){
 			List<LocationDTO> list = (List<LocationDTO>)map.get("list");
-			HashMap<String, Object> searchData = (HashMap<String, Object>)map.get("searchData");
-			model.addAttribute("list", list);
-			model.addAttribute("searchData", searchData);
+			List<EventDTO> eList = (List<EventDTO>)map.get("eList");
+			String categories = (String)map.get("categories");
+			String searchWord = (String)map.get("searchWord");
+			
+			if(list!=null){
+				model.addAttribute("list", list);
+			}
+			if(eList!=null){
+				model.addAttribute("eList", eList);
+			}
+			model.addAttribute("categories", categories);
+			model.addAttribute("searchWord", searchWord);
 			session.removeAttribute("map");
 		}
 		return url;
 	}
 	
 	@RequestMapping(value = "getSearhShopname", method = RequestMethod.POST)
-	public String getSearhShopname(@RequestParam(value = "searchWord") String searchWord, @RequestParam(value = "selectOp1") String selectOp1, 
+	public String getSearhShopname(@RequestParam(value = "searchWord") String searchWord, @RequestParam(value = "categories") String categories, 
 			Model model,  HttpSession session){
 		String url = "redirect:/review/viewSearchShop";
-		HashMap<String, Object> searchData = new HashMap<String, Object>();
-		
-		searchData.put("searchWord", searchWord);
-		searchData.put("selectOp1", selectOp1);
-		
-		List<LocationDTO> list = locService.getSearchData(searchData);
-		System.out.println(list);
-		System.out.println(searchData);
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("list", list);
-		map.put("searchData", searchData);
+
+		if(categories.equals("MAP")){
+			List<LocationDTO> list = locService.getMapSearchData(searchWord);
+			map.put("list", list);
+		}else if(categories.equals("EVENT")){
+			List<EventDTO> list = locService.getEventSearchData(searchWord);
+			map.put("eList", list);
+		}
+		map.put("categories", categories);
+		map.put("searchWord", searchWord);
 		session.setAttribute("map", map);
 		return url;
 	}

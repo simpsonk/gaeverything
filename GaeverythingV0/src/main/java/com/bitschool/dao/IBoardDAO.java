@@ -6,6 +6,7 @@ import java.util.List;
 import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.CommentDTO;
+import com.bitschool.dto.MyPageDTO;
 import com.bitschool.dto.PageDTO;
 import com.bitschool.dto.SearchDTO;
 
@@ -19,7 +20,7 @@ public interface IBoardDAO {
 	public boolean updateReadCount(int boardNo)throws SQLException;
 	public boolean update(BoardDTO dto) throws SQLException;
 	public boolean removePost(int boardNo) throws SQLException;
-	public int getTotalNumber() throws SQLException;
+	public int getTotalNumber(PageDTO pDTO) throws SQLException;
 	public List<BoardDTO> readPerPage(PageDTO page) throws SQLException;
 	public List<BoardDTO> searchData(SearchDTO sDTO)throws SQLException;
 	public int getSearchTotal(SearchDTO sDTO) throws SQLException;
@@ -38,6 +39,8 @@ public interface IBoardDAO {
 	public boolean updateDislike(int boardNo)  throws SQLException;
 	public BoardDTO getPrev(int boardNo) throws SQLException;
 	public BoardDTO getNext(int boardNo) throws SQLException;
+	public String readEmail(String nickName) throws SQLException;
+	public MyPageDTO readProfile(String email) throws SQLException;
 
 
 }

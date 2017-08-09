@@ -29,16 +29,16 @@
 				<form action="" method="post" id="dataset">
 					<div class="row with-forms">
 						<div id = "hiddenOption" class="col-fs-3">	
-							<select class="chosen-select" name="selectOp1" id = "selectOp1">
+							<select class="chosen-select" name="categories" id = "selectOp1">
 								<option value="0">Category</option>
-								<option value="HP8">Hospital</option>
-								<option value="EVENT">Event</option>
+								<option value="MAP" ${categories == 'MAP'?'selected="selected"':'' }>Map</option>
+								<option value="EVENT" ${categories =='EVENT'?'selected="selected"':''}>Event</option>
 							</select>
 						</div>
 						<div id = "textContainer" class="col-fs-7">
 							<div class="input-with-icon">
 								<i class="sl sl-icon-magnifier"></i>
-								<input type="text" placeholder="What are you looking for?" value="${searchData['searchWord']}" id="searchWord" name = "searchWord">
+								<input type="text" placeholder="What are you looking for?" value="${searchWord}" id="searchWord" name = "searchWord">
 							</div>
 						</div>
 						<div class="col-fs-2" style="text-align:center">
@@ -59,6 +59,19 @@
 					</ul>
 				</div>
 			</c:if>
+			
+			<c:if test="${eList!=null}">
+				<div class="dashboard-list-box with-icons margin-top-20">
+					<h4>Result Shopname(count:${eList.size()})</h4>
+					<ul>
+					<c:forEach items="${eList}" var="data">
+						<li class = "list">
+							<strong><span id="title">${data.eventName}</span></strong><span>(${data.address})</span><span id="locationSeq" style="visibility: hidden;">${data.eventNo}</span>
+						</li>
+					</c:forEach>		
+					</ul>	
+				</div>
+			</c:if>
 		</div>
 	</div>
 </div>
@@ -77,6 +90,8 @@
 <script type="text/javascript" src="<c:url value = '/resources/scripts/tooltips.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/custom.js'/>"></script>
 <script type="text/javascript">
+
+
 
 $(document).ready(function() {	
 	$("#search").click(function() {

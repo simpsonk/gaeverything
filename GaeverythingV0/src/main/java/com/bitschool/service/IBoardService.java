@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BoardDTO;
+import com.bitschool.dto.MyPageDTO;
 import com.bitschool.dto.PageDTO;
 import com.bitschool.dto.SearchDTO;
 
@@ -21,5 +22,6 @@ public interface IBoardService {
 	public int dislike(int boardNo);
 	public BoardDTO searchPrev(int boardNo);
 	public BoardDTO searchNext(int boardNo);
+	public MyPageDTO getWriter(String email);
 
 }

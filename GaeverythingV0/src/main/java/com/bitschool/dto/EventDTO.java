@@ -1,12 +1,17 @@
 package com.bitschool.dto;
 
-import java.sql.Timestamp;
+
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class EventDTO {
 	
 	private int eventNo;
 	private String eventName;
 	private String startDate;
+	private String addDate;
 	private String endDate;
 	private String location;
 	private String address;
@@ -22,9 +27,6 @@ public class EventDTO {
 	private String userLikeStatus;
 	private int countLike;
 	private String categoryCode;
-	
-
-	
 	private int countReview;
 	private String averageRatings;
 	private int countRatings;
@@ -46,13 +48,33 @@ public class EventDTO {
 	}
 	
 	
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+		this.setAddDate(startDate);
+				
+	}
 	
 	public String getStartDate() {
 		return startDate;
+		
 	}
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
+	
+	
+	public void setAddDate(String addDate) {
+		//String date = this.getStartDate();
+		String [] dates = addDate.split("-");
+		//2017-08-17 =>>> 2017, 08, 17
+		String date2 = dates[1] + "-" + dates[2] + "-" + dates[0];
+		this.addDate = date2;
 	}
+	
+	public String getAddDate() {
+		return addDate;
+	}
+	
+	
+	
 	public String getEndDate() {
 		return endDate;
 	}

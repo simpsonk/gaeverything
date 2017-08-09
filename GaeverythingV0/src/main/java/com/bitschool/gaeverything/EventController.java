@@ -74,6 +74,8 @@ public class EventController {
 		HashMap<String, Object> map = pService.makeEventSerachList(0, 6, list);
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		
+		System.out.println("일자포맷변경: " + list.get(1).getAddDate());
+		System.out.println("일자포맷변경 전: " + list.get(1).getStartDate());
 		data.put("events", list); //
 		data.put("pList", map.get("pList"));
 		data.put("infoList", map.get("infoList"));
