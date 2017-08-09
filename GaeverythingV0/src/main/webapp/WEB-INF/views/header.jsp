@@ -41,7 +41,7 @@
 					<ul id="responsive">
 						<div></div>
 						<li><a href="/">Home</a></li>
-						<li><a href="/map/viewMapList">Hospital</a></li>
+						<li><a href="/map/viewMapList">Map</a></li>
 						<li><a href="/event/viewEventList">Event</a></li>
 						<li><a href="/review/viewReviewList">Review</a>
 							<ul>
