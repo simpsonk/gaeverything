@@ -383,7 +383,7 @@
 		var itemStr =  '	<div class="listing-item-container" data-marker-id="1">'
 				+ '	   			<div class="listing-item">' 
 				+ '					<img src="/resources/images/event/'+event.thumbnail+'" alt="">'
-				+ '				<a href = "/event/detail">'
+				+ '				<a href = "/event/detail/view?no='+event.eventNo + '">'
 				+ '					<div class="listing-item-content">';
 				
 				if(event.eventName.match("축제")||event.eventName.match("페스티벌")){
@@ -394,7 +394,7 @@
 			itemStr += '				<h3>'+ event.eventName + '</h3><br>'
 				+ '						<span><i class="fa fa-map-marker"></i>  '+ event.address+ '</span><br>'
 				+ '						<span><i class="fa fa-calendar-check-o"></i>  '+ event.startDate+ '  ~  '+ event.endDate	+ '</span><br>'
-				+ '						<span><i class="fa fa-dollar"></i>  '+ event.fee+ '   <i class="fa fa-check"></i>  '+ event.discountInfo+ '</span>'
+				+ '						<span><i class="fa fa-won"></i>  '+ event.fee+ '   <i class="fa fa-check"></i>  '+ event.discountInfo+ '</span>'
 				+ '					</div>'
 				+ '				</a>';
 				

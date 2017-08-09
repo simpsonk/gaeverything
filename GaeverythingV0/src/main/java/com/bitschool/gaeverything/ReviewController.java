@@ -24,6 +24,7 @@ import com.bitschool.dto.CommentDTO;
 import com.bitschool.dto.EventDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
+import com.bitschool.dto.MyPageDTO;
 import com.bitschool.dto.PageDTO;
 import com.bitschool.service.ActUserService;
 import com.bitschool.service.IBoardService;
@@ -107,9 +108,11 @@ public class ReviewController {
 	}
 
 	@RequestMapping(value = "/viewReviewRegist", method = {RequestMethod.GET, RequestMethod.POST})
-	public String viewReviewRegist(HttpSession session, Model model,@RequestParam(value="locationSeq", defaultValue = "0") int locationSeq,
+	public String viewReviewRegist(HttpSession session, Model model,
+			@RequestParam(value="locationSeq", defaultValue = "0") int locationSeq,
 			@RequestParam(value="boardCategory",defaultValue="") String boardCategory,
-			@RequestParam(value="address", defaultValue = "") String address){
+			@RequestParam(value="address", defaultValue = "") String address
+			/*@RequestParam(value="eventNo") int eventNo*/){
 		System.out.println("check"+locationSeq);
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		String url = "review/review_regist";
@@ -183,10 +186,10 @@ public class ReviewController {
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		String url = null;
 		BoardDTO dto = service.selectToRead(boardNo);
-
+		MemberDTO member = null;
 		//user like status like
 		if(isLogin){
-			MemberDTO member = (MemberDTO)session.getAttribute("member");
+			member = (MemberDTO)session.getAttribute("member");
 			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.REVIEW, dto.getBoardNo());
 			dto= new ActUserManager(aService).checkReLikeStatus(aDTO, dto);
 		}
@@ -209,12 +212,18 @@ public class ReviewController {
 			nextTitle = "(다음 글이 없습니다.)";
 		}
 		
+		//글쓴이 닉네임으로 프로필 불러오기
+		//글쓴이 닉넴 -> 이메일 찾고(사인업) -> 프로필에서 찾기
+		MyPageDTO mDTO = service.getWriter(dto.getNickname());
+		
 		model.addAttribute("numOfCmt", numOfCmt);
 		model.addAttribute("dto", dto);
 		model.addAttribute("cList", cList);
 		model.addAttribute("page", page);
 		model.addAttribute("prevTitle", prevTitle);
 		model.addAttribute("nextTitle",nextTitle);
+		model.addAttribute("profile",mDTO);
+		
 		url = "review/read_review";
 		return url;
 	}
@@ -392,6 +401,31 @@ public class ReviewController {
 		System.out.println("좋아요개수: " + data);
 		return data;
 	}
+	
+	@RequestMapping(value="/updateEventDetailLike", method={RequestMethod.GET, RequestMethod.POST})
+	public @ResponseBody int updateEventDetailLike(
+							 @RequestParam("like") String like,
+							 @RequestParam("eventNo") int eventNo,
+							 @RequestParam("email") String email){
+		boolean flag = false;
+		int data = 0;
+		ActUserManager manager = new ActUserManager(aService);
+		ActUserDTO dto = new ActUserDTO(email, ActUserManager.EVENT, eventNo);
+		if(like.equals("like-icon")){
+			flag = manager.registLikeStatus(dto);
+			if(!flag){
+				System.out.println("insert fail: DetailPageLike");
+			}
+		}else if(like.equals("like-icon liked")){
+			flag = manager.deleteLikeStatus(dto);
+			if(!flag){
+				System.out.println("delete fail: DetailPageLike");
+			}
+		}
+		data = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.EVENT, eventNo));
+		return data;
+	}
+	
 	
 	@RequestMapping(value = "viewSearchShop", method = RequestMethod.GET)
 	public String viewSearchShop(HttpSession session, Model model){

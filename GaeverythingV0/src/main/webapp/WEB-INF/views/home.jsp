@@ -36,13 +36,13 @@
 <!-- Banner
 ================================================== -->
 <form action="/map/homeSearchResult" method="post">
-<div class="main-search-container" data-background-image="/resources/images/main-search-background-02.jpg">
+<div class="main-search-container" data-background-image="/resources/images/main-search-background-03.jpg">
 	<div class="main-search-inner">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
 					<h2>Find Nearby Attractions</h2>
-					<h4>Expolore top-rated attractions, activities and more</h4>
+					<h4>Explore top-rated dog cares, events and more!</h4>
 
 					<div class="main-search-input">
 						<div class="main-search-input-item">
@@ -51,8 +51,8 @@
 						
 						<div class="main-search-input-item">
 							<select data-placeholder="All Categories" class="chosen-select" name="searchOption">
-								<option value="1">shop name</option>
-								<option value="2">location</option>
+								<option value="1">Name</option>
+								<option value="2">Location</option>
 							</select>
 						</div>
 
@@ -65,7 +65,7 @@
 							<label for="check-1">Hospital</label>
 	
 							<input id="check-2" type="checkbox" name="check">
-							<label for="check-2">Hotels</label>
+							<label for="check-2">Event</label>
 						</div>
 					</div>
 				</div>
@@ -350,7 +350,7 @@
 		<div class="col-md-4">
 			<div class="icon-box-2 with-line">
 				<i class="im im-icon-Map2"></i>
-				<h3>Find Interesting Place</h3>
+				<h3 class="fff" style="color:white;">Find Interesting Place</h3>
 				<p>Proin dapibus nisl ornare diam varius tempus. Aenean a quam luctus, finibus tellus ut, convallis eros sollicitudin turpis.</p>
 			</div>
 		</div>

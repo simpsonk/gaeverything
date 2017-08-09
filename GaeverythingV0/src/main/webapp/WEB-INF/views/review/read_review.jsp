@@ -10,8 +10,7 @@
 ================================================== -->
 <title>gaeverything</title>
 <meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <script src="<c:url value = '/resources/ckeditor/ckeditor.js'/>"></script>
 
 <script type="text/javascript">
@@ -227,7 +226,7 @@
 						<div class="listing-titlebar-title">
 							<h3>${dto.title} 
 								<c:if test="${dto.boardCategory=='1'}">
-									<span class = "listing-tag">Hospital & Beauty</span>
+									<span class = "listing-tag">Hospital</span>
 								</c:if>
 							</h3>
 						</div>	
@@ -237,12 +236,12 @@
 					<!-- nickname, comment, likes.. -->
 					<div class="post-info col-md-12" style="padding-left: 15px;padding-right: 15px;">
 						<ul class="post-meta">
-							<c:if test="${dto.boardCategory=='1'}">
+							<!--<c:if test="${dto.boardCategory=='1'}">
 								<li><a href="#">병원, 뷰티</a></li>
 							</c:if>
 							<c:if test="${dto.boardCategory=='2'}">
 								<li><a href="#">애견동반 식당, 카페</a></li>
-							</c:if>
+							</c:if>-->
 							
 							<li><i class="sl sl-icon-bubble"></i> ${numOfCmt}</li>
 							<li id="numOflike"><i class="sl sl-icon-heart"></i> ${dto.countLike}</li>
@@ -290,7 +289,7 @@
 					</div>
 							
 					<!-- edit, delete -->
-					<c:if test="${member.nickname == dto.nickname}">
+					<c:if test="${tom.nickname == dto.nickname}">
 						<div class="col-md-8 centered-content" >
 							<a onclick="go_url(1, ${param.page})" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-note"></i>Edit</a>
 							<a onclick="go_url(2, ${param.page})" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-close"></i>Delete</a>
@@ -306,16 +305,19 @@
 		<!-- 작성자 프로필 -->
 		<div class="about-author col-md-12" style=" padding-left: 10px; padding-right: 10px;">
 			<div class="profile col-md-3" style="width: 150px;height: 150px; padding-top: 15px; padding-bottom: 15px;">
-				<img src="/resources/images/user-avatar.jpg" alt="" />
+				<img src="/resources/upload/${profile.photo}" alt="" />
+				<c:if test="${empty profile.photo}">
+					<img src="/resources/upload/user_icon.png" alt="" />
+				</c:if>
 			</div>
 			<div class="about-description">
 				<div class="writer">
 					<h4>${dto.nickname}&nbsp;&nbsp;&nbsp;<a href="/review/follow"><i class="sl sl-icon-user-follow"></i></a></h4>
 				</div>
 			</div>
-				<a href="#">tom@example.com</a> 
+				<a href="#">${profile.email}</a> 
 			<div class="intro col-md-9" style="padding-left: 0px;padding-right: 0px;">	
-				<p>Nullam ultricies, velit ut varius molestie, ante metus condimentum nisi, dignissim facilisis turpis ex in libero. Sed porta ante tortor, a pulvinar mi facilisis nec. Proin finibus dolor ac convallis congue.</p>
+				<p>${profile.notes}</p>
 			</div>
 		</div>
 	</form>
@@ -426,21 +428,21 @@
 				
 			
 			<div class="clearfix"></div>
-			<h4 class="headline margin-top-25">Related Posts</h4>
+			<h4 class="headline margin-top-25">${dto.nickname} 님의 다른 글 보기 </h4>
 			<div class="row">
 
 				<!-- Blog Post Item -->
 				<div class="col-md-6">
-					<a href="#" class="blog-compact-item-container">
-						<div class="blog-compact-item">
-							<img src="/resources/images/blog-compact-post-01.jpg" alt="">
-							<span class="blog-item-tag">Tips</span>
+					<a href="#" class="blog-compact-item-container" style="height: 250px;">
+						<div class="blog-compact-item" style="height: 250px;">
+							<img src="/resources/images/blog-compact-post-01.jpg" alt="" style="height: 250px;">
+							<!-- <span class="blog-item-tag">Tips</span> -->
 							<div class="blog-compact-item-content">
 								<ul class="blog-post-tags">
-									<li>22 August 2017</li>
+									<li>${dto.regiDate}</li>
 								</ul>
-								<h3>Hotels for All Budgets</h3>
-								<p>Sed sed tristique nibh iam porta volutpat finibus. Donec in aliquet urneget mattis lorem. Pellentesque pellentesque.</p>
+								<h3>${dto.title}</h3>
+								<p>${dto.onlyText} </p>
 							</div>
 						</div>
 					</a>
@@ -601,10 +603,8 @@
 
 	<!-- Scripts
 ================================================== -->
-	<script type="text/javascript"
-		src="<c:url value = '/resources/scripts/jquery-2.2.0.min.js'/>"></script>
-	<script type="text/javascript"
-		src="<c:url value = '/resources/scripts/jpanelmenu.min.js'/>"></script>
+	<script type="text/javascript" src="<c:url value = '/resources/scripts/jquery-2.2.0.min.js'/>"></script>
+	<script type="text/javascript" src="<c:url value = '/resources/scripts/jpanelmenu.min.js'/>"></script>
 	<script type="text/javascript"
 		src="<c:url value = '/resources/scripts/chosen.min.js'/>"></script>
 	<script type="text/javascript"
@@ -623,5 +623,7 @@
 		src="<c:url value = '/resources/scripts/tooltips.min.js'/>"></script>
 	<script type="text/javascript"
 		src="<c:url value = '/resources/scripts/custom.js'/>"></script>
+		<script type="text/javascript" src="<c:url value = '/resources/jQuery.dotdotdot-master/src/jquery.dotdotdot.js'/>"></script>
+		
 </body>
 </html>		

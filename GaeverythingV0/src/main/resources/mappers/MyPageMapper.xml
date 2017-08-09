@@ -4,6 +4,19 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.bitschool.bootstrap.MyPageMapper">
 
+ 	
+ 	<!-- 내가 쓴 댓글(게시판리뷰)의 원글 제목 가져오기-->
+ 	<select id="selectBoardTitle" parameterType="Integer" resultType="String">
+ 		select title from board 
+		where groupno = #{groupno}
+ 	</select>
+
+	<!-- 내가 쓴 댓글(게시판리뷰) 모아보기 -->
+	<select id="selectMyBoardComments" parameterType="String" resultType="CommentDTO">
+		select * from commentbox 
+		where nicknameCmt = #{nickname}
+	</select>
+	
 	<!-- 상호명 지정해주기 위해 -->
 	<select id="selectShopName" parameterType="Integer" resultType="String">
 		select title from location where locationseq = #{locationSeq}

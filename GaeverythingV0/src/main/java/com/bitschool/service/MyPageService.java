@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.bitschool.dao.MyPageDAO;
 import com.bitschool.dto.BoardDTO;
+import com.bitschool.dto.CommentDTO;
 import com.bitschool.dto.DetailCommentDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.dto.MyPageDTO;
@@ -18,6 +19,34 @@ public class MyPageService {
 	
 	@Inject
 	private MyPageDAO mdao;
+	
+	// 내가 쓴 댓글(게시판리뷰)의 원글 제목 가져오기
+	public String selectBoardTitle(int groupno){
+		String title = null;
+		try {
+			title = mdao.selectBoardTitle(groupno);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return title;
+	}
+	
+	// 내가 쓴 댓글(게시판리뷰) 모아보기 
+	public List<CommentDTO> selectMyBoardComments(String nickname){
+		List<CommentDTO> list = null;
+		try {
+			list = mdao.selectMyBoardComments(nickname);
+			for(int i=0;i<list.size();i++){
+				String title = this.selectBoardTitle(list.get(i).getGroupNo());
+				list.get(i).setTitle(title);
+			}		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}	
 	
 	// 상호명 지정해주기 위해 
 	public String selectShopName(int locationSeq){

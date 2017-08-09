@@ -136,4 +136,12 @@
 	<select id="readNext" parameterType="Integer" resultType="BoardDTO">
 		select * from (select rownum as num, temp.* from(select * from board order by boardNo desc)temp) where num = (#{num}+1)
 	</select>
+
+	<select id="findEmail" parameterType="String" resultType="String">
+		select email from signup where nickname = #{nickName}
+	</select>
+	
+	<select id="profile" parameterType="String" resultType="MyPageDTO">
+		select * from mypage where email = #{email}
+	</select>
 </mapper>

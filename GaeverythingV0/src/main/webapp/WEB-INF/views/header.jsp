@@ -41,7 +41,7 @@
 					<ul id="responsive">
 						<div></div>
 						<li><a href="/">Home</a></li>
-						<li><a href="/map/viewMapList">Map</a></li>
+						<li><a href="/map/viewMapList">Hospital</a></li>
 						<li><a href="/event/viewEventList">Event</a></li>
 						<li><a href="/review/viewReviewList">Review</a>
 							<ul>
@@ -53,10 +53,8 @@
 							<ul>
 								<li><a href="/mypage/viewMypageDashboard">Dashboard</a></li>
 								<li><a href="/mypage/calendar/viewCalendar">Calendar</a></li>
-								<li><a href="/mypage/viewMypageList">My Listings</a></li>
-								<li><a href="/mypage/viewMypageReviews">Reviews</a></li>
+								<li><a href="/mypage/viewMypageList">My Activities</a></li>
 								<li><a href="/mypage/viewMypageBookmarks">Bookmarks</a></li>
-								<li><a href="#">Add Listing</a></li>
 								<li><a href="/mypage/viewMypageProfile">My Profile</a></li>
 								<li><a href="/mypage/viewPetList">Pet Profile</a></li>
 							</ul>

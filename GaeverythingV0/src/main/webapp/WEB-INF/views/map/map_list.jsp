@@ -128,7 +128,7 @@
                <!-- Pagination / End -->
                
                <!-- Copyrights -->
-               <div class="copyrights margin-top-0">© 2017 Listeo. All Rights Reserved.</div>
+               <div class="copyrights margin-top-0">© 2017 gaeverything. All Rights Reserved.</div>
 
             </div>
          </div>

@@ -20,6 +20,7 @@ import com.bitschool.dto.EventDTO;
 import com.bitschool.dto.EventSearchDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.service.ActUserService;
+import com.bitschool.service.EventDetailService;
 import com.bitschool.service.EventService;
 import com.bitschool.service.PageService;
 import com.bitschool.utils.ActUserManager;
@@ -36,6 +37,9 @@ public class EventController {
 	
 	@Inject
 	private EventService service;
+	
+	@Inject
+	private EventDetailService eService;
 
 	@Inject
 	private PageService pService;
@@ -60,13 +64,18 @@ public class EventController {
 	public @ResponseBody HashMap<String, Object> getAllEvents(HttpSession session){
 		List<EventDTO> list = service.getAllLists();
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		ActUserManager manager = new ActUserManager(aService);
 		if(member!=null){
 			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.EVENT);
-			list= new ActUserManager(aService).checkLikeStatusEvent(aDTO, list);
+			list =manager.checkLikeStatusEvent(aDTO, list);
+			//유저라이크스테이터스, 라이크갯수
 		}
+		list = eService.getEventActUserResults(manager, list);
 		HashMap<String, Object> map = pService.makeEventSerachList(0, 6, list);
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		
+		System.out.println("일자포맷변경: " + list.get(1).getAddDate());
+		System.out.println("일자포맷변경 전: " + list.get(1).getStartDate());
 		data.put("events", list); //
 		data.put("pList", map.get("pList"));
 		data.put("infoList", map.get("infoList"));
@@ -74,10 +83,13 @@ public class EventController {
 	}
 	
 	@RequestMapping(value="/detail", method=RequestMethod.GET)
-	public String detail (HttpSession session, Model model){
-		String url = "event/event_detail";
+	public String detail (HttpSession session, Model model, @RequestParam("no") int eventNo){
+		String url = "event/event_detail2";
 		boolean isLogin = new LoginFilter().isLogin(session, model);
-
+		System.out.println(eventNo);
+		EventDTO detail = service.readOne(eventNo);
+		model.addAttribute("dto", detail);
+		System.out.println("해당이벤트 좋아요 수:" + detail.getCountLike());
 		return url;
 	}
 	

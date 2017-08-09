@@ -9,7 +9,6 @@ public class DetailCommentDTO {
 	private String message;
 	private double rating;
 	private Timestamp regiDate;
-
 	private String photo;
 	
 	//댓글모아보기할때 상호명을 보여주기위해

@@ -7,6 +7,46 @@ public class MemberDTO {
 	private String pw;
 	private String photo;	
 	
+	private int myCommentSize;
+	private int myReviewSize;
+	private int bookmarkReviewSize;
+	private int bookmarkMapSize;
+	private int bookmarkEventSize;
+	
+	
+	
+	
+	
+	public int getMyCommentSize() {
+		return myCommentSize;
+	}
+	public void setMyCommentSize(int myCommentSize) {
+		this.myCommentSize = myCommentSize;
+	}
+	public int getMyReviewSize() {
+		return myReviewSize;
+	}
+	public void setMyReviewSize(int myReviewSize) {
+		this.myReviewSize = myReviewSize;
+	}
+	public int getBookmarkReviewSize() {
+		return bookmarkReviewSize;
+	}
+	public void setBookmarkReviewSize(int bookmarkReviewSize) {
+		this.bookmarkReviewSize = bookmarkReviewSize;
+	}
+	public int getBookmarkMapSize() {
+		return bookmarkMapSize;
+	}
+	public void setBookmarkMapSize(int bookmarkMapSize) {
+		this.bookmarkMapSize = bookmarkMapSize;
+	}
+	public int getBookmarkEventSize() {
+		return bookmarkEventSize;
+	}
+	public void setBookmarkEventSize(int bookmarkEventSize) {
+		this.bookmarkEventSize = bookmarkEventSize;
+	}
 	public int getMemberNo() {
 		return memberNo;
 	}

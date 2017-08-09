@@ -55,7 +55,7 @@
 		<div id="titlebar">
 			<div class="row">
 				<div class="col-md-12">
-					<h2>My Listings</h2>
+					<h2>My Comments</h2>
 					<!-- Breadcrumbs -->
 					<nav id="breadcrumbs">
 						<ul>
@@ -69,11 +69,16 @@
 		</div>
 
 		<div class="row">
+			<ul class="listing-nav">
+					<li><a href="#listing-map" class="">in Map</a></li>
+					<li><a href="#listing-review">in Review</a></li>
+			</ul>
 
-			<!-- Listings -->
-			<div class="col-lg-12 col-md-12">
-				<div class="dashboard-list-box margin-top-0">
-					<h4>Comments (${commentList.size()})</h4>
+
+			<!-- Listings --><!-- 맵디테일의 코멘트 -->
+			<div id="listing-map" class="col-lg-12 col-md-12">
+				<div class="dashboard-list-box margin-top-20">
+					<h4 style="background: #F91942; color: white;">Comments in Map (${commentList.size()})</h4>
 					<ul>
 						<li>
 							<div class="comments listing-reviews">
@@ -81,22 +86,20 @@
 								<c:choose>
 								<c:when test="${commentList.size()==0}">
 								<li>
-								<span>작성한 리뷰가 없습니다.</span>
+								<span>작성한 댓글이 없습니다.</span>
 								</li>
 								</c:when>
 								</c:choose>	
 									<c:forEach var="list" items="${commentList}">        								
-									<li>
-										<div class="avatar"><img src="/resources/upload/${member.photo}" alt="" /> </div>
-										<div class="comment-content"><div class="arrow-comment"></div>
-											<div class="comment-by">Your Comments <div class="comment-by-listing own-comment">on <a href="#"><b>${list.address}</b></a></div> <span class="date">${list.regiDate}</span>
+									<li>										
+											<div class="comment-by">Your Comments <div class="comment-by-listing own-comment">on <a href="/map/detail/viewDetailPage?locationSeq=${list.locationSeq}"><b>${list.address}</b></a></div> <span class="date">${list.regiDate}</span>
 												<div class="star-rating" data-rating="${list.rating}"></div>
 											</div>
 											<p>${list.message}</p>
+											<div class="buttons-to-right">
 											<a href="#" class="rate-review"><i class="sl sl-icon-note"></i> Edit</a>										
-											<a href="#" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>						
-										</div>
-
+											<a href="/mypage/removeMyMapCmt?commentSeq=${list.commentSeq}&category=2" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>		
+											</div>				
 									</li>
 									</c:forEach>
 								</ul>
@@ -108,9 +111,47 @@
 			</div>
 
 
+	 		<!-- Listings --><!-- 리뷰게시판의 코멘트 -->
+			<div id="listing-review" class="col-lg-12 col-md-12">
+				<div class="dashboard-list-box margin-top-20">
+					<h4 style="background: #F91942; color: white;">Comments in Review (${bCommentList.size()})</h4>
+					<ul>
+						<li>
+							<div class="comments listing-reviews">
+								<ul>
+								<c:choose>
+								<c:when test="${bCommentList.size()==0}">
+								<li>
+								<span>작성한 댓글이 없습니다.</span>
+								</li>
+								</c:when>
+								</c:choose>	
+									<c:forEach var="list" items="${bCommentList}" varStatus="loop">									        								
+									<form action="" method="post" id="listOfComment${loop.index}">
+									<li>																					
+											<div class="comment-by">Your Comments <div class="comment-by-listing own-comment">on <a href="/review/readPost?boardNo=${list.groupNo}&page=1"><b>${list.title}</b></a></div> <span class="date">${list.regiDate}</span>
+											</div>
+											<p>${list.commentBody}</p>
+											<div class="buttons-to-right">
+											<a class="rate-review" onclick="cmt_url(1, ${loop.index},1);"><i class="sl sl-icon-note"></i> Edit</a>										
+											<a href="/mypage/removeMyBoardCmt?commentNo=${list.commentNo}&category=2" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>						
+											</div>
+											<input type="hidden" name="commentNo" value ="${list.commentNo}">
+											<input type="hidden" name="groupNo" value ="${list.groupNo}">
+									</li>
+									</form>
+									</c:forEach>
+								</ul>
+							</div>
+						</li>
+
+					</ul>
+				</div>
+			</div>
+
 			<!-- Copyrights -->
 			<div class="col-md-12">
-				<div class="copyrights">© 2017 Listeo. All Rights Reserved.</div>
+				<div class="copyrights">© 2017 gaeverything. All Rights Reserved.</div>
 			</div>
 		</div>
 
@@ -124,7 +165,7 @@
 
 </div>
 <!-- Wrapper / End -->
-
+<div id="backtotop" class="visible"><a href="#"></a></div>
 
 <!-- Scripts
 ================================================== -->
@@ -139,7 +180,15 @@
 <script type="text/javascript" src="<c:url value = '/resources/scripts/jquery-ui.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/tooltips.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/custom.js'/>"></script>
-
-
+<script>
+function cmt_url(type, index, page){
+		var data = document.getElementById("listOfComment"+index);	
+		if(type == 1){
+			url = "/mypage/modifyCmt?page="+page;
+		}
+		data.action = url;
+		data.submit();
+	}
+</script>
 </body>
 </html>
