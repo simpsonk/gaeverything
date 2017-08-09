@@ -21,6 +21,9 @@
 			(select rownum as num, temp.* from
 				(select * from board order by boardNo desc)temp) 
 		where num between #{firstNo} and #{lastNo}
+		<if test="categoryCode!=null">
+			and boardCategory = #{categoryCode}
+		</if>
 	</select>
 	
 	<select id="readOne" parameterType="Integer" resultType="BoardDTO">
@@ -39,8 +42,11 @@
 		delete from board where boardno=#{boardNo}
 	</delete>
 	
-	<select id="getTotal" resultType="Integer">
+	<select id="getTotal" resultType="Integer" parameterType="PageDTO">
 		select count(*) from board
+		<if test="categoryCode!=null">
+			where boardCategory = #{categoryCode}
+		</if>
 	</select>
 	
 	<select id="search" parameterType="SearchDTO" resultType="BoardDTO">
@@ -130,7 +136,7 @@
 	<select id="readNext" parameterType="Integer" resultType="BoardDTO">
 		select * from (select rownum as num, temp.* from(select * from board order by boardNo desc)temp) where num = (#{num}+1)
 	</select>
-	
+
 	<select id="findEmail" parameterType="String" resultType="String">
 		select email from signup where nickname = #{nickName}
 	</select>
@@ -138,6 +144,4 @@
 	<select id="profile" parameterType="String" resultType="MyPageDTO">
 		select * from mypage where email = #{email}
 	</select>
-	
-	
 </mapper>

@@ -87,15 +87,15 @@
 					<c:when test="${locationSeq!=null}">
 					<select class="chosen-select" name = "boardCategory">
 						<option value ="0">Categories</option>
-						<option value ="1" ${boardCategory == 'HP8'?'selected="selected"':''}>Hospital</option>
-						<option value ="2" ${boardCategory == 'EVENT1'?'selected="selected"':''}>Event</option>
+						<option value ="MAP" ${boardCategory == 'MAP'?'selected="selected"':''}>Map</option>
+						<option value ="EVENT" ${boardCategory == 'EVENT'?'selected="selected"':''}>Event</option>
 					</select>	
 					</c:when>
 					<c:otherwise>
 					<select class="chosen-select" name = "boardCategory">
 						<option value ="0">Categories</option>
-						<option value ="1" ${dto.boardCategory == 'HP8'?'selected="selected"':''}>Hospital</option>
-						<option value ="2" ${dto.boardCategory == 'EVENT1'?'selected="selected"':''}>Event</option>
+						<option value ="MAP" ${dto.boardCategory == 'MAP'?'selected="selected"':''}>Map</option>
+						<option value ="EVENT" ${dto.boardCategory == 'EVENT'?'selected="selected"':''}>Event</option>
 					</select>	
 					</c:otherwise>
 					</c:choose>	

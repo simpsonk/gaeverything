@@ -73,7 +73,7 @@
 			<!-- Listings -->
 			<div class="col-lg-4 col-md-12">
 				<div class="dashboard-list-box margin-top-0">
-					<h4 style="background: #F91942; color: white;">Reviews (${reviewList.size()})</h4>
+					<h4 style="background: #fa5b0f; color: white;">Reviews (${reviewList.size()})</h4>
 					<ul>						
 						<c:choose>
 						<c:when test="${reviewList.size()==0}">
@@ -128,7 +128,7 @@
 			
 			<div class="col-lg-4 col-md-12">
 				<div class="dashboard-list-box margin-top-0">
-					<h4 style="background: #F91942; color: white;">Hospitals (${mapList.size()})</h4>
+					<h4 style="background: #37b6bd; color: white;">Hospitals (${mapList.size()})</h4>
 					<ul>
 						<c:choose>
 						<c:when test="${mapList.size()==0}">
@@ -194,7 +194,7 @@
 						<c:if test="${status.index<3}">	     
 						<li>							
 							<div class="list-box-listing">
-								<div class="list-box-listing-img"><a href="/event/detail/viewDetailPage?eventNo=${list.eventNo}">
+								<div class="list-box-listing-img"><a href="/event/detail/view?no=${list.eventNo}">
 								<img src="/resources/images/event/${list.thumbnail}" alt=""></a></div>
 								<div class="list-box-listing-content">
 									<div class="inner">

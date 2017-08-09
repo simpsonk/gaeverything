@@ -81,8 +81,8 @@ public class BoardDAO implements IBoardDAO{
 	}
 
 	@Override
-	public int getTotalNumber() throws SQLException {
-		int total = session.selectOne(nameSpace+".getTotal");
+	public int getTotalNumber(PageDTO pDTO) throws SQLException {
+		int total = session.selectOne(nameSpace+".getTotal", pDTO);
 		return total;
 	}
 
