@@ -155,10 +155,10 @@
 												</div>
 												</c:when>
 												<c:otherwise>
-												<div class="buttons-to-right">
+												<%-- <div class="buttons-to-right">
 												<a onclick="cmt_url2(${list.commentSeq}, ${loop.index},${list.locationSeq});" class="rate-review"><i class="sl sl-icon-note"></i> Edit</a>										
 												<a href="/mypage/removeMyMapCmt?commentSeq=${list.commentSeq}&category=2" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>		
-												</div>	
+												</div>	 --%>
 												</c:otherwise>
 											</c:choose>
 											<input type="hidden" id="commSeq" value="${list.commentSeq}">												
@@ -269,28 +269,9 @@ function cmt_url3(commentSeq, index, locationSeq){
 
 
 $(window).load(function(){
-	if(ratingVal.value==0.5){
-		$('input:radio[name=rating]:input[value="0.5"]').attr("checked", true);			
-	}else if(ratingVal.value==1.0){
-		$('input:radio[name=rating]:input[value="1.0"]').attr("checked", true);		
-	}else if(ratingVal.value==1.5){
-		$('input:radio[name=rating]:input[value="1.5"]').attr("checked", true);		
-	}else if(ratingVal.value==2.0){
-		$('input:radio[name=rating]:input[value="2.0"]').attr("checked", true);		
-	}else if(ratingVal.value==2.5){
-		$('input:radio[name=rating]:input[value="2.5"]').attr("checked", true);		
-	}else if(ratingVal.value==3.0){
-		$('input:radio[name=rating]:input[value="3.0"]').attr("checked", true);		
-	}else if(ratingVal.value==3.5){
-		$('input:radio[name=rating]:input[value="3.5"]').attr("checked", true);		
-	}else if(ratingVal.value==4.0){
-		$('input:radio[name=rating]:input[value="4.0"]').attr("checked", true);		
-	}else if(ratingVal.value==4.5){
-		$('input:radio[name=rating]:input[value="4.5"]').attr("checked", true);		
-	}else if(ratingVal.value==5.0){
-		$('input:radio[name=rating]:input[value="5.0"]').attr("checked", true);		
-	}		
+	$('#commentBody').focus();
 });
+
 </script>
 </body>
 </html>
