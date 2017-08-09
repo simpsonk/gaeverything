@@ -98,7 +98,7 @@
 											<p>${list.message}</p>
 											<div class="buttons-to-right">
 											<a href="#" class="rate-review"><i class="sl sl-icon-note"></i> Edit</a>										
-											<a href="#" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>		
+											<a href="/mypage/removeMyMapCmt?commentSeq=${list.commentSeq}&category=2" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>		
 											</div>				
 									</li>
 									</c:forEach>
