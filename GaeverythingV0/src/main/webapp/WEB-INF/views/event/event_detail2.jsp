@@ -359,7 +359,9 @@
 					<form method="post" action="" id="booking-calendar">
 						<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
 						<div class="col-lg-6 col-md-12">
-							<input type="text" id="booking-date" name="bookDate" data-format="Y-m-d" data-lang="ko" data-large-mode="true" data-min-year="2017" data-max-year="2020">
+							<input type="text" id="booking-date" name="bookDate" data-format="Y-m-d"   data-lang="ko" data-large-mode="true" data-min-year="2017" data-max-year="2020" data-default-date="${dto.addDate}">
+							<!-- <input type="text" id="booking-date" name="bookDate" data-format="Y-m-d" data-lang="ko" data-large-mode="true" data-min-year="2017" data-max-year="2020"> -->
+							
 						</div>
 	
 						<!-- Time Picker - docs: http://www.vasterad.com/docs/listeo/#!/time_picker -->
@@ -456,7 +458,17 @@
 <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
 <link rel="stylesheet" href= "<c:url value = '/resources/css/plugins/datedropper.css'/>">
 <script type="text/javascript" src="<c:url value = '/resources/scripts/datedropper.js'/>"></script>
-<script>$('#booking-date').dateDropper();</script> 
+<script>
+	
+	$('#booking-date').dateDropper({
+		/* //var date = document.getElementById("booking-date").value;
+		var date = $('#booking-date').val(),
+		Default : date,
+		format	: "YYYY-mm-dd" */
+		
+	});
+	
+</script> 
 
 <!-- Time Picker - docs: http://www.vasterad.com/docs/listeo/#!/time_picker -->
 <link rel="stylesheet" href= "<c:url value = '/resources/css/plugins/timedropper.css'/>">

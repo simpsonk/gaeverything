@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.CommentDTO;
+import com.bitschool.dto.MyPageDTO;
 import com.bitschool.dto.PageDTO;
 import com.bitschool.dto.SearchDTO;
 
@@ -124,13 +125,9 @@ public class BoardDAO implements IBoardDAO{
 	public boolean getOneCmt(CommentDTO cDTO) throws SQLException {
 		int commentNo = 0;
 		//CommentDTO cmt = null;
-		
 		boolean flag = false;
 		commentNo = session.selectOne(nameSpace+".getOneCmt", cDTO);
-		
-		System.out.println("�닔�젙�뙎湲�踰덊샇 �떎�삤:" + commentNo);
 		if(commentNo>0){
-			//cDTO.setCommentNo(commentNo);
 			flag = this.updateCmt(cDTO);
 		}
 		return flag;
@@ -217,6 +214,18 @@ public class BoardDAO implements IBoardDAO{
 		BoardDTO bDTO = session.selectOne(nameSpace+".readNext", num);
 		//System.out.println("다음글 보드넘버:" + preBoardNo);
 		return bDTO;
+	}
+
+	@Override
+	public String readEmail(String nickName) throws SQLException {
+		 String email = session.selectOne(nameSpace+".findEmail", nickName);
+		return email;
+	}
+
+	@Override
+	public MyPageDTO readProfile(String email) {
+		MyPageDTO dto = session.selectOne(nameSpace+".profile", email);
+		return dto;
 	}
 
 }

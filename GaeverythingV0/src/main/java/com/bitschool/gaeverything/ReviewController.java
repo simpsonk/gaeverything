@@ -26,6 +26,7 @@ import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.CommentDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
+import com.bitschool.dto.MyPageDTO;
 import com.bitschool.dto.PageDTO;
 import com.bitschool.service.ActUserService;
 import com.bitschool.service.IBoardService;
@@ -183,10 +184,10 @@ public class ReviewController {
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		String url = null;
 		BoardDTO dto = service.selectToRead(boardNo);
-
+		MemberDTO member = null;
 		//user like status like
 		if(isLogin){
-			MemberDTO member = (MemberDTO)session.getAttribute("member");
+			member = (MemberDTO)session.getAttribute("member");
 			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.REVIEW, dto.getBoardNo());
 			dto= new ActUserManager(aService).checkReLikeStatus(aDTO, dto);
 		}
@@ -209,12 +210,18 @@ public class ReviewController {
 			nextTitle = "(다음 글이 없습니다.)";
 		}
 		
+		//글쓴이 닉네임으로 프로필 불러오기
+		//글쓴이 닉넴 -> 이메일 찾고(사인업) -> 프로필에서 찾기
+		MyPageDTO mDTO = service.getWriter(dto.getNickname());
+		
 		model.addAttribute("numOfCmt", numOfCmt);
 		model.addAttribute("dto", dto);
 		model.addAttribute("cList", cList);
 		model.addAttribute("page", page);
 		model.addAttribute("prevTitle", prevTitle);
 		model.addAttribute("nextTitle",nextTitle);
+		model.addAttribute("profile",mDTO);
+		
 		url = "review/read_review";
 		return url;
 	}
