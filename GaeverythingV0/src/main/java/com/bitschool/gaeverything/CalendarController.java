@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.bitschool.dto.CalendarDTO;
 import com.bitschool.dto.CalendarFormat;
 import com.bitschool.dto.MemberDTO;
+import com.bitschool.dto.PetPageDTO;
 import com.bitschool.service.CalendarService;
+import com.bitschool.service.PetPageService;
 import com.google.gson.Gson;
 
 @RequestMapping("/mypage/calendar")
@@ -30,6 +32,9 @@ public class CalendarController {
 	
 	@Inject
 	private CalendarService service;
+	
+	@Inject
+	private PetPageService Pservice;
 	
 	@RequestMapping(value="/viewCalendar", method={RequestMethod.GET,RequestMethod.POST})
 	public String viewCalendar(HttpSession session, Model model){
@@ -43,6 +48,9 @@ public class CalendarController {
 	public String viewRegistCalendar(HttpSession session, Model model, @RequestParam("startDate") String sd){
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		String url = "mypage/calendar/regist_calendar";
+		List<PetPageDTO> list = Pservice.readPetsData(member);
+		model.addAttribute("list", list);
+		System.out.println(list.toString());
 		model.addAttribute("member", member);
 		model.addAttribute("sd",sd);
 		return url;
@@ -91,7 +99,6 @@ public class CalendarController {
 		dto.setId(member.getEmail());
 		boolean flag = service.registCalendar(dto);
 		System.out.println(dto.getId());
-		
 		if(flag){
 			url = "redirect:/mypage/calendar/viewCalendar";
 		}

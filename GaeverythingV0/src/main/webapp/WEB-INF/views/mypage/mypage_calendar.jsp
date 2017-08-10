@@ -210,7 +210,7 @@ footer {
 									eventClick: function(calEvent, jsEvent, view) {
 										document.getElementById('seq').value=calEvent.seq;
 										
-										if(calEvent.color=='#0045C6'){//#A20082 #0045C6
+										if(calEvent.color=='#495d7f'){//#A20082 #0045C6
 											document.getElementById('longitude').value=calEvent.longitude;
 											document.getElementById('latitude').value=calEvent.latitude;
 											submitSeq.action = "/mypage/calendar/viewDetailCalendarLoc";
