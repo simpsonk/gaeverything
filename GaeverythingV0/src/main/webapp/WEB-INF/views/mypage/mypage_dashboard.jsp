@@ -96,7 +96,7 @@
 			<!-- Item -->
 			<div class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-3">
-					<div class="dashboard-stat-content"><h4>95</h4> <span>Total Reviews</span></div>
+					<div class="dashboard-stat-content"><h4>${countReviewCmt}</h4> <span>Times Replied</span></div>
 					<div class="dashboard-stat-icon"><i class="im im-icon-Add-UserStar"></i></div>
 				</div>
 			</div>

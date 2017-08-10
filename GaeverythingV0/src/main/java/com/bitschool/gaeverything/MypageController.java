@@ -366,6 +366,7 @@ public class MypageController {
 		return url;
 	}
 	
+	//대시보드
 	@RequestMapping(value = "/viewMypageDashboard", method = RequestMethod.GET)
 	public String viewDashBoard(HttpSession session, Model model){
 		String url = "mypage/mypage_dashboard";
@@ -375,16 +376,22 @@ public class MypageController {
 		ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.REVIEW);
 		reviewList= new ActUserManager(aservice).checkListReLikeStatus(aDTO, reviewList);	
 		int countReviewBookmark = 0;
+		int countReviewCmt = 0;
 		for(int i=0;i<reviewList.size();i++){
 			int temp = reviewList.get(i).getCountLike();
 			countReviewBookmark = countReviewBookmark + temp;
+			int temp2 = cservice.countCmt(reviewList.get(i).getGroupNo());
+			System.out.println("temp2 : "+temp2);
+			countReviewCmt = countReviewCmt + temp2;
 		}
+	
 		if(!isLogin){
 			url = "login_page";
 		}else{
 			model.addAttribute("member", member);
 			model.addAttribute("reviewList", reviewList);
 			model.addAttribute("countReviewBookmark",countReviewBookmark);
+			model.addAttribute("countReviewCmt",countReviewCmt);
 		}
 		return url;
 	}
