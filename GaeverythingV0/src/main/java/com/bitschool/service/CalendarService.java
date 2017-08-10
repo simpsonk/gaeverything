@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.bitschool.dao.CalendarDAO;
 import com.bitschool.dao.LocationDAO;
+import com.bitschool.dao.PetPageDAO;
 import com.bitschool.dto.CalendarDTO;
 import com.bitschool.dto.CalendarFormat;
 import com.bitschool.dto.LocationDTO;
@@ -26,6 +27,7 @@ public class CalendarService{
 	
 	@Inject
 	private LocationDAO ldao;
+	
 	
 	public List<CalendarDTO> listCalendarAll() {
 		// TODO Auto-generated method stub
@@ -52,7 +54,7 @@ public class CalendarService{
 		List<CalendarDTO> list = dao.selectId(id);
 		List<CalendarFormat> calendar = new ArrayList<CalendarFormat>();
 		CalendarFormat c = null;
-		String[] colorType = {"#0045C6","#A20082","#C40000","#F5A9A9"};
+		String[] colorType = {"#37b6bd","#b3c211","#ffb400","#f91941", "#fa5b0f"};
 		for(int i=0;i<list.size();i++){
 			if((list.get(i).getRepeatdata())==null){
 				c = new CalendarFormat();

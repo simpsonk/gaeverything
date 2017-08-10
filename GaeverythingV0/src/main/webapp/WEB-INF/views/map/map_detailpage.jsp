@@ -335,7 +335,9 @@
 					<form method="post" action="" id="booking-calendar">
 						<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
 						<div class="col-lg-6 col-md-12">
-							<input type="text" id="booking-date" name="bookDate" data-format="Y-m-d" data-lang="ko" data-large-mode="true" data-min-year="2017" data-max-year="2020">
+							<input type="text" id="booking-date" name="bookDate" 
+								data-format="Y-m-d" data-lang="ko" data-large-mode="true" 
+								data-min-year="2017" data-max-year="2020">
 						</div>
 	
 						<!-- Time Picker - docs: http://www.vasterad.com/docs/listeo/#!/time_picker -->
