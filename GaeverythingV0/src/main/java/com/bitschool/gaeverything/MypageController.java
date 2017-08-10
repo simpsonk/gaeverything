@@ -22,9 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bitschool.dto.ActUserDTO;
+import com.bitschool.dto.BlogDTO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.CommentDTO;
 import com.bitschool.dto.DetailCommentDTO;
+import com.bitschool.dto.DetailPhotoDTO;
 import com.bitschool.dto.EventDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
@@ -460,7 +462,7 @@ public class MypageController {
 		return url;
 	}	
 	
-	//마이페이지에서 내가작성한 댓글(리뷰게시판) 수정하기
+	//MyActivity에서  내가작성한 댓글(리뷰게시판) 수정하기
 	@RequestMapping(value="/modifyCmt", method={RequestMethod.GET, RequestMethod.POST})
 	public String modifyCmt(BoardDTO dto, CommentDTO cDTO,  
 							@RequestParam("groupNo") int groupNo,
@@ -476,8 +478,7 @@ public class MypageController {
 		model.addAttribute("numOfCmt", numOfCmt);
 		model.addAttribute("dto", dto);
 		model.addAttribute("modifyNo", commentNo);		
-		String url = "mypage/mypage_list_comments_modify";
-		
+		String url = "mypage/mypage_list_comments_modify";		
 		return url;
 	}
 	
@@ -490,6 +491,52 @@ public class MypageController {
 		boolean flag = cservice.removeCmt(commentNo);
 		if(flag){
 			url = "redirect:viewMypageList?category="+category;
+		}
+		return url;
+	}
+	
+	//MyActivity에서 내가쓴 병원댓글 수정하기
+	@RequestMapping(value="/modifyMapCmt",method=RequestMethod.POST)
+	public String modifyMapCmt(HttpSession session,Model model,
+			DetailCommentDTO list,
+			@RequestParam(value="commentSeq") int commentSeq,
+			@RequestParam(value="locationSeq") int locationSeq,
+			@RequestParam(value="index") int index){
+		String url = null;
+		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		System.out.println("list : "+list);
+		list.setNickname(member.getNickname());
+		list.setPhoto(member.getPhoto());	
+		System.out.println("list : "+list);
+		boolean flag = lservice.commentEdit(list);
+		if(flag){
+			url = "redirect:viewMypageList?category=2";
+		}
+		return url;
+	}
+	
+	//MyActivity에서 내가쓴 병원댓글 수정하는 뷰
+	@RequestMapping(value="/viewModifyMapCmt", method={RequestMethod.GET, RequestMethod.POST})
+	public String viewModifyMapCmt(HttpSession session, Model model,
+			@RequestParam(value="commentSeq") int commentSeq){
+		String url = "mypage/mypage_list_comments_modifymap";
+	
+		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		List<BoardDTO> reviewList = service.selectMyReviews(member.getNickname());
+		member.setMyReviewSize(reviewList.size());
+		List<DetailCommentDTO> commentList = service.selectMyDetailComments(member.getNickname());
+		List<CommentDTO> bCommentList = service.selectMyBoardComments(member.getNickname());
+		member.setMyCommentSize(commentList.size()+bCommentList.size());
+		
+		boolean isLogin = member!=null?true:false;
+		if(!isLogin){
+			url = "login_page";
+		}else{
+			model.addAttribute("member", member);
+			model.addAttribute("reviewList",reviewList);
+			model.addAttribute("commentList",commentList);	
+			model.addAttribute("bCommentList",bCommentList);
+			model.addAttribute("commentSeq",commentSeq);
 		}
 		return url;
 	}
