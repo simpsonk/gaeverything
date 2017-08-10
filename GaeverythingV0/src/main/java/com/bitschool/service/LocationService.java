@@ -55,12 +55,10 @@ public class LocationService {
 	}
 	
 	public List<LocationDTO> SearchCategory(MapInfomation info) {
-		// TODO Auto-generated method stub
 		List<LocationDTO> list  = null;
 		try {
 			list = dao.selectCategory(info);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return list;
@@ -141,12 +139,10 @@ public class LocationService {
 	}
 
 	public List<EventDTO> getEventSearchData(String searchWord) {
-		// TODO Auto-generated method stub
 		List<EventDTO> list = null;
 		try {
 			list = dao.selectEventData(searchWord);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return list;

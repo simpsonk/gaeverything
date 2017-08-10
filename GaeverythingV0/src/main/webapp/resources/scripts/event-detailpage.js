@@ -317,19 +317,52 @@ function getPhotoList(photo) {
     return itemStr;
 }
 
-function makeNearByList(){
+
+
+$(document).ready(function() {
+	var eventNo = document.getElementById("eventNo").value;
+	var url = "/event/detail/getNearby?eventNo="+eventNo;
+	$.ajax ({
+		url 	 : url,
+		dataType : 'JSON',
+		type 	 : "POST",
+		success	 : function(data){
+
+			makeNearByList(data);
+			nearbySlide();
+		},
+		error : function(request, status, error) {
+			 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      }
+	});
+	
+	
+});
+
+function nearbySlide(){
+	$('.sim').slick({
+		infinite: true,
+		slidesToShow: 3,
+		slidesToScroll: 3,
+		
+		});
+}
+
+
+
+function makeNearByList(near){
 	var ele = document.getElementById("nearbyList");
-	//for(var i=0; i<; i++){
-		nearbyFragment = createDocumentFragment();
+	for(var i=0; i<near.length; i++){
+		nearbyFragment = document.createDocumentFragment();
 		var itemEle = document.createElement("div");
 		var nearbyItem = 
-		'	<a href="listings-single-page.html" class="listing-item-container">'+
+		'	<a href="https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query='+near[i].title+'" class="listing-item-container">'+
 		'		<div class="listing-item">'+
-		'			<img src="/resource/images/listing-item-01.jpg" alt="">		'+
+		'			<img src="/resources/images/event-cafe.jpg" alt="">		'+
 		'			<div class="listing-item-content">'+
 		'				<span class="tag" style="background: #f91942;">Cafe</span>'+
-		'				<h3>Tos Restaurant</h3>'+
-		'				<span>964 School Street, New York</span>'+
+		'				<h3>'+near[i].title+'</h3>'+
+		'				<span>'+near[i].address+'</span>'+
 		'			</div>'+
 		'			<span class="like-icon"></span>'+
 		'		</div>'+
@@ -338,6 +371,8 @@ function makeNearByList(){
 		itemEle.className = 'carousel-item';
 		nearbyFragment.appendChild(itemEle);
 		ele.appendChild(nearbyFragment);
-	//}
+	}
+	
 	return ele;
 }
+

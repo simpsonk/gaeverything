@@ -49,12 +49,12 @@
 			<div id="titlebar" class="listing-titlebar " style="padding-bottom: 30px;">
 				<div class="listing-titlebar-title">
 					<h2>${dto.eventName} <span class="listing-tag"> Event </span></h2>
-					<div>
-						<div class="star-rating" data-rating="${averageRatings}">
-							<div class="rating-counter">${countRatings} </div>
+					<div class="general-info">
+						average rating <div class="star-rating" data-rating="${dto.averageRatings}">
+							<!--  <div class="rating-counter"></div>-->
 						</div>
-						<div>${countReview}  Reviews</div>
-						<div><i class="sl sl-icon-bubble"></i>${commentlist.size()} Comments</div>
+						<div>${dto.countReview}  Reviews</div>
+						<div><i class="sl sl-icon-bubble"></i> ${commentlist.size()} Comments</div>
 					</div>					
 				</div>
 			</div>
@@ -108,28 +108,18 @@
 			<!-- nearby -->
 			<div id="blog-review" class="listing-section margin-top-20 margin-bottom-30">
 				<div class="col-lg-12" style="padding-left: 0px;">	
-					<h3 class="listing-desc-headline">Nearby</h3>		
+					<h3 class="listing-desc-headline">Nearby(${nearbyCount})</h3>		
 					
 					<!-- 리스트 보여줄 곳  -->
-						<div class="col-md-12">
-							<div class="simple-slick-carousel dots-nav" id = "nearbyList">
+						<div class="col-md-12" id="nearby">
+							<div class="sim" id = "nearbyList">
 
-							<!-- Listing Item -->
-							<div class="carousel-item">
-								<a href="listings-single-page.html" class="listing-item-container">
-									<div class="listing-item">
-										<img src="/resource/images/listing-item-01.jpg" alt="">
-										
-										<div class="listing-item-content">
-											<span class="tag" style="background: #f91942;">Cafe</span>
-											<h3>Tom's Restaurant</h3>
-											<span>964 School Street, New York</span>
-										</div>
-										<span class="like-icon"></span>
-									</div>
-								</a>
-							</div>	<!-- item -->
-				
+							<!-- Listing Item  item -->
+		<!--  item -->
+							
+							
+						
+					
 							
 							
 						</div>
@@ -223,7 +213,7 @@
 						<div class="add-review-photos col-lg-4" style="position:static;">		
 							<div class="photoUpload">
 								<span>
-								<a href="/review/viewReviewRegist?eventNo=${dto.eventNo}&boardCategory=${dto.categoryCode}&address=${dto.eventName}"><i class="im im-icon-Pencil"></i> Write Review</span></a>
+								<a href="/review/viewReviewRegist?eventNo=${dto.eventNo}&boardCategory=EVENT&address=${dto.eventName}"><i class="im im-icon-Pencil"></i> Write Review</span></a>
 							</div>
 						</div>	
 					</div>
@@ -267,7 +257,7 @@
 			<!-- write Review / End -->
 
 
-			<!-- Blog review -->
+			<!-- Blog review 
 			<div id="blog-review" class="listing-section margin-top-70 margin-bottom-30">
 				<div class="col-lg-3" style="padding-left: 0px;">				
 					<h3 class="listing-desc-headline ">Blog Review </h3>							
@@ -287,7 +277,7 @@
 							</c:forEach>	
 					</div>				
 					</div>
-			<!-- Blog Review END -->
+			 Blog Review END -->
 		
 			
 				

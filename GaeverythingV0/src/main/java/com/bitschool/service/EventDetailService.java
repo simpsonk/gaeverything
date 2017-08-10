@@ -1,12 +1,14 @@
 package com.bitschool.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import com.bitschool.dao.BoardDAO;
 import com.bitschool.dao.EventDetailDAO;
 import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BlogDTO;
@@ -23,6 +25,10 @@ public class EventDetailService {
 
 	@Inject
 	private EventDetailDAO dao;
+	
+	@Inject
+	private BoardDAO bdao;
+	
 	
 	public EventDTO selectOne(int seq){
 		EventDTO dto = null;
@@ -116,7 +122,7 @@ public class EventDetailService {
 		}
 		return flag;
 	}
-	/* 게시판관련
+	 
 	public int countReviews(int eventNo){
 		int count = 0;
 		try {
@@ -135,7 +141,7 @@ public class EventDetailService {
 			e.printStackTrace();
 		}
 		return ratings;
-	}*/	
+	}	
 	
 	public List<Double> getReplyRatings(int eventNo){
 		List<Double> ratings = null;
@@ -171,7 +177,7 @@ public class EventDetailService {
 		return count;
 	}
 	
-	/*public List<BoardDTO> getReviews(int eventNo){
+	public List<BoardDTO> getReviews(int eventNo){
 		List<BoardDTO> dto = null;
 		try {
 			dto = dao.getReviews(eventNo);
@@ -189,7 +195,7 @@ public class EventDetailService {
 	}
 	
 
-	public List<BlogDTO> getBlogReviews(int eventNo){
+	/*public List<BlogDTO> getBlogReviews(int eventNo){
 		List<BlogDTO> dto = null;
 		try {
 			dto = dao.getBlogReviews(eventNo);
@@ -201,17 +207,18 @@ public class EventDetailService {
 
 	public EventDTO getEventActUserResult(ActUserManager manager, EventDTO dto) {
 		// TODO Auto-generated method stub
-		//int countReview = this.countReviews(dto.getEventNo());	
+		int countReview = this.countReviews(dto.getEventNo());	
 		
-		//double averageRatings = this.getAverageRatings(this.getRatings(dto.getEventNo()),this.getReplyRatings(dto.getEventNo()));
-		//averageRatings=(Double.isNaN(averageRatings))?0:averageRatings;
-		//String temp = String.format("%.2f", averageRatings);
+		double averageRatings = this.getAverageRatings(this.getRatings(dto.getEventNo()),this.getReplyRatings(dto.getEventNo()));
+		averageRatings=(Double.isNaN(averageRatings))?0:averageRatings;
+		String temp = String.format("%.2f", averageRatings);
 		
-		//int countRatings = this.getRatings(dto.getEventNo()).size()+this.getReplyRatings(dto.getEventNo()).size();
+		int countRatings = this.getRatings(dto.getEventNo()).size()+this.getReplyRatings(dto.getEventNo()).size();
 		int countReplies = this.countReplies(dto.getEventNo());
 		int countLike = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.EVENT, dto.getEventNo()));
 		
-		dto.setActUserResult( countReplies, countLike);
+		dto.setActUserResult(countReview, temp, countRatings, countReplies, countLike);
+
 		
 		return dto;
 	}
@@ -249,7 +256,8 @@ public class EventDetailService {
 
 	public List<LocationDTO> getNearby(String lat, String lon) {
 		List<LocationDTO> list = this.getAllCafe();
-		List<LocationDTO> nList = null;
+		System.out.println("카페 수:" + list.size());
+		List<LocationDTO> nList = new ArrayList<LocationDTO>();
 		
 		double startLat = Double.parseDouble(lat);
 		double startLon = Double.parseDouble(lon);
@@ -265,10 +273,11 @@ public class EventDetailService {
 			double radius = this.distanceCalcu(startLat, startLon, endLat, endLon, "kilometer");
 			//temp.setRadius(radius);
 			//System.out.println(radius);
-			if(!(radius>3)){
+			if(!(radius>5)){
 				nList.add(temp);
 			}
 		}
+		System.out.println("근처:" + nList.size());
 		return nList;
 	}
 	
@@ -289,7 +298,6 @@ public class EventDetailService {
         return (dist);
     }
      
- 
     // This function converts decimal degrees to radians
     private double deg2rad(double deg) {
         return (deg * Math.PI / 180.0);
