@@ -113,35 +113,12 @@
 					<!-- 리스트 보여줄 곳  -->
 						<div class="col-md-12" id="nearby">
 							<div class="sim" id = "nearbyList">
-
 							<!-- Listing Item  item -->
-		<!--  item -->
-							
-							
-						
-					
-							
-							
-						</div>
-						</div>				
-				</div>	
-				</div>			
-			<!--  <div class="col-lg-12" style="padding-left: 0px;">
-					<div class="row">
-							<c:forEach var="reviews" items="${blogList}" varStatus="status">
-							<%-- <c:if test="${status.index<10}"> --%>
-								<div class="col-md-4">
-									<a href="${reviews.link}" class="listing-item-container">																
-										<h4>${reviews.title}</h4>												
-										<span>${reviews.bloggername}</span><br>
-										<span>${reviews.postdate}</span>																				
-									</a>
-								</div>	
-							<%-- </c:if>			 --%>
-							</c:forEach>	
-					</div>				
-			</div>-->
-			<!-- nearby END -->
+							<!--  item -->		
+							</div>				
+						</div>	
+				</div>
+			</div>			
 						
 			<!-- regist photo -->
 			<div id="regist-photo" class="listing-section margin-top-70 margin-bottom-30">
@@ -386,7 +363,11 @@
 			</div>
 		</div>
 	</div>
-</div>
+
+
+<!-- Sidebar
+================================================== -->
+
 		<div class="col-lg-4 col-md-4 margin-top-75 sticky">
 
 			<!-- Book Now -->
@@ -470,8 +451,7 @@
 					</ul>
 					<div class="clearfix"></div>
 			</div>
-
-		</div>
+		</div> <!-- sidebar end -->
 </div>
 </div>
 
