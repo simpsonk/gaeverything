@@ -409,10 +409,7 @@ public class MypageController {
 				commentList.get(j).setAddress(service.selectShopName(mapList.get(i).getLocationSeq()));	
 				commentList2.add(commentList.get(j));
 			}
-			
-		/*	for(int j=0;j<commentList.size();j++){
-				commentList2.add(commentList.get(j));
-			}*/
+
 		}
 	
 	
