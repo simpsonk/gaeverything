@@ -79,7 +79,7 @@
 			<!-- Item -->
 			<div class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-1">
-					<div class="dashboard-stat-content"><h4>6</h4> <span>Active Listings</span></div>
+					<div class="dashboard-stat-content"><h4>${countLocReviews}</h4> <span>Active Listings</span></div>
 					<div class="dashboard-stat-icon"><i class="im im-icon-Map2"></i></div>
 				</div>
 			</div>
@@ -87,7 +87,7 @@
 			<!-- Item -->
 			<div class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-2">
-					<div class="dashboard-stat-content"><h4>726</h4> <span>Total Views</span></div>
+					<div class="dashboard-stat-content"><h4>${countRead}</h4> <span>Total Views</span></div>
 					<div class="dashboard-stat-icon"><i class="im im-icon-Line-Chart"></i></div>
 				</div>
 			</div>

@@ -375,15 +375,18 @@ public class MypageController {
 		List<BoardDTO> reviewList = service.selectMyReviews(member.getNickname());
 		ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.REVIEW);
 		reviewList= new ActUserManager(aservice).checkListReLikeStatus(aDTO, reviewList);	
-		int countReviewBookmark = 0;
+		int countReviewBookmark = 0; //리뷰북마크수,댓글수,조회수
 		int countReviewCmt = 0;
+		int countRead = 0;	
 		for(int i=0;i<reviewList.size();i++){
 			int temp = reviewList.get(i).getCountLike();
 			countReviewBookmark = countReviewBookmark + temp;
 			int temp2 = cservice.countCmt(reviewList.get(i).getGroupNo());
-			System.out.println("temp2 : "+temp2);
 			countReviewCmt = countReviewCmt + temp2;
+			int temp3 = reviewList.get(i).getReadCount();
+			countRead = countRead + temp3;
 		}
+		int countLocReviews = service.countLocReviews(member.getNickname());
 	
 		if(!isLogin){
 			url = "login_page";
@@ -392,6 +395,8 @@ public class MypageController {
 			model.addAttribute("reviewList", reviewList);
 			model.addAttribute("countReviewBookmark",countReviewBookmark);
 			model.addAttribute("countReviewCmt",countReviewCmt);
+			model.addAttribute("countRead",countRead);
+			model.addAttribute("countLocReviews",countLocReviews);
 		}
 		return url;
 	}
