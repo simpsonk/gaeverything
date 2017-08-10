@@ -19,11 +19,12 @@
 	<select id="perPage" parameterType="PageDTO" resultType="BoardDTO">
 		select * from 
 			(select rownum as num, temp.* from
-				(select * from board order by boardNo desc)temp) 
+				(select * from board 
+					<if test="categoryCode!=null">
+						where boardCategory = #{categoryCode}
+					</if>
+				order by boardNo desc)temp) 
 		where num between #{firstNo} and #{lastNo}
-		<if test="categoryCode!=null">
-			and boardCategory = #{categoryCode}
-		</if>
 	</select>
 	
 	<select id="readOne" parameterType="Integer" resultType="BoardDTO">

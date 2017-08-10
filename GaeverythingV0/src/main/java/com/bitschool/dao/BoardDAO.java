@@ -88,6 +88,7 @@ public class BoardDAO implements IBoardDAO{
 
 	@Override
 	public List<BoardDTO> readPerPage(PageDTO pDTO) throws SQLException {
+		System.out.println("BoardDAO->pageDTO:"+pDTO);
 		List<BoardDTO> list = session.selectList(nameSpace+".perPage", pDTO);
 		return list;
 	}

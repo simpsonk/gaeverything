@@ -31,8 +31,8 @@
 						<div id = "hiddenOption" class="col-fs-3">	
 							<select class="chosen-select" name="categories" id = "selectOp1">
 								<option value="0">Category</option>
-								<option value="MAP" ${categories == 'MAP'?'selected="selected"':'' }>Map</option>
-								<option value="EVENT" ${categories =='EVENT'?'selected="selected"':''}>Event</option>
+								<option value="CARE" ${categories == 'CARE'?'selected="selected"':'' } ${param.categoryCode == 'CARE'?'selected="selected"':'' }>Care</option>
+								<option value="EVENT" ${categories =='EVENT'?'selected="selected"':''}  ${param.categoryCode == 'EVENT'?'selected="selected"':'' }>Event</option>
 							</select>
 						</div>
 						<div id = "textContainer" class="col-fs-7">

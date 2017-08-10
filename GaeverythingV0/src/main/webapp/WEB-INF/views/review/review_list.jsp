@@ -80,9 +80,12 @@
 				<div id="titlebar" class="listing-titlebar  col-md-9" style="padding-top: 0px;padding-bottom: 0px; margin-bottom: 10px;">
 					<!-- title -->	
 					<div class="listing-titlebar-title">
-						<h3><a href = "/review/readPost?boardNo=${board.boardNo}&page=${page}">${board.title}</a>
-							<c:if test="${board.boardCategory=='1'}">
-								<span class = "listing-tag">Hospital</span>
+						<h3><a href = "/review/readPost?CategoryCode=${param.categoryCode }&boardNo=${board.boardNo}&page=${page}">${board.title}</a>
+							<c:if test="${board.boardCategory=='CARE'}">
+								<span class = "listing-tag">CARE</span>
+							</c:if>
+							<c:if test="${board.boardCategory=='EVENT'}">
+								<span class = "listing-tag">EVENT</span>
 							</c:if>
 						</h3>
 					</div>	
@@ -135,7 +138,7 @@
 				<div class="preview_box" id="preview" style="width: 100%; height:100px;">
 					<p>${board.onlyText}</p>
 				</div>
-				<a href="/review/readPost?boardNo=${board.boardNo}&page=${page}" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
+				<a href="/review/readPost?categoryCode=${param.categoryCode}&boardNo=${board.boardNo}&page=${page}" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
 			</div>
 		</div>
 	</c:forEach>
@@ -174,7 +177,7 @@
 				<h3>Any recommendations?</h3>
 				<div class="info-box margin-bottom-10">
 					<p>Feel free to share your experience!</p>
-					<a href="/review/viewReviewRegist" class="button fullwidth margin-top-20">Write a Review</a>
+					<a href="/review/viewReviewRegist?categoryCode=${param.categoryCode}" class="button fullwidth margin-top-20">Write a Review</a>
 				</div>
 			</div>
 			<!-- Widget / End -->
