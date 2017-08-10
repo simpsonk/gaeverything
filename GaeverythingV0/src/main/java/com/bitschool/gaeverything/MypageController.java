@@ -68,6 +68,8 @@ public class MypageController {
 	   
 	@Inject
 	private ICommentService cservice;
+	
+
 	   
 
 	
@@ -369,10 +371,20 @@ public class MypageController {
 		String url = "mypage/mypage_dashboard";
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		boolean isLogin = member!=null?true:false;
+		List<BoardDTO> reviewList = service.selectMyReviews(member.getNickname());
+		ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.REVIEW);
+		reviewList= new ActUserManager(aservice).checkListReLikeStatus(aDTO, reviewList);	
+		int countReviewBookmark = 0;
+		for(int i=0;i<reviewList.size();i++){
+			int temp = reviewList.get(i).getCountLike();
+			countReviewBookmark = countReviewBookmark + temp;
+		}
 		if(!isLogin){
 			url = "login_page";
 		}else{
 			model.addAttribute("member", member);
+			model.addAttribute("reviewList", reviewList);
+			model.addAttribute("countReviewBookmark",countReviewBookmark);
 		}
 		return url;
 	}
@@ -557,6 +569,5 @@ public class MypageController {
 		}
 		return url;
 	}
-	
 
 }

@@ -104,7 +104,7 @@
 			<!-- Item -->
 			<div class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-4">
-					<div class="dashboard-stat-content"><h4>126</h4> <span>Times Bookmarked</span></div>
+					<div class="dashboard-stat-content"><h4>${countReviewBookmark}</h4> <span>Times Bookmarked</span></div>
 					<div class="dashboard-stat-icon"><i class="im im-icon-Heart"></i></div>
 				</div>
 			</div>
