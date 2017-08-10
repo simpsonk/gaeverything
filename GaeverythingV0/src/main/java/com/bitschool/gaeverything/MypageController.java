@@ -372,9 +372,22 @@ public class MypageController {
 		String url = "mypage/mypage_dashboard";
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		boolean isLogin = member!=null?true:false;
+		
+		//마이페이지 눌렀을때 네비게이터에 개수 뜨도록//////////////////////////////////////
+		List<DetailCommentDTO> cl = service.selectMyDetailComments(member.getNickname());
+		List<CommentDTO> bcl = service.selectMyBoardComments(member.getNickname());
+		member.setMyCommentSize(cl.size()+bcl.size());
 		List<BoardDTO> reviewList = service.selectMyReviews(member.getNickname());
 		ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.REVIEW);
-		reviewList= new ActUserManager(aservice).checkListReLikeStatus(aDTO, reviewList);	
+		reviewList= new ActUserManager(aservice).checkListReLikeStatus(aDTO, reviewList);
+		member.setMyReviewSize(reviewList.size());
+		List<BoardDTO> rl = aservice.selectReviewBookmark(member.getEmail());	
+		List<LocationDTO> ml = aservice.selectShopBookmark(member.getEmail());
+		member.setBookmarkMapSize(ml.size());
+		member.setBookmarkReviewSize(rl.size());		
+		List<EventDTO> el = aservice.selectEventBookmark(member.getEmail());
+		member.setBookmarkEventSize(el.size());
+		///////////////////////////////////////////////////////////////////////
 		int countReviewBookmark = 0; //리뷰북마크수,댓글수,조회수
 		int countReviewCmt = 0;
 		int countRead = 0;	
