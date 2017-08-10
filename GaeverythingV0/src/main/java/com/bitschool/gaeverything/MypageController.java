@@ -387,6 +387,21 @@ public class MypageController {
 			countRead = countRead + temp3;
 		}
 		int countLocReviews = service.countLocReviews(member.getNickname());
+		List<LocationDTO> mapList = aservice.selectShopBookmark(member.getEmail());
+		List<DetailCommentDTO> commentList = new ArrayList<DetailCommentDTO>();
+		List<DetailCommentDTO> commentList2 = new ArrayList<DetailCommentDTO>();
+		for(int i=0;i<mapList.size();i++){
+			commentList = lservice.commentList(mapList.get(i).getLocationSeq());
+			for(int j=0;j<commentList.size();j++){
+				commentList.get(j).setAddress(service.selectShopName(mapList.get(i).getLocationSeq()));	
+				commentList2.add(commentList.get(j));
+			}
+			
+		/*	for(int j=0;j<commentList.size();j++){
+				commentList2.add(commentList.get(j));
+			}*/
+		}
+	
 	
 		if(!isLogin){
 			url = "login_page";
@@ -397,6 +412,7 @@ public class MypageController {
 			model.addAttribute("countReviewCmt",countReviewCmt);
 			model.addAttribute("countRead",countRead);
 			model.addAttribute("countLocReviews",countLocReviews);
+			model.addAttribute("commentList",commentList2);
 		}
 		return url;
 	}

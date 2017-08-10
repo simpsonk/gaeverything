@@ -64,14 +64,14 @@
 		</div>
 
 		<!-- Notice -->
-		<div class="row">
+		<!-- <div class="row">
 			<div class="col-md-12">
 				<div class="notification success closeable margin-bottom-30">
 					<p>Your listing <strong>Hotel Govendor</strong> has been approved!</p>
 					<a class="close" href="#"></a>
 				</div>
 			</div>
-		</div>
+		</div> -->
 
 		<!-- Content -->
 		<div class="row">
@@ -116,7 +116,22 @@
 			<!-- Recent Activity -->
 			<div class="col-lg-6 col-md-12">
 				<div class="dashboard-list-box with-icons margin-top-20">
-					<h4>Recent Activities</h4>
+					<h4 style="background:#37b6bd; color:white">Recent Activities</h4>
+					<ul>
+					<c:forEach var="list" items="${commentList}" varStatus="status">
+						
+						<li>
+							<i class="list-box-icon sl sl-icon-star"></i>${list.nickname}  left a comment <div class="numerical-rating" data-rating="${list.rating}"></div> on <strong><a href="/map/detail/viewDetailPage?locationSeq=${list.locationSeq}">${list.address}</a></strong>
+							<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+						</li>
+					</c:forEach>
+					</ul>
+				</div>
+			</div>
+			<!-- Recent Activity -->
+			<!-- <div class="col-lg-6 col-md-12">
+				<div class="dashboard-list-box with-icons margin-top-20">
+					<h4 style="background:#37b6bd; color:white">Recent Activities</h4>
 					<ul>
 						<li>
 							<i class="list-box-icon sl sl-icon-layers"></i> Your listing <strong><a href="#">Hotel Govendor</a></strong> has been approved!
@@ -154,12 +169,12 @@
 						</li>
 					</ul>
 				</div>
-			</div>
+			</div> -->
 			
 			<!-- Invoices -->
 			<div class="col-lg-6 col-md-12">
 				<div class="dashboard-list-box invoices with-icons margin-top-20">
-					<h4>Invoices</h4>
+					<h4 style="background:#fa5b0f; color:white">Invoices</h4>
 					<ul>
 						
 						<li><i class="list-box-icon sl sl-icon-doc"></i>
