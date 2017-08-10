@@ -13,6 +13,7 @@ import com.bitschool.dto.BlogDTO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.EventCommentDTO;
 import com.bitschool.dto.EventPhotoDTO;
+import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.EventDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.utils.ActUserManager;
@@ -231,6 +232,73 @@ public class EventDetailService {
 		}
 		return dto;
 	}
+
+	//카페 장소정보를 다 가져옴 
+	public List<LocationDTO> getAllCafe(){
+		List<LocationDTO> list = null;
+		try {
+			list = dao.readAllCafe();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	//전체 카페리스트 중 내 반경 몇km이내의 정보만 빼서 새 리스트에 저장함 
+
+	public List<LocationDTO> getNearby(String lat, String lon) {
+		List<LocationDTO> list = this.getAllCafe();
+		List<LocationDTO> nList = null;
+		
+		double startLat = Double.parseDouble(lat);
+		double startLon = Double.parseDouble(lon);
+		
+		//시작지점 : 해당 이벤트의 x, y
+		//거리구할 끝 지점 : 카페리스트 x, y
+		//받은 리스트랑 시작~거리 거리를 쫙 구하고  그게 특정 km이내인 리스트만 뽑아서 nList에 저장 
+		
+		for(int i=0;i<list.size();i++){
+			LocationDTO temp = list.get(i);
+			double endLat = Double.parseDouble(temp.getLatitude());
+			double endLon = Double.parseDouble(temp.getLongitude());
+			double radius = this.distanceCalcu(startLat, startLon, endLat, endLon, "kilometer");
+			//temp.setRadius(radius);
+			//System.out.println(radius);
+			if(!(radius>3)){
+				nList.add(temp);
+			}
+		}
+		return nList;
+	}
+	
+	private double distanceCalcu(double lat1, double lon1, double lat2, double lon2, String unit) {
+        
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+         
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+         
+        if (unit == "kilometer") {
+            dist = dist * 1.609344;
+        } else if(unit == "meter"){
+            dist = dist * 1609.344;
+        }
+        return (dist);
+    }
+     
+ 
+    // This function converts decimal degrees to radians
+    private double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+     
+    // This function converts radians to decimal degrees
+    private double rad2deg(double rad) {
+        return (rad * 180 / Math.PI);
+    }
 
 
 

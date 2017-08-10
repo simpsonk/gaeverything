@@ -77,11 +77,12 @@ public class ReviewController {
 		
 		int amount = 5;
 		PageDTO pDTO = null;
-		if(categoryCode.equals("0")){
+		if(categoryCode.equals("0")||categoryCode.equals("null")){
 			pDTO = new PageDTO(page, amount, null);
 		}else{
 			pDTO = new PageDTO(page, amount, categoryCode);
 		}
+		
 		String pList = pService.pageList(pDTO);
 		model.addAttribute("pList", pList);
 		
@@ -123,13 +124,13 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value = "/newPost", method={RequestMethod.POST, RequestMethod.GET})
-	public String newPost(BoardDTO dto, HttpSession session){
+	public String newPost(BoardDTO dto, HttpSession session, @RequestParam(value = "categoryCode", defaultValue ="0") String categoryCode){
 		String url = null;
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		dto.setNickname(member.getNickname());
 		boolean flag = service.insertPost(dto);
 		if(flag){
-			url = "redirect:/review/viewReviewList";
+			url = "redirect:/review/viewReviewList?categoryCode="+categoryCode;
 		}
 		return url;
 	}
@@ -180,6 +181,7 @@ public class ReviewController {
 	
 	@RequestMapping(value = "/readPost", method={RequestMethod.GET, RequestMethod.POST})
 	public String readPost(@RequestParam("boardNo") int boardNo, 
+							@RequestParam(value = "categoryCode", defaultValue="0") String categoryCode,
 						   @RequestParam(value="page", defaultValue="1") int page,
 						   HttpSession session,
 						   Model model){
@@ -456,7 +458,7 @@ public class ReviewController {
 		String url = "redirect:/review/viewSearchShop";
 		HashMap<String, Object> map = new HashMap<String, Object>();
 
-		if(categories.equals("MAP")){
+		if(categories.equals("CARE")){
 			List<LocationDTO> list = locService.getMapSearchData(searchWord);
 			map.put("list", list);
 		}else if(categories.equals("EVENT")){

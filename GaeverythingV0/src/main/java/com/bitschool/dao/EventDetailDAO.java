@@ -12,6 +12,7 @@ import com.bitschool.dto.BlogDTO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.EventCommentDTO;
 import com.bitschool.dto.EventPhotoDTO;
+import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.EventDTO;
 import com.bitschool.dto.MemberDTO;
 
@@ -152,6 +153,11 @@ public class EventDetailDAO {
 			List<EventPhotoDTO> dto = null;
 			dto = session.selectList(namespace+".photoList",seq);
 			return dto;
+		}
+
+		public List<LocationDTO> readAllCafe()  throws SQLException{
+			List<LocationDTO> list = session.selectList(namespace+".cafe");
+			return list;
 		}
 
 

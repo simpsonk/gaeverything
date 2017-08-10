@@ -62,4 +62,15 @@ public class DataService {
 		}
 		return flag;
 	}
+
+	public boolean insertEventData(Location2DTO dto) {
+		boolean flag = false;
+		try {
+			flag = dao.insertEventData(dto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return flag;
+	}
 }

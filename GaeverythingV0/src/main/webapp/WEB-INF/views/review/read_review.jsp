@@ -34,10 +34,13 @@
 		}
 	}
 	
-	function go_url(type, page){
+	function go_url(type, page, categoryCode){
+		if(categoryCode==undefined){
+			categoryCode=0;
+		}
 		var data = document.getElementById("postData");
 		var boardNo = document.getElementById("boardNo").value;
-		var url = "/review/viewReviewList?page="+page;
+		var url = "/review/viewReviewList?categoryCode="+categoryCode+"&page="+page;
 		if(type == 1){
 			url = "/review/clickModify?page="+page+"&boardNo="+boardNo;
 		}else if(type == 2){
@@ -49,6 +52,8 @@
 				alert("삭제가 취소되었습니다.")
 				return;
 			}
+		}else if(type == 3){
+			location.href = url;
 		}
 		data.action = url;
 		data.submit();
@@ -225,8 +230,11 @@
 					<!-- title -->	
 						<div class="listing-titlebar-title">
 							<h3>${dto.title} 
-								<c:if test="${dto.boardCategory=='1'}">
-									<span class = "listing-tag">Hospital</span>
+								<c:if test="${dto.boardCategory=='CARE'}">
+									<span class = "listing-tag">CARE</span>
+								</c:if>
+								<c:if test="${dto.boardCategory=='EVENT'}">
+									<span class = "listing-tag">EVENT</span>
 								</c:if>
 							</h3>
 						</div>	
@@ -265,7 +273,7 @@
 	
 					<!-- back to list -->
 					<div class="list col-md-2" style="margin-top: 5px;">
-						<button type="button" class="button border margin-top-5" onclick="go_url(3, ${param.page})" style="height: 48px;width: 125px;">back to list</button>
+						<button type="button" class="button border margin-top-5" onclick="go_url(3,${param.page}, '${param.categoryCode}')" style="height: 48px;width: 125px;">back to list</button>
 					</div>
 					
 					<div class="optin button col-md-2" style="margin-top: 6px;">
@@ -289,7 +297,7 @@
 					</div>
 							
 					<!-- edit, delete -->
-					<c:if test="${tom.nickname == dto.nickname}">
+					<c:if test="${member.nickname == dto.nickname}">
 						<div class="col-md-8 centered-content" >
 							<a onclick="go_url(1, ${param.page})" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-note"></i>Edit</a>
 							<a onclick="go_url(2, ${param.page})" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-close"></i>Delete</a>

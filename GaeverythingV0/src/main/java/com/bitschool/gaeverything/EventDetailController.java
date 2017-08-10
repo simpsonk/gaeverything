@@ -22,6 +22,7 @@ import com.bitschool.dto.DetailPhotoDTO;
 import com.bitschool.dto.EventCommentDTO;
 import com.bitschool.dto.EventDTO;
 import com.bitschool.dto.EventPhotoDTO;
+import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.service.ActUserService;
 import com.bitschool.service.EventDetailService;
@@ -66,7 +67,9 @@ public class EventDetailController {
 		dto = service.getEventActUserResult(manager, dto);
 		
 		List<EventPhotoDTO> photoList = service.selectPhoto(eventNo);
-		//List<BlogDTO> blogList = service.getBlogReviews(eventNo);
+
+		List<LocationDTO> nList = service.getNearby(dto.getLatitude(), dto.getLongitude()); 
+		
 		//좋아요 상태 유지
 		if(isLogin){
 			MemberDTO member = (MemberDTO)session.getAttribute("member");
