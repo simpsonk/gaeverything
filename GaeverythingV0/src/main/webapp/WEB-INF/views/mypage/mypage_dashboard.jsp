@@ -64,14 +64,14 @@
 		</div>
 
 		<!-- Notice -->
-		<div class="row">
+		<!-- <div class="row">
 			<div class="col-md-12">
 				<div class="notification success closeable margin-bottom-30">
 					<p>Your listing <strong>Hotel Govendor</strong> has been approved!</p>
 					<a class="close" href="#"></a>
 				</div>
 			</div>
-		</div>
+		</div> -->
 
 		<!-- Content -->
 		<div class="row">
@@ -116,7 +116,32 @@
 			<!-- Recent Activity -->
 			<div class="col-lg-6 col-md-12">
 				<div class="dashboard-list-box with-icons margin-top-20">
-					<h4>Recent Activities</h4>
+					<h4 style="background:#37b6bd; color:white"> News Of Bookmark</h4>
+					<ul>
+					<c:choose>
+					<c:when test="${commentList.size()==0}">
+						<li>
+							<span>표시할 알림이 없습니다.</span>
+						</li>
+					</c:when>
+					
+					<c:otherwise>
+					<c:forEach var="list" items="${commentList}" varStatus="status">
+						
+						<li>
+							<i class="list-box-icon sl sl-icon-star"></i>${list.nickname}  left a comment <div class="numerical-rating" data-rating="${list.rating}"></div> on <strong><a href="/map/detail/viewDetailPage?locationSeq=${list.locationSeq}">${list.address}</a></strong>
+							<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+						</li>
+					</c:forEach>
+					</c:otherwise>
+					</c:choose>
+					</ul>
+				</div>
+			</div>
+			<!-- Recent Activity -->
+			<!-- <div class="col-lg-6 col-md-12">
+				<div class="dashboard-list-box with-icons margin-top-20">
+					<h4 style="background:#37b6bd; color:white">Recent Activities</h4>
 					<ul>
 						<li>
 							<i class="list-box-icon sl sl-icon-layers"></i> Your listing <strong><a href="#">Hotel Govendor</a></strong> has been approved!
@@ -154,62 +179,33 @@
 						</li>
 					</ul>
 				</div>
-			</div>
+			</div> -->
 			
 			<!-- Invoices -->
 			<div class="col-lg-6 col-md-12">
 				<div class="dashboard-list-box invoices with-icons margin-top-20">
-					<h4>Invoices</h4>
+					<h4 style="background:#fa5b0f; color:white">Reactions</h4>
 					<ul>
-						
-						<li><i class="list-box-icon sl sl-icon-doc"></i>
-							<strong>Professional Plan</strong>
-							<ul>
-								<li class="unpaid">Unpaid</li>
-								<li>Order: #00124</li>
-								<li>Date: 20/07/2017</li>
-							</ul>
-							<div class="buttons-to-right">
-								<a href="dashboard-invoice.html" class="button gray">View Invoice</a>
-							</div>
+					<c:choose>
+					<c:when test="${commentList.size()==0}">
+						<li>
+							<span>표시할 알림이 없습니다.</span>
 						</li>
-						
-						<li><i class="list-box-icon sl sl-icon-doc"></i>
-							<strong>Extended Plan</strong>
-							<ul>
-								<li class="paid">Paid</li>
-								<li>Order: #00108</li>
-								<li>Date: 14/07/2017</li>
-							</ul>
-							<div class="buttons-to-right">
-								<a href="dashboard-invoice.html" class="button gray">View Invoice</a>
-							</div>
+					</c:when>
+					
+					<c:otherwise>
+					<%-- <c:forEach var="list" items="${commentList}" varStatus="status"> --%>
+						<li>
+							<i class="list-box-icon sl sl-icon-heart"></i> Someone bookmarked your <strong><a href="#">Burger House</a></strong> listing!
+							<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
 						</li>
-
-						<li><i class="list-box-icon sl sl-icon-doc"></i>
-							<strong>Extended Plan</strong>
-							<ul>
-								<li class="paid">Paid</li>
-								<li>Order: #00097</li>
-								<li>Date: 10/07/2017</li>
-							</ul>
-							<div class="buttons-to-right">
-								<a href="dashboard-invoice.html" class="button gray">View Invoice</a>
-							</div>
+						<li>
+							<i class="list-box-icon sl sl-icon-star"></i> Kathy Brown left a review <div class="numerical-rating" data-rating="5.0"></div> on <strong><a href="#">Burger House</a></strong>
+							<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
 						</li>
-						
-						<li><i class="list-box-icon sl sl-icon-doc"></i>
-							<strong>Basic Plan</strong>
-							<ul>
-								<li class="paid">Paid</li>
-								<li>Order: #00091</li>
-								<li>Date: 30/06/2017</li>
-							</ul>
-							<div class="buttons-to-right">
-								<a href="dashboard-invoice.html" class="button gray">View Invoice</a>
-							</div>
-						</li>
-
+					<%-- </c:forEach> --%>
+					</c:otherwise>
+					</c:choose>
 					</ul>
 				</div>
 			</div>
