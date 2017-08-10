@@ -9,6 +9,8 @@ import com.bitschool.dto.ActUserDTO;
 import java.util.List;
 import com.bitschool.dao.IBoardDAO;
 import com.bitschool.dto.BoardDTO;
+import com.bitschool.dto.MemberDTO;
+import com.bitschool.dto.MyPageDTO;
 import com.bitschool.dto.PageDTO;
 import com.bitschool.dto.SearchDTO;
 
@@ -166,5 +168,21 @@ public class BoardService implements IBoardService {
 			e.printStackTrace();
 		}
 		return bDTO;
+	}
+
+	@Override
+	public MyPageDTO getWriter(String nickName) {
+		MyPageDTO dto = null;
+		MemberDTO mDTO = null;
+		String email = "";
+		try {
+			email = dao.readEmail(nickName);
+			System.out.println("글쓴이 이메일: " + email);
+			dto = dao.readProfile(email);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return dto;
 	}
 }

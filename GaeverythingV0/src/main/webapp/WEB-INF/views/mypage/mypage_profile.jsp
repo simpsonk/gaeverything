@@ -99,7 +99,7 @@
 			<!-- Profile -->
 			<div class="col-lg-6 col-md-12">
 				<div class="dashboard-list-box margin-top-0">
-					<h4 class="gray">Profile Details</h4>
+					<h4 style="background: #F91942; color: white;">profile details</h4>
 					<div class="dashboard-list-box-static">
 
 <form method="post" action="" id="dataset" enctype="multipart/form-data">	
@@ -178,7 +178,7 @@
 
 			<!-- Copyrights -->
 			<div class="col-md-12">
-				<div class="copyrights">© 2017 Listeo. All Rights Reserved.</div>
+				<div class="copyrights">© 2017 gaeverything. All Rights Reserved.</div>
 			</div>
 
 		</div>

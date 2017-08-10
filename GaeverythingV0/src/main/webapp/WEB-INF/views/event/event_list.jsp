@@ -280,7 +280,6 @@
 		
 	 //좋아요 클릭 핸들러
 	function like_clicked(eventNo){
-		
 		var ele = document.getElementById("like"+eventNo); //어떤 이벤트에 라이크를 눌렀는지 해당 이벤트번호 같이 가져옴
 		var class_name = ele.className; //로그인했으면 클래스가 like-icon 좋아요했으면 클래스가 like-icon clicked
 		var email = document.getElementById("memberEmail").value;
@@ -291,35 +290,6 @@
 			tyoe 	 : 'POST',
 			success  : function(data){
 				listAll();
-				//alert(data);
-				//alert(eventNo);
-				//data: 좋아요개수 
-			/* 	if(ele.className === 'like-icon'){
-	        		ele.className = 'like-icon liked';
-	        		/* var count = document.getElementById("star-rating"); //새 태그 삽입할 부모태그
-		        	
-	        		var icon = document.createElement('i');
-	        		
-	        		var span = document.createElement("span"); //하위태그
-	        		span.innerHTML = "  "+data; //span 태그에 들어갈 내용 
-	        		
-	        		var rating = document.createElement("div");
-	        		rating.className = "rating-counter";
-	        		rating.innerHTML = "10 reviews   ";
-	        		
-	        		count.innerHTML = ""; 		
-	        		count.appendChild(rating);
-	        		count.appendChild(icon); //상위태그에 붙이기
-	        		count.appendChild(span); //상위태그에 붙이기
-	       			
-	       			clearStarRating('.star-rating');
-	       			starRating('.star-rating'); 
-	        		
-	        	}else{
-	        		ele.className = 'like-icon';
-	        	} */
-				
-				
 			}
 		});
 	}
@@ -359,11 +329,6 @@
 			itemEl.onmouseover = function() {
 				setOverlay(event); 		
 				panTo(event);
-				/* clearStarRating('.star-rating');
-				starRating('.star-rating'); */
-				/* var el = document.getElmentById("star-rating");
-				var counter = '<div class="rating-counter">(12 reviews)</div>';
-				el.appendChild(counter); */
 			};
 			 itemEl.onmouseout = function() {
 				closeOverlay(); 			
@@ -378,12 +343,11 @@
 	
 	//좌측리스트
 	function eventItems(event) {
-		//alert(event.countLike)
 		var el = document.createElement("div");
 		var itemStr =  '	<div class="listing-item-container" data-marker-id="1">'
 				+ '	   			<div class="listing-item">' 
 				+ '					<img src="/resources/images/event/'+event.thumbnail+'" alt="">'
-				+ '				<a href = "/event/detail">'
+				+ '				<a href = "/event/detail/view?no='+event.eventNo + '">'
 				+ '					<div class="listing-item-content">';
 				
 				if(event.eventName.match("축제")||event.eventName.match("페스티벌")){
@@ -394,7 +358,7 @@
 			itemStr += '				<h3>'+ event.eventName + '</h3><br>'
 				+ '						<span><i class="fa fa-map-marker"></i>  '+ event.address+ '</span><br>'
 				+ '						<span><i class="fa fa-calendar-check-o"></i>  '+ event.startDate+ '  ~  '+ event.endDate	+ '</span><br>'
-				+ '						<span><i class="fa fa-dollar"></i>  '+ event.fee+ '   <i class="fa fa-check"></i>  '+ event.discountInfo+ '</span>'
+				+ '						<span><i class="fa fa-won"></i>  '+ event.fee+ '   <i class="fa fa-check"></i>  '+ event.discountInfo+ '</span>'
 				+ '					</div>'
 				+ '				</a>';
 				
@@ -406,15 +370,10 @@
 				
 				itemStr += '			</div>'
 				+		   '			<div class="star-rating" id="star-rating" data-rating="3.5">'
-				+		   '           		<div class="rating-counter">(12 reviews)</div> '
-				+		   '           		<span><i class="sl sl-icon-heart"></i>'+event.countLike+'</span> '
+				+		   '           		<div class="rating-counter">12 reviews</div> '
+				+		   '           		<span><i class="sl sl-icon-heart" style="color: #f91942"></i> '+event.countLike  +'</span> '
+				+		   '           		<span><i class="sl sl-icon-bubble" style="color: #f91942"></i> '+event.countReplies+'</span> '
 			 	+		   ' 			</div>';
-			 	/*	if(event.userLikeStatus == null){
-				itemStr += 		   '<span class="like-icon" id="like" onclick="no_login_like()"></span>	';
-			}else{	
-				itemStr +=         '<span class="'+event.userLikeStatus+'" id="like'+event.eventNo+'" onclick="like_clicked('+event.eventNo+')"></span>	';
-			}
-			 */
 		el.innerHTML = itemStr;
 		el.className = 'col-lg-6 col-md-12';
 		

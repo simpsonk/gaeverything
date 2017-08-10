@@ -7,8 +7,10 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import com.bitschool.dao.BoardDAO;
 import com.bitschool.dao.MyPageDAO;
 import com.bitschool.dto.BoardDTO;
+import com.bitschool.dto.CommentDTO;
 import com.bitschool.dto.DetailCommentDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.dto.MyPageDTO;
@@ -18,6 +20,61 @@ public class MyPageService {
 	
 	@Inject
 	private MyPageDAO mdao;
+	
+	@Inject
+	private BoardDAO bdao;
+	
+	// 내가 리뷰쓴 곳 개수(맵디테일의 댓글 또는 리뷰게시판의 글) 가져오기 (중복X) 
+	public int countLocReviews(String nickname){
+		int count = 0;
+		try {
+			count = mdao.countLocReviews(nickname);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return count;
+	}
+	
+	//북마크수 가져오기
+	public int getTotalLike(int boardno){
+		int like = 0;
+		try {
+			like = bdao.getTotalLike(boardno);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return like;
+	}
+	
+	// 내가 쓴 댓글(게시판리뷰)의 원글 제목 가져오기
+	public String selectBoardTitle(int groupno){
+		String title = null;
+		try {
+			title = mdao.selectBoardTitle(groupno);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return title;
+	}
+	
+	// 내가 쓴 댓글(게시판리뷰) 모아보기 
+	public List<CommentDTO> selectMyBoardComments(String nickname){
+		List<CommentDTO> list = null;
+		try {
+			list = mdao.selectMyBoardComments(nickname);
+			for(int i=0;i<list.size();i++){
+				String title = this.selectBoardTitle(list.get(i).getGroupNo());
+				list.get(i).setTitle(title);
+			}		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}	
 	
 	// 상호명 지정해주기 위해 
 	public String selectShopName(int locationSeq){

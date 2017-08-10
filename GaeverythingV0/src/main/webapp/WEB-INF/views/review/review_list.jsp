@@ -80,9 +80,12 @@
 				<div id="titlebar" class="listing-titlebar  col-md-9" style="padding-top: 0px;padding-bottom: 0px; margin-bottom: 10px;">
 					<!-- title -->	
 					<div class="listing-titlebar-title">
-						<h3><a href = "/review/readPost?boardNo=${board.boardNo}&page=${page}">${board.title}</a>
-							<c:if test="${board.boardCategory=='1'}">
-								<span class = "listing-tag">Hospital & Beauty</span>
+						<h3><a href = "/review/readPost?CategoryCode=${param.categoryCode }&boardNo=${board.boardNo}&page=${page}">${board.title}</a>
+							<c:if test="${board.boardCategory=='CARE'}">
+								<span class = "listing-tag">CARE</span>
+							</c:if>
+							<c:if test="${board.boardCategory=='EVENT'}">
+								<span class = "listing-tag">EVENT</span>
 							</c:if>
 						</h3>
 					</div>	
@@ -112,13 +115,13 @@
 				<!-- nickname, comment, etc. -->	
 				<ul class="post-meta">
 					<li><strong>${board.nickname}</strong></li>
-					<c:if test="${board.boardCategory=='1'}">
+					<!--<c:if test="${board.boardCategory=='1'}">
 						<li><a href="#">병원, 뷰티</a></li>
 					</c:if>
 						
 					<c:if test="${board.boardCategory=='2'}">
 						<li><a href="#">애견동반 식당, 카페</a></li>
-					</c:if>
+					</c:if>-->
 						<li><i class="sl sl-icon-bubble"></i> ${board.numOfCmt}</li>
 						<li id="numOflike${board.boardNo}"><i class="sl sl-icon-heart"></i> ${board.countLike}</li>
 						<li><i class="sl sl-icon-eye"></i> ${board.readCount}</li>
@@ -135,7 +138,7 @@
 				<div class="preview_box" id="preview" style="width: 100%; height:100px;">
 					<p>${board.onlyText}</p>
 				</div>
-				<a href="/review/readPost?boardNo=${board.boardNo}&page=${page}" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
+				<a href="/review/readPost?categoryCode=${param.categoryCode}&boardNo=${board.boardNo}&page=${page}" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
 			</div>
 		</div>
 	</c:forEach>
@@ -160,7 +163,7 @@
 
 			<!-- Widget -->
 			<div class="widget">
-				<h3 class="margin-top-0 margin-bottom-25">Search Blog</h3>
+				<h3 class="margin-top-0 margin-bottom-25">Search Review</h3>
 				<div class="search-blog-input">
 					<div class="input"><input class="search-field" type="text" placeholder="Type and hit enter" value=""/></div>
 				</div>
@@ -172,6 +175,16 @@
 			<!-- Widget -->
 			<div class="widget margin-top-40">
 				<h3>Any recommendations?</h3>
+				<div class="info-box margin-bottom-10">
+					<p>Feel free to share your experience!</p>
+					<a href="/review/viewReviewRegist?categoryCode=${param.categoryCode}" class="button fullwidth margin-top-20">Write a Review</a>
+				</div>
+			</div>
+			<!-- Widget / End -->
+			
+			<!-- Widget -->
+			<div class="widget margin-top-40">
+				<h3>Categories</h3>
 				<div class="info-box margin-bottom-10">
 					<p>Feel free to share your experience!</p>
 					<a href="/review/viewReviewRegist" class="button fullwidth margin-top-20">Write a Review</a>

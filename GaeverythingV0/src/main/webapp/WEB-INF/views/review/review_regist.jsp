@@ -87,15 +87,15 @@
 					<c:when test="${locationSeq!=null}">
 					<select class="chosen-select" name = "boardCategory">
 						<option value ="0">Categories</option>
-						<option value ="1" ${boardCategory == 'HP8'?'selected="selected"':''}>병원, 뷰티</option>
-						<option value ="2" ${boardCategory == '2'?'selected="selected"':''}>애견동반 식당, 카페</option>
+						<option value ="CARE" ${boardCategory == 'CARE'?'selected="selected"':''} ${param.categoryCode == 'CARE'?'selected="selected"':''}>Care</option>
+						<option value ="EVENT" ${boardCategory == 'EVENT'?'selected="selected"':''} ${param.categoryCode == 'EVENT'?'selected="selected"':''}>Event</option>
 					</select>	
 					</c:when>
 					<c:otherwise>
 					<select class="chosen-select" name = "boardCategory">
 						<option value ="0">Categories</option>
-						<option value ="1" ${dto.boardCategory == 'HP8'?'selected="selected"':''}>병원, 뷰티</option>
-						<option value ="2" ${dto.boardCategory == '2'?'selected="selected"':''}>애견동반 식당, 카페</option>
+						<option value ="CARE" ${dto.boardCategory == 'CARE'?'selected="selected"':''} >Care</option>
+						<option value ="EVENT" ${dto.boardCategory == 'EVENT'?'selected="selected"':''} >Event</option>
 					</select>	
 					</c:otherwise>
 					</c:choose>	
@@ -122,7 +122,7 @@
 				</div>
 				<div class = "location col-md-4" >
 					<div style="padding-top: 30px;">
-						<button type="button" class="button border margin-top-5" onclick="search_shop()" style="width: 110px;">Search</button>
+						<button type="button" class="button border margin-top-5" onclick="search_shop('${param.categoryCode}')" style="width: 110px;">Search</button>
 					</div>
 				</div>
 								
@@ -192,7 +192,7 @@
 							<c:when test="${empty dto}">
 								<!-- publish -->	
 								<div class="button col-md-12"> 
-									<button type="button" class="button border margin-top-5" onclick="go_url(2, 0)" style="margin-left: 15px;">publish</button>
+									<button type="button" class="button border margin-top-5" onclick="go_url(2, 0, '${param.categoryCode}')" style="margin-left: 15px;">publish</button>
 								</div>
 							</c:when>
 							
@@ -381,15 +381,15 @@
 
 
 	<script type="text/javascript">
-		function search_shop(){
-			window.open("/review/viewSearchShop", "myWindow", "width=1600,height=600");
+		function search_shop(categoryCode){
+			window.open("/review/viewSearchShop?categoryCode="+categoryCode, "myWindow", "width=1600,height=600");
 		}
 	
 	
-		function go_url(type, page){
+		function go_url(type, page, categoryCode){
 			var data = document.getElementById("postData");
 			var boardNo = document.getElementById("boardNo").value;
-
+			alert(categoryCode);
 			var url = "/review/viewReviewList";
 			var text = CKEDITOR.instances.editor1.document.getBody().getText();
 			document.getElementById("onlyText").value = text;
@@ -435,7 +435,7 @@
 					var check = confirm("작성한 게시글을 등록하시겠습니까?");
 					if(check == true){
 						alert("게시글이 등록되었습니다.");
-						url = "/review/newPost";
+						url = "/review/newPost?categoryCode="+categoryCode;
 					}else{
 						alert("등록이 취소되었습니다.");
 						return;

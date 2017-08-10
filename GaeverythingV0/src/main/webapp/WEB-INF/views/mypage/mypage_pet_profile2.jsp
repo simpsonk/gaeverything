@@ -124,7 +124,7 @@
 	</form>		
 			<!-- Copyrights -->
 			<div class="col-md-12">
-				<div class="copyrights">© 2017 Listeo. All Rights Reserved.</div>
+				<div class="copyrights">© 2017 gaeverything. All Rights Reserved.</div>
 			</div>
 
 		</div>
@@ -160,7 +160,8 @@
 $("#modify").click(function(){
 	checkMessage();
 	if($("#petname").val()!='' && $("#species").val()!='' && 
-			$('input:radio[name="gender"]').is(":checked") && $("#age").val()!=''){
+			$('input:radio[name="gender"]').is(":checked") && $("#age").val()!=''
+			&&!isNaN($("#age").val())){
 		$('#updateform').submit();
 	}else{
 		return;
@@ -198,6 +199,12 @@ function checkMessage(){
 	  }else{
 		  ageMsg.innerHTML="";
 	  }
+	  if(isNaN($("#age").val())){
+		  ageMsg.style.color = "#f91942";
+		  ageMsg.innerHTML="숫자를 입력해주세요.";
+	  }else{
+		  ageMsg.innerHTML="";
+	  } 
 }
 </script>
 

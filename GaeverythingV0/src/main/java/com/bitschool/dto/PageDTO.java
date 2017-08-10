@@ -6,13 +6,25 @@ public class PageDTO {
 	private int lastNo;
 	private int page;
 	private int amount;
+	private String categoryCode;
 	
 	
-	public PageDTO(int page, int amount){
+	
+	
+	public String getCategoryCode() {
+		return categoryCode;
+	}
+
+	public void setCategoryCode(String categoryCode) {
+		this.categoryCode = categoryCode;
+	}
+
+	public PageDTO(int page, int amount, String categoryCode){
 		this.page = page;
 		this.amount = amount;
 		this.firstNo = (page*amount)-amount+1;
 		this.lastNo = (page*amount);
+		this.categoryCode = categoryCode;
 	}
 
 	public int getFirstNo() {
@@ -45,6 +57,12 @@ public class PageDTO {
 
 	public void setAmount(int amount) {
 		this.amount = amount;
+	}
+
+	@Override
+	public String toString() {
+		return "PageDTO [firstNo=" + firstNo + ", lastNo=" + lastNo + ", page=" + page + ", amount=" + amount
+				+ ", categoryCode=" + categoryCode + "]";
 	}
 	
 	

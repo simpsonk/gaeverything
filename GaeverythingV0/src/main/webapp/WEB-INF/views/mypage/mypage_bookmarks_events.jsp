@@ -73,7 +73,7 @@
 			<!-- Listings -->
 				<div class="col-lg-12 col-md-12">
 				<div class="dashboard-list-box margin-top-0">
-					<h4>Bookmarked Events</h4>
+					<h4 style="background: #F91942; color: white;">Events (${eventList.size()})</h4>
 					<ul>
 						<c:choose>
 						<c:when test="${eventList.size()==0}">
@@ -85,7 +85,7 @@
 						<c:forEach var="list" items="${eventList}">        
 						<li>							
 							<div class="list-box-listing">
-								<div class="list-box-listing-img"><a href="/event/detail/viewDetailPage?eventNo=${list.eventNo}">
+								<div class="list-box-listing-img"><a href="/event/detail/view?no=${list.eventNo}"=${list.eventNo}">
 								<img src="/resources/images/event/${list.thumbnail}" alt=""></a></div>
 								<div class="list-box-listing-content">
 									<div class="inner">
@@ -117,7 +117,7 @@
 
 			<!-- Copyrights -->
 			<div class="col-md-12">
-				<div class="copyrights">© 2017 Listeo. All Rights Reserved.</div>
+				<div class="copyrights">© 2017 gaeverything. All Rights Reserved.</div>
 			</div>
 		</div>
 

@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.bitschool.dto.BoardDTO;
+import com.bitschool.dto.CommentDTO;
 import com.bitschool.dto.DetailCommentDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.dto.MyPageDTO;
@@ -20,6 +21,27 @@ public class MyPageDAO {
 	private SqlSession session;
 	
 	private static final String namespace = "com.bitschool.bootstrap.MyPageMapper";
+
+	// 내가 리뷰쓴 곳 개수(맵디테일의 댓글 또는 리뷰게시판의 글) 가져오기 (중복X) 
+	public int countLocReviews(String nickname) throws SQLException{
+		int count = 0;
+		count = session.selectOne(namespace+".countLocReviews",nickname);
+		return count;
+	}
+	
+	// 내가 쓴 댓글(게시판리뷰)의 원글 제목 가져오기
+	public String selectBoardTitle(int groupno) throws SQLException{
+		String title = null;
+		title = session.selectOne(namespace+".selectBoardTitle",groupno);
+		return title;
+	}
+ 	
+	// 내가 쓴 댓글(게시판리뷰) 모아보기 
+	public List<CommentDTO> selectMyBoardComments(String nickname) throws SQLException{
+		List<CommentDTO> list = null;
+		list = session.selectList(namespace+".selectMyBoardComments",nickname);
+		return list;
+	}
 	
 	// 상호명 지정해주기 위해 
 	public String selectShopName(int locationSeq) throws SQLException{

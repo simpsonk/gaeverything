@@ -13,6 +13,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import com.bitschool.dao.LocationDAO;
+import com.bitschool.dto.EventDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MapInfomation;
 import com.bitschool.utils.AscendCom;
@@ -53,11 +54,11 @@ public class LocationService {
 		return list;
 	}
 	
-	public List<LocationDTO> SearchShopName(MapInfomation info) {
+	public List<LocationDTO> SearchCategory(MapInfomation info) {
 		// TODO Auto-generated method stub
 		List<LocationDTO> list  = null;
 		try {
-			list = dao.selectShopName(info);
+			list = dao.selectCategory(info);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -127,28 +128,26 @@ public class LocationService {
         return (rad * 180 / Math.PI);
     }
     
-
-	public List<LocationDTO> getSearchData(HashMap<String, Object> searchData) {
+	public List<LocationDTO> getMapSearchData(String searchWord) {
 		// TODO Auto-generated method stub
 		List<LocationDTO> list = null;
-		MapInfomation info = new MapInfomation();
-		info.setCategories((String)searchData.get("selectOp2"));
-		info.setSearchWord((String)searchData.get("searchWord"));
-		System.out.println(info);
-		if(searchData.get("selectOp1").equals("1")){
-			try {
-				list = dao.selectShopName(info);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}else if(searchData.get("selectOp1").equals("2")){
-			try {
-				list = dao.selectLocation(info);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		try {
+			list = dao.selectMapData(searchWord);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public List<EventDTO> getEventSearchData(String searchWord) {
+		// TODO Auto-generated method stub
+		List<EventDTO> list = null;
+		try {
+			list = dao.selectEventData(searchWord);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return list;
 	}

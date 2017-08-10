@@ -10,7 +10,7 @@
 			    height: 80px;
 			    padding-top: 10px;
 			    padding-bottom: 10px;">
-				
+	
 				<!-- Logo -->
 				<!-- <div id="logo">
 					<a href="/"><img src="/resources/images/logo_gae.png" alt=""></a>
@@ -41,21 +41,20 @@
 					<ul id="responsive">
 						<div></div>
 						<li><a href="/">Home</a></li>
-						<li><a href="/map/viewMapList">Map</a></li>
+						<li><a href="/map/viewMapList">Care</a></li>
+						<li><a href="/event/viewEventList">Event</a></li>
 						<li><a href="/review/viewReviewList">Review</a>
 							<ul>
-								<li><a href="/review/viewReviewList">병원/뷰티</a></li>
+								<li><a href="/review/viewReviewList?categoryCode=CARE">Care</a></li>
+								<li><a href="/review/viewReviewList?categoryCode=EVENT">Event</a></li>
 							</ul>
 						</li>
-						<li><a href="/event/viewEventList">Event</a></li>
 						<li><a href="/mypage/viewMypageDashboard">MyPage</a>
 							<ul>
 								<li><a href="/mypage/viewMypageDashboard">Dashboard</a></li>
 								<li><a href="/mypage/calendar/viewCalendar">Calendar</a></li>
-								<li><a href="/mypage/viewMypageList">My Listings</a></li>
-								<li><a href="/mypage/viewMypageReviews">Reviews</a></li>
+								<li><a href="/mypage/viewMypageList">My Activities</a></li>
 								<li><a href="/mypage/viewMypageBookmarks">Bookmarks</a></li>
-								<li><a href="#">Add Listing</a></li>
 								<li><a href="/mypage/viewMypageProfile">My Profile</a></li>
 								<li><a href="/mypage/viewPetList">Pet Profile</a></li>
 							</ul>

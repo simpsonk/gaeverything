@@ -39,6 +39,7 @@ public class LocationDTO {
 	public int getCountReview() {
 		return countReview;
 	}
+	
 	public void setCountReview(int countReview) {
 		this.countReview = countReview;
 	}

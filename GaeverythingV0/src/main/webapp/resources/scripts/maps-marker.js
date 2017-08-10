@@ -176,5 +176,9 @@
 
     	return content;
     }
-    	
+    
+    function currnetMarkerSet(){
+    	currentMarker.setMap(map);
+    }
+
     

@@ -1,12 +1,17 @@
 package com.bitschool.dto;
 
-import java.sql.Timestamp;
+
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class EventDTO {
 	
 	private int eventNo;
 	private String eventName;
 	private String startDate;
+	private String addDate;
 	private String endDate;
 	private String location;
 	private String address;
@@ -21,6 +26,12 @@ public class EventDTO {
 	private String thumbnail;
 	private String userLikeStatus;
 	private int countLike;
+	private String categoryCode;
+	private int countReview;
+	private String averageRatings;
+	private int countRatings;
+	private int countReplies;
+
 	
 	
 	public int getEventNo() {
@@ -37,31 +48,40 @@ public class EventDTO {
 	}
 	
 	
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+		this.setAddDate(startDate);
+				
+	}
 	
 	public String getStartDate() {
 		return startDate;
+		
 	}
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
+	
+	
+	public void setAddDate(String addDate) {
+		//String date = this.getStartDate();
+		String [] dates = addDate.split("-");
+		//2017-08-17 =>>> 2017, 08, 17
+		String date2 = dates[1] + "-" + dates[2] + "-" + dates[0];
+		this.addDate = date2;
 	}
+	
+	public String getAddDate() {
+		return addDate;
+	}
+	
+	
+	
 	public String getEndDate() {
 		return endDate;
 	}
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
-	/*public Timestamp getStartDate() {
-		return startDate;
-	}
-	public void setStartDate(Timestamp startDate) {
-		this.startDate = startDate;
-	}
-	public Timestamp getEndDate() {
-		return endDate;
-	}
-	public void setEndDate(Timestamp endDate) {
-		this.endDate = endDate;
-	}*/
+
 	public String getLocation() {
 		return location;
 	}
@@ -80,6 +100,10 @@ public class EventDTO {
 	public void setCall(String call) {
 		this.call = call;
 	}
+	
+	
+	
+	
 	public String getLatitude() {
 		return latitude;
 	}
@@ -139,6 +163,55 @@ public class EventDTO {
 	}
 	public void setCountLike(int countLike) {
 		this.countLike = countLike;
+	}
+	
+	
+	
+	public int getCountReview() {
+		return countReview;
+	}
+	public void setCountReview(int countReview) {
+		this.countReview = countReview;
+	}
+	public String getAverageRatings() {
+		return averageRatings;
+	}
+	public void setAverageRatings(String averageRatings) {
+		this.averageRatings = averageRatings;
+	}
+	public int getCountRatings() {
+		return countRatings;
+	}
+	public void setCountRatings(int countRatings) {
+		this.countRatings = countRatings;
+	}
+	public int getCountReplies() {
+		return countReplies;
+	}
+	public void setCountReplies(int countReplies) {
+		this.countReplies = countReplies;
+	}
+	/*public void setActUserResult(int countReview, String averageRatings, int countRatings, int countReplies, int countLike) {
+		this.countReview = countReview ;
+		this.averageRatings = averageRatings;
+		this.countRatings = countRatings;
+		this.countReplies = countReplies;
+		this.countLike = countLike;
+		
+	}*/
+	
+	public void setActUserResult( int countReplies, int countLike) {
+		
+		this.countReplies = countReplies;
+		this.countLike = countLike;
+		
+	}
+	
+	public String getCategoryCode() {
+		return categoryCode;
+	}
+	public void setCategoryCode(String categoryCode) {
+		this.categoryCode = categoryCode;
 	}
 	
 	
