@@ -56,7 +56,7 @@
 		<div id="titlebar">
 			<div class="row">
 				<div class="col-md-12">
-					<h2>My Activities</h2>
+					<h2>My Activities (${member.myCommentSize+member.myReviewSize})</h2>
 					<!-- Breadcrumbs -->
 					<nav id="breadcrumbs">
 						<ul>

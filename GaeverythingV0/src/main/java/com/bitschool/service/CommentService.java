@@ -8,8 +8,10 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.bitschool.dao.IBoardDAO;
+import com.bitschool.dao.ReactionDAO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.CommentDTO;
+import com.bitschool.dto.ReactionDTO;
 
 @Service
 public class CommentService implements ICommentService{
@@ -17,11 +19,16 @@ public class CommentService implements ICommentService{
 	@Inject
 	private IBoardDAO dao;
 	
+	@Inject
+	private ReactionDAO rdao;
+	
 	@Override
 	public boolean addComment(CommentDTO cDTO) {
 		boolean flag = false;
 		try {
 			flag = dao.insertComment(cDTO);
+			ReactionDTO rdto = new ReactionDTO("C",cDTO.getGroupNo());
+			rdao.insertReaction(rdto);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
