@@ -68,6 +68,8 @@ public class MypageController {
 	   
 	@Inject
 	private ICommentService cservice;
+	
+
 	   
 
 	
@@ -341,15 +343,63 @@ public class MypageController {
 		return url;
 	}
 	
+	//대시보드
 	@RequestMapping(value = "/viewMypageDashboard", method = RequestMethod.GET)
 	public String viewDashBoard(HttpSession session, Model model){
 		String url = "mypage/mypage_dashboard";
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		boolean isLogin = member!=null?true:false;
+		
+		//마이페이지 눌렀을때 네비게이터에 개수 뜨도록//////////////////////////////////////
+		List<DetailCommentDTO> cl = service.selectMyDetailComments(member.getNickname());
+		List<CommentDTO> bcl = service.selectMyBoardComments(member.getNickname());
+		member.setMyCommentSize(cl.size()+bcl.size());
+		List<BoardDTO> reviewList = service.selectMyReviews(member.getNickname());
+		ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.REVIEW);
+		reviewList= new ActUserManager(aservice).checkListReLikeStatus(aDTO, reviewList);
+		member.setMyReviewSize(reviewList.size());
+		List<BoardDTO> rl = aservice.selectReviewBookmark(member.getEmail());	
+		List<LocationDTO> ml = aservice.selectShopBookmark(member.getEmail());
+		member.setBookmarkMapSize(ml.size());
+		member.setBookmarkReviewSize(rl.size());		
+		List<EventDTO> el = aservice.selectEventBookmark(member.getEmail());
+		member.setBookmarkEventSize(el.size());
+		///////////////////////////////////////////////////////////////////////
+		int countReviewBookmark = 0; //리뷰북마크수,댓글수,조회수
+		int countReviewCmt = 0;
+		int countRead = 0;	
+		for(int i=0;i<reviewList.size();i++){
+			int temp = reviewList.get(i).getCountLike();
+			countReviewBookmark = countReviewBookmark + temp;
+			int temp2 = cservice.countCmt(reviewList.get(i).getGroupNo());
+			countReviewCmt = countReviewCmt + temp2;
+			int temp3 = reviewList.get(i).getReadCount();
+			countRead = countRead + temp3;
+		}
+		int countLocReviews = service.countLocReviews(member.getNickname());
+		List<LocationDTO> mapList = aservice.selectShopBookmark(member.getEmail());
+		List<DetailCommentDTO> commentList = new ArrayList<DetailCommentDTO>();
+		List<DetailCommentDTO> commentList2 = new ArrayList<DetailCommentDTO>();
+		for(int i=0;i<mapList.size();i++){
+			commentList = lservice.commentList(mapList.get(i).getLocationSeq());
+			for(int j=0;j<commentList.size();j++){
+				commentList.get(j).setAddress(service.selectShopName(mapList.get(i).getLocationSeq()));	
+				commentList2.add(commentList.get(j));
+			}
+
+		}
+	
+	
 		if(!isLogin){
 			url = "login_page";
 		}else{
 			model.addAttribute("member", member);
+			model.addAttribute("reviewList", reviewList);
+			model.addAttribute("countReviewBookmark",countReviewBookmark);
+			model.addAttribute("countReviewCmt",countReviewCmt);
+			model.addAttribute("countRead",countRead);
+			model.addAttribute("countLocReviews",countLocReviews);
+			model.addAttribute("commentList",commentList2);
 		}
 		return url;
 	}
@@ -528,6 +578,5 @@ public class MypageController {
 		}
 		return url;
 	}
-	
 
 }

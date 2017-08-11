@@ -73,13 +73,15 @@
 			<!-- Blog Post -->
 			<div class="blog-post">
 				<c:choose>
-				<c:when test="${locationSeq!=null}">
-				<input type="hidden" id = "locationSeq" name = "locationSeq" value = "${locationSeq}">	
-				</c:when>
-				<c:otherwise>
-				<input type="hidden" id = "locationSeq" name = "locationSeq" value = "${dto.locationSeq}">		
-				</c:otherwise>
+					<c:when test="${locationSeq!=null}"><!-- 첫글 -->
+						<input type="hidden" id = "locationSeq" name = "locationSeq" value = "${locationSeq}">	
+					</c:when>
+					<c:otherwise><!-- 수정 시 -->
+						<input type="hidden" id = "locationSeq" name = "locationSeq" value = "${dto.locationSeq}">		
+					</c:otherwise>
 				</c:choose>
+
+				
 				<!-- category -->		
 				<div class="col-md-4">
 					<h5>Category</h5>

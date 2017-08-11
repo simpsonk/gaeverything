@@ -191,10 +191,8 @@
 			<!-- Widget -->
 			<div class="widget margin-top-40">
 				<h3>Categories</h3>
-				<div class="info-box margin-bottom-10">
-					<p>Feel free to share your experience!</p>
-					<a href="/review/viewReviewRegist" class="button fullwidth margin-top-20">Write a Review</a>
-				</div>
+				<div class="info-box margin-bottom-10"style="height: 65px;"><h4>Care</h4></div>
+				<div class="info-box margin-bottom-10"style="height: 65px;"><h4>Event</h4></div>	
 			</div>
 			<!-- Widget / End -->
 

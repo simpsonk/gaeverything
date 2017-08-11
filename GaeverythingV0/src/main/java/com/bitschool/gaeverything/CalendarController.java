@@ -17,10 +17,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bitschool.dto.BookCalendarDTO;
+import com.bitschool.dto.BookEventCalendarDTO;
 import com.bitschool.dto.CalendarDTO;
 import com.bitschool.dto.CalendarFormat;
 import com.bitschool.dto.MemberDTO;
+import com.bitschool.dto.PetPageDTO;
 import com.bitschool.service.CalendarService;
+import com.bitschool.service.PetPageService;
 import com.google.gson.Gson;
 
 @RequestMapping("/mypage/calendar")
@@ -30,6 +34,9 @@ public class CalendarController {
 	
 	@Inject
 	private CalendarService service;
+	
+	@Inject
+	private PetPageService Pservice;
 	
 	@RequestMapping(value="/viewCalendar", method={RequestMethod.GET,RequestMethod.POST})
 	public String viewCalendar(HttpSession session, Model model){
@@ -43,6 +50,8 @@ public class CalendarController {
 	public String viewRegistCalendar(HttpSession session, Model model, @RequestParam("startDate") String sd){
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		String url = "mypage/calendar/regist_calendar";
+		List<PetPageDTO> list = Pservice.readPetsData(member);
+		model.addAttribute("list", list);
 		model.addAttribute("member", member);
 		model.addAttribute("sd",sd);
 		return url;
@@ -110,6 +119,30 @@ public class CalendarController {
 		boolean flag = service.removeCalendar(seq);
 		if(flag){
 			url = "redirect:/mypage/calendar/viewCalendar";
+		}
+		return url;
+	}
+	@RequestMapping(value="/addBooking",method=RequestMethod.POST)
+	public String addBooking(HttpSession session,Model model,
+			BookCalendarDTO dto){
+		String url = null;
+		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		boolean flag = service.bookingAdd(dto,member.getEmail());
+		System.out.println("controller");
+		if(flag){
+			url = "redirect:/map/detail/viewDetailPage?locationSeq="+dto.getLocationSeq();
+		}
+		return url;
+	}
+	@RequestMapping(value="/addBookingEvent",method=RequestMethod.POST)
+	public String addBookingEvent(HttpSession session,Model model,
+			BookEventCalendarDTO dto){
+		String url = null;
+		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		boolean flag = service.bookingAdd2(dto,member.getEmail());
+		System.out.println("controller");
+		if(flag){
+			url = "redirect:/event/detail/view?no="+dto.getEventNo();
 		}
 		return url;
 	}

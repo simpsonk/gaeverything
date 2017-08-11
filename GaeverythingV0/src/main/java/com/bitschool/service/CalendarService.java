@@ -13,9 +13,14 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.bitschool.dao.CalendarDAO;
+import com.bitschool.dao.EventDAO;
 import com.bitschool.dao.LocationDAO;
+import com.bitschool.dao.PetPageDAO;
+import com.bitschool.dto.BookCalendarDTO;
+import com.bitschool.dto.BookEventCalendarDTO;
 import com.bitschool.dto.CalendarDTO;
 import com.bitschool.dto.CalendarFormat;
+import com.bitschool.dto.EventDTO;
 import com.bitschool.dto.LocationDTO;
 
 @Service
@@ -26,6 +31,13 @@ public class CalendarService{
 	
 	@Inject
 	private LocationDAO ldao;
+	
+	@Inject
+	private CalendarDAO Cdao;
+	
+	@Inject
+	private EventDAO Edao;
+	
 	
 	public List<CalendarDTO> listCalendarAll() {
 		// TODO Auto-generated method stub
@@ -52,7 +64,7 @@ public class CalendarService{
 		List<CalendarDTO> list = dao.selectId(id);
 		List<CalendarFormat> calendar = new ArrayList<CalendarFormat>();
 		CalendarFormat c = null;
-		String[] colorType = {"#0045C6","#A20082","#C40000","#F5A9A9"};
+		String[] colorType = {"#37b6bd","#b3c211","#ffb400","#f91941", "#fa5b0f"};
 		for(int i=0;i<list.size();i++){
 			if((list.get(i).getRepeatdata())==null){
 				c = new CalendarFormat();
@@ -72,8 +84,21 @@ public class CalendarService{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+				}else if(list.get(i).getDogid()==1){
+					EventDTO Edto;
+					try {
+						
+						Edto = Edao.getOneEvent(list.get(i).getEventNo());
+						
+						c.setLongitude(Edto.getLongitude());
+						c.setLatitude(Edto.getLatitude());
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				calendar.add(c);
+				System.out.println(calendar.toString());
 			}else{
 				String repeat = list.get(i).getRepeatdata();
 				String[] repeatSplit = repeat.split(",");
@@ -139,8 +164,6 @@ public class CalendarService{
 				}else if(dateForm==4){
 					
 				}
-				
-				
 			}
 		}
 		return calendar;
@@ -159,5 +182,107 @@ public class CalendarService{
 		flag = dao.delete(seq);
 		return flag;
 	}
-
+	
+	public boolean bookingAdd(BookCalendarDTO dto,String email){
+		// TODO Auto-generated method stub
+		boolean flag = false;
+		try {
+			LocationDTO Ldto = ldao.selectLocationSeq(dto.getLocationSeq());
+			CalendarDTO Cdto = new CalendarDTO();
+			Cdto.setId(email);
+			Cdto.setDogid(0);
+			Cdto.setTitle("병원예약");
+			Cdto.setPlace(Ldto.getTitle());
+			Cdto.setStartDate(dto.getBookDate());
+			String time = dto.getBookTime();
+			String[] times = time.split(" ");
+			String resultStart = null;
+			String resultEnd = null;
+			if(times[1].equals("pm")){
+				String[] fTimes = times[0].split(":");
+				int fTime = Integer.parseInt(fTimes[0])+12;
+				resultStart = fTime+":"+fTimes[1];
+				resultEnd = (fTime+2)+":"+fTimes[1];
+			}else{
+				String[] fTimes = times[0].split(":");
+				int fTime = Integer.parseInt(fTimes[0]);
+				resultStart = fTime+":"+fTimes[1];
+				resultEnd = (fTime+2)+":"+fTimes[1];
+			}
+			Date date;
+			try {
+				DateFormat dateS = new SimpleDateFormat("H:mm");
+				date = dateS.parse(resultStart);
+				DateFormat dateE = new SimpleDateFormat("HH:mm");
+				resultStart = dateE.format(date);
+				date = dateS.parse(resultEnd);
+				resultEnd = dateE.format(date);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Cdto.setStartTime(resultStart);
+			Cdto.setEndDate(dto.getBookDate());
+			Cdto.setEndTime(resultEnd);
+			Cdto.setMessage(null);
+			Cdto.setLocationseq(dto.getLocationSeq());
+			flag = Cdao.insert2(Cdto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return flag;
+	}
+	
+	public boolean bookingAdd2(BookEventCalendarDTO dto,String email){
+		// TODO Auto-generated method stub
+		boolean flag = false;
+		try {
+			EventDTO Edto = Edao.getOneEvent(dto.getEventNo());
+			CalendarDTO Cdto = new CalendarDTO();
+			Cdto.setId(email);
+			Cdto.setDogid(1);
+			Cdto.setTitle(Edto.getEventName());
+			Cdto.setPlace(Edto.getLocation());
+			Cdto.setStartDate(dto.getBookDate());
+			String time = dto.getBookTime();
+			String[] times = time.split(" ");
+			String resultStart = null;
+			String resultEnd = null;
+			if(times[1].equals("pm")){
+				String[] fTimes = times[0].split(":");
+				int fTime = Integer.parseInt(fTimes[0])+12;
+				resultStart = fTime+":"+fTimes[1];
+				resultEnd = (fTime+2)+":"+fTimes[1];
+				System.out.println(fTimes[0]+"      "+fTimes[1]);
+			}else{
+				String[] fTimes = times[0].split(":");
+				int fTime = Integer.parseInt(fTimes[0]);
+				resultStart = fTime+":"+fTimes[1];
+				resultEnd = (fTime+2)+":"+fTimes[1];
+			}
+			Date date;
+			try {
+				DateFormat dateS = new SimpleDateFormat("H:mm");
+				date = dateS.parse(resultStart);
+				DateFormat dateE = new SimpleDateFormat("HH:mm");
+				resultStart = dateE.format(date);
+				date = dateS.parse(resultEnd);
+				resultEnd = dateE.format(date);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Cdto.setStartTime(resultStart);
+			Cdto.setEndDate(dto.getBookDate());
+			Cdto.setEndTime(resultEnd);
+			Cdto.setMessage(null);
+			Cdto.setEventNo(dto.getEventNo());
+			flag = Cdao.insert3(Cdto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return flag;
+	}
 }

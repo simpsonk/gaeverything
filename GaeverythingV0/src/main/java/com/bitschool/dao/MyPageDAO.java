@@ -22,6 +22,12 @@ public class MyPageDAO {
 	
 	private static final String namespace = "com.bitschool.bootstrap.MyPageMapper";
 
+	// 내가 리뷰쓴 곳 개수(맵디테일의 댓글 또는 리뷰게시판의 글) 가져오기 (중복X) 
+	public int countLocReviews(String nickname) throws SQLException{
+		int count = 0;
+		count = session.selectOne(namespace+".countLocReviews",nickname);
+		return count;
+	}
 	
 	// 내가 쓴 댓글(게시판리뷰)의 원글 제목 가져오기
 	public String selectBoardTitle(int groupno) throws SQLException{

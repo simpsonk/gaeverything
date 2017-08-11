@@ -54,7 +54,6 @@
 							${countReview}  Reviews
 							<i class="sl sl-icon-bubble"></i> ${countReplies}
 						</div>
-						
 					</div>					
 				</div>
 			</div>
@@ -108,50 +107,17 @@
 			<!-- nearby -->
 			<div id="blog-review" class="listing-section margin-top-20 margin-bottom-30">
 				<div class="col-lg-12" style="padding-left: 0px;">	
-					<h3 class="listing-desc-headline">Nearby</h3>		
+					<h3 class="listing-desc-headline">Nearby(${nearbyCount})</h3>		
 					
 					<!-- 리스트 보여줄 곳  -->
-						<div class="col-md-12">
-							<div class="simple-slick-carousel dots-nav" id = "nearbyList">
-
-							<!-- Listing Item -->
-							<div class="carousel-item">
-								<a href="listings-single-page.html" class="listing-item-container">
-									<div class="listing-item">
-										<img src="/resource/images/listing-item-01.jpg" alt="">
-										
-										<div class="listing-item-content">
-											<span class="tag" style="background: #f91942;">Cafe</span>
-											<h3>Tom's Restaurant</h3>
-											<span>964 School Street, New York</span>
-										</div>
-										<span class="like-icon"></span>
-									</div>
-								</a>
-							</div>	<!-- item -->
-				
-							
-							
-						</div>
-						</div>				
-				</div>	
-				</div>			
-			<!--  <div class="col-lg-12" style="padding-left: 0px;">
-					<div class="row">
-							<c:forEach var="reviews" items="${blogList}" varStatus="status">
-							<%-- <c:if test="${status.index<10}"> --%>
-								<div class="col-md-4">
-									<a href="${reviews.link}" class="listing-item-container">																
-										<h4>${reviews.title}</h4>												
-										<span>${reviews.bloggername}</span><br>
-										<span>${reviews.postdate}</span>																				
-									</a>
-								</div>	
-							<%-- </c:if>			 --%>
-							</c:forEach>	
-					</div>				
-			</div>-->
-			<!-- nearby END -->
+						<div class="col-md-12" id="nearby">
+							<div class="sim" id = "nearbyList">
+							<!-- Listing Item  item -->
+							<!--  item -->		
+							</div>				
+						</div>	
+				</div>
+			</div>			
 						
 			<!-- regist photo -->
 			<div id="regist-photo" class="listing-section margin-top-70 margin-bottom-30">
@@ -223,7 +189,7 @@
 						<div class="add-review-photos col-lg-4" style="position:static;">		
 							<div class="photoUpload">
 								<span>
-								<a href="/review/viewReviewRegist?eventNo=${dto.eventNo}&boardCategory=${dto.categoryCode}&address=${dto.eventName}"><i class="im im-icon-Pencil"></i> Write Review</span></a>
+								<a href="/review/viewReviewRegist?eventNo=${dto.eventNo}&boardCategory=EVENT&address=${dto.eventName}"><i class="im im-icon-Pencil"></i> Write Review</span></a>
 							</div>
 						</div>	
 					</div>
@@ -267,7 +233,7 @@
 			<!-- write Review / End -->
 
 
-			<!-- Blog review -->
+			<!-- Blog review 
 			<div id="blog-review" class="listing-section margin-top-70 margin-bottom-30">
 				<div class="col-lg-3" style="padding-left: 0px;">				
 					<h3 class="listing-desc-headline ">Blog Review </h3>							
@@ -287,7 +253,7 @@
 							</c:forEach>	
 					</div>				
 					</div>
-			<!-- Blog Review END -->
+			 Blog Review END -->
 		
 			
 				
@@ -396,7 +362,11 @@
 			</div>
 		</div>
 	</div>
-</div>
+
+
+<!-- Sidebar
+================================================== -->
+
 		<div class="col-lg-4 col-md-4 margin-top-75 sticky">
 
 			<!-- Book Now -->
@@ -413,7 +383,7 @@
 	
 						<!-- Time Picker - docs: http://www.vasterad.com/docs/listeo/#!/time_picker -->
 						<div class="col-lg-6 col-md-12">
-							<input type="text" id="booking-time" name="bookTime" value="9:00 am">
+							<input type="text" id="booking-time" name="bookTime" value="09:00 am">
 						</div>
 						<input type="hidden" id="isLogin3" name="bookEmail" value="${member.nickname}">
 						<input type="hidden" id="eventNo3" name="eventNo" value="${dto.eventNo}">
@@ -480,8 +450,7 @@
 					</ul>
 					<div class="clearfix"></div>
 			</div>
-
-		</div>
+		</div> <!-- sidebar end -->
 </div>
 </div>
 
@@ -535,7 +504,6 @@ this.$('#booking-time').timeDropper({
 
 
 <script type="text/javascript">
-
 
 
 </script>

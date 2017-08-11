@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bitschool.dto.ActUserDTO;
+import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.DetailCommentDTO;
 import com.bitschool.dto.DetailPhotoDTO;
 import com.bitschool.dto.EventCommentDTO;
@@ -65,9 +66,11 @@ public class EventDetailController {
 		EventDTO dto = service.selectOne(eventNo);	 //이벤트 정보	
 		List<EventCommentDTO> list = service.commentList(eventNo);
 		dto = service.getEventActUserResult(manager, dto);
-		
+		System.out.println(dto);
 		List<EventPhotoDTO> photoList = service.selectPhoto(eventNo);
-
+		List<BoardDTO> reviewList = service.getReviews(eventNo);
+		
+		
 		List<LocationDTO> nList = service.getNearby(dto.getLatitude(), dto.getLongitude()); 
 		
 		//좋아요 상태 유지
@@ -78,10 +81,11 @@ public class EventDetailController {
 		}
 		model.addAttribute("commentlist",list);
 		model.addAttribute("dto", dto);
-		//model.addAttribute("reviewList",reviewList);
+		model.addAttribute("reviewList",reviewList);
 		model.addAttribute("eventphoto",photoList);
+		model.addAttribute("nearbyCount", nList.size());
+		System.out.println("사진갯수:" + photoList.size());
 		//model.addAttribute("blogList",blogList);
-		
 		return url;
 	}
 	
@@ -157,7 +161,14 @@ public class EventDetailController {
 		return photoList;
 	}
 	
-	
+	@RequestMapping(value = "/getNearby", method = {RequestMethod.POST,RequestMethod.GET})
+	public @ResponseBody List<LocationDTO> getNearby(@RequestParam(value="eventNo") int eventNo){
+		System.out.println("nearby--");
+		EventDTO dto = service.selectOne(eventNo);
+		List<LocationDTO> data = service.getNearby(dto.getLatitude(), dto.getLongitude()); 
+		System.out.println("근처리스트 개수: " + data.size());
+		return data;
+	}
 	
 
 

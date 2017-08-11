@@ -49,7 +49,7 @@
 			</div>
 			<c:if test="${list!=null}">
 				<div class="dashboard-list-box with-icons margin-top-20">
-					<h4>Result Shopname(count:${list.size()})</h4>
+					<h4>Result Shopname(count: ${list.size()})</h4>
 					<ul>
 					<c:forEach items="${list}" var="data">
 						<li class = "list">

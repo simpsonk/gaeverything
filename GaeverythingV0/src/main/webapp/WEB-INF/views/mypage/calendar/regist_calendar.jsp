@@ -88,11 +88,22 @@
 										name='title' placeholder="예: 오후 7시에 멕시코 음식점에서 저녁식사" value=''>
 
 									<label>강아지 선택</label> 
-									<select id='dogid' name='dogid'>
-										<option value="1" selected='selected'>1번개
-										<option value="2">2번개
-										<option value="3">3번개
-									</select> 
+									
+									<c:choose>
+										<c:when test="${!empty list}" >
+										   <select name="dogid" id="dogid">
+										      <c:forEach var="pet" items="${list}" varStatus="i">
+										         <option value="${i.count+1}">${pet.petname}</option>
+										      </c:forEach>
+										   </select>
+										</c:when>
+										<c:otherwise>
+											<select name="dogidnull" id="dogidnull">
+										       	<option value="null">등록된 펫이 없습니다.</option>
+											</select>
+										</c:otherwise>
+									</c:choose>
+									
 									
 									<label>시작시간</label> 
 									<input type="time" id='startTime'
@@ -490,6 +501,15 @@
 	      document.getElementById("result").value = selCountData+data;
 	      document.getElementById("resultHidden").value = selDataNum+selCountDataNum+dataNum;
 		});
+	});
+	
+	$('#dogidnull').on('click', function(){
+		var f = confirm("등록된 펫이 없습니다. 펫을 등록하시겠습니까?");
+		if(f){
+			location.href = "/mypage/viewMypagePetProfile";
+		}else{
+			return false;
+		}
 	});
 	
 	    

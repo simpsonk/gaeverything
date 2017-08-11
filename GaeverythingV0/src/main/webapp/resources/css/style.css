@@ -12330,6 +12330,10 @@ img.mfp-img {
  float: right; 
 }
 
+.sim .slick-slide {
+	padding: 10px 15px;
+}
+
 
 
 /***** CSS Magic to Highlight Stars on Hover *****/

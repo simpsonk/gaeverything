@@ -106,19 +106,19 @@ public class EventDetailDAO {
 			return flag;
 		}
 		
-		/*// 게시판에서 작성한 리뷰 개수 가져오기 
+		// 게시판에서 작성한 리뷰 개수 가져오기 
 		public int countReviews(int eventNo) throws SQLException{
 			int count = 0;
 			count = session.selectOne(namespace+".countReviews",eventNo);
 			return count;
-		}*/
+		}
 		
-		/*// 게시판에서 작성한 리뷰의 별점 가져오기 
+		// 게시판에서 작성한 리뷰의 별점 가져오기 
 		public List<Double> getRatings(int eventNo) throws SQLException{
 			List<Double> ratings = null;
 			ratings = session.selectList(namespace+".getRatings",eventNo);
 			return ratings;
-		}*/
+		}
 		
 		// 디테일페이지 댓글에서 작성한 별졈 가져오기 
 		public List<Double> getReplyRatings(int eventNo) throws SQLException{
@@ -134,12 +134,12 @@ public class EventDetailDAO {
 			return count;
 		}
 		
-		/*// 게시판에서 작성한 리뷰 가져오기
+		// 게시판에서 작성한 리뷰 가져오기
 		public List<BoardDTO> getReviews(int eventNo) throws SQLException{
 			List<BoardDTO> dto = null;
 			dto = session.selectList(namespace+".getReviews",eventNo);
 			return dto;
-		}*/
+		}
 		
 		/*// 해당 장소의 블로그 리뷰 불러오기
 		public List<BlogDTO> getBlogReviews(int eventNo) throws SQLException{
@@ -160,5 +160,6 @@ public class EventDetailDAO {
 			return list;
 		}
 
+	
 
 }
