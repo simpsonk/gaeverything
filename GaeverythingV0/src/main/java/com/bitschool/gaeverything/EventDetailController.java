@@ -66,11 +66,8 @@ public class EventDetailController {
 		EventDTO dto = service.selectOne(eventNo);	 //이벤트 정보	
 		List<EventCommentDTO> list = service.commentList(eventNo);
 		dto = service.getEventActUserResult(manager, dto);
-		System.out.println(dto);
 		List<EventPhotoDTO> photoList = service.selectPhoto(eventNo);
 		List<BoardDTO> reviewList = service.getReviews(eventNo);
-		
-		
 		List<LocationDTO> nList = service.getNearby(dto.getLatitude(), dto.getLongitude()); 
 		
 		//좋아요 상태 유지
@@ -84,7 +81,6 @@ public class EventDetailController {
 		model.addAttribute("reviewList",reviewList);
 		model.addAttribute("eventphoto",photoList);
 		model.addAttribute("nearbyCount", nList.size());
-		System.out.println("사진갯수:" + photoList.size());
 		//model.addAttribute("blogList",blogList);
 		return url;
 	}

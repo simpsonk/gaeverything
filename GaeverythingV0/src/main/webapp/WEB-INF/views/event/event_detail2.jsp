@@ -62,12 +62,12 @@
 			<c:choose>
 				<c:when test="${member.nickname == null }">
 					<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
-						<button type="button" class="like-button" onclick="no_login_like()"><span class="like-icon"></span> Bookmark this event</button> <span>${dto.countLike} people bookmarked this event.</span>
+						<button type="button" class="like-button" onclick="no_login_like()"><span class="like-icon"></span> Bookmark this event</button> <span id = "numOflike">${dto.countLike} people bookmarked this event.</span>
 					</div>	
 				</c:when>
 				<c:otherwise>
 					<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
-						<button type="button" class="like-button" onclick="like_clicked()"><span id = "like" class="${dto.userLikeStatus }"></span> Bookmark this event</button> ${dto.countLike} people bookmarked this event.</span>
+						<button type="button" class="like-button" onclick="like_clicked()"><span id = "like" class="${dto.userLikeStatus }"></span> Bookmark this event</button><span id = "numOflike"> ${dto.countLike} people bookmarked this event.</span>
 					</div>	
 				</c:otherwise>
 			</c:choose>	

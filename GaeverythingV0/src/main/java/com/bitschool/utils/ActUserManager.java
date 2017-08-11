@@ -56,6 +56,7 @@ public class ActUserManager {
 			userLikeStatus = "like-icon liked";
 		}
 		dto.setUserLikeStatus(userLikeStatus);
+		dto.setCountLike(service.getLikeCount(aDTO));
 		return dto;
 	}
 	

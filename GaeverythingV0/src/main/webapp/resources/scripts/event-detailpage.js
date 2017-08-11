@@ -126,7 +126,7 @@ function like_clicked(){
         dataType : 'json',
         type	 : "POST",
         success  : function(data) {
-        	id.innerHTML=data+' people bookmarked this event.'; 
+        	id.innerHTML = data+' people bookmarked this event.';
         },
         error : function(request, status, error) {
             alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -356,17 +356,21 @@ function makeNearByList(near){
 		nearbyFragment = document.createDocumentFragment();
 		var itemEle = document.createElement("div");
 		var nearbyItem = 
-		'	<a href="https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query='+near[i].title+'" class="listing-item-container">'+
+		'	<div class="listing-item-container">'+
 		'		<div class="listing-item">'+
 		'			<img src="/resources/images/event-cafe.jpg" alt="">		'+
-		'			<div class="listing-item-content">'+
-		'				<span class="tag" style="background: #f91942;">Cafe</span>'+
-		'				<h3>'+near[i].title+'</h3>'+
+		'			<a href="https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query='+near[i].title+'">'+
+		'				<div class="listing-item-content">'+
+
+		'					<span class="tag" style="background: #f91942;">Cafe</span>'+
+		'					<h3>'+near[i].title+'</h3>'+
 		'				<span>'+near[i].address+'</span>'+
-		'			</div>'+
+
+		'				</div>'+
+		'			</a>'+
 		'			<span class="like-icon"></span>'+
 		'		</div>'+
-		'	</a>';
+		'	</div>';
 		itemEle.innerHTML = nearbyItem;
 		itemEle.className = 'carousel-item';
 		nearbyFragment.appendChild(itemEle);

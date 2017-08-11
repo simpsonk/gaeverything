@@ -34,6 +34,7 @@
 		</selectKey>
 		insert into act_user values(#{actNo}, #{email}, #{contentNo}, #{actType})
 	</insert>
+	
 	<delete id="deleteLikeStatus" parameterType="ActUserDTO">
 		delete from act_user where email = #{email} and contentNo = #{contentNo} and actType = #{actType}
 	</delete>
