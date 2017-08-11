@@ -46,13 +46,13 @@
 		<div class="col-lg-8 col-md-8 padding-right-10 padding-left-10 ">
 			<input type="hidden" id = "memberEmail" value="${member.email}" >
 			<!-- Titlebar -->
-			<div id="titlebar" class="listing-titlebar " style="padding-bottom: 30px;">
+			<div id="titlebar" class="listing-titlebar " style="padding-bottom: 15px;">
 				<div class="listing-titlebar-title">
 					<h2>${dto.eventName} <span class="listing-tag"> Event </span></h2>
 					<div>
-						<div class="star-rating" data-rating="${averageRatings}">
-							${countReview}  Reviews
-							<i class="sl sl-icon-bubble"></i> ${countReplies}
+						<div class="star-rating" data-rating="${averageRatings}"  style="margin-left: 20px;">
+							<span style="margin-left: 15px;"><i class="sl sl-icon-note"></i>${reviewList.size()}  Reviews</span>
+							<span style="margin-left: 15px;"><i class="sl sl-icon-bubble"></i> ${commentlist.size()}</span>	
 						</div>
 					</div>					
 				</div>
@@ -60,16 +60,23 @@
 			
 			<c:choose>
 				<c:when test="${member.nickname == null }">
-					<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
-						<button type="button" class="like-button" onclick="no_login_like()"><span class="like-icon"></span> Bookmark this event</button> <span>${dto.countLike} people bookmarked this event.</span>
+					<div class="listing-share margin-bottom-20 no-border col-lg-4" style="text-align: left;">
+						<button type="button" class="like-button" onclick="no_login_like()"><span class="like-icon"></span> Bookmark this event</button>
 					</div>	
 				</c:when>
 				<c:otherwise>
-					<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
-						<button type="button" class="like-button" onclick="like_clicked()"><span id = "like" class="${dto.userLikeStatus }"></span> Bookmark this event</button> ${dto.countLike} people bookmarked this event.</span>
+					<div class="listing-share margin-bottom-20 no-border col-lg-4" style="text-align: left;">
+						<button type="button" class="like-button" onclick="like_clicked()"><span id = "like" class="${dto.userLikeStatus }"></span> Bookmark this event</button>
 					</div>	
 				</c:otherwise>
 			</c:choose>	
+			
+			
+				<div class="listing-share margin-bottom-20 no-border col-lg-6" style="text-align: left; margin-top: 10px;">
+					<span>${dto.countLike} people bookmarked this event.</span>
+				</div>
+			
+		
 			
 			<!-- Overview -->
 			<div id="detail-Info" class="listing-section">

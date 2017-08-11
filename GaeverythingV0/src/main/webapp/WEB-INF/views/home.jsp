@@ -206,7 +206,7 @@
 								<h3>Tom's Restaurant</h3>
 								<span>964 School Street, New York</span>
 							</div>
-							<span class="like-icon"></span>
+							<span class="sim"></span>
 						</div>
 						<div class="star-rating" data-rating="3.5">
 							<div class="rating-counter">(12 reviews)</div>
