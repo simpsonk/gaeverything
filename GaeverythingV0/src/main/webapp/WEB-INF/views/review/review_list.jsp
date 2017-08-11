@@ -45,7 +45,13 @@
 				<nav id="breadcrumbs">
 					<ul>
 						<li><a href="/">Home</a></li>
-						<li>Review</li>
+						<li><a href="http://localhost:5050/review/viewReviewList">Review</a></li>
+						<c:if test="${param.categoryCode=='CARE'}">
+							<li>Care</li>
+						</c:if>
+						<c:if test="${param.categoryCode=='EVENT'}">
+							<li>Event</li>
+						</c:if>
 					</ul>
 				</nav>
 			</div>

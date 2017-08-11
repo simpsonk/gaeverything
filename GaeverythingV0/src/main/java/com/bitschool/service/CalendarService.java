@@ -76,7 +76,6 @@ public class CalendarService{
 				calendar.add(c);
 			}else{
 				String repeat = list.get(i).getRepeatdata();
-				//System.out.println(repeat);
 				String[] repeatSplit = repeat.split(",");
 				int dateForm = Integer.parseInt(repeatSplit[0]);
 				if(dateForm==1){

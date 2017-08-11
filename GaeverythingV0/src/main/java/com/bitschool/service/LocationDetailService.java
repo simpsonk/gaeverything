@@ -289,7 +289,6 @@ public class LocationDetailService {
 				int fTime = Integer.parseInt(fTimes[0])+12;
 				resultStart = fTime+":"+fTimes[1];
 				resultEnd = (fTime+2)+":"+fTimes[1];
-				System.out.println(fTimes[0]+"      "+fTimes[1]);
 			}else{
 				String[] fTimes = times[0].split(":");
 				int fTime = Integer.parseInt(fTimes[0]);
@@ -301,12 +300,8 @@ public class LocationDetailService {
 			Cdto.setEndTime(resultEnd);
 			Cdto.setMessage(null);
 			Cdto.setLocationseq(dto.getLocationSeq());
-			System.out.println(Cdto.toString());
-			System.out.println(dto.getBookTime());
-			System.out.println(times[0]+"    "+times[1]);
 			
 			flag = Cdao.insert2(Cdto);
-			System.out.println("입력성공");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

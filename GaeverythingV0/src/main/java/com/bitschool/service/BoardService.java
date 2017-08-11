@@ -22,7 +22,6 @@ public class BoardService implements IBoardService {
 
 	@Override
 	public boolean insertPost(BoardDTO dto) {
-		System.out.println("insert service");
 		boolean flag = false;
 		try {
 			flag = dao.addNewPost(dto);
@@ -51,7 +50,6 @@ public class BoardService implements IBoardService {
 			if (flag) {
 				dto = dao.readOnePost(boardNo);
 			}
-			System.out.println("boardno:" + boardNo);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -66,7 +64,6 @@ public class BoardService implements IBoardService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println("service:" + flag);
 		return flag;
 	}
 
@@ -75,7 +72,6 @@ public class BoardService implements IBoardService {
 		boolean flag = false;
 		try {
 			flag = dao.removePost(boardNo);
-			System.out.println("remove service:" + flag);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -98,7 +94,6 @@ public class BoardService implements IBoardService {
 		List<BoardDTO> list = null;
 		try {
 			list = dao.searchData(sDTO);
-			System.out.println("list:" + list);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -152,7 +147,6 @@ public class BoardService implements IBoardService {
 		BoardDTO bDTO = null;
 		try {
 			bDTO = dao.getPrev(boardNo);
-			System.out.println(bDTO);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -177,7 +171,6 @@ public class BoardService implements IBoardService {
 		String email = "";
 		try {
 			email = dao.readEmail(nickName);
-			System.out.println("글쓴이 이메일: " + email);
 			dto = dao.readProfile(email);
 			
 		} catch (SQLException e) {

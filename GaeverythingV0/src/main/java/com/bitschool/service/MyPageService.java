@@ -103,7 +103,6 @@ public class MyPageService {
 	
 	//회원정보 수정(photo는 수정하지 않을 때)
 	public boolean updateData2(MyPageDTO member){
-		System.out.println("MyPageService-updateData2에 들어왔다");
 		boolean flag = false;
 		try {
 			flag = mdao.modifyData2(member);
@@ -117,7 +116,6 @@ public class MyPageService {
 	//회원정보 수정
 	public boolean updateData(MyPageDTO member) {
 		// TODO Auto-generated method stub
-		System.out.println("MyPageService-updateData에 들어왔다");
 		boolean flag = false;
 		try {
 			flag = mdao.modifyData(member);

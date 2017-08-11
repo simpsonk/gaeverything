@@ -263,8 +263,6 @@ public class EventDetailService {
 			double endLat = Double.parseDouble(temp.getLatitude());
 			double endLon = Double.parseDouble(temp.getLongitude());
 			double radius = this.distanceCalcu(startLat, startLon, endLat, endLon, "kilometer");
-			//temp.setRadius(radius);
-			//System.out.println(radius);
 			if(!(radius>3)){
 				nList.add(temp);
 			}

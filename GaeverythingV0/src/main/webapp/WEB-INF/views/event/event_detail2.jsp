@@ -51,10 +51,10 @@
 					<h2>${dto.eventName} <span class="listing-tag"> Event </span></h2>
 					<div>
 						<div class="star-rating" data-rating="${averageRatings}">
-							<div class="rating-counter">${countRatings} </div>
+							${countReview}  Reviews
+							<i class="sl sl-icon-bubble"></i> ${countReplies}
 						</div>
-						<div>${countReview}  Reviews</div>
-						<div><i class="sl sl-icon-bubble"></i>${commentlist.size()} Comments</div>
+						
 					</div>					
 				</div>
 			</div>

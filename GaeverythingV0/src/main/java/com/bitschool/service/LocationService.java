@@ -58,7 +58,7 @@ public class LocationService {
 		// TODO Auto-generated method stub
 		List<LocationDTO> list  = null;
 		try {
-			list = dao.selectCategory(info);
+			list = dao.selectMapData(info.getSearchWord());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -92,11 +92,9 @@ public class LocationService {
 			
 			if(!(radius>distances[index])){
 				levelList.add(temp);
-				System.out.println(radius);
 			}
 		}
 		Collections.sort(levelList, asc);
-		System.out.println(levelList);
 		return levelList;
 	}
 	

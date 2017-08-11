@@ -81,26 +81,22 @@ public class MyPageDAO {
 	//수정(photo는 수정X)
 	public boolean modifyData2(MyPageDTO member) throws SQLException{
 		// TODO Auto-generated method stub
-		System.out.println("MyPageDAO-modifyData2에 들어왔다");
 		boolean flag = false;
 		int aCnt = session.update(namespace+".update2",member);
 		if(aCnt>0){
 			flag = true;
 		}
-		System.out.println(flag);
 		return flag;
 	}
 	
 	//수정 
 	public boolean modifyData(MyPageDTO member) throws SQLException{
 		// TODO Auto-generated method stub
-		System.out.println("MyPageDAO-modifyData에 들어왔다");
 		boolean flag = false;
 		int aCnt = session.update(namespace+".update",member);
 		if(aCnt>0){
 			flag = true;
 		}
-		System.out.println(flag);
 		return flag;
 	}
 	

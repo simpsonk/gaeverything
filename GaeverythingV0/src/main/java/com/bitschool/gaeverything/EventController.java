@@ -76,8 +76,6 @@ public class EventController {
 		HashMap<String, Object> data = new HashMap<String, Object>();
 	
 		
-		System.out.println("일자포맷변경: " + list.get(1).getAddDate());
-		System.out.println("일자포맷변경 전: " + list.get(1).getStartDate());
 		data.put("events", list); //
 		data.put("pList", map.get("pList"));
 		data.put("infoList", map.get("infoList"));
@@ -88,10 +86,8 @@ public class EventController {
 	public String detail (HttpSession session, Model model, @RequestParam("no") int eventNo){
 		String url = "event/event_detail2";
 		boolean isLogin = new LoginFilter().isLogin(session, model);
-		System.out.println(eventNo);
 		EventDTO detail = service.readOne(eventNo);
 		model.addAttribute("dto", detail);
-		System.out.println("해당이벤트 좋아요 수:" + detail.getCountLike());
 		return url;
 	}
 	

@@ -86,7 +86,6 @@ public class LocationDetailController {
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		dto.setNickname(member.getNickname());
 		dto.setPhoto(member.getPhoto());
-		System.out.println("dto : "+dto);
 		boolean flag = service.commentAdd(dto);
 		if(flag){
 			url = "redirect:viewDetailPage?locationSeq="+dto.getLocationSeq();
@@ -103,7 +102,6 @@ public class LocationDetailController {
 		DetailPhotoDTO Pdto = new DetailPhotoDTO();
 		Pdto.setLocationSeq(LSeq);
 		Pdto.setLocationPhoto(photoName);
-		System.out.println(Pdto);
 		try {
 			photo.transferTo(new File(root_path+attach_path+photoName));
 		} catch (IllegalStateException e) {
@@ -189,7 +187,6 @@ public class LocationDetailController {
 		String url = null;
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		boolean flag = service.bookingAdd(dto,member.getEmail());
-		System.out.println("controller");
 		if(flag){
 			url = "redirect:viewDetailPage?locationSeq="+dto.getLocationSeq();
 		}

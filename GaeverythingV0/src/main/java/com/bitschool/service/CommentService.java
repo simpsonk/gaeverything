@@ -19,11 +19,9 @@ public class CommentService implements ICommentService{
 	
 	@Override
 	public boolean addComment(CommentDTO cDTO) {
-		System.out.println("댓글추가 service");
 		boolean flag = false;
 		try {
 			flag = dao.insertComment(cDTO);
-			System.out.println("댓글추가결과: " + flag);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -34,11 +32,8 @@ public class CommentService implements ICommentService{
 	public List<CommentDTO> getAllComment(int boardNo) {
 		List<CommentDTO> cList= null;
 		
-		System.out.println("모든 댓글읽기 service");
-		System.out.println("모두읽기 그룹넘버:" + boardNo);
 		try {
 			cList = dao.readAllCmt(boardNo);
-			System.out.println("리스트받음ㅇㅇ");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -47,16 +42,12 @@ public class CommentService implements ICommentService{
 
 	@Override
 	public boolean updateCmt(CommentDTO cDTO) {
-		System.out.println("업뎃서비스");
 		
 		
 		boolean flag = false;
 		
 		try {
 			flag = dao.updateCmt(cDTO); 
-			System.out.println("댓글수정성공");
-			//인덱스번호 가져와서 해당 댓글 찾음 
-			//그 댓글 업뎃함. 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -80,7 +80,6 @@ public class EventDetailController {
 		model.addAttribute("dto", dto);
 		//model.addAttribute("reviewList",reviewList);
 		model.addAttribute("eventphoto",photoList);
-		System.out.println("사진갯수:" + photoList.size());
 		//model.addAttribute("blogList",blogList);
 		
 		return url;
@@ -103,7 +102,6 @@ public class EventDetailController {
 	@RequestMapping(value="addPhoto",method=RequestMethod.POST)
 	public String addPhoto(HttpServletRequest hsr, @RequestParam("eventNo") int eventNo,
 			@RequestParam("photo") MultipartFile photo, Model model){
-		System.out.println("사진추가");
 		String url = null;
 		String photoName = photo.getOriginalFilename();
 		String root_path = hsr.getSession().getServletContext().getRealPath("/");
@@ -111,7 +109,6 @@ public class EventDetailController {
 		EventPhotoDTO Pdto = new EventPhotoDTO();
 		Pdto.setEventNo(eventNo);
 		Pdto.setEventPhoto(photoName);
-		System.out.println("사진:" + Pdto);
 		try {
 			photo.transferTo(new File(root_path+attach_path+photoName));
 		} catch (IllegalStateException e) {
@@ -123,7 +120,6 @@ public class EventDetailController {
 		List<EventPhotoDTO> list = service.selectPhoto(eventNo);
 		//int PCnt = 0;
 		//PCnt = service.photoCnt(LNo);
-		//System.out.println("PCnt"+PCnt);
 		model.addAttribute("eventphoto",list);
 		//model.addAttribute("detailphotocnt",PCnt);
 		
