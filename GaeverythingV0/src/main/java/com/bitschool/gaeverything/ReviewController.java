@@ -112,14 +112,16 @@ public class ReviewController {
 	public String viewReviewRegist(HttpSession session, Model model,
 			@RequestParam(value="locationSeq", defaultValue = "0") int locationSeq,
 			@RequestParam(value="boardCategory",defaultValue="") String boardCategory,
-			@RequestParam(value="address", defaultValue = "") String address
-			/*@RequestParam(value="eventNo") int eventNo*/){
+			@RequestParam(value="address", defaultValue = "") String address,
+			@RequestParam(value="eventNo", defaultValue = "0") int eventNo){
 		System.out.println("check"+locationSeq);
+		
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		String url = "review/review_regist";
 		model.addAttribute("locationSeq",locationSeq);
 		model.addAttribute("boardCategory",boardCategory);
 		model.addAttribute("address",address);
+		model.addAttribute("eventNo", eventNo);
 		return url;
 	}
 	

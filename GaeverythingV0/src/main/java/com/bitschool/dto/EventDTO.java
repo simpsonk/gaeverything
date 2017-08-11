@@ -27,6 +27,7 @@ public class EventDTO {
 	private String userLikeStatus;
 	private int countLike;
 	private String categoryCode;
+	
 	private int countReview;
 	private String averageRatings;
 	private int countRatings;
@@ -191,21 +192,21 @@ public class EventDTO {
 	public void setCountReplies(int countReplies) {
 		this.countReplies = countReplies;
 	}
-	/*public void setActUserResult(int countReview, String averageRatings, int countRatings, int countReplies, int countLike) {
+	public void setActUserResult(int countReview, String averageRatings, int countRatings, int countReplies, int countLike) {
 		this.countReview = countReview ;
 		this.averageRatings = averageRatings;
 		this.countRatings = countRatings;
 		this.countReplies = countReplies;
 		this.countLike = countLike;
 		
-	}*/
-	
+	}
+	/*
 	public void setActUserResult( int countReplies, int countLike) {
 		
 		this.countReplies = countReplies;
 		this.countLike = countLike;
 		
-	}
+	}*/
 	
 	public String getCategoryCode() {
 		return categoryCode;

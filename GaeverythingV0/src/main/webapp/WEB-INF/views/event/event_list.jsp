@@ -369,8 +369,8 @@
 				}
 				
 				itemStr += '			</div>'
-				+		   '			<div class="star-rating" id="star-rating" data-rating="3.5">'
-				+		   '           		<div class="rating-counter">12 reviews</div> '
+				+		   '			<div class="star-rating" id="star-rating" data-rating="'+event.averageRatings+'">'
+				+		   '           		<div class="rating-counter">'+ event.countReview+' reviews</div> '
 				+		   '           		<span><i class="sl sl-icon-heart" style="color: #f91942"></i> '+event.countLike  +'</span> '
 				+		   '           		<span><i class="sl sl-icon-bubble" style="color: #f91942"></i> '+event.countReplies+'</span> '
 			 	+		   ' 			</div>';

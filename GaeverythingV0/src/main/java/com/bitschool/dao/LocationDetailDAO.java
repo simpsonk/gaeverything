@@ -136,7 +136,7 @@ public class LocationDetailDAO {
 	// 게시판에서 작성한 리뷰 가져오기
 	public List<BoardDTO> getReviews(int locationSeq) throws SQLException{
 		List<BoardDTO> dto = null;
-		dto = session.selectList(namespace+".getReviews",locationSeq);
+		dto = session.selectList(namespace+".getReviews", locationSeq);
 		return dto;
 	}
 	

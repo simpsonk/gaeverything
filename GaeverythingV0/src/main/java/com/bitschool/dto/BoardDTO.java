@@ -8,6 +8,7 @@ public class BoardDTO {
 	
 	private String boardCategory;
 	private int locationSeq;
+	private int eventNo;
 	private int boardNo;
 	private String nickname;
 	private String title;
@@ -32,6 +33,14 @@ public class BoardDTO {
 	
 	
 	
+
+	public int getEventNo() {
+		return eventNo;
+	}
+
+	public void setEventNo(int eventNo) {
+		this.eventNo = eventNo;
+	}
 
 	public int getCountLike() {
 		return countLike;
