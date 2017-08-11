@@ -77,14 +77,12 @@ public class MypageController {
 	@RequestMapping(value = "/viewMypageProfile", method = RequestMethod.GET)
 	public String viewMypageProfile(HttpSession session, Model model){
 		String url = "mypage/mypage_profile";
-		System.out.println("viewMypageProfile에 들어왔다");
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		boolean isLogin = member!=null?true:false;
 		if(!isLogin){
 			url = "login_page";
 		}else{
 			MyPageDTO mypage = service.readData(member);
-			System.out.println("mypage : "+mypage);
 			model.addAttribute("member", member);
 			model.addAttribute("mypage", mypage);
 		}
@@ -96,9 +94,7 @@ public class MypageController {
 			@RequestParam("name") String name, @RequestParam("notes") String notes, @RequestParam("photo") MultipartFile photo,
 			Model model,HttpServletRequest req){		
 		
-		System.out.println("MypageController-updateMember로 들어왔다");
 		String photos=photo.getOriginalFilename();	
-		System.out.println("photos : "+photos);
 		String url = null;	
 		MyPageDTO dto=new MyPageDTO();
         String root_path = req.getSession().getServletContext().getRealPath("/");  
@@ -134,9 +130,6 @@ public class MypageController {
 			flag3 = lservice.updatePhoto(member); //맵 디테일페이지에 photo 업데이트
 		}
 		member = sservice.getMemberInfo(email);
-		System.out.println("flag : "+flag+"flag2 : "+flag2+"flag3 : "+flag3);
-		System.out.println("MyPageDTO : "+dto);		
-		System.out.println("MemberDTO : "+member);
 		if(flag){
 			url = "redirect:viewMypageProfile";	
 			model.addAttribute("member", member);
@@ -148,7 +141,6 @@ public class MypageController {
 	//펫 리스트 보기(♥)
 	@RequestMapping(value = "/viewPetList", method = RequestMethod.GET)
 	public String viewPetList(HttpSession session, Model model){
-		System.out.println("viewPetList에 들어왔다");
 		String url = "mypage/mypage_pet_list";
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		
@@ -173,9 +165,7 @@ public class MypageController {
 			@RequestParam("age") int age, @RequestParam("photo") MultipartFile photo,
 			@RequestParam("notes") String notes,HttpServletRequest req, Model model){
 		
-		System.out.println("MypageController-registNewPet에 들어왔다");
 		String photos=photo.getOriginalFilename();	
-		System.out.println("photos : "+photos);
 		String url = null;	
 		PetPageDTO pet = new PetPageDTO();
 		String root_path = req.getSession().getServletContext().getRealPath("/");  
@@ -183,7 +173,6 @@ public class MypageController {
 
 		//String url = "mypage/mypage_pet_profile";
 		MemberDTO member = (MemberDTO)req.getSession().getAttribute("member");
-		System.out.println("member의 email : "+member.getEmail());
 		try { 
 			pet.setEmail(email);
 			pet.setPetname(petname);
@@ -215,7 +204,6 @@ public class MypageController {
 		}
 		
 		model.addAttribute("member",member);		
-		System.out.println("flag : "+flag);
 		if(flag){
 			url = "redirect:viewPetList";
 		}
@@ -225,7 +213,6 @@ public class MypageController {
 	//펫 등록하는 페이지 보기
 	@RequestMapping(value = "/viewMypagePetProfile", method = {RequestMethod.POST,RequestMethod.GET})
 	public String viewMypagePetProfile(HttpSession session, Model model){
-		System.out.println("viewMypagePetProfile에 들어왔다");
 		String url = "mypage/mypage_pet_profile";	//등록하는 페이지로 이동
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		boolean isLogin = member!=null?true:false;
@@ -241,8 +228,6 @@ public class MypageController {
 	@RequestMapping(value = "/removePet", method = {RequestMethod.POST,RequestMethod.GET})
 	public String removePet(HttpSession session, Model model,
 			@RequestParam("petno") int petno){
-		System.out.println("removePet에 들어왔다");
-		System.out.println("petno : "+petno);
 		String url = null;
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		boolean isLogin = member!=null?true:false;
@@ -267,9 +252,7 @@ public class MypageController {
 			@RequestParam("species") String species, @RequestParam("gender") String gender,
 			@RequestParam("age") int age, @RequestParam("photo") MultipartFile photo,
 			@RequestParam("notes") String notes,HttpServletRequest req, Model model){
-		System.out.println("MypageController-modifyPet에 들어왔다");
 		String photos=photo.getOriginalFilename();	
-		System.out.println("photos : "+photos);
 		String url = null;	
 		PetPageDTO pet = new PetPageDTO();
 		String root_path = req.getSession().getServletContext().getRealPath("/");  
@@ -298,7 +281,6 @@ public class MypageController {
 			e1.printStackTrace();
 		}
 		
-		System.out.println("pet : "+pet);
 		
 		boolean flag = false;
 		if(photos.equals("")){//새로운 사진 선택 안할 경우
@@ -309,7 +291,6 @@ public class MypageController {
 			model.addAttribute("petpage",pet);
 		}
 		model.addAttribute("member",member);		
-		System.out.println("flag : "+flag);
 		if(flag){
 			url = "redirect:viewPetList";
 		}
@@ -319,10 +300,8 @@ public class MypageController {
 	//펫 수정하는 페이지 보기(♥)
 	@RequestMapping(value = "/viewModifyPetProfile", method = {RequestMethod.POST,RequestMethod.GET})
 	public String viewModifyPetProfile(HttpSession session, Model model,@RequestParam("petno") int petno){
-		System.out.println("viewModifyPetProfile에 들어왔다");
 		String url = "mypage/mypage_pet_profile2";	//수정하는 페이지로 이동
 		MemberDTO member = (MemberDTO)session.getAttribute("member");		
-		System.out.println("petno : "+petno); //petno..
 		boolean isLogin = member!=null?true:false;
 		if(!isLogin){
 			url = "login_page";
@@ -330,9 +309,7 @@ public class MypageController {
 			PetPageDTO pet = new PetPageDTO();
 			pet.setPetno(petno);
 			pet.setEmail(member.getEmail());
-			System.out.println("pet : "+pet);
 			pet = pservice.readPetData(pet); //pet하나정보읽기
-			System.out.println("pet : "+pet);			
 			model.addAttribute("petpage",pet);
 		}
 		return url;
@@ -436,7 +413,6 @@ public class MypageController {
 			MemberDTO member = (MemberDTO)session.getAttribute("member");
 			ActUserDTO aDTO = new ActUserDTO(member.getEmail(),"20",contentno);
 			aservice.deleteDetailPageLikeStatus(aDTO);
-			System.out.println("deleteBookmarks : "+aDTO);
 			url = "redirect:viewMypageBookmarks?category="+category;	
 			return url;
 		}	
@@ -450,7 +426,6 @@ public class MypageController {
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		ActUserDTO aDTO = new ActUserDTO(member.getEmail(),"10",contentno);
 		aservice.deleteDetailPageLikeStatus(aDTO);
-		System.out.println("deleteBookmarks : "+aDTO);
 		url = "redirect:viewMypageBookmarks?category="+category;	
 		return url;
 	}	
@@ -461,11 +436,9 @@ public class MypageController {
 			@RequestParam(value="contentno") int contentno,
 			@RequestParam(value="category",defaultValue="0") int category){
 		String url = null;
-		System.out.println("category : "+category);
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		ActUserDTO aDTO = new ActUserDTO(member.getEmail(),"00",contentno);
 		aservice.deleteDetailPageLikeStatus(aDTO);
-		System.out.println("deleteBookmarks : "+aDTO);
 		url = "redirect:viewMypageBookmarks?category="+category;		
 		return url;
 	}	
@@ -554,10 +527,8 @@ public class MypageController {
 			@RequestParam(value="index") int index){
 		String url = null;
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		System.out.println("list : "+list);
 		list.setNickname(member.getNickname());
 		list.setPhoto(member.getPhoto());	
-		System.out.println("list : "+list);
 		boolean flag = lservice.commentEdit(list);
 		if(flag){
 			url = "redirect:viewMypageList?category=2";

@@ -70,7 +70,6 @@ public class CalendarController {
 	@RequestMapping(value="/viewDetailCalendarLoc", method={RequestMethod.GET,RequestMethod.POST})
 	public String viewDetailCalendarLoc(HttpSession session, Model model, @RequestParam("seq") int seq,
 			@RequestParam(value="longitude",defaultValue="0") String longitude, @RequestParam(value="latitude",defaultValue="0") String latitude){
-		System.out.println(longitude+"       "+latitude);
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		String url = "mypage/calendar/detail_calendar_location";
 		model.addAttribute("member", member);
@@ -98,8 +97,7 @@ public class CalendarController {
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		model.addAttribute("member", member);
 		dto.setId(member.getEmail());
-		boolean flag = service.registCalendar(dto);
-		System.out.println(dto.getId());
+		boolean flag = service.registCalendar(dto);		
 		if(flag){
 			url = "redirect:/mypage/calendar/viewCalendar";
 		}

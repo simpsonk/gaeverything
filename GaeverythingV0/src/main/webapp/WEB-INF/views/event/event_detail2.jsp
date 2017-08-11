@@ -49,12 +49,11 @@
 			<div id="titlebar" class="listing-titlebar " style="padding-bottom: 30px;">
 				<div class="listing-titlebar-title">
 					<h2>${dto.eventName} <span class="listing-tag"> Event </span></h2>
-					<div class="general-info">
-						average rating <div class="star-rating" data-rating="${dto.averageRatings}">
-							<!--  <div class="rating-counter"></div>-->
+					<div>
+						<div class="star-rating" data-rating="${averageRatings}">
+							${countReview}  Reviews
+							<i class="sl sl-icon-bubble"></i> ${countReplies}
 						</div>
-						<div>${dto.countReview}  Reviews</div>
-						<div><i class="sl sl-icon-bubble"></i> ${commentlist.size()} Comments</div>
 					</div>					
 				</div>
 			</div>

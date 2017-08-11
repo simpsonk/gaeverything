@@ -41,7 +41,6 @@ public class GetDataController {
 		 String clientId = "LEq7OLCKz1iWikgbm3jr";//애플리케이션 클라이언트 아이디값";
 	        String clientSecret = "pNcj27Jve1";//애플리케이션 클라이언트 시크릿값";
 	        List<BlogDTO> list1 = service.selectBlog();
-	        System.out.println("list1 : "+list1);
 	        List<BlogDTO> list2 = null;
 	       /* for(int i=0;i<list1.size();i++){
 		        try {
@@ -87,7 +86,6 @@ public class GetDataController {
 	public String insertBlogData(){
 		String url = null;
 		List<BlogDTO> list = this.getBlogImage();
-		System.out.println(list);
 		return url;
 	}
 	
@@ -145,7 +143,6 @@ public class GetDataController {
 				}
 		    	
 	        }
-	        System.out.println("lists.size() : "+lists.size());
 	        return lists;
 	    }
 	   
@@ -160,7 +157,6 @@ public class GetDataController {
 		for(int i=0;i<list.size();i++){
 			flag = service.insertBlogData(list.get(i));
 		}
-		System.out.println(flag);
 		return url;
 	}
 	
@@ -216,11 +212,9 @@ public class GetDataController {
 	@RequestMapping(value="/insertData", method=RequestMethod.GET)
 	public String insertData(LocationDTO dto){
 		List<Location2DTO> list = this.GetDatum();
-		System.out.println("insertData / list : "+list);
 		String url = null;
 		boolean flag = false;
 		for(int i=0;i<list.size();i++){
-			//flag = service.insertData(list.get(i));
 			flag = service.insertEventData(list.get(i));
 		}
 		System.out.println(flag);

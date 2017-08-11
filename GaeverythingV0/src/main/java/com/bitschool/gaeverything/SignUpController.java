@@ -27,7 +27,6 @@ public class SignUpController {
 		String url = null;		
 		boolean flag = service.registUserData(member);
 		member.setPhoto("user_icon.png");
-		System.out.println(flag);
 		if(flag){
 			url = "redirect:/";
 			session.setAttribute("member", member);
@@ -41,7 +40,6 @@ public class SignUpController {
 		MemberDTO member = new MemberDTO();
 		member.setEmail(email);
 		member.setPw(password);
-		System.out.println("member :"+member);
 		int chkPoint = service.checkPW(member);	
 		return chkPoint;
 	}

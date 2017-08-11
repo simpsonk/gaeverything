@@ -60,7 +60,6 @@ public class HomeController {
 	public String home(Model model, HttpSession session) {
 		logger.info("Welcome home! The client locale is {}.", "connect");
 		boolean islogin = new LoginFilter().isLogin(session, model);
-		System.out.println(islogin);
 		return "home";
 	}
 	@RequestMapping(value = "login", method = {RequestMethod.POST, RequestMethod.GET})
@@ -105,13 +104,11 @@ public class HomeController {
 	    public ModelAndView findPW(@RequestParam("email") String e_mail,
 	    		@RequestParam("nickname") String nickname,
 	    		ModelMap model) throws Exception {
-		 	System.out.println("findPW 에 옴");
 	        ModelAndView mav;
 	        MemberDTO member = new MemberDTO();
 	        member.setEmail(e_mail);
 	        member.setNickname(nickname);
 	        String pw = sigService.findPW(member);	        
-	        System.out.println(pw);
 	        if(pw!=null) {
 	            email.setContent(nickname+"님, 안녕하세요. [Gaeverything]입니다. "
 	            		+ e_mail+" 계정의 비밀번호는 "+pw+" 입니다.");
@@ -132,9 +129,7 @@ public class HomeController {
 			MemberDTO member = new MemberDTO();
 			member.setEmail(email);
 			member.setNickname(nickname);
-			System.out.println("member :"+member);
 			boolean chkPoint = sigService.findPW(member)==null;	
-			System.out.println("chkPoint :"+chkPoint);
 			return chkPoint;
 		}
 }

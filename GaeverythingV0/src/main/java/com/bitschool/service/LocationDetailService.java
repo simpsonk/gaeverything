@@ -267,7 +267,4 @@ public class LocationDetailService {
 		}
 		return dto;
 	}
-
-	
-
 }
