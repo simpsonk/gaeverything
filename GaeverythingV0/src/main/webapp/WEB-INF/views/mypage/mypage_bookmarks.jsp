@@ -56,7 +56,7 @@
 		<div id="titlebar">
 			<div class="row">
 				<div class="col-md-12">
-					<h2>Bookmarks</h2>
+					<h2>Bookmarks (${member.bookmarkReviewSize+member.bookmarkMapSize+member.bookmarkEventSize})</h2>
 					<!-- Breadcrumbs -->
 					<nav id="breadcrumbs">
 						<ul>
