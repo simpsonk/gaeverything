@@ -11,4 +11,10 @@
 			insert into reaction(reactionSeq,type,groupNo) 
 			values(#{reactionSeq},#{type},#{groupNo}) 
 	</insert>
+	
+	<!-- select  -->
+	<select id="selectReaction" parameterType="String" resultType="ReactionDTO">
+		select * from reaction 
+		where groupno in (select groupno from board where nickname = #{nickname})
+	</select>
  </mapper>

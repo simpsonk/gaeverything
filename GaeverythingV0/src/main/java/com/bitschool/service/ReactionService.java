@@ -28,5 +28,16 @@ public class ReactionService {
 		return flag;
 	}
 	
+	public List<ReactionDTO> selectReaction(String nickname){
+		List<ReactionDTO> list = null;
+		try {
+			list = dao.selectReaction(nickname);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
 
 }

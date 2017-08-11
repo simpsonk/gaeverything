@@ -1,7 +1,7 @@
 package com.bitschool.dao;
 
 import java.sql.SQLException;
-
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -29,5 +29,10 @@ public class ReactionDAO {
 		return flag;
 	}
 	
+	public List<ReactionDTO> selectReaction(String nickname) throws SQLException{
+		List<ReactionDTO> list = null;
+		list = session.selectList(namespace+".selectReaction", nickname);
+		return list;
+	}
 
 }

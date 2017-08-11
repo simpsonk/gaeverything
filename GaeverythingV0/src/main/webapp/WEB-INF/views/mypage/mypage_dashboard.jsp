@@ -178,23 +178,23 @@
 					<h4 style="background:#fa5b0f; color:white">Reactions</h4>
 					<ul>
 					<c:choose>
-					<c:when test="${commentList.size()==0}">
+					<c:when test="${reactions.size()==0}">
 						<li>
 							<span>표시할 알림이 없습니다.</span>
 						</li>
 					</c:when>
 					
 					<c:otherwise>
-					<%-- <c:forEach var="list" items="${commentList}" varStatus="status"> --%>
+					<c:forEach var="list" items="${reactions}" varStatus="status"> --%>
 						<li>
-							<i class="list-box-icon sl sl-icon-heart"></i> Someone bookmarked your <strong><a href="#">Burger House</a></strong> listing!
+							<i class="list-box-icon sl sl-icon-heart"></i> ${list.nickname} bookmarked your <strong><a href="#">Burger House</a></strong> listing!
 							<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
 						</li>
 						<li>
-							<i class="list-box-icon sl sl-icon-star"></i> Kathy Brown left a review <div class="numerical-rating" data-rating="5.0"></div> on <strong><a href="#">Burger House</a></strong>
+							<i class="list-box-icon sl sl-icon-star"></i> ${list.nickname} left a review <div class="numerical-rating" data-rating="5.0"></div> on <strong><a href="#">Burger House</a></strong>
 							<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
 						</li>
-					<%-- </c:forEach> --%>
+					</c:forEach> 
 					</c:otherwise>
 					</c:choose>
 					</ul>

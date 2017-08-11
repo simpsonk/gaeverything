@@ -32,12 +32,14 @@ import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.dto.MyPageDTO;
 import com.bitschool.dto.PetPageDTO;
+import com.bitschool.dto.ReactionDTO;
 import com.bitschool.service.ActUserService;
 import com.bitschool.service.BoardService;
 import com.bitschool.service.ICommentService;
 import com.bitschool.service.LocationDetailService;
 import com.bitschool.service.MyPageService;
 import com.bitschool.service.PetPageService;
+import com.bitschool.service.ReactionService;
 import com.bitschool.service.SignUpService;
 import com.bitschool.utils.ActUserManager;
 import com.bitschool.utils.LoginFilter;
@@ -68,6 +70,9 @@ public class MypageController {
 	   
 	@Inject
 	private ICommentService cservice;
+	
+	@Inject
+	private ReactionService rservice;
 	
 
 	   
@@ -365,6 +370,8 @@ public class MypageController {
 		List<EventDTO> el = aservice.selectEventBookmark(member.getEmail());
 		member.setBookmarkEventSize(el.size());
 		///////////////////////////////////////////////////////////////////////
+		List<ReactionDTO> reactions = rservice.selectReaction(member.getNickname());
+		
 		int countReviewBookmark = 0; //리뷰북마크수,댓글수,조회수
 		int countReviewCmt = 0;
 		int countRead = 0;	
@@ -400,6 +407,7 @@ public class MypageController {
 			model.addAttribute("countRead",countRead);
 			model.addAttribute("countLocReviews",countLocReviews);
 			model.addAttribute("commentList",commentList2);
+			model.addAttribute("reactions", reactions);
 		}
 		return url;
 	}
