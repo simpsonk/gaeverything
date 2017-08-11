@@ -15,9 +15,11 @@ import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BlogDTO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.BookCalendarDTO;
+import com.bitschool.dto.BookEventCalendarDTO;
 import com.bitschool.dto.CalendarDTO;
 import com.bitschool.dto.DetailCommentDTO;
 import com.bitschool.dto.DetailPhotoDTO;
+import com.bitschool.dto.EventDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.utils.ActUserManager;
@@ -34,9 +36,6 @@ public class LocationDetailService {
 	
 	@Inject
 	private LocationDAO ldao;
-	
-	@Inject
-	private CalendarDAO Cdao;
 	
 	public LocationDTO selectOne(int seq){
 		// TODO Auto-generated method stub
@@ -269,49 +268,6 @@ public class LocationDetailService {
 		return dto;
 	}
 
-	public boolean bookingAdd(BookCalendarDTO dto,String email){
-		// TODO Auto-generated method stub
-		boolean flag = false;
-		try {
-			LocationDTO Ldto = ldao.selectLocationSeq(dto.getLocationSeq());
-			CalendarDTO Cdto = new CalendarDTO();
-			Cdto.setId(email);
-			Cdto.setDogid(0);
-			Cdto.setTitle("병원예약");
-			Cdto.setPlace(Ldto.getTitle());
-			Cdto.setStartDate(dto.getBookDate());
-			String time = dto.getBookTime();
-			String[] times = time.split(" ");
-			String resultStart = null;
-			String resultEnd = null;
-			if(times[1].equals("pm")){
-				String[] fTimes = times[0].split(":");
-				int fTime = Integer.parseInt(fTimes[0])+12;
-				resultStart = fTime+":"+fTimes[1];
-				resultEnd = (fTime+2)+":"+fTimes[1];
-				System.out.println(fTimes[0]+"      "+fTimes[1]);
-			}else{
-				String[] fTimes = times[0].split(":");
-				int fTime = Integer.parseInt(fTimes[0]);
-				resultStart = fTime+":"+fTimes[1];
-				resultEnd = (fTime+2)+":"+fTimes[1];
-			}
-			Cdto.setStartTime(resultStart);
-			Cdto.setEndDate(dto.getBookDate());
-			Cdto.setEndTime(resultEnd);
-			Cdto.setMessage(null);
-			Cdto.setLocationseq(dto.getLocationSeq());
-			System.out.println(Cdto.toString());
-			System.out.println(dto.getBookTime());
-			System.out.println(times[0]+"    "+times[1]);
-			
-			flag = Cdao.insert2(Cdto);
-			System.out.println("입력성공");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return flag;
-	}
+	
 
 }

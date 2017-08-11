@@ -342,7 +342,7 @@
 	
 						<!-- Time Picker - docs: http://www.vasterad.com/docs/listeo/#!/time_picker -->
 						<div class="col-lg-6 col-md-12">
-							<input type="text" id="booking-time" name="bookTime" value="9:00 am">
+							<input type="text" id="booking-time" name="bookTime" value="09:00 am">
 						</div>
 						<input type="hidden" id="isLogin3" name="bookEmail" value="${member.nickname}">
 						<input type="hidden" id="locationSeq3" name="locationSeq" value="${detail.locationSeq}">
@@ -480,9 +480,9 @@ $('#bookNow').on('click',function(){
 	var locationSeq = document.getElementById("locationSeq3").value;
 	checkBooking(locationSeq);
 	var book = document.getElementById("booking-calendar");
-	var url = "/map/detail/addBooking";
+	var url = "/mypage/calendar/addBooking";
 	book.action = url;
-	book.submit();
+	book.submit(); 
 });
 
 function checkBooking(locationSeq){

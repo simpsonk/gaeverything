@@ -61,6 +61,11 @@ public class CalendarFormat {
 	public void setEnd(String end) {
 		this.end = end;
 	}
+	@Override
+	public String toString() {
+		return "CalendarFormat [id=" + id + ", title=" + title + ", start=" + start + ", end=" + end + ", color="
+				+ color + ", seq=" + seq + ", longitude=" + longitude + ", latitude=" + latitude + "]";
+	}
 	
 	
 }
