@@ -18,7 +18,7 @@ $('#bookNow').on('click',function(){
 	var eventNo = document.getElementById("eventNo3").value;
 	checkBooking(eventNo);
 	var book = document.getElementById("booking-calendar");
-	var url = "/map/detail/addBooking";
+	var url = "/mypage/calendar/addBookingEvent";
 	book.action = url;
 	book.submit();
 });

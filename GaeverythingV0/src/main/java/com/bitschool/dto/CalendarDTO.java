@@ -19,8 +19,26 @@ public class CalendarDTO {
 	private String repeatdata;
 	private String repeatview;
 	private int locationseq;
+	private int eventNo;
 	
 	
+	@Override
+	public String toString() {
+		return "CalendarDTO [calendarseq=" + calendarseq + ", id=" + id + ", dogid=" + dogid + ", title=" + title
+				+ ", place=" + place + ", message=" + message + ", startTime=" + startTime + ", startDate=" + startDate
+				+ ", endTime=" + endTime + ", endDate=" + endDate + ", start=" + start + ", end=" + end
+				+ ", repeatdata=" + repeatdata + ", repeatview=" + repeatview + ", locationseq=" + locationseq
+				+ ", eventNo=" + eventNo + "]";
+	}
+
+	public int getEventNo() {
+		return eventNo;
+	}
+
+	public void setEventNo(int eventNo) {
+		this.eventNo = eventNo;
+	}
+
 	public int getLocationseq() {
 		return locationseq;
 	}
@@ -53,12 +71,7 @@ public class CalendarDTO {
 		this.repeatdata = repeatdata;
 	}
 
-	@Override
-	public String toString() {
-		return "CalendarDTO [seq=" + calendarseq + ", id=" + id + ", dogid=" + dogid + ", title=" + title + ", place=" + place
-				+ ", message=" + message + ", startTime=" + startTime + ", startDate=" + startDate + ", endTime="
-				+ endTime + ", endDate=" + endDate + ", start=" + start + ", end=" + end + "]";
-	}
+	
 
 	public String getStart() {
 		String date = null;

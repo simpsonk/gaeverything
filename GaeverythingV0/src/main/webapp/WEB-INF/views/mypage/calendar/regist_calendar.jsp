@@ -93,7 +93,7 @@
 										<c:when test="${!empty list}" >
 										   <select name="dogid" id="dogid">
 										      <c:forEach var="pet" items="${list}" varStatus="i">
-										         <option value="${i.count}">${pet.petname}</option>
+										         <option value="${i.count+1}">${pet.petname}</option>
 										      </c:forEach>
 										   </select>
 										</c:when>
