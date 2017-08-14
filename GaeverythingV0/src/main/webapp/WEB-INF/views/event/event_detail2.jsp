@@ -239,31 +239,7 @@
 					</c:if>
 					</div>
 			<!-- write Review / End -->
-
-
-			<!-- Blog review 
-			<div id="blog-review" class="listing-section margin-top-70 margin-bottom-30">
-				<div class="col-lg-3" style="padding-left: 0px;">				
-					<h3 class="listing-desc-headline ">Blog Review </h3>							
-				</div>				
-			<div class="col-lg-12" style="padding-left: 0px;">
-					<div class="row">
-							<c:forEach var="reviews" items="${blogList}" varStatus="status">
-							<%-- <c:if test="${status.index<10}"> --%>
-								<div class="col-md-4">
-									<a href="${reviews.link}" class="listing-item-container">																
-										<h4>${reviews.title}</h4>												
-										<span>${reviews.bloggername}</span><br>
-										<span>${reviews.postdate}</span>																				
-									</a>
-								</div>	
-							<%-- </c:if>			 --%>
-							</c:forEach>	
-					</div>				
-					</div>
-			 Blog Review END -->
 		
-			
 				
 			<!-- Comment -->
 			<div id="listing-reviews" class="listing-section">

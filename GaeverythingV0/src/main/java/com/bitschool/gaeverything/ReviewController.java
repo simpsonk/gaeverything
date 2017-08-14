@@ -214,9 +214,7 @@ public class ReviewController {
 		}else{
 			nextTitle = "(다음 글이 없습니다.)";
 		}
-		
-		//글쓴이 닉네임으로 프로필 불러오기
-		//글쓴이 닉넴 -> 이메일 찾고(사인업) -> 프로필에서 찾기
+
 		MyPageDTO mDTO = service.getWriter(dto.getNickname());
 		
 		model.addAttribute("numOfCmt", numOfCmt);

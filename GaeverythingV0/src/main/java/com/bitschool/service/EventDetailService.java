@@ -243,9 +243,7 @@ public class EventDetailService {
 		double startLat = Double.parseDouble(lat);
 		double startLon = Double.parseDouble(lon);
 		
-		//시작지점 : 해당 이벤트의 x, y
-		//거리구할 끝 지점 : 카페리스트 x, y
-		//받은 리스트랑 시작~거리 거리를 구하고  그게 특정 km이내인 리스트만 뽑아서 nList에 저장 
+
 		for(int i=0;i<list.size();i++){
 			LocationDTO temp = list.get(i);
 			double endLat = Double.parseDouble(temp.getLatitude());
