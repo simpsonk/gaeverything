@@ -192,7 +192,7 @@ public class CalendarService{
 			CalendarDTO Cdto = new CalendarDTO();
 			Cdto.setId(email);
 			Cdto.setDogid(0);
-			Cdto.setTitle("병원예약");
+			Cdto.setTitle("병원예약");//병원, 카페에 따라 다르게
 			Cdto.setPlace(Ldto.getTitle());
 			Cdto.setStartDate(dto.getBookDate());
 			String time = dto.getBookTime();

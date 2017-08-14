@@ -320,15 +320,17 @@ function getPhotoList(photo) {
 
 
 $(document).ready(function() {
+	
+	
 	var eventNo = document.getElementById("eventNo").value;
 	var url = "/event/detail/getNearby?eventNo="+eventNo;
 	$.ajax ({
 		url 	 : url,
 		dataType : 'JSON',
 		type 	 : "POST",
-		success	 : function(data){
+		success	 : function(list){
 
-			makeNearByList(data);
+			makeNearByList(list.member, list.nearby, list.dto);
 			nearbySlide();
 		},
 		error : function(request, status, error) {
@@ -336,8 +338,11 @@ $(document).ready(function() {
       }
 	});
 	
+
 	
 });
+
+
 
 function nearbySlide(){
 	$('.sim').slick({
@@ -350,7 +355,7 @@ function nearbySlide(){
 
 
 
-function makeNearByList(near){
+function makeNearByList(member, near, dto){
 	var ele = document.getElementById("nearbyList");
 	for(var i=0; i<near.length; i++){
 		nearbyFragment = document.createDocumentFragment();
@@ -367,8 +372,14 @@ function makeNearByList(near){
 		'				<span>'+near[i].address+'</span>'+
 
 		'				</div>'+
-		'			</a>'+
-		'			<span class="like-icon"></span>'+
+		'			</a>';
+		if(member.nickname == null){
+			nearbyItem += '	<span class="like-icon" onclick = "sim()"></span>';
+		}else {
+			nearbyItem += '	<span class="'+dto.userLikeStatus+'" onclick = "addToCal('+member.nickname, dto.eventNo, dto.startDate+')"></span>';
+		}
+	
+		nearbyItem +=
 		'		</div>'+
 		'	</div>';
 		itemEle.innerHTML = nearbyItem;
@@ -376,7 +387,27 @@ function makeNearByList(near){
 		nearbyFragment.appendChild(itemEle);
 		ele.appendChild(nearbyFragment);
 	}
-	
 	return ele;
 }
 
+
+function addToCal(nickname, eventNo, startDate){
+	alert("check");
+	//var eventNo = document.getElementById("eventNo4").value;
+	checkBooking(eventNo);
+	//var book = document.getElementById("addNearby");
+	var url = "/mypage/calendar/addBookingEvent";
+			book.action = url;
+			book.submit();	
+			
+}
+
+
+
+function checkBooking(eventNo){
+	var isLogin = document.getElementById("isLogin4");
+	if(isLogin.value==''){
+		alert("일정등록은 회원만 가능합니다.");
+		location.href = "/viewLogin?uri=/event/detail/view?no="+eventNo;
+	}
+}

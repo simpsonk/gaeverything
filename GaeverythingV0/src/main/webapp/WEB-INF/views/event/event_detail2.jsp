@@ -428,20 +428,7 @@
 
 			<!-- Share / Like -->
 			<div class="listing-share margin-top-40 margin-bottom-40 no-border">
-				<!--<c:choose>
-				<c:when test="${member.nickname == null }">
-					<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
-						<button type="button" class="like-button" onclick="no_login_like()"><span class="like-icon"></span> Bookmark this listing</button> 
-					</div>	
-				</c:when>
-				<c:otherwise>
-					<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
-						<button type="button" class="like-button" onclick="like_clicked()"><span id = "like" class="${dto.userLikeStatus }"></span> Bookmark this listing</button> 
-					</div>	
-				</c:otherwise>
-				</c:choose> -->
-			
-
+		
 					<!-- Share Buttons -->
 					<ul class="share-buttons margin-top-40 margin-bottom-0">
 						<li><a class="fb-share" href="#"><i class="fa fa-facebook"></i> Share</a></li>
@@ -451,6 +438,7 @@
 					</ul>
 					<div class="clearfix"></div>
 			</div>
+			<span onclick="sim()"></span>
 		</div> <!-- sidebar end -->
 </div>
 </div>

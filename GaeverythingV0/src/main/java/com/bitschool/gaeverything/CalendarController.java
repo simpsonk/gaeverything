@@ -136,6 +136,7 @@ public class CalendarController {
 		}
 		return url;
 	}
+	
 	@RequestMapping(value="/addBookingEvent",method=RequestMethod.POST)
 	public String addBookingEvent(HttpSession session,Model model,
 			BookEventCalendarDTO dto){

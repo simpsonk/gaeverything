@@ -2,6 +2,7 @@ package com.bitschool.gaeverything;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -102,7 +103,7 @@ public class EventDetailController {
 	@RequestMapping(value="addPhoto",method=RequestMethod.POST)
 	public String addPhoto(HttpServletRequest hsr, @RequestParam("eventNo") int eventNo,
 			@RequestParam("photo") MultipartFile photo, Model model){
-		System.out.println("사진추가");
+		
 		String url = null;
 		String photoName = photo.getOriginalFilename();
 		String root_path = hsr.getSession().getServletContext().getRealPath("/");
@@ -161,12 +162,18 @@ public class EventDetailController {
 	}
 	
 	@RequestMapping(value = "/getNearby", method = {RequestMethod.POST,RequestMethod.GET})
-	public @ResponseBody List<LocationDTO> getNearby(@RequestParam(value="eventNo") int eventNo){
-		System.out.println("nearby--");
+	public @ResponseBody HashMap<String, Object> getNearby(@RequestParam(value="eventNo") int eventNo, HttpSession session, Model model){
 		EventDTO dto = service.selectOne(eventNo);
-		List<LocationDTO> data = service.getNearby(dto.getLatitude(), dto.getLongitude()); 
-		System.out.println("근처리스트 개수: " + data.size());
-		return data;
+		
+		List<LocationDTO> nearby = service.getNearby(dto.getLatitude(), dto.getLongitude()); 
+		boolean isLogin = new LoginFilter().isLogin(session, model); //로그인유지
+		
+		HashMap<String, Object> list = new HashMap<String, Object>();
+		list.put("member", isLogin);
+		list.put("nearby", nearby);
+		list.put("dto", dto);
+		//System.out.println("근처리스트 개수: " + data.size());
+		return list;
 	}
 	
 

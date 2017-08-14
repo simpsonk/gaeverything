@@ -198,15 +198,7 @@ public class EventDTO {
 		this.countRatings = countRatings;
 		this.countReplies = countReplies;
 		this.countLike = countLike;
-		
 	}
-	/*
-	public void setActUserResult( int countReplies, int countLike) {
-		
-		this.countReplies = countReplies;
-		this.countLike = countLike;
-		
-	}*/
 	
 	public String getCategoryCode() {
 		return categoryCode;
