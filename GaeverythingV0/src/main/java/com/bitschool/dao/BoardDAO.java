@@ -24,12 +24,10 @@ public class BoardDAO implements IBoardDAO{
 	
 	@Override
 	public boolean addNewPost(BoardDTO dto) throws SQLException {
-		System.out.println("dao: insert");
 		boolean flag = false;
 		int affected = session.insert(nameSpace+".add", dto);
 		if(affected > 0){
 			flag = true;
-			System.out.println("flag:" + flag);
 		}
 		return flag;
 	}
@@ -52,9 +50,7 @@ public class BoardDAO implements IBoardDAO{
 
 	@Override
 	public BoardDTO readOnePost(int boardNo) throws SQLException {
-		System.out.println("dao: read");
 		BoardDTO dto = session.selectOne(nameSpace+".readOne", boardNo);
-		System.out.println("dao: finished reading");
 		return dto;
 	}
 
@@ -62,7 +58,6 @@ public class BoardDAO implements IBoardDAO{
 	public boolean update(BoardDTO dto)throws SQLException {
 		boolean flag = false;
 		int affected = session.update(nameSpace+".modify", dto);
-		System.out.println("dao modify:" + affected);
 		if(affected>0){
 			flag = true;
 		}
@@ -75,7 +70,6 @@ public class BoardDAO implements IBoardDAO{
 		int affected = session.delete(nameSpace+".remove", boardNo);
 		if(affected>0){
 			flag = true;
-			System.out.println("remove dao:" + flag);
 		}
 		return flag;
 	}
@@ -88,7 +82,6 @@ public class BoardDAO implements IBoardDAO{
 
 	@Override
 	public List<BoardDTO> readPerPage(PageDTO pDTO) throws SQLException {
-		System.out.println("BoardDAO->pageDTO:"+pDTO);
 		List<BoardDTO> list = session.selectList(nameSpace+".perPage", pDTO);
 		return list;
 	}
@@ -111,7 +104,6 @@ public class BoardDAO implements IBoardDAO{
 		int affected = session.insert(nameSpace+".insertCmt", cDTO);
 		if(affected>0){
 			flag = true;
-			System.out.println("�뙎湲��엯�젰dao:" + flag);
 		}
 		return flag;
 	}
@@ -198,22 +190,17 @@ public class BoardDAO implements IBoardDAO{
 	@Override
 	public BoardDTO getPrev(int boardNo) throws SQLException{
 		int num = session.selectOne(nameSpace+".prevNum", boardNo);
-		System.out.println("현재글번호의 num:"+ num);
 		BoardDTO bDTO = null;
 		if(num!=1){
 			bDTO = session.selectOne(nameSpace+".readPrev", num);
 		}
-		
-	//	System.out.println("이전글 보드넘버:" + preBoardNo);
 		return bDTO;
 	}
 	
 	@Override
 	public BoardDTO getNext(int boardNo) throws SQLException{
 		int num = session.selectOne(nameSpace+".nextNum", boardNo);
-		System.out.println("현재글번호의 num:"+ num);
 		BoardDTO bDTO = session.selectOne(nameSpace+".readNext", num);
-		//System.out.println("다음글 보드넘버:" + preBoardNo);
 		return bDTO;
 	}
 

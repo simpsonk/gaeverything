@@ -44,11 +44,9 @@ public class APIExamSearchBlog {
                 response.append(inputLine);
             }
             br.close();
-            System.out.println(response.toString());
             
             
     		List<BlogDTO> list = null;
-    		System.out.println(response.toString().substring(99,response.length()-1));
     		
         } catch (Exception e) {
             System.out.println(e);

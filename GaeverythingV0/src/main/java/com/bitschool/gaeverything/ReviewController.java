@@ -114,7 +114,6 @@ public class ReviewController {
 			@RequestParam(value="boardCategory",defaultValue="") String boardCategory,
 			@RequestParam(value="address", defaultValue = "") String address,
 			@RequestParam(value="eventNo", defaultValue = "0") int eventNo){
-		System.out.println("check"+locationSeq);
 		
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		String url = "review/review_regist";
@@ -402,7 +401,7 @@ public class ReviewController {
 			}
 		}
 		data = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.EVENT, eventNo));
-		System.out.println("count check:"+data);
+
 		return data;
 	}
 	

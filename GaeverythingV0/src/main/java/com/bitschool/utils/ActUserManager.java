@@ -91,7 +91,6 @@ public class ActUserManager {
 	}
 	
 	public List<EventDTO> checkLikeStatusEvent(ActUserDTO aDTO, List<EventDTO> list) {
-		System.out.println(list.size());
 		for(int i=0;i<list.size();i++){
 			String userLikeStatus = "like-icon";
 			aDTO.setContentNo(list.get(i).getEventNo());

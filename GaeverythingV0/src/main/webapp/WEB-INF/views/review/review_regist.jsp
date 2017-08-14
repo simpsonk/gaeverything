@@ -86,7 +86,7 @@
 				<div class="col-md-4">
 					<h5>Category</h5>
 					<c:choose>
-					<c:when test="${locationSeq!=null}">
+					<c:when test="${dto==null}">
 					<select class="chosen-select" name = "boardCategory">
 						<option value ="0">Categories</option>
 						<option value ="CARE" ${boardCategory == 'CARE'?'selected="selected"':''} ${param.categoryCode == 'CARE'?'selected="selected"':''}>Care</option>
@@ -113,11 +113,11 @@
 				<div class 	= "location col-md-8">
 					<h5>Location</h5>
 					<c:choose>
-					<c:when test="${locationSeq!=null}">
-					<input type="text" placeholder="장소를 선택해주세요." name="address" id="address" value="${address}" readonly="readonly">
+					<c:when test="${dto==null}">
+						<input type="text" placeholder="장소를 선택해주세요." name="address" id="address" value="${address}" readonly="readonly">
 					</c:when>
 					<c:otherwise>
-					<input type="text" placeholder="장소를 선택해주세요." name="address" id="address" value="${dto.address}" readonly="readonly">	
+						<input type="text" placeholder="장소를 선택해주세요." name="address" id="address" value="${dto.address}" readonly="readonly">	
 					</c:otherwise>
 					</c:choose>
 					

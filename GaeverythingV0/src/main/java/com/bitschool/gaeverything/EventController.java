@@ -75,7 +75,7 @@ public class EventController {
 		HashMap<String, Object> map = pService.makeEventSerachList(0, 6, list);
 		HashMap<String, Object> data = new HashMap<String, Object>();
 	
-		data.put("events", list); //
+		data.put("events", list); 
 		data.put("pList", map.get("pList"));
 		data.put("infoList", map.get("infoList"));
 		return data;	

@@ -28,7 +28,6 @@ public class BoardPageService implements IPagerService{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println("total:" + total);
 		return total;
 	}
 	
@@ -47,7 +46,6 @@ public class BoardPageService implements IPagerService{
 	@Override
 	public String pageList(PageDTO pDTO) {
 		//List<String> pList = null;
-		System.out.println("check: "+this.totalPosts(pDTO)+"categoryCode: "+pDTO.getCategoryCode());
 		int numOfPage = (int)Math.ceil(this.totalPosts(pDTO)/(double)pDTO.getAmount());
 		int pageUnit = (pDTO.getPage()/10)*10;
 		int startPage = pageUnit+1;

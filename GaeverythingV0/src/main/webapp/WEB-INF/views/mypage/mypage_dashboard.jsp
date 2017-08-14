@@ -77,6 +77,39 @@
 		<div class="row">
 
 			<!-- Item -->
+			<div class="col-lg-4 col-md-6">
+				<div class="dashboard-stat color-1">
+					<div class="dashboard-stat-content"><h4>${countLocReviews}</h4> <span>Active Locations</span></div>
+					<div class="dashboard-stat-icon"><i class="im im-icon-Map-Marker2"></i></div>
+				</div>
+			</div>
+
+			<!-- Item -->
+			<a href="/mypage/viewMypageList">
+			<div class="col-lg-4 col-md-6">
+				<div class="dashboard-stat color-3">
+					<div class="dashboard-stat-content"><h4>${member.myCommentSize+member.myReviewSize}</h4> <span>Times Reviewed</span></div>
+					<div class="dashboard-stat-icon"><i class="im im-icon-Pencil"></i></div>
+				</div>
+			</div>
+			</a>
+
+			<!-- Item -->
+			<a href="/mypage/viewMypageBookmarks">
+			<div class="col-lg-4 col-md-6">
+				<div class="dashboard-stat color-4">
+					<div class="dashboard-stat-content"><h4>${member.bookmarkReviewSize+member.bookmarkMapSize+member.bookmarkEventSize}</h4> <span>Times Bookmarked</span></div>
+					<div class="dashboard-stat-icon"><i class="im im-icon-Heart"></i></div>
+				</div>
+			</div>
+			</a>
+		</div>
+
+
+		<!-- Content -->
+		<%-- <div class="row">
+
+			<!-- Item -->
 			<div class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-1">
 					<div class="dashboard-stat-content"><h4>${countLocReviews}</h4> <span>Active Listings</span></div>
@@ -99,7 +132,7 @@
 					<div class="dashboard-stat-content"><h4>${countReviewCmt}</h4> <span>Times Replied</span></div>
 					<div class="dashboard-stat-icon"><i class="im im-icon-Add-UserStar"></i></div>
 				</div>
-			</div>
+			</div> 
 
 			<!-- Item -->
 			<div class="col-lg-3 col-md-6">
@@ -108,12 +141,11 @@
 					<div class="dashboard-stat-icon"><i class="im im-icon-Heart"></i></div>
 				</div>
 			</div>
-		</div>
-
+		</div>	--%>
 
 		<div class="row">
 			
-			<!-- Recent Activity -->
+			<%-- <!-- Recent Activity -->
 			<div class="col-lg-6 col-md-12">
 				<div class="dashboard-list-box with-icons margin-top-20">
 					<h4 style="background:#37b6bd; color:white"> News Of Bookmark</h4>
@@ -137,7 +169,38 @@
 					</c:choose>
 					</ul>
 				</div>
+			</div> --%>
+			
+			
+			<!-- Invoices -->
+			<div class="col-lg-6 col-md-12">
+				<div class="dashboard-list-box invoices with-icons margin-top-20">
+					<h4 style="background:#fa5b0f; color:white">Reactions</h4>
+					<ul>
+					<c:choose>
+					<c:when test="${reactions.size()==0}">
+						<li>
+							<span>표시할 알림이 없습니다.</span>
+						</li>
+					</c:when>
+					
+					<c:otherwise>
+					<c:forEach var="list" items="${reactions}" varStatus="status"> --%>
+						<li>
+							<i class="list-box-icon sl sl-icon-heart"></i> ${list.nickname} bookmarked your <strong><a href="#">Burger House</a></strong> listing!
+							<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+						</li>
+						<li>
+							<i class="list-box-icon sl sl-icon-star"></i> ${list.nickname} left a review <div class="numerical-rating" data-rating="5.0"></div> on <strong><a href="#">Burger House</a></strong>
+							<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+						</li>
+					</c:forEach> 
+					</c:otherwise>
+					</c:choose>
+					</ul>
+				</div>
 			</div>
+
 			<!-- Recent Activity -->
 			<!-- <div class="col-lg-6 col-md-12">
 				<div class="dashboard-list-box with-icons margin-top-20">
@@ -180,37 +243,6 @@
 					</ul>
 				</div>
 			</div> -->
-			
-			<!-- Invoices -->
-			<div class="col-lg-6 col-md-12">
-				<div class="dashboard-list-box invoices with-icons margin-top-20">
-					<h4 style="background:#fa5b0f; color:white">Reactions</h4>
-					<ul>
-					<c:choose>
-					<c:when test="${commentList.size()==0}">
-						<li>
-							<span>표시할 알림이 없습니다.</span>
-						</li>
-					</c:when>
-					
-					<c:otherwise>
-					<%-- <c:forEach var="list" items="${commentList}" varStatus="status"> --%>
-						<li>
-							<i class="list-box-icon sl sl-icon-heart"></i> Someone bookmarked your <strong><a href="#">Burger House</a></strong> listing!
-							<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
-						</li>
-						<li>
-							<i class="list-box-icon sl sl-icon-star"></i> Kathy Brown left a review <div class="numerical-rating" data-rating="5.0"></div> on <strong><a href="#">Burger House</a></strong>
-							<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
-						</li>
-					<%-- </c:forEach> --%>
-					</c:otherwise>
-					</c:choose>
-					</ul>
-				</div>
-			</div>
-
-
 			<!-- Copyrights -->
 			<div class="col-md-12">
 				<div class="copyrights">© 2017 gaeverything. All Rights Reserved.</div>

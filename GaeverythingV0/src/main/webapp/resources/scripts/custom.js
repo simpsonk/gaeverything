@@ -710,6 +710,12 @@ $(document).ready(function(){
 		$(this).toggleClass('liked');
 		$(this).children('.like-icon').toggleClass('liked');
 	});
+    
+    $('.sim').on('click', function(e){
+    	e.preventDefault();
+		$(this).toggleClass('liked');
+		$(this).children('.sim').toggleClass('liked');
+	});
 
     /*----------------------------------------------------*/
     /*  Searh Form More Options

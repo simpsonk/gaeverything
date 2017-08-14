@@ -41,9 +41,7 @@ public class ActUserDAO {
 
 	public boolean searchStatus(ActUserDTO dto) throws SQLException{
 		boolean flag = false;
-		System.out.println(dto);
 		int count = session.selectOne(nameSpace+".selectStatus", dto);
-		System.out.println(count);
 		if(count!=0){
 			flag = true;
 		}
