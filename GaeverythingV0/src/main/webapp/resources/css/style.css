@@ -7202,8 +7202,8 @@ section.fullwidth .listing-item-container.list-layout,
 	overflow: hidden;
 }
 
-/* sim Icon */
-span.sim {
+/* add-to-cal Icon */
+span.add-to-cal {
 	color: #fff;
 	font-size: 19px;
 	position: absolute;
@@ -7219,8 +7219,8 @@ span.sim {
 	transition: all 0.4s;
 }
 
-.sim:before,
-.sim:after {
+.add-to-cal:before,
+.add-to-cal:after {
 	transition: opacity 0.3s, transform 0.4s cubic-bezier(.0,-.41,.19,2.5);
 	font-family: "FontAwesome";
 	position: absolute;
@@ -7230,28 +7230,28 @@ span.sim {
 	top: 9px;
 }
 
-.sim:before {
+.add-to-cal:before {
 	content: "\f271";
 	transform: scale(0.95);
 }
 
-.sim:after {
+.add-to-cal:after {
 	content: "\f274";
 	opacity: 0;
 	transform: scale(0.5);
 }
 
-.sim.liked:after {
+.add-to-cal.liked:after {
 	opacity: 1;
 	transform: scale(0.95);
 }
 
-.sim:hover,
-.sim.liked {
+.add-to-cal:hover,
+.add-to-cal.liked {
 	background-color: #f3103c;
 }
 
-.sim.liked:before{
+.add-to-cal.liked:before{
 	opacity: 0;
 }
 

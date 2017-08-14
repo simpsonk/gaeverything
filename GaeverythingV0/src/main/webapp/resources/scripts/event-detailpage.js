@@ -364,24 +364,23 @@ function makeNearByList(member, near, dto){
 		'	<div class="listing-item-container">'+
 		'		<div class="listing-item">'+
 		'			<img src="/resources/images/event-cafe.jpg" alt="">		'+
-		'			<a href="https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query='+near[i].title+'">'+
-		'				<div class="listing-item-content">'+
-
+		'			<div class="listing-item-content">'+
+		'				<a href="https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query='+near[i].title+'">'+
 		'					<span class="tag" style="background: #f91942;">Cafe</span>'+
 		'					<h3>'+near[i].title+'</h3>'+
-		'				<span>'+near[i].address+'</span>'+
-
-		'				</div>'+
-		'			</a>';
+		'					<span>'+near[i].address+'</span>'+
+		'				</a>'+
+		'			</div>';
 		if(member.nickname == null){
-			nearbyItem += '	<span class="like-icon" onclick = "sim()"></span>';
+			nearbyItem += '	<span class="like-icon"></span>';
 		}else {
 			nearbyItem += '	<span class="'+dto.userLikeStatus+'" onclick = "addToCal('+member.nickname, dto.eventNo, dto.startDate+')"></span>';
 		}
 	
 		nearbyItem +=
 		'		</div>'+
-		'	</div>';
+		'	</div>' ;
+		
 		itemEle.innerHTML = nearbyItem;
 		itemEle.className = 'carousel-item';
 		nearbyFragment.appendChild(itemEle);

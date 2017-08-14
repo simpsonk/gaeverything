@@ -82,7 +82,6 @@ public class EventDetailController {
 		model.addAttribute("reviewList",reviewList);
 		model.addAttribute("eventphoto",photoList);
 		model.addAttribute("nearbyCount", nList.size());
-		//model.addAttribute("blogList",blogList);
 		return url;
 	}
 	
