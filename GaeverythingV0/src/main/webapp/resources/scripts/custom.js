@@ -711,10 +711,10 @@ $(document).ready(function(){
 		$(this).children('.like-icon').toggleClass('liked');
 	});
     
-    $('.sim').on('click', function(e){
+    $('.add-schedule').on('click', function(e){
     	e.preventDefault();
 		$(this).toggleClass('liked');
-		$(this).children('.sim').toggleClass('liked');
+		$(this).children('.add-schedule').toggleClass('liked');
 	});
 
     /*----------------------------------------------------*/

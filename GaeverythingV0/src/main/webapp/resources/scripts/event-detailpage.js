@@ -357,37 +357,43 @@ function nearbySlide(){
 
 function makeNearByList(member, near, dto){
 	var ele = document.getElementById("nearbyList");
+	nearbyFragment = document.createDocumentFragment();
 	for(var i=0; i<near.length; i++){
-		nearbyFragment = document.createDocumentFragment();
 		var itemEle = document.createElement("div");
 		var nearbyItem = 
 		'	<div class="listing-item-container">'+
 		'		<div class="listing-item">'+
-		'			<img src="/resources/images/event-cafe.jpg" alt="">		'+
-		'			<a href="https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query='+near[i].title+'">'+
+		'		<a href="https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query='+near[i].title+'">'+
+		'				<img src="/resources/images/event-cafe.jpg" alt="">		'+
 		'				<div class="listing-item-content">'+
-
 		'					<span class="tag" style="background: #f91942;">Cafe</span>'+
 		'					<h3>'+near[i].title+'</h3>'+
-		'				<span>'+near[i].address+'</span>'+
-
+		'					<span>'+near[i].address+'</span>'+
 		'				</div>'+
-		'			</a>';
+		'		</a>';
 		if(member.nickname == null){
-			nearbyItem += '	<span class="like-icon" onclick = "sim()"></span>';
+			nearbyItem += '	<span class="add-schedule" onclick = "testString('+i+')" id = "add-schedule'+i+'"></span>';
 		}else {
 			nearbyItem += '	<span class="'+dto.userLikeStatus+'" onclick = "addToCal('+member.nickname, dto.eventNo, dto.startDate+')"></span>';
 		}
-	
 		nearbyItem +=
 		'		</div>'+
 		'	</div>';
 		itemEle.innerHTML = nearbyItem;
+		
+		
 		itemEle.className = 'carousel-item';
 		nearbyFragment.appendChild(itemEle);
-		ele.appendChild(nearbyFragment);
 	}
+	ele.appendChild(nearbyFragment);
 	return ele;
+}
+
+
+function testString(index){
+	var id ='#add-schedule'+index; 
+	$(id).toggleClass('liked');
+	$(id).children('.add-schedule').toggleClass('liked');
 }
 
 
