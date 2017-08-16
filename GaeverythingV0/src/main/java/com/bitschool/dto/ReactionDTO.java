@@ -4,10 +4,22 @@ public class ReactionDTO {
 	private int reactionSeq;
 	private String type;
 	private int groupNo;
+	private String nicknameReact;
 	
-	public ReactionDTO(String type, int groupNo) {
+	//장소 이름 셋팅해주기위해
+	private String title;
+
+
+	
+
+	public ReactionDTO() {
+     
+    }
+	
+	public ReactionDTO(String type, int groupNo, String nicknameReact) {
         this.type = type;
         this.groupNo = groupNo;
+        this.nicknameReact = nicknameReact;
     }
 	
 	public int getReactionSeq() {
@@ -28,13 +40,20 @@ public class ReactionDTO {
 	public void setGroupNo(int groupNo) {
 		this.groupNo = groupNo;
 	}
-	@Override
-	public String toString() {
-		return "ReactionDTO [reactionSeq=" + reactionSeq + ", type=" + type + ", groupNo=" + groupNo
-				+ ", getReactionSeq()=" + getReactionSeq() + ", getType()=" + getType() + ", getGroupNo()="
-				+ getGroupNo() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
-				+ super.toString() + "]";
+	public String getNicknameReact() {
+		return nicknameReact;
 	}
-	
+
+	public void setNicknameReact(String nicknameReact) {
+		this.nicknameReact = nicknameReact;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
 	
 }

@@ -125,6 +125,12 @@ public class BoardDAO implements IBoardDAO{
 		}
 		return flag;
 	}
+	@Override
+	public CommentDTO getFullCmt(int commentNo) throws SQLException{
+		CommentDTO dto = null;
+		dto = session.selectOne(nameSpace+".getFullCmt",commentNo);
+		return dto;
+	}
 
 	@Override
 	public boolean updateCmt(CommentDTO cDTO) throws SQLException {

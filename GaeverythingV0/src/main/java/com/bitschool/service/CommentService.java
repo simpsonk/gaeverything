@@ -27,7 +27,7 @@ public class CommentService implements ICommentService{
 		boolean flag = false;
 		try {
 			flag = dao.insertComment(cDTO);
-			ReactionDTO rdto = new ReactionDTO("C",cDTO.getGroupNo());
+			ReactionDTO rdto = new ReactionDTO("C",cDTO.getGroupNo(),cDTO.getNicknameCmt());
 			rdao.insertReaction(rdto);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -65,7 +65,15 @@ public class CommentService implements ICommentService{
 	public boolean removeCmt(int commentNo) {
 		boolean flag = false;
 		try {
-			flag = dao.removeCmt(commentNo);
+			//댓글 삭제하면 대시보드의 reaction에서도 사라지도록///
+			CommentDTO cDTO = this.getFullCmt(commentNo);
+			System.out.println("cDTO :"+cDTO);
+			ReactionDTO rdto = new ReactionDTO("C",cDTO.getGroupNo(),cDTO.getNicknameCmt());
+			rdao.deleteReaction(rdto);
+			
+			//진짜 댓글 삭제
+			flag = dao.removeCmt(commentNo);	
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -83,6 +91,18 @@ public class CommentService implements ICommentService{
 		return numOfCmt;
 	}
 
+	
+	@Override
+	public CommentDTO getFullCmt(int commentNo){
+		CommentDTO dto = null;
+		try {
+			dto = dao.getFullCmt(commentNo);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dto;
+	}
 	
 	
 	

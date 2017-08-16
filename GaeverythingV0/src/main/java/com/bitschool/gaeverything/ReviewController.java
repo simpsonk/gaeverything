@@ -26,12 +26,14 @@ import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.dto.MyPageDTO;
 import com.bitschool.dto.PageDTO;
+import com.bitschool.dto.ReactionDTO;
 import com.bitschool.service.ActUserService;
 import com.bitschool.service.IBoardService;
 import com.bitschool.service.ICommentService;
 import com.bitschool.service.IPagerService;
 import com.bitschool.service.LocationDetailService;
 import com.bitschool.service.LocationService;
+import com.bitschool.service.ReactionService;
 import com.bitschool.utils.ActUserManager;
 import com.bitschool.utils.LoginFilter;
 
@@ -57,6 +59,9 @@ public class ReviewController {
 	
 	@Inject
 	private LocationDetailService dService; 
+	
+	@Inject
+	private ReactionService rService;
 
 
 	@RequestMapping(value = "/viewDetailReviews", method = RequestMethod.GET)
@@ -338,20 +343,27 @@ public class ReviewController {
 		int data = 0;
 		ActUserManager manager = new ActUserManager(aService);
 		ActUserDTO dto = new ActUserDTO(email, ActUserManager.REVIEW, boardNo);
+		String nickname = rService.selectNickname(email);
+		ReactionDTO rDTO = new ReactionDTO("B",boardNo, nickname);
 		boolean flag = false;
 		if(like.equals("like-icon")){
 			flag = manager.registLikeStatus(dto);
-			if(
-					!flag){
+
+			//북마크 눌렀을 때 reaction 테이블에 넣어주기!!
+			rService.insertReaction(rDTO);
+			if(!flag){
 				System.out.println("insert fail: ReviewLike");
 			}
 		}else if(like.equals("like-icon liked")){
 			flag = manager.deleteLikeStatus(dto);
+			//북마크 해제 눌렀을 때 reaction 테이블에서 지우기!!
+			rService.deleteReaction(rDTO);
 			if(!flag){
 				System.out.println("delete fail: ReviewLike");
 			}
 		}
 		data = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.REVIEW, boardNo));
+		
 		return data;
 	}
 	

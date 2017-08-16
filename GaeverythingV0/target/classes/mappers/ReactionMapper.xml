@@ -8,13 +8,26 @@
 		<selectKey keyProperty="reactionSeq" order="BEFORE" resultType="Integer">
 			select reaction_seq.nextval from dual
 		</selectKey> 
-			insert into reaction(reactionSeq,type,groupNo) 
-			values(#{reactionSeq},#{type},#{groupNo}) 
+			insert into reaction(reactionSeq,type,groupNo,nicknameReact) 
+			values(#{reactionSeq},#{type},#{groupNo},#{nicknameReact}) 
 	</insert>
 	
 	<!-- select  -->
 	<select id="selectReaction" parameterType="String" resultType="ReactionDTO">
 		select * from reaction 
-		where groupno in (select groupno from board where nickname = #{nickname})
+		where groupno in (select groupno from board where nickname = #{nickname}) 
+		order by reactionseq desc
 	</select>
+	
+	<select id="selectNickname" parameterType="String" resultType="String">
+		select nickname from signup 
+		where email = #{email}
+	</select>
+	
+	<delete id="deleteReaction" parameterType="ReactionDTO">
+		delete from reaction 
+		where type=#{type} and groupNo = #{groupNo} and nicknameReact = #{nicknameReact}
+	</delete>
+	
+
  </mapper>

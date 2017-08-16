@@ -15,5 +15,6 @@ public interface ICommentService {
 	public boolean updateCmt(CommentDTO cDTO);
 	public boolean removeCmt(int commentNo);
 	public int countCmt(int boardNo);
+	public CommentDTO getFullCmt(int commentNo);
 
 }

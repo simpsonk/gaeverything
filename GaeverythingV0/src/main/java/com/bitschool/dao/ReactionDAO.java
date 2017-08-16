@@ -34,5 +34,21 @@ public class ReactionDAO {
 		list = session.selectList(namespace+".selectReaction", nickname);
 		return list;
 	}
+	
+	public String selectNickname(String email) throws SQLException{
+		String nickname = null;
+		nickname = session.selectOne(namespace+".selectNickname", email);
+		return nickname;
+	}
+	
+	public boolean deleteReaction(ReactionDTO dto) throws SQLException{
+		boolean flag = false;
+		int aCnt = session.delete(namespace+".deleteReaction", dto);
+		if(aCnt>0){
+			flag = true;
+		}
+		return flag;
+	}
+
 
 }
