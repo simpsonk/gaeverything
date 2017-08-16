@@ -50,5 +50,15 @@ public class ReactionDAO {
 		return flag;
 	}
 
+	public boolean deleteReaction2(int reactionSeq) throws SQLException{
+		boolean flag = false;
+		int aCnt = session.delete(namespace+".deleteReaction2", reactionSeq);
+		if(aCnt>0){
+			flag = true;
+		}
+		return flag;
+	}
+	
+
 
 }

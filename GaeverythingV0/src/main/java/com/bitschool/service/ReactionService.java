@@ -67,4 +67,15 @@ public class ReactionService {
 		}
 		return flag;
 	}
+
+	public boolean deleteReaction2(int reactionSeq){
+		boolean flag = false;
+		try {
+			flag = dao.deleteReaction2(reactionSeq);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return flag;
+	}
 }

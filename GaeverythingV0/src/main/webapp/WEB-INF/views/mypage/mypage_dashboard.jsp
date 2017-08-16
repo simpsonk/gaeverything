@@ -190,13 +190,13 @@
 						<c:when test="${list.type=='B'}">
 						<li>
 							<i class="list-box-icon sl sl-icon-heart"></i><b> ${list.nicknameReact}</b> bookmarked your <strong><a href="/review/readPost?boardNo=${list.groupNo}&page=1">${list.title}</a></strong> listing!
-							<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+							<a href="/mypage/deleteReaction?reactionSeq=${list.reactionSeq}" class="close-list-item"><i class="fa fa-close"></i></a>
 						</li>
 						</c:when>
 						<c:otherwise>
 						<li>
 							<i class="list-box-icon sl sl-icon-pencil"></i><b>${list.nicknameReact}</b> left a comment on <strong><a href="/review/readPost?boardNo=${list.groupNo}&page=1"">${list.title}</a></strong>
-							<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+							<a href="/mypage/deleteReaction?reactionSeq=${list.reactionSeq}" class="close-list-item"><i class="fa fa-close"></i></a>
 						</li>
 						</c:otherwise>
 						</c:choose>
