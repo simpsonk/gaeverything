@@ -88,6 +88,11 @@
 		where num=#{index}
 	</select>
 	
+	<select id="getFullCmt" parameterType="Integer" resultType="CommentDTO">
+		select * from commentbox 
+		where commentno = #{commentNo}
+	</select>
+	
 	<update id="modifyCmt" parameterType="CommentDTO">
 		update commentbox set commentbody=#{commentBody} where commentno=#{commentNo}
 	</update>
