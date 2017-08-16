@@ -8,8 +8,8 @@
 		<selectKey keyProperty="reactionSeq" order="BEFORE" resultType="Integer">
 			select reaction_seq.nextval from dual
 		</selectKey> 
-			insert into reaction(reactionSeq,type,groupNo) 
-			values(#{reactionSeq},#{type},#{groupNo}) 
+			insert into reaction(reactionSeq,type,groupNo,nicknameReact) 
+			values(#{reactionSeq},#{type},#{groupNo},#{nicknameReact}) 
 	</insert>
 	
 	<!-- select  -->
@@ -17,4 +17,6 @@
 		select * from reaction 
 		where groupno in (select groupno from board where nickname = #{nickname})
 	</select>
+	
+
  </mapper>

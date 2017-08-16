@@ -27,7 +27,7 @@ public class CommentService implements ICommentService{
 		boolean flag = false;
 		try {
 			flag = dao.insertComment(cDTO);
-			ReactionDTO rdto = new ReactionDTO("C",cDTO.getGroupNo());
+			ReactionDTO rdto = new ReactionDTO("C",cDTO.getGroupNo(),cDTO.getNicknameCmt());
 			rdao.insertReaction(rdto);
 		} catch (SQLException e) {
 			e.printStackTrace();

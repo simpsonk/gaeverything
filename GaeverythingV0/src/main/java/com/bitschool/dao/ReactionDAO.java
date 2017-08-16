@@ -34,5 +34,7 @@ public class ReactionDAO {
 		list = session.selectList(namespace+".selectReaction", nickname);
 		return list;
 	}
+	
+
 
 }
