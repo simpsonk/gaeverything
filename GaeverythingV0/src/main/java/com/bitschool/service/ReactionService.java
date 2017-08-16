@@ -46,5 +46,25 @@ public class ReactionService {
 		return list;
 	}
 	
+	public String selectNickname(String email){
+		String nickname = null;
+		try {
+			nickname = dao.selectNickname(email);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return nickname;
+	}
 
+	public boolean deleteReaction(ReactionDTO dto){
+		boolean flag = false;
+		try {
+			flag = dao.deleteReaction(dto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return flag;
+	}
 }

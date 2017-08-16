@@ -187,7 +187,7 @@
 					<c:otherwise>
 					<c:forEach var="list" items="${reactions}" varStatus="status"> 
 						<c:choose>
-						<c:when test="${list.type}=='B'">
+						<c:when test="${list.type=='B'}">
 						<li>
 							<i class="list-box-icon sl sl-icon-heart"></i><b> ${list.nicknameReact}</b> bookmarked your <strong><a href="/review/readPost?boardNo=${list.groupNo}&page=1">${list.title}</a></strong> listing!
 							<a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
