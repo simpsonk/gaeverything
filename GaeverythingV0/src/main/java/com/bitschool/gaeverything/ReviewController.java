@@ -341,7 +341,8 @@ public class ReviewController {
 		boolean flag = false;
 		if(like.equals("like-icon")){
 			flag = manager.registLikeStatus(dto);
-			if(!flag){
+			if(
+					!flag){
 				System.out.println("insert fail: ReviewLike");
 			}
 		}else if(like.equals("like-icon liked")){

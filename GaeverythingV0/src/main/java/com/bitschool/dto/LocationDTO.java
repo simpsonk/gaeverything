@@ -31,6 +31,7 @@ public class LocationDTO {
 	private int countReplies;
 	private int countLike;
 	private String userLikeStatus;
+	private String scheduleAdded;
 	
 
 	
@@ -213,13 +214,27 @@ public class LocationDTO {
 		this.latitude = latitude;
 	}
 	
+	
+	
+	public String getScheduleAdded() {
+		return scheduleAdded;
+	}
+
+	public void setScheduleAdded(String scheduleAdded) {
+		this.scheduleAdded = scheduleAdded;
+	}
+
 	public void setActUserResult(int countReview, String averageRatings, int countRatings, int countReplies, int countLike) {
-		// TODO Auto-generated method stub
 		this.countReview = countReview ;
 		this.averageRatings = averageRatings;
 		this.countRatings = countRatings;
 		this.countReplies = countReplies;
 		this.countLike = countLike;
+		
+	}
+	
+	public void setAddedResult(String scheduleAdded) {
+		this.scheduleAdded = scheduleAdded;
 	}
 	
 	@Override

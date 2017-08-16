@@ -285,4 +285,54 @@ public class CalendarService{
 		}
 		return flag;
 	}
+
+	public boolean bookingAddNearby(int eventNo, String startDate, int locationSeq, String email) {
+		boolean flag = false;
+		try {
+			LocationDTO Ldto = ldao.selectLocationSeq(locationSeq);
+			CalendarDTO Cdto = new CalendarDTO();
+			Cdto.setId(email);
+			Cdto.setDogid(0);
+			Cdto.setTitle("주변장소 등록");//병원, 카페에 따라 다르게
+			Cdto.setPlace(Ldto.getTitle());
+			Cdto.setStartDate(startDate);
+			//String time = dto.getBookTime();
+			//String[] times = time.split(" ");
+			String resultStart = null;
+			String resultEnd = null;
+			/*if(times[1].equals("pm")){
+				String[] fTimes = times[0].split(":");
+				int fTime = Integer.parseInt(fTimes[0])+12;
+				resultStart = fTime+":"+fTimes[1];
+				resultEnd = (fTime+2)+":"+fTimes[1];
+			}else{
+				String[] fTimes = times[0].split(":");
+				int fTime = Integer.parseInt(fTimes[0]);
+				resultStart = fTime+":"+fTimes[1];
+				resultEnd = (fTime+2)+":"+fTimes[1];
+			}*/
+		/*	Date date;
+			try {
+				DateFormat dateS = new SimpleDateFormat("H:mm");
+				date = dateS.parse(resultStart);
+				DateFormat dateE = new SimpleDateFormat("HH:mm");
+				resultStart = dateE.format(date);
+				date = dateS.parse(resultEnd);
+				resultEnd = dateE.format(date);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
+			Cdto.setStartTime(resultStart);
+			Cdto.setEndDate(startDate);
+			Cdto.setEndTime(resultEnd);
+			Cdto.setMessage(null);
+			Cdto.setLocationseq(locationSeq);
+			flag = Cdao.insert2(Cdto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return flag;
+	}
 }

@@ -164,11 +164,33 @@ public class EventDetailController {
 		
 		List<LocationDTO> nearby = service.getNearby(dto.getLatitude(), dto.getLongitude()); 
 		boolean isLogin = new LoginFilter().isLogin(session, model); //로그인유지
+		ActUserManager manager = new ActUserManager(aService);
+		//MemberDTO member = (MemberDTO)session.getAttribute("member");
+		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		
+		if(member!=null){
+			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.EVENT);
+			nearby =manager.checkAddStatus(aDTO, nearby);
+				/*//System.out.println(nearby.size());
+				LocationDTO Ldto = nearby.get(i);
+				//System.out.println(member.getEmail());
+				ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.Nearby, nearby.get(i).getLocationSeq());
+				Ldto= manager.checkAddStatus(aDTO, Ldto);
+				nearby.add(Ldto);*/
+			}
+		//로그인 안된 상태면. 
+	//	nearby = service.getNearbyActUserResults(manager, nearby);
+		
+		System.out.println(nearby.get(1).getScheduleAdded());
+		
 		
 		HashMap<String, Object> list = new HashMap<String, Object>();
-		list.put("member", isLogin);
+		//list.put("member", isLogin);
+//		System.out.println();
+		//list.put("member", member);
 		list.put("nearby", nearby);
 		list.put("dto", dto);
+		//System.out.println(member.getNickname());
 		//System.out.println("근처리스트 개수: " + data.size());
 		return list;
 	}

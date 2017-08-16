@@ -19,6 +19,7 @@ public class ActUserManager {
 	public static final String REVIEW = "00";
 	public static final String SHOP = "10";
 	public static final String EVENT = "20";
+	public static final String Nearby = "30";
 	
 
 	public ActUserManager(ActUserService service){
@@ -122,6 +123,19 @@ public class ActUserManager {
 		int count = 0;
 		count = service.getLikeCount(dto);
 		return count;
+	}
+
+	public List<LocationDTO> checkAddStatus(ActUserDTO aDTO, List<LocationDTO> list) {
+		for(int i=0;i<list.size();i++){
+			String scheduleAdded = "add-schedule";
+			aDTO.setContentNo(list.get(i).getLocationSeq());
+			boolean flag = service.isCheckedLikeStatus(aDTO);
+			if(flag){
+				scheduleAdded = "add-schedule liked";
+			}
+			list.get(i).setScheduleAdded(scheduleAdded);
+		}
+		return list;
 	}
 
 }
