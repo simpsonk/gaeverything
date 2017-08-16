@@ -191,8 +191,8 @@
 			<!-- Widget -->
 			<div class="widget margin-top-40">
 				<h3>Categories</h3>
-				<div class="info-box margin-bottom-10"style="height: 65px;"><h4>Care</h4></div>
-				<div class="info-box margin-bottom-10"style="height: 65px;"><h4>Event</h4></div>	
+				<div class="info-box margin-bottom-10"style="height: 65px;"><a href="/review/viewReviewList?categoryCode=CARE"><h4>Care</h4></a></div>
+				<div class="info-box margin-bottom-10"style="height: 65px;"><a href="/review/viewReviewList?categoryCode=EVENT"><h4>Event</h4></a></div>	
 			</div>
 			<!-- Widget / End -->
 

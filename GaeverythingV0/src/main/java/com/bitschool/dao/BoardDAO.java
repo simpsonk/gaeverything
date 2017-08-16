@@ -217,9 +217,10 @@ public class BoardDAO implements IBoardDAO{
 	}
 
 	@Override
-	public MyPageDTO readProfile(String email) {
+	public MyPageDTO readProfile(String email) throws SQLException {
 		MyPageDTO dto = session.selectOne(nameSpace+".profile", email);
 		return dto;
 	}
+
 
 }

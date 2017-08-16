@@ -28,12 +28,6 @@ public class BoardDTO {
 	private String encodeUTF;
 	private int countLike;
 	
-	
-	
-	
-	
-	
-
 	public int getEventNo() {
 		return eventNo;
 	}

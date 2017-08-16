@@ -25,6 +25,7 @@ public class EventDTO {
 	private String regist;
 	private String thumbnail;
 	private String userLikeStatus;
+	
 	private int countLike;
 	private String categoryCode;
 	
@@ -206,6 +207,10 @@ public class EventDTO {
 	public void setCategoryCode(String categoryCode) {
 		this.categoryCode = categoryCode;
 	}
+	
+	
+	
+	
 	@Override
 	public String toString() {
 		return "EventDTO [eventNo=" + eventNo + ", eventName=" + eventName + ", startDate=" + startDate + ", addDate="

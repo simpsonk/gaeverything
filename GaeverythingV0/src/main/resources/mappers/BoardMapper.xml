@@ -150,4 +150,5 @@
 	<select id="profile" parameterType="String" resultType="MyPageDTO">
 		select * from mypage where email = #{email}
 	</select>
+	
 </mapper>

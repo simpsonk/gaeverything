@@ -329,8 +329,8 @@ $(document).ready(function() {
 		dataType : 'JSON',
 		type 	 : "POST",
 		success	 : function(list){
-
-			makeNearByList(list.member, list.nearby, list.dto);
+			//alert(member.nickname);
+			makeNearByList(list.nearby, list.dto);
 			nearbySlide();
 		},
 		error : function(request, status, error) {
@@ -355,11 +355,13 @@ function nearbySlide(){
 
 
 
-function makeNearByList(member, near, dto){
+function makeNearByList(near, event){
 	var ele = document.getElementById("nearbyList");
 	nearbyFragment = document.createDocumentFragment();
 	for(var i=0; i<near.length; i++){
 		var itemEle = document.createElement("div");
+		
+		
 		var nearbyItem = 
 		'	<div class="listing-item-container">'+
 		'		<div class="listing-item">'+
@@ -371,16 +373,17 @@ function makeNearByList(member, near, dto){
 		'					<span>'+near[i].address+'</span>'+
 		'				</div>'+
 		'		</a>';
-		if(member.nickname == null){
-			nearbyItem += '	<span class="add-schedule" onclick = "testString('+i+')" id = "add-schedule'+i+'"></span>';
+		if(near[i].scheduleAdded == null){
+			nearbyItem += '	<span class="add-schedule" onclick = "no_log_in('+event.eventNo+')" id = "add-schedule'+i+'"></span>';	
 		}else {
-			nearbyItem += '	<span class="'+dto.userLikeStatus+'" onclick = "addToCal('+member.nickname, dto.eventNo, dto.startDate+')"></span>';
+			
+			nearbyItem += '	<span class="'+near[i].scheduleAdded+'" id = "add-schedule'+i+'" onclick = "addToCal('+near[i].locationSeq+','+event.eventNo+','+event.startDate+','+i+')"></span>';
 		}
+		
 		nearbyItem +=
 		'		</div>'+
 		'	</div>';
 		itemEle.innerHTML = nearbyItem;
-		
 		
 		itemEle.className = 'carousel-item';
 		nearbyFragment.appendChild(itemEle);
@@ -390,21 +393,28 @@ function makeNearByList(member, near, dto){
 }
 
 
-function testString(index){
+function no_log_in(eventNo){
+		alert("일정등록은 회원만 가능합니다.");
+		location.href = "/viewLogin?uri=/event/detail/view?no="+eventNo;
+}
+	
+
+function addToCal(locationSeq, eventNo, startDate, index){
+	var added = document.getElementById("add-schedule"+index).className;
+	var url = "/mypage/calendar/addBookingNearby?added="+added+"&eventNo="+eventNo+"&startDate"+"&loc="+locationSeq;
+	
 	var id ='#add-schedule'+index; 
 	$(id).toggleClass('liked');
 	$(id).children('.add-schedule').toggleClass('liked');
-}
-
-
-function addToCal(nickname, eventNo, startDate){
-	alert("check");
+	
+	
+	//alert("check");
 	//var eventNo = document.getElementById("eventNo4").value;
-	checkBooking(eventNo);
+	/*checkBooking(eventNo);
 	//var book = document.getElementById("addNearby");
 	var url = "/mypage/calendar/addBookingEvent";
 			book.action = url;
-			book.submit();	
+			book.submit();	*/
 			
 }
 

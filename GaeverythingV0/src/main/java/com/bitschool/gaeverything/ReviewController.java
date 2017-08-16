@@ -348,6 +348,7 @@ public class ReviewController {
 		boolean flag = false;
 		if(like.equals("like-icon")){
 			flag = manager.registLikeStatus(dto);
+
 			//북마크 눌렀을 때 reaction 테이블에 넣어주기!!
 			rService.insertReaction(rDTO);
 			if(!flag){
