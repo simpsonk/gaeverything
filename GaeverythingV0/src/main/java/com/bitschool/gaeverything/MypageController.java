@@ -411,6 +411,19 @@ public class MypageController {
 		return url;
 	}
 	
+	//대시보드에서 리액션 삭제
+	@RequestMapping(value = "/deleteReaction", method = RequestMethod.GET)
+	public String deleteReaction(HttpSession session, Model model,
+			@RequestParam(value="reactionSeq") int reactionSeq){
+		String url = null;
+		boolean flag = false;
+		flag = rservice.deleteReaction2(reactionSeq);
+		if(flag){
+			url = "redirect:viewMypageDashboard";
+		}
+		return url;
+	}
+	
 	//북마크한 이벤트 제거
 		@RequestMapping(value = "/deleteEventBookmarks", method = RequestMethod.GET)
 		public String deleteEventBookmarks(HttpSession session, Model model,

@@ -29,5 +29,9 @@
 		where type=#{type} and groupNo = #{groupNo} and nicknameReact = #{nicknameReact}
 	</delete>
 	
+	<delete id="deleteReaction2" parameterType="Integer">
+		delete from reaction 
+		where reactionSeq = #{reactionSeq} 
+	</delete>
 
  </mapper>
