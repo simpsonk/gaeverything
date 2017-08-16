@@ -40,7 +40,10 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<h2>Review</h2><span>Latest Reviews</span>
+				<h2>Review</h2>
+				<span>Latest Reviews</span>							
+						
+					
 				<!-- Breadcrumbs -->
 				<nav id="breadcrumbs">
 					<ul>
@@ -166,10 +169,21 @@
 	<!-- Widgets -->
 	<div class="col-lg-3 col-md-4">
 		<div class="sidebar right">
-
+			<!-- Order -->		
+			<div class="widget">	
+				<h3 class="margin-top-0 margin-bottom-25">Order By</h3>			
+				<div>
+							<select data-placeholder="Reviews" class="chosen-select" style="display: none;">
+								<option>Reviews</option>	
+								<option>Bookmarks</option>			
+								<option>Ratings</option>						
+							</select>
+				</div>
+				<div class="clearfix"></div>
+			</div>
 			<!-- Widget -->
 			<div class="widget">
-				<h3 class="margin-top-0 margin-bottom-25">Search Review</h3>
+				<h3 class="margin-top-40 margin-bottom-25">Search Review</h3>
 				<div class="search-blog-input">
 					<div class="input"><input class="search-field" type="text" placeholder="Type and hit enter" value=""/></div>
 				</div>
