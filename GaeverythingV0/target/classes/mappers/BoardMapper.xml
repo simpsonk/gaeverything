@@ -28,6 +28,7 @@
 	</select> -->
 	
 	<select id="perPage" parameterType="PageDTO" resultType="BoardDTO">
+		 <if test="orderBy!='Comments'">	
 		select * from 
 			(select rownum as num, temp.* from
 				(select * from board 
@@ -43,12 +44,21 @@
 				<if test="orderBy=='Bookmarks'">
 				order by countLike desc)
 				</if>
-				<!-- 
-				<if test="orderBy=='Comments'">
-				order by Comments desc)
-				</if> -->
 				 temp) 			
 		where num between #{firstNo} and #{lastNo}
+		</if> 
+		
+		<if test="orderBy=='Comments'">
+		     select * from
+			  (select rownum as num,F.* from 
+			  (select E.* from 
+			  (select count(commentbody) as cntcomment,B.groupno from board B
+			  full outer join commentbox C 
+			  on B.groupno = C.groupno
+			  group by B.groupno) D, board E 
+			  where D.groupno=E.groupno 
+			  order by cntcomment desc) F)	where num between #{firstNo} and #{lastNo}
+		</if> 
 	</select>
 	
 	<select id="readOne" parameterType="Integer" resultType="BoardDTO">

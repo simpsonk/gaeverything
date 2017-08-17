@@ -38,7 +38,8 @@ public class PageDTO {
 		this.lastNo = (page*amount);
 		this.categoryCode = categoryCode;
 		this.orderBy = orderBy;
-	}
+	} 
+	
 	public int getFirstNo() {
 		return firstNo;
 	}
