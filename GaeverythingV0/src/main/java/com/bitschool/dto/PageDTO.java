@@ -23,13 +23,13 @@ public class PageDTO {
 	}
 
 	
-	public PageDTO(int page, int amount, String categoryCode){
+/*	public PageDTO(int page, int amount, String categoryCode){
 		this.page = page;
 		this.amount = amount;
 		this.firstNo = (page*amount)-amount+1;
 		this.lastNo = (page*amount);
 		this.categoryCode = categoryCode;
-	}
+	}*/
 
 	public PageDTO(int page, int amount, String categoryCode, String order){
 		this.page = page;

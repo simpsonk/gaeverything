@@ -169,19 +169,22 @@
 	<!-- Widgets -->
 	<div class="col-lg-3 col-md-4">
 		<div class="sidebar right">
-			<!-- Order -->		
+			<!-- Order -->
+			<form id="orderForm" action="" method="post">	
 			<div class="widget">	
 				<h3 class="margin-top-0 margin-bottom-25">Order By</h3>			
 				<div>
-							<select data-placeholder="Date" class="chosen-select" style="display: none;">
-								<option>Date</option>	
-								<option>Comments</option>	
-								<option>Bookmarks</option>			
-								<option>Ratings</option>						
+							<select id="orderBy" data-placeholder="Date" class="chosen-select">
+								<option value="Date" ${orderBy == 'Date'?'selected="selected"':''}>Date</option>	
+								<option value="Comments" ${orderBy == 'Comments'?'selected="selected"':''}>Comments</option>	
+								<option value="Bookmarks" ${orderBy == 'Bookmarks'?'selected="selected"':''}>Bookmarks</option>			
+								<option value="Ratings" ${orderBy == 'Ratings'?'selected="selected"':''}>Ratings</option>						
 							</select>
 				</div>
 				<div class="clearfix"></div>
 			</div>
+			</form>
+			
 			<!-- Widget -->
 			<div class="widget">
 				<h3 class="margin-top-40 margin-bottom-25">Search Review</h3>
@@ -370,6 +373,14 @@
 		location.href = "/viewLogin?uri=/review/viewReviewList";
 	}
 	
+	
+	$('#orderBy').change(function(){
+		var orderBy = document.getElementById('orderBy').value;
+		var url = '/review/viewReviewList?orderBy='+orderBy;
+		var data = document.getElementById('orderForm');
+		data.action = url;
+		data.submit();
+	});
 </script>
 
 </body>

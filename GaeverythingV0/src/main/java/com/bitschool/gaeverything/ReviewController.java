@@ -76,16 +76,18 @@ public class ReviewController {
 	
 	@RequestMapping(value = "/viewReviewList", method = {RequestMethod.GET, RequestMethod.POST})
 	public String viewReviewList(Model model, HttpSession session, @RequestParam(value="page", defaultValue="1") int page,
-			@RequestParam(value = "categoryCode", defaultValue = "0") String categoryCode){
+			@RequestParam(value = "categoryCode", defaultValue = "0") String categoryCode,
+			@RequestParam(value = "orderBy", defaultValue="boardNo") String orderBy){
+		System.out.println("orderBy : "+orderBy);
 		
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		
 		int amount = 5;
 		PageDTO pDTO = null;
 		if(categoryCode.equals("0")||categoryCode.equals("null")){
-			pDTO = new PageDTO(page, amount, null, "boardNo");
+			pDTO = new PageDTO(page, amount, null, orderBy);
 		}else{
-			pDTO = new PageDTO(page, amount, categoryCode, "boardNo");
+			pDTO = new PageDTO(page, amount, categoryCode, orderBy);
 		}
 		
 		System.out.println("pDTO : "+pDTO);
@@ -114,6 +116,7 @@ public class ReviewController {
 			list.get(i).setNumOfCmt(countCmts);
 		}
 		model.addAttribute("list", list);
+		model.addAttribute("orderBy",orderBy);
 		String url = "review/review_list";
 
 		return url;
