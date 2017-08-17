@@ -126,8 +126,8 @@
 				</a>
 				</c:when>
 				<c:otherwise>
-				<a href="/event/detail/view?no=${board.eventNo}">
-				<span><i class="sl sl-icon-location"></i>    ${board.address}</span>
+				<a href="/event/detail/view?no=${board.locationSeq}">
+				<span><i class="sl sl-icon-paper-plane "></i>    ${board.address}</span>
 				</a>
 				</c:otherwise>
 				</c:choose>
@@ -180,10 +180,18 @@
 	<!-- Widgets -->
 	<div class="col-lg-3 col-md-4">
 		<div class="sidebar right">
+		
+			<!-- Widget -->
+			<div class="widget margin-top-0">
+				<h3>Categories</h3>
+				<div class="info-box margin-bottom-10"style="height: 65px;"><a href="/review/viewReviewList?categoryCode=CARE"><h4>Care</h4></a></div>
+				<div class="info-box margin-bottom-10"style="height: 65px;"><a href="/review/viewReviewList?categoryCode=EVENT"><h4>Event</h4></a></div>	
+			</div>
+			<!-- Widget / End -->
 			<!-- Order -->
 			<form id="orderForm" action="" method="post">	
 			<div class="widget">	
-				<h3 class="margin-top-0 margin-bottom-25">Order By</h3>			
+				<h3 class="margin-top-40 margin-bottom-25">Order By</h3>			
 				<div>
 							<select id="orderBy" data-placeholder="Date" class="chosen-select">
 								<option value="boardNo" ${orderBy == 'boardNo'?'selected="selected"':''}>Date</option>	
@@ -217,13 +225,7 @@
 			</div>
 			<!-- Widget / End -->
 			
-			<!-- Widget -->
-			<div class="widget margin-top-40">
-				<h3>Categories</h3>
-				<div class="info-box margin-bottom-10"style="height: 65px;"><a href="/review/viewReviewList?categoryCode=CARE"><h4>Care</h4></a></div>
-				<div class="info-box margin-bottom-10"style="height: 65px;"><a href="/review/viewReviewList?categoryCode=EVENT"><h4>Event</h4></a></div>	
-			</div>
-			<!-- Widget / End -->
+			
 
 
 			<!-- Widget -->

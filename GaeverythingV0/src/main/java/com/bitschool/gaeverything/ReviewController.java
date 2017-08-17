@@ -145,6 +145,7 @@ public class ReviewController {
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		dto.setNickname(member.getNickname());
 		boolean flag = service.insertPost(dto);
+		
 		if(flag){
 			url = "redirect:/review/viewReviewList?categoryCode="+categoryCode;
 		}

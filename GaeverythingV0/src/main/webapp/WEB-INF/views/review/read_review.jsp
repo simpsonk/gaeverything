@@ -243,9 +243,21 @@
 						</div>	
 					</div>
 					
-					
+								
 					<!-- nickname, comment, likes.. -->
 					<div class="post-info col-md-12" style="padding-left: 15px;padding-right: 15px;">
+					<c:choose>
+					<c:when test="${dto.boardCategory=='CARE'}">
+					<a href="/map/detail/viewDetailPage?locationSeq=${dto.locationSeq}">
+					<span><i class="sl sl-icon-location"></i>    ${dto.address}</span>
+					</a>
+					</c:when>
+					<c:otherwise>
+					<a href="/event/detail/view?no=${dto.locationSeq}">
+					<span><i class="sl sl-icon-paper-plane "></i>    ${dto.address}</span>
+					</a>
+					</c:otherwise>
+					</c:choose>	
 						<ul class="post-meta">
 							<!--<c:if test="${dto.boardCategory=='1'}">
 								<li><a href="#">병원, 뷰티</a></li>
