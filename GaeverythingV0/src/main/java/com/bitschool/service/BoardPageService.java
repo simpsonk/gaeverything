@@ -55,12 +55,9 @@ public class BoardPageService implements IPagerService{
 		String categoryCode = pDTO.getCategoryCode();
 		if(categoryCode == null){
 			categoryCode = "0";
-		}
-		
-		
+		}				
 		StringBuffer sb = new StringBuffer();
-		sb.append("<nav class='pagination'><ul>");
-		
+		sb.append("<nav class='pagination'><ul>");		
 		if((pDTO.getPage()/10)>=1){
 			sb.append("<li><a href='/review/viewReviewList?categoryCode="+categoryCode+"&page="+(pageUnit-9)+"&orderBy="+orderBy+"'><i class='sl sl-icon-arrow-left'></i></a></li>");
 		}

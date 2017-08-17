@@ -89,7 +89,7 @@
 				<div id="titlebar" class="listing-titlebar  col-md-9" style="padding-top: 0px;padding-bottom: 0px; margin-bottom: 10px;">
 					<!-- title -->	
 					<div class="listing-titlebar-title">
-						<h3><a href = "/review/readPost?CategoryCode=${param.categoryCode }&boardNo=${board.boardNo}&page=${page}&orderBy=${orderBy}">${board.title}</a>
+						<h3><a href = "/review/readPost?CategoryCode=${param.categoryCode}&boardNo=${board.boardNo}&page=${page}&orderBy=${orderBy}">${board.title}</a>
 							<c:if test="${board.boardCategory=='CARE'}">
 								<span class = "listing-tag">CARE</span>
 							</c:if>
@@ -102,7 +102,7 @@
 				<div class="optin button col-md-3" style="margin-top: 0px;margin-bottom: 12px;height: 40px;">
 					<!-- Like -->
 					<c:choose>
-						<c:when test="${member.nickname == null }">
+						<c:when test="${member.nickname == null}">
 							<div class="like col-md-3" style="width: 80px; height: 0px; padding-left: 0px; margin-top: 25px; padding-right: 0px ; float: right;">
 								<div class="listing-item-container list-layout">
 									<span class="like-icon" id="like" onclick="no_login_like()"></span>
@@ -119,7 +119,18 @@
 					</c:choose>						
 				</div>
 				
-				
+				<c:choose>
+				<c:when test="${board.boardCategory=='CARE'}">
+				<a href="/map/detail/viewDetailPage?locationSeq=${board.locationSeq}">
+				<span><i class="sl sl-icon-location"></i>    ${board.address}</span>
+				</a>
+				</c:when>
+				<c:otherwise>
+				<a href="/event/detail/view?no=${board.eventNo}">
+				<span><i class="sl sl-icon-location"></i>    ${board.address}</span>
+				</a>
+				</c:otherwise>
+				</c:choose>
 				
 				<!-- nickname, comment, etc. -->	
 				<ul class="post-meta">
@@ -134,7 +145,7 @@
 						<li><i class="sl sl-icon-bubble"></i> ${board.numOfCmt}</li>
 						<li id="numOflike${board.boardNo}"><i class="sl sl-icon-heart"></i> ${board.countLike}</li>
 						<li><i class="sl sl-icon-eye"></i> ${board.readCount}</li>
-						<li><fmt:formatDate value = "${board.regiDate}" pattern="YYYY-MM-dd hh:mm:ss"/></li>
+						<li><fmt:formatDate value = "${board.regiDate}" pattern="YYYY-MM-dd hh:mm:ss"/></li>						
 				</ul>
 				
 								
