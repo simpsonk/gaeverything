@@ -80,6 +80,15 @@
 						<input type="hidden" id = "locationSeq" name = "locationSeq" value = "${dto.locationSeq}">		
 					</c:otherwise>
 				</c:choose>
+				
+				<c:choose>
+					<c:when test="${eventNo!=null}"><!-- 첫글 -->
+						<input type="hidden" id = "eventNo" name = "eventNo" value = "${eventNo}">	
+					</c:when>
+					<c:otherwise><!-- 수정 시 -->
+						<input type="hidden" id = "eventNo" name = "eventNo" value = "${dto.eventNo}">		
+					</c:otherwise>
+				</c:choose>
 
 				
 				<!-- category -->		

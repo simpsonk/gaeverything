@@ -126,8 +126,8 @@
 				</a>
 				</c:when>
 				<c:otherwise>
-				<a href="/event/detail/view?no=${board.eventNo}">
-				<span><i class="sl sl-icon-location"></i>    ${board.address}</span>
+				<a href="/event/detail/view?no=${board.locationSeq}">
+				<span><i class="sl sl-icon-paper-plane "></i>    ${board.address}</span>
 				</a>
 				</c:otherwise>
 				</c:choose>
