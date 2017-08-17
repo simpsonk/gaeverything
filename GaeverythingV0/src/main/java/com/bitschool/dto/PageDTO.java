@@ -8,7 +8,7 @@ public class PageDTO {
 	private int amount;
 	private String categoryCode;
 	
-	private String order;
+	private String orderBy;
 	
 	
 	
@@ -23,7 +23,7 @@ public class PageDTO {
 	}
 
 	
-/*	public PageDTO(int page, int amount, String categoryCode){
+	/*public PageDTO(int page, int amount, String categoryCode){
 		this.page = page;
 		this.amount = amount;
 		this.firstNo = (page*amount)-amount+1;
@@ -31,13 +31,13 @@ public class PageDTO {
 		this.categoryCode = categoryCode;
 	}*/
 
-	public PageDTO(int page, int amount, String categoryCode, String order){
+	public PageDTO(int page, int amount, String categoryCode, String orderBy){
 		this.page = page;
 		this.amount = amount;
 		this.firstNo = (page*amount)-amount+1;
 		this.lastNo = (page*amount);
 		this.categoryCode = categoryCode;
-		this.order = order;
+		this.orderBy = orderBy;
 	}
 	public int getFirstNo() {
 		return firstNo;
@@ -71,18 +71,18 @@ public class PageDTO {
 		this.amount = amount;
 	}
 
-	public String getOrder() {
-		return order;
+	public String getOrderBy() {
+		return orderBy;
 	}
 
-	public void setOrder(String order) {
-		this.order = order;
+	public void setOrder(String orderBy) {
+		this.orderBy = orderBy;
 	}
 
 	@Override
 	public String toString() {
 		return "PageDTO [firstNo=" + firstNo + ", lastNo=" + lastNo + ", page=" + page + ", amount=" + amount
-				+ ", categoryCode=" + categoryCode + ", order=" + order + "]";
+				+ ", categoryCode=" + categoryCode + ", orderBy=" + orderBy + "]";
 	}
 
 	

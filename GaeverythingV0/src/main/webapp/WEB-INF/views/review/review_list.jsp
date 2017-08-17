@@ -175,7 +175,7 @@
 				<h3 class="margin-top-0 margin-bottom-25">Order By</h3>			
 				<div>
 							<select id="orderBy" data-placeholder="Date" class="chosen-select">
-								<option value="Date" ${orderBy == 'Date'?'selected="selected"':''}>Date</option>	
+								<option value="boardNo" ${orderBy == 'boardNo'?'selected="selected"':''}>Date</option>	
 								<option value="Comments" ${orderBy == 'Comments'?'selected="selected"':''}>Comments</option>	
 								<option value="Bookmarks" ${orderBy == 'Bookmarks'?'selected="selected"':''}>Bookmarks</option>			
 								<option value="Ratings" ${orderBy == 'Ratings'?'selected="selected"':''}>Ratings</option>						

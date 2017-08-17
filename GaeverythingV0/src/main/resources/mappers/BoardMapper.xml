@@ -34,9 +34,20 @@
 					<if test="categoryCode!=null">
 						where boardCategory = #{categoryCode}
 					</if>
-	
-				order by boardNo desc)temp) 
-			
+				<if test="orderBy=='boardNo' || orderBy==null">
+				order by boardNo desc)
+				</if>
+				<if test="orderBy=='Ratings'">
+				order by Rating desc)
+				</if>
+				<if test="orderBy=='Bookmarks'">
+				order by countLike desc)
+				</if>
+				<!-- 
+				<if test="orderBy=='Comments'">
+				order by Comments desc)
+				</if> -->
+				 temp) 			
 		where num between #{firstNo} and #{lastNo}
 	</select>
 	

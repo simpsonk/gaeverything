@@ -118,7 +118,6 @@ public class ReviewController {
 		model.addAttribute("list", list);
 		model.addAttribute("orderBy",orderBy);
 		String url = "review/review_list";
-
 		return url;
 	}
 
