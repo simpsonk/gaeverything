@@ -50,6 +50,7 @@ public class BoardPageService implements IPagerService{
 		int pageUnit = (pDTO.getPage()/10)*10;
 		int startPage = pageUnit+1;
 		int lastPage = pageUnit+10;
+		String orderBy = pDTO.getOrderBy();
 		lastPage = (lastPage<=numOfPage)?lastPage:numOfPage;
 		String categoryCode = pDTO.getCategoryCode();
 		if(categoryCode == null){
@@ -61,13 +62,13 @@ public class BoardPageService implements IPagerService{
 		sb.append("<nav class='pagination'><ul>");
 		
 		if((pDTO.getPage()/10)>=1){
-			sb.append("<li><a href='/review/viewReviewList?categoryCode="+categoryCode+"&page="+(pageUnit-9)+"'><i class='sl sl-icon-arrow-left'></i></a></li>");
+			sb.append("<li><a href='/review/viewReviewList?categoryCode="+categoryCode+"&page="+(pageUnit-9)+"&orderBy="+orderBy+"'><i class='sl sl-icon-arrow-left'></i></a></li>");
 		}
 		for(int i=startPage; i<=lastPage; i++){
-			sb.append("<li><a href='/review/viewReviewList?categoryCode="+categoryCode+"&page="+i+"'>"+i+"</a></li>");
+			sb.append("<li><a href='/review/viewReviewList?categoryCode="+categoryCode+"&page="+i+"&orderBy="+orderBy+"'>"+i+"</a></li>");
 		}
 		if(lastPage<numOfPage){
-			sb.append("<li><a href='/review/viewReviewList?categoryCode="+categoryCode+"&page="+(pageUnit+11)+"'><i class='sl sl-icon-arrow-right'></i></a></li>");
+			sb.append("<li><a href='/review/viewReviewList?categoryCode="+categoryCode+"&page="+(pageUnit+11)+"&orderBy="+orderBy+"'><i class='sl sl-icon-arrow-right'></i></a></li>");
 		}
 		sb.append("</ul></nav>");
 		return sb.toString();
