@@ -276,6 +276,7 @@ public class ReviewController {
 	public String comment(CommentDTO cDTO,
 						  @RequestParam("boardNo") int boardNo, 
 						  @RequestParam(value="page", defaultValue="1") int page,
+						  @RequestParam(value="orderBy") String orderBy,
 						  Model model){
 		String url = null;
 		cDTO.setGroupNo(boardNo);
@@ -285,7 +286,7 @@ public class ReviewController {
 			model.addAttribute("boardNo", boardNo);
 			model.addAttribute("page", page);
 			
-			url = "redirect:/review/readPost";
+			url = "redirect:/review/readPost?orderBy="+orderBy;
 		}
 		return url;	
 	}

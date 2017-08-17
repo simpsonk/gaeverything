@@ -81,7 +81,7 @@
 		data.submit();
 	}
 
-	function add_cmt(page){
+	function add_cmt(page,orderBy){
 		var data = document.getElementById("newComment");
 		var isLogin = document.getElementById("isLogin").value;
 		if(isLogin==''){
@@ -94,7 +94,7 @@
 				var check = confirm("댓글을 등록하시겠습니까?");
 				if(check==true){
 					alert("댓글이 등록되었습니다.");
-					url = "/review/newCmt?page="+page;
+					url = "/review/newCmt?page="+page+"&orderBy="+orderBy;
 				}else{
 					alert("댓글 등록이 취소되었습니다.");
 					return;
@@ -369,7 +369,7 @@
 				<input type="hidden" id="isLogin" value="${member.nickname}">
 				<div class="clearfix col-md-9" style="margin-right: 26px;"></div>
 				<div class ="submit-cmt">
-					<button type = "button" class="button" onclick="add_cmt(${param.page})">Submit Comment</button>
+					<button type = "button" class="button" onclick="add_cmt('${param.page}','${param.orderBy}')">Submit Comment</button>
 				</div>
 				
 				<div class="clearfix"></div>
