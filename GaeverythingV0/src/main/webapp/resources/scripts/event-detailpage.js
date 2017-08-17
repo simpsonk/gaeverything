@@ -356,6 +356,9 @@ function nearbySlide(){
 
 
 function makeNearByList(near, event){
+	var date = event.startDate;
+	var startDate = date.toString();
+	alert('makeNearByList '+startDate);
 	var ele = document.getElementById("nearbyList");
 	nearbyFragment = document.createDocumentFragment();
 	for(var i=0; i<near.length; i++){
@@ -377,7 +380,7 @@ function makeNearByList(near, event){
 			nearbyItem += '	<span class="add-schedule" onclick = "no_log_in('+event.eventNo+')" id = "add-schedule'+i+'"></span>';	
 		}else {
 			
-			nearbyItem += '	<span class="'+near[i].scheduleAdded+'" id = "add-schedule'+i+'" onclick = "addToCal('+near[i].locationSeq+','+event.eventNo+','+event.startDate+','+i+')"></span>';
+			nearbyItem += '	<span class="'+near[i].scheduleAdded+'" id = "add-schedule'+i+'" onclick = "addToCal('+near[i].locationSeq+','+event.eventNo+',\''+startDate.toString()+'\','+i+')"></span>';
 		}
 		
 		nearbyItem +=
@@ -400,8 +403,13 @@ function no_log_in(eventNo){
 	
 
 function addToCal(locationSeq, eventNo, startDate, index){
+	
+	//startDate = startDate.toString();
 	var added = document.getElementById("add-schedule"+index).className;
-	var url = "/mypage/calendar/addBookingNearby?added="+added+"&eventNo="+eventNo+"&startDate"+"&loc="+locationSeq;
+	
+	alert('addToCal alert'+startDate.toString());
+	var url = "/mypage/calendar/addBookingNearby?added="+added+"&eventNo="+eventNo+"&startDate="+startDate.toString()+"&loc="+locationSeq;
+	location.href = url;
 	
 	var id ='#add-schedule'+index; 
 	$(id).toggleClass('liked');

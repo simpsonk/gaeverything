@@ -143,17 +143,18 @@ public class CalendarController {
 		return url;
 	}
 	
-	@RequestMapping(value="/addBookingNearby",method=RequestMethod.POST)
+	@RequestMapping(value="/addBookingNearby",method=RequestMethod.GET)
 	public String addBookingEvent(HttpSession session,Model model,
 			@RequestParam("added") String added,
 			@RequestParam("eventNo") int eventNo,
 			@RequestParam("startDate") String startDate,
 			@RequestParam("loc") int locationSeq){
 		String url = null;
+		
 		//캘린더에 등록
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		boolean flag = service.bookingAddNearby(eventNo, startDate, locationSeq, member.getEmail());
-		System.out.println("controller");
+		System.out.println("controller"+startDate);
 		if(flag){
 			url = "redirect:/event/detail/view?no="+eventNo;
 		}

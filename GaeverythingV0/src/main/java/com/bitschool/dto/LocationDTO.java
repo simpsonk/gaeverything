@@ -33,10 +33,20 @@ public class LocationDTO {
 	private String userLikeStatus;
 	private String scheduleAdded;
 	
+	private int totalReview;
+	
+	
+	
+	
+	
+	public int getTotalReview() {
+		return totalReview;
+	}
 
-	
-	
-	
+	public void setTotalReview(int totalReview) {
+		this.totalReview = totalReview;
+	}
+
 	public int getCountReview() {
 		return countReview;
 	}

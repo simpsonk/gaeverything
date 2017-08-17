@@ -34,8 +34,17 @@ public class EventDTO {
 	private int countRatings;
 	private int countReplies;
 
+	private int totalReview;
 	
 	
+	
+	
+	public int getTotalReview() {
+		return totalReview;
+	}
+	public void setTotalReview(int totalReview) {
+		this.totalReview = totalReview;
+	}
 	public int getEventNo() {
 		return eventNo;
 	}

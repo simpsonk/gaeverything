@@ -65,6 +65,9 @@
    	<select id="selectLocationSeq" parameterType="Integer" resultType="LocationDTO">
 		select * from location where locationSeq = #{locationSeq}
    	</select>
+   	
+
+
 
 
 </mapper>

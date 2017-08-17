@@ -203,6 +203,8 @@ public class EventDetailService {
 		int countReplies = this.countReplies(dto.getEventNo());
 		int countLike = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.EVENT, dto.getEventNo()));		
 		dto.setActUserResult(countReview, temp, countRatings, countReplies, countLike);
+		int totalReview = countReplies + countReview;
+		dto.setTotalReview(totalReview);
 		return dto;
 	}
 	
@@ -236,6 +238,7 @@ public class EventDetailService {
 	public List<EventDTO> getEventActUserResults(ActUserManager manager, List<EventDTO> list) {
 		for(int i=0;i<list.size();i++){
 			this.getEventActUserResult(manager, list.get(i));
+			
 		}
 		return list;
 	}

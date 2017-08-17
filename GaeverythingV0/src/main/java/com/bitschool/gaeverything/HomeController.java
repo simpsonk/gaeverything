@@ -1,7 +1,11 @@
 	package com.bitschool.gaeverything;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -10,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +24,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bitschool.dto.ActUserDTO;
+import com.bitschool.dto.EventDTO;
+import com.bitschool.dto.HomeListDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
+import com.bitschool.service.ActUserService;
+import com.bitschool.service.EventDetailService;
+import com.bitschool.service.EventService;
+import com.bitschool.service.HomeService;
 import com.bitschool.service.IBoardService;
+import com.bitschool.service.LocationDetailService;
 import com.bitschool.service.LocationService;
 import com.bitschool.service.LogService;
 import com.bitschool.service.SignUpService;
@@ -51,6 +63,21 @@ public class HomeController {
 	 
 	@Inject
 	private Email email;
+	
+	@Inject
+	private LocationDetailService lService;
+	
+	@Inject
+	private EventService eService;
+	
+	@Inject
+	private EventDetailService dService;
+	
+	@Inject
+	private ActUserService aService;
+	
+	@Inject
+	private HomeService hService;
 	
 	
 	
@@ -132,4 +159,29 @@ public class HomeController {
 			boolean chkPoint = sigService.findPW(member)==null;	
 			return chkPoint;
 		}
+		
+		@RequestMapping(value="mostReviewed", method={RequestMethod.GET, RequestMethod.POST})
+		public @ResponseBody List<HomeListDTO> mostReviewed(HttpSession session){
+			System.out.println("home controller");
+		//	HashMap<String, Object> data = null;
+			
+			//디테일 서비스에서 카운트리뷰, 카운트리플라이 값 나온걸 서로 더해서 토탈 리뷰 변수에 셋팅
+			ActUserManager manager = new ActUserManager(aService);
+			List<LocationDTO> list = lService.getAllHospital(manager);
+			List<HomeListDTO> hList = hService.makeList1(list);
+		
+			List<EventDTO> eList = eService.getAllLists();
+			eList = dService.getEventActUserResults(manager, eList);
+			hList = hService.makeList2(hList, eList);
+
+			//totalReview순으로 정렬.
+			Collections.sort(hList, new Comparator<HomeListDTO>() {
+			});
+			
+			
+			
+			return hList;
+		}
+		
+		
 }

@@ -185,8 +185,8 @@
 		<div class="row">
 			<div class="col-md-12">
 				<h3 class="headline centered margin-bottom-45">
-					Most Visited Places
-					<span>Discover top-rated local businesses</span>
+					Most Reviewed Places
+					<span>Discover most-reviewed local places</span>
 				</h3>
 			</div>
 
@@ -198,12 +198,10 @@
  					<a href="listings-single-page.html" class="listing-item-container">
 						<div class="listing-item">
  							<img src="/resources/images/listing-item-01.jpg" alt="">
- 
-							<div class="listing-badge now-open">Now Open</div>
 							
 							<div class="listing-item-content">
 								<span class="tag">Eat & Drink</span>
-								<h3>Tom's Restaurant</h3>
+								<h3>Tom's Restaurantzzzzzzzz</h3>
 								<span>964 School Street, New York</span>
 							</div>
 							<span class="add-schedule"></span>
@@ -334,47 +332,7 @@
 
 
 <!-- Info Section -->
-<div class="container">
 
-	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
-			<h2 class="headline centered margin-top-80">
-				Plan The Vacation of Your Dreams 
-				<span class="margin-top-25">Explore some of the best tips from around the world from our partners and friends.  Discover some of the most popular listings in Sydney.</span>
-			</h2>
-		</div>
-	</div>
-
-	<div class="row icons-container">
-		<!-- Stage -->
-		<div class="col-md-4">
-			<div class="icon-box-2 with-line">
-				<i class="im im-icon-Map2"></i>
-				<h3 class="fff" style="color:white;">Find Interesting Place</h3>
-				<p>Proin dapibus nisl ornare diam varius tempus. Aenean a quam luctus, finibus tellus ut, convallis eros sollicitudin turpis.</p>
-			</div>
-		</div>
-
-		<!-- Stage -->
-		<div class="col-md-4">
-			<div class="icon-box-2 with-line">
-				<i class="im im-icon-Mail-withAtSign"></i>
-				<h3>Contact a Few Owners</h3>
-				<p>Maecenas pulvinar, risus in facilisis dignissim, quam nisi hendrerit nulla, id vestibulum metus nullam viverra porta purus.</p>
-			</div>
-		</div>
-
-		<!-- Stage -->
-		<div class="col-md-4">
-			<div class="icon-box-2">
-				<i class="im im-icon-Checked-User"></i>
-				<h3>Make a Reservation</h3>
-				<p>Faucibus ante, in porttitor tellus blandit et. Phasellus tincidunt metus lectus sollicitudin feugiat pharetra consectetur.</p>
-			</div>
-		</div>
-	</div>
-
-</div>
 <!-- Info Section / End -->
 
 
@@ -484,6 +442,75 @@
 <script type="text/javascript" src="<c:url value = '/resources/scripts/jquery-ui.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/tooltips.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/custom.js'/>"></script>
+<script>
 
+$(document).ready(function(){
+	mostReviewed();
+});
+
+
+	//most reviewed 
+	function mostReviewed(){
+		$.ajax({
+			url 	 : "/mostReviewed",
+			dataType : "json", 
+			type	 : 'post',
+			success  : function(hList){
+				
+			},
+			error : function(request, status, error) {
+				alert("code:" + request.status + "\n" + "message:"+ request.responseText + "\n" + "error:"+ error);
+			}
+		});
+	}
+	
+	
+	//most rated
+	function mostRated(){
+		$.ajax({
+			url 	 : "/mostReviewed",
+			dataType : "json", 
+			type	 : 'post',
+			success  : function(data){
+				
+			},
+			error : function(request, status, error) {
+				alert("code:" + request.status + "\n" + "message:"+ request.responseText + "\n" + "error:"+ error);
+			}
+		});
+	}
+	
+	//newest reviews
+	function newestReview(){
+		$.ajax({
+			url 	 : "/mostReviewed",
+			dataType : "json", 
+			type	 : 'post',
+			success  : function(data){
+				
+			},
+			error : function(request, status, error) {
+				alert("code:" + request.status + "\n" + "message:"+ request.responseText + "\n" + "error:"+ error);
+			}
+		});
+	}
+	
+	//most bookmarked
+	function mostBookmarked(){
+		$.ajax({
+			url 	 : "/mostReviewed",
+			dataType : "json", 
+			type	 : 'post',
+			success  : function(data){
+				
+			},
+			error : function(request, status, error) {
+				alert("code:" + request.status + "\n" + "message:"+ request.responseText + "\n" + "error:"+ error);
+			}
+		});
+	}
+
+
+</script>
 </body>
 </html>

@@ -296,10 +296,14 @@ public class CalendarService{
 			Cdto.setTitle("주변장소 등록");//병원, 카페에 따라 다르게
 			Cdto.setPlace(Ldto.getTitle());
 			Cdto.setStartDate(startDate);
+			System.out.println("eventNo ==  "+eventNo);
+			System.out.println("startDate ==  "+startDate);
+			System.out.println("locationSeq ==  "+locationSeq);
+			System.out.println("email ==  "+email);
 			//String time = dto.getBookTime();
 			//String[] times = time.split(" ");
-			String resultStart = null;
-			String resultEnd = null;
+			//String resultStart = null;
+			//String resultEnd = null;
 			/*if(times[1].equals("pm")){
 				String[] fTimes = times[0].split(":");
 				int fTime = Integer.parseInt(fTimes[0])+12;
@@ -323,11 +327,11 @@ public class CalendarService{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}*/
-			Cdto.setStartTime(resultStart);
+			Cdto.setStartTime("00:00");
 			Cdto.setEndDate(startDate);
-			Cdto.setEndTime(resultEnd);
+			Cdto.setEndTime("00:00");
 			Cdto.setMessage(null);
-			Cdto.setLocationseq(locationSeq);
+			Cdto.setLocationseq(Ldto.getLocationSeq());
 			flag = Cdao.insert2(Cdto);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
