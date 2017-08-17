@@ -154,4 +154,10 @@ public class LocationDetailDAO {
 		return dto;
 	}
 
+	public List<LocationDTO> readAll()  throws SQLException{
+		List<LocationDTO> list = session.selectList(namespace+".all");
+		
+		return list;
+	}
+
 }

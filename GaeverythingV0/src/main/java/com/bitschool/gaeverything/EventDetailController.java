@@ -2,6 +2,7 @@ package com.bitschool.gaeverything;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -66,11 +67,8 @@ public class EventDetailController {
 		EventDTO dto = service.selectOne(eventNo);	 //이벤트 정보	
 		List<EventCommentDTO> list = service.commentList(eventNo);
 		dto = service.getEventActUserResult(manager, dto);
-		System.out.println(dto);
 		List<EventPhotoDTO> photoList = service.selectPhoto(eventNo);
 		List<BoardDTO> reviewList = service.getReviews(eventNo);
-		
-		
 		List<LocationDTO> nList = service.getNearby(dto.getLatitude(), dto.getLongitude()); 
 		
 		//좋아요 상태 유지
@@ -84,8 +82,6 @@ public class EventDetailController {
 		model.addAttribute("reviewList",reviewList);
 		model.addAttribute("eventphoto",photoList);
 		model.addAttribute("nearbyCount", nList.size());
-		System.out.println("사진갯수:" + photoList.size());
-		//model.addAttribute("blogList",blogList);
 		return url;
 	}
 	
@@ -106,7 +102,7 @@ public class EventDetailController {
 	@RequestMapping(value="addPhoto",method=RequestMethod.POST)
 	public String addPhoto(HttpServletRequest hsr, @RequestParam("eventNo") int eventNo,
 			@RequestParam("photo") MultipartFile photo, Model model){
-		System.out.println("사진추가");
+
 		String url = null;
 		String photoName = photo.getOriginalFilename();
 		String root_path = hsr.getSession().getServletContext().getRealPath("/");
@@ -114,7 +110,6 @@ public class EventDetailController {
 		EventPhotoDTO Pdto = new EventPhotoDTO();
 		Pdto.setEventNo(eventNo);
 		Pdto.setEventPhoto(photoName);
-		System.out.println("사진:" + Pdto);
 		try {
 			photo.transferTo(new File(root_path+attach_path+photoName));
 		} catch (IllegalStateException e) {
@@ -126,7 +121,6 @@ public class EventDetailController {
 		List<EventPhotoDTO> list = service.selectPhoto(eventNo);
 		//int PCnt = 0;
 		//PCnt = service.photoCnt(LNo);
-		//System.out.println("PCnt"+PCnt);
 		model.addAttribute("eventphoto",list);
 		//model.addAttribute("detailphotocnt",PCnt);
 		
@@ -165,12 +159,40 @@ public class EventDetailController {
 	}
 	
 	@RequestMapping(value = "/getNearby", method = {RequestMethod.POST,RequestMethod.GET})
-	public @ResponseBody List<LocationDTO> getNearby(@RequestParam(value="eventNo") int eventNo){
-		System.out.println("nearby--");
+	public @ResponseBody HashMap<String, Object> getNearby(@RequestParam(value="eventNo") int eventNo, HttpSession session, Model model){
 		EventDTO dto = service.selectOne(eventNo);
-		List<LocationDTO> data = service.getNearby(dto.getLatitude(), dto.getLongitude()); 
-		System.out.println("근처리스트 개수: " + data.size());
-		return data;
+		
+		List<LocationDTO> nearby = service.getNearby(dto.getLatitude(), dto.getLongitude()); 
+		boolean isLogin = new LoginFilter().isLogin(session, model); //로그인유지
+		ActUserManager manager = new ActUserManager(aService);
+		//MemberDTO member = (MemberDTO)session.getAttribute("member");
+		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		
+		if(member!=null){
+			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.EVENT);
+			nearby =manager.checkAddStatus(aDTO, nearby);
+				/*//System.out.println(nearby.size());
+				LocationDTO Ldto = nearby.get(i);
+				//System.out.println(member.getEmail());
+				ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.Nearby, nearby.get(i).getLocationSeq());
+				Ldto= manager.checkAddStatus(aDTO, Ldto);
+				nearby.add(Ldto);*/
+			}
+		//로그인 안된 상태면. 
+	//	nearby = service.getNearbyActUserResults(manager, nearby);
+		
+		System.out.println(nearby.get(1).getScheduleAdded());
+		
+		
+		HashMap<String, Object> list = new HashMap<String, Object>();
+		//list.put("member", isLogin);
+//		System.out.println();
+		//list.put("member", member);
+		list.put("nearby", nearby);
+		list.put("dto", dto);
+		//System.out.println(member.getNickname());
+		//System.out.println("근처리스트 개수: " + data.size());
+		return list;
 	}
 	
 

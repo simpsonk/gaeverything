@@ -16,7 +16,7 @@
 		select * from board order by boardNo desc 
 	</select>
 	
-	<select id="perPage" parameterType="PageDTO" resultType="BoardDTO">
+<!-- 	<select id="perPage" parameterType="PageDTO" resultType="BoardDTO">
 		select * from 
 			(select rownum as num, temp.* from
 				(select * from board 
@@ -25,6 +25,43 @@
 					</if>
 				order by boardNo desc)temp) 
 		where num between #{firstNo} and #{lastNo}
+	</select> -->
+	
+	<select id="perPage" parameterType="PageDTO" resultType="BoardDTO">
+		 <if test="orderBy!='Comments'">	
+		select * from 
+			(select rownum as num, temp.* from
+				(select * from board 
+					<if test="categoryCode!=null">
+						where boardCategory = #{categoryCode}
+					</if>
+				<if test="orderBy=='boardNo' || orderBy==null">
+				order by boardNo desc)
+				</if>
+				<if test="orderBy=='Ratings'">
+				order by Rating desc)
+				</if>
+				<if test="orderBy=='Bookmarks'">
+				order by countLike desc)
+				</if>
+				 temp) 			
+		where num between #{firstNo} and #{lastNo}
+		</if> 
+		
+		<if test="orderBy=='Comments'">
+		     select * from
+			  (select rownum as num,F.* from 
+			  (select E.* from 
+			  (select count(commentbody) as cntcomment,B.groupno from board B
+			  full outer join commentbox C 
+			  on B.groupno = C.groupno
+			  group by B.groupno) D, board E 
+			  where D.groupno=E.groupno 
+			  <if test="categoryCode!=null">
+			  and E.boardCategory = #{categoryCode} 
+			  </if>
+			  order by cntcomment desc) F)	where num between #{firstNo} and #{lastNo}
+		</if> 
 	</select>
 	
 	<select id="readOne" parameterType="Integer" resultType="BoardDTO">
@@ -88,6 +125,11 @@
 		where num=#{index}
 	</select>
 	
+	<select id="getFullCmt" parameterType="Integer" resultType="CommentDTO">
+		select * from commentbox 
+		where commentno = #{commentNo}
+	</select>
+	
 	<update id="modifyCmt" parameterType="CommentDTO">
 		update commentbox set commentbody=#{commentBody} where commentno=#{commentNo}
 	</update>
@@ -145,4 +187,5 @@
 	<select id="profile" parameterType="String" resultType="MyPageDTO">
 		select * from mypage where email = #{email}
 	</select>
+	
 </mapper>

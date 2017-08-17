@@ -42,8 +42,8 @@
 				<div class="form-row">
 					<input type="button" class="button border margin-top-5" id="login" name="login" value="Login" />
 					<div class="checkboxes margin-top-10">
-						<input id="remember-me" type="checkbox" name="check"  >
-						<label for="remember-me">Remember Me</label>
+					<!-- 	<input id="remember-me" type="checkbox" name="check"  >
+						<label for="remember-me">Remember Me</label> -->
 					</div>
 				</div>
 				<input type="hidden" name ="uri" value="${param.uri}">

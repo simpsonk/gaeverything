@@ -79,7 +79,6 @@ public class PetPageService {
 
 		//PetPage의 펫 수정하기(photo도 수정)
 		public boolean updatePetData(PetPageDTO pet){
-			System.out.println("PetPageService-updatePetData에 들어왔다");
 			boolean flag = false;
 			try {
 				flag = pdao.updateData(pet);
@@ -92,7 +91,6 @@ public class PetPageService {
 	
 	//PetPage 펫 수정(photo는 수정하지 않을 때)
 	public boolean updatePetData2(PetPageDTO pet){
-		System.out.println("PetPageService-updatePetData2에 들어왔다");
 		boolean flag = false;
 		try {
 			flag = pdao.updateData2(pet);

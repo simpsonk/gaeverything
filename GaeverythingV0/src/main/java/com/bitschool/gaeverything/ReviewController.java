@@ -26,12 +26,14 @@ import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.dto.MyPageDTO;
 import com.bitschool.dto.PageDTO;
+import com.bitschool.dto.ReactionDTO;
 import com.bitschool.service.ActUserService;
 import com.bitschool.service.IBoardService;
 import com.bitschool.service.ICommentService;
 import com.bitschool.service.IPagerService;
 import com.bitschool.service.LocationDetailService;
 import com.bitschool.service.LocationService;
+import com.bitschool.service.ReactionService;
 import com.bitschool.utils.ActUserManager;
 import com.bitschool.utils.LoginFilter;
 
@@ -57,13 +59,18 @@ public class ReviewController {
 	
 	@Inject
 	private LocationDetailService dService; 
+	
+	@Inject
+	private ReactionService rService;
 
 
 	@RequestMapping(value = "/viewDetailReviews", method = RequestMethod.GET)
 	public String viewDetailReviews(HttpSession session,  @RequestParam(value="locationSeq") int locationSeq,
-			@RequestParam(value="page", defaultValue="1") int page,Model model){
+			@RequestParam(value="page", defaultValue="1") int page,Model model,
+			@RequestParam(value="orderBy",defaultValue="boardNo") String orderBy){
 		String url = "review/review_list";
 		List<BoardDTO> reviewList = dService.getReviews(locationSeq);
+		model.addAttribute("orderBy",orderBy);
 		model.addAttribute("list",reviewList);
 		model.addAttribute("page",page);
 		return url;
@@ -71,23 +78,31 @@ public class ReviewController {
 	
 	@RequestMapping(value = "/viewReviewList", method = {RequestMethod.GET, RequestMethod.POST})
 	public String viewReviewList(Model model, HttpSession session, @RequestParam(value="page", defaultValue="1") int page,
-			@RequestParam(value = "categoryCode", defaultValue = "0") String categoryCode){
+			@RequestParam(value = "categoryCode", defaultValue = "0") String categoryCode,
+			@RequestParam(value = "orderBy", defaultValue="boardNo") String orderBy){
+		System.out.println("orderBy : "+orderBy);
 		
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		
 		int amount = 5;
 		PageDTO pDTO = null;
 		if(categoryCode.equals("0")||categoryCode.equals("null")){
-			pDTO = new PageDTO(page, amount, null);
+			pDTO = new PageDTO(page, amount, null, orderBy);
 		}else{
-			pDTO = new PageDTO(page, amount, categoryCode);
+			pDTO = new PageDTO(page, amount, categoryCode, orderBy);
 		}
+		
+		System.out.println("pDTO : "+pDTO);
 		
 		String pList = pService.pageList(pDTO);
 		model.addAttribute("pList", pList);
 		
+		System.out.println("pList : "+pList);
+		
 		List<BoardDTO> list = service.getPagedList(pDTO); 
 		model.addAttribute("page", page);
+		
+		System.out.println("list : "+list);
 		
 		//user like status like
 		if(isLogin){
@@ -103,8 +118,8 @@ public class ReviewController {
 			list.get(i).setNumOfCmt(countCmts);
 		}
 		model.addAttribute("list", list);
+		model.addAttribute("orderBy",orderBy);
 		String url = "review/review_list";
-
 		return url;
 	}
 
@@ -114,7 +129,6 @@ public class ReviewController {
 			@RequestParam(value="boardCategory",defaultValue="") String boardCategory,
 			@RequestParam(value="address", defaultValue = "") String address,
 			@RequestParam(value="eventNo", defaultValue = "0") int eventNo){
-		System.out.println("check"+locationSeq);
 		
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		String url = "review/review_regist";
@@ -131,6 +145,7 @@ public class ReviewController {
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		dto.setNickname(member.getNickname());
 		boolean flag = service.insertPost(dto);
+		
 		if(flag){
 			url = "redirect:/review/viewReviewList?categoryCode="+categoryCode;
 		}
@@ -215,9 +230,7 @@ public class ReviewController {
 		}else{
 			nextTitle = "(다음 글이 없습니다.)";
 		}
-		
-		//글쓴이 닉네임으로 프로필 불러오기
-		//글쓴이 닉넴 -> 이메일 찾고(사인업) -> 프로필에서 찾기
+
 		MyPageDTO mDTO = service.getWriter(dto.getNickname());
 		
 		model.addAttribute("numOfCmt", numOfCmt);
@@ -264,6 +277,7 @@ public class ReviewController {
 	public String comment(CommentDTO cDTO,
 						  @RequestParam("boardNo") int boardNo, 
 						  @RequestParam(value="page", defaultValue="1") int page,
+						  @RequestParam(value="orderBy") String orderBy,
 						  Model model){
 		String url = null;
 		cDTO.setGroupNo(boardNo);
@@ -273,7 +287,7 @@ public class ReviewController {
 			model.addAttribute("boardNo", boardNo);
 			model.addAttribute("page", page);
 			
-			url = "redirect:/review/readPost";
+			url = "redirect:/review/readPost?orderBy="+orderBy;
 		}
 		return url;	
 	}
@@ -341,19 +355,27 @@ public class ReviewController {
 		int data = 0;
 		ActUserManager manager = new ActUserManager(aService);
 		ActUserDTO dto = new ActUserDTO(email, ActUserManager.REVIEW, boardNo);
+		String nickname = rService.selectNickname(email);
+		ReactionDTO rDTO = new ReactionDTO("B",boardNo, nickname);
 		boolean flag = false;
 		if(like.equals("like-icon")){
 			flag = manager.registLikeStatus(dto);
+
+			//북마크 눌렀을 때 reaction 테이블에 넣어주기!!
+			rService.insertReaction(rDTO);
 			if(!flag){
 				System.out.println("insert fail: ReviewLike");
 			}
 		}else if(like.equals("like-icon liked")){
 			flag = manager.deleteLikeStatus(dto);
+			//북마크 해제 눌렀을 때 reaction 테이블에서 지우기!!
+			rService.deleteReaction(rDTO);
 			if(!flag){
 				System.out.println("delete fail: ReviewLike");
 			}
 		}
 		data = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.REVIEW, boardNo));
+		
 		return data;
 	}
 	
@@ -378,6 +400,31 @@ public class ReviewController {
 			}
 		}
 		data = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.SHOP, locationSeq));
+		return data;
+	}
+	
+	@RequestMapping(value="/updateEventDetailLike", method={RequestMethod.GET, RequestMethod.POST})
+	public @ResponseBody int updateEventDetailLike(
+							 @RequestParam("like") String like,
+							 @RequestParam("eventNo") int eventNo,
+							 @RequestParam("email") String email){
+		boolean flag = false;
+		int data = 0;
+		ActUserManager manager = new ActUserManager(aService);
+		ActUserDTO dto = new ActUserDTO(email, ActUserManager.EVENT, eventNo);
+		if(like.equals("like-icon")){
+			flag = manager.registLikeStatus(dto);
+			if(!flag){
+				System.out.println("insert fail: DetailPageLike");
+			}
+		}else if(like.equals("like-icon liked")){
+			flag = manager.deleteLikeStatus(dto);
+			if(!flag){
+				System.out.println("delete fail: DetailPageLike");
+			}
+		}
+		data = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.EVENT, eventNo));
+
 		return data;
 	}
 	
@@ -406,29 +453,7 @@ public class ReviewController {
 		return data;
 	}
 	
-	@RequestMapping(value="/updateEventDetailLike", method={RequestMethod.GET, RequestMethod.POST})
-	public @ResponseBody int updateEventDetailLike(
-							 @RequestParam("like") String like,
-							 @RequestParam("eventNo") int eventNo,
-							 @RequestParam("email") String email){
-		boolean flag = false;
-		int data = 0;
-		ActUserManager manager = new ActUserManager(aService);
-		ActUserDTO dto = new ActUserDTO(email, ActUserManager.EVENT, eventNo);
-		if(like.equals("like-icon")){
-			flag = manager.registLikeStatus(dto);
-			if(!flag){
-				System.out.println("insert fail: DetailPageLike");
-			}
-		}else if(like.equals("like-icon liked")){
-			flag = manager.deleteLikeStatus(dto);
-			if(!flag){
-				System.out.println("delete fail: DetailPageLike");
-			}
-		}
-		data = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.EVENT, eventNo));
-		return data;
-	}
+	
 	
 	
 	@RequestMapping(value = "viewSearchShop", method = RequestMethod.GET)

@@ -8,8 +8,10 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.bitschool.dao.IBoardDAO;
+import com.bitschool.dao.ReactionDAO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.CommentDTO;
+import com.bitschool.dto.ReactionDTO;
 
 @Service
 public class CommentService implements ICommentService{
@@ -17,13 +19,16 @@ public class CommentService implements ICommentService{
 	@Inject
 	private IBoardDAO dao;
 	
+	@Inject
+	private ReactionDAO rdao;
+	
 	@Override
 	public boolean addComment(CommentDTO cDTO) {
-		System.out.println("ëŒ“ê¸€ì¶”ê°€ service");
 		boolean flag = false;
 		try {
 			flag = dao.insertComment(cDTO);
-			System.out.println("ëŒ“ê¸€ì¶”ê°€ê²°ê³¼: " + flag);
+			ReactionDTO rdto = new ReactionDTO("C",cDTO.getGroupNo(),cDTO.getNicknameCmt());
+			rdao.insertReaction(rdto);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -34,11 +39,8 @@ public class CommentService implements ICommentService{
 	public List<CommentDTO> getAllComment(int boardNo) {
 		List<CommentDTO> cList= null;
 		
-		System.out.println("ëª¨ë“  ëŒ“ê¸€ì½ê¸° service");
-		System.out.println("ëª¨ë‘ì½ê¸° ê·¸ë£¹ë„˜ë²„:" + boardNo);
 		try {
 			cList = dao.readAllCmt(boardNo);
-			System.out.println("ë¦¬ìŠ¤íŠ¸ë°›ìŒã…‡ã…‡");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -47,16 +49,12 @@ public class CommentService implements ICommentService{
 
 	@Override
 	public boolean updateCmt(CommentDTO cDTO) {
-		System.out.println("ì—…ëƒì„œë¹„ìŠ¤");
 		
 		
 		boolean flag = false;
 		
 		try {
 			flag = dao.updateCmt(cDTO); 
-			System.out.println("ëŒ“ê¸€ìˆ˜ì •ì„±ê³µ");
-			//ì¸ë±ìŠ¤ë²ˆí˜¸ ê°€ì ¸ì™€ì„œ í•´ë‹¹ ëŒ“ê¸€ ì°¾ìŒ 
-			//ê·¸ ëŒ“ê¸€ ì—…ëƒí•¨. 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -67,7 +65,15 @@ public class CommentService implements ICommentService{
 	public boolean removeCmt(int commentNo) {
 		boolean flag = false;
 		try {
-			flag = dao.removeCmt(commentNo);
+			//´ñ±Û »èÁ¦ÇÏ¸é ´ë½Ãº¸µåÀÇ reaction¿¡¼­µµ »ç¶óÁöµµ·Ï///
+			CommentDTO cDTO = this.getFullCmt(commentNo);
+			System.out.println("cDTO :"+cDTO);
+			ReactionDTO rdto = new ReactionDTO("C",cDTO.getGroupNo(),cDTO.getNicknameCmt());
+			rdao.deleteReaction(rdto);
+			
+			//ÁøÂ¥ ´ñ±Û »èÁ¦
+			flag = dao.removeCmt(commentNo);	
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -85,6 +91,18 @@ public class CommentService implements ICommentService{
 		return numOfCmt;
 	}
 
+	
+	@Override
+	public CommentDTO getFullCmt(int commentNo){
+		CommentDTO dto = null;
+		try {
+			dto = dao.getFullCmt(commentNo);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dto;
+	}
 	
 	
 	

@@ -415,8 +415,6 @@
 		daum.maps.event.addListener(marker, 'click', function() {
 			setOverlay(event);
 			overlay.setMap(map);
-			/* clearStarRating('.star-rating');
-			starRating('.star-rating'); */
 		}); 
 	}
 

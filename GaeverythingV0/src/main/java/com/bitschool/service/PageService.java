@@ -14,7 +14,6 @@ import com.bitschool.dto.MemberDTO;
 public class PageService {
 	public HashMap<String, Object> makeSerachList(int page, int amount, List<LocationDTO> list){
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		System.out.println(amount+"--->"+list.size()+"page-->"+page);
 		//page:0, amount 5;
 		int pageCount = (int)Math.ceil(list.size()/(double)amount);
 		int pageUnit = page/amount;
@@ -47,8 +46,6 @@ public class PageService {
 		
 		map.put("pList", plist.toString());
 		map.put("infoList", infoList);
-		System.out.println("infoList size: "+infoList.size());
-		
 		
 		return map;
 	}
@@ -56,7 +53,6 @@ public class PageService {
 	
 	public HashMap<String, Object> makeEventSerachList(int page, int amount, List<EventDTO> list) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-	//	System.out.println(amount+"--->"+list.size());
 		
 		int pageCount = (int)Math.ceil(list.size()/(double)amount);
 		int pageUnit = page/amount;
@@ -89,7 +85,6 @@ public class PageService {
 		
 		map.put("pList", plist.toString());
 		map.put("infoList", infoList);
-		System.out.println("infoList size: "+infoList.size());
 		
 		return map;
 	}

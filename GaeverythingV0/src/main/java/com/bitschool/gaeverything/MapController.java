@@ -129,9 +129,7 @@ public class MapController {
 			info = new MapInfomation(searchWord, temps[0], level, lat, lon);
 		}
 		
-		System.out.println("info:"+info);
 		List<LocationDTO> list = service.SearchCategory(info);
-		System.out.println(list);
 
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		ActUserManager manager = new ActUserManager(aService);

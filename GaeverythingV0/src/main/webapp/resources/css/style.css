@@ -7202,6 +7202,60 @@ section.fullwidth .listing-item-container.list-layout,
 	overflow: hidden;
 }
 
+/* add-schedule Icon */
+span.add-schedule {
+	color: #fff;
+	font-size: 19px;
+	position: absolute;
+	z-index: 101;
+	right: 30px;
+	bottom: 30px;
+	cursor: normal;
+	background-color: rgba(24,24,24,0.4);
+	display: block;
+	height: 44px;
+	width: 44px;
+	border-radius: 50%;
+	transition: all 0.4s;
+}
+
+.add-schedule:before,
+.add-schedule:after {
+	transition: opacity 0.3s, transform 0.4s cubic-bezier(.0,-.41,.19,2.5);
+	font-family: "FontAwesome";
+	position: absolute;
+	right: 0;
+	left: 0;
+	text-align: center;
+	top: 9px;
+}
+
+.add-schedule:before {
+	content: "\f271";
+	transform: scale(0.95);
+}
+
+.add-schedule:after {
+	content: "\f274";
+	opacity: 0;
+	transform: scale(0.5);
+}
+
+.add-schedule.liked:after {
+	opacity: 1;
+	transform: scale(0.95);
+}
+
+.add-schedule:hover,
+.add-schedule.liked {
+	background-color: #f3103c;
+}
+
+.add-schedule.liked:before{
+	opacity: 0;
+}
+
+
 
 /* Like Icon */
 span.like-icon {

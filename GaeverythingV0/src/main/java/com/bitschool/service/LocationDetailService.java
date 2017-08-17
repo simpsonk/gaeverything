@@ -268,6 +268,21 @@ public class LocationDetailService {
 		return dto;
 	}
 
-	
-
+	public List<LocationDTO> getAllHospital(ActUserManager manager) {
+		List<LocationDTO> list = null;
+		try {
+			list = dao.readAll();
+			list = this.getLocActUserResults(manager, list);
+			for(int i=0; i<list.size(); i++){
+				int a = list.get(i).getCountReview();
+				int b = list.get(i).getCountReplies();
+				list.get(i).setTotalReview(a+b);
+			}		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return list;
+	}
 }

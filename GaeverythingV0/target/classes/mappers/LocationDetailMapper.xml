@@ -105,4 +105,10 @@
 		where locationSeq = #{locationSeq} 
 		order by detailPhotoSeq desc
 	</select>
+	
+	<select id = "all" resultType = "LocationDTO">
+   		select * from location where CATEGORYCODE like 'HP8'
+   	</select>
+   	
+   	
 </mapper>

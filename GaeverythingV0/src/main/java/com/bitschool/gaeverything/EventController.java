@@ -52,12 +52,6 @@ public class EventController {
 	public String viewEventList(HttpSession session, Model model){
 		String url = "event/event_list";
 		boolean isLogin = new LoginFilter().isLogin(session, model);
-		/*if(isLogin){
-			MemberDTO member = (MemberDTO)session.getAttribute("member");
-			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.REVIEW);
-			list= new ActUserManager(aService).checkListReLikeStatus(aDTO, list);
-		}
-		*/
 		return url;
 	}
 	
@@ -75,10 +69,7 @@ public class EventController {
 		HashMap<String, Object> map = pService.makeEventSerachList(0, 6, list);
 		HashMap<String, Object> data = new HashMap<String, Object>();
 	
-		
-		System.out.println("일자포맷변경: " + list.get(1).getAddDate());
-		System.out.println("일자포맷변경 전: " + list.get(1).getStartDate());
-		data.put("events", list); //
+		data.put("events", list); 
 		data.put("pList", map.get("pList"));
 		data.put("infoList", map.get("infoList"));
 		return data;	

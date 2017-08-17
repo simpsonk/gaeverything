@@ -34,13 +34,16 @@
 		}
 	}
 	
-	function go_url(type, page, categoryCode){
+	function go_url(type, page, categoryCode, orderBy){
 		if(categoryCode==undefined){
 			categoryCode=0;
 		}
+		if(orderBy==undefined){
+			orderBy='boardNo';
+		}
 		var data = document.getElementById("postData");
 		var boardNo = document.getElementById("boardNo").value;
-		var url = "/review/viewReviewList?categoryCode="+categoryCode+"&page="+page;
+		var url = "/review/viewReviewList?categoryCode="+categoryCode+"&page="+page+"&orderBy="+orderBy;
 		if(type == 1){
 			url = "/review/clickModify?page="+page+"&boardNo="+boardNo;
 		}else if(type == 2){
@@ -78,7 +81,7 @@
 		data.submit();
 	}
 
-	function add_cmt(page){
+	function add_cmt(page,orderBy){
 		var data = document.getElementById("newComment");
 		var isLogin = document.getElementById("isLogin").value;
 		if(isLogin==''){
@@ -91,7 +94,7 @@
 				var check = confirm("댓글을 등록하시겠습니까?");
 				if(check==true){
 					alert("댓글이 등록되었습니다.");
-					url = "/review/newCmt?page="+page;
+					url = "/review/newCmt?page="+page+"&orderBy="+orderBy;
 				}else{
 					alert("댓글 등록이 취소되었습니다.");
 					return;
@@ -240,9 +243,21 @@
 						</div>	
 					</div>
 					
-					
+								
 					<!-- nickname, comment, likes.. -->
 					<div class="post-info col-md-12" style="padding-left: 15px;padding-right: 15px;">
+					<c:choose>
+					<c:when test="${dto.boardCategory=='CARE'}">
+					<a href="/map/detail/viewDetailPage?locationSeq=${dto.locationSeq}">
+					<span><i class="sl sl-icon-location"></i>    ${dto.address}</span>
+					</a>
+					</c:when>
+					<c:otherwise>
+					<a href="/event/detail/view?no=${dto.locationSeq}">
+					<span><i class="sl sl-icon-paper-plane "></i>    ${dto.address}</span>
+					</a>
+					</c:otherwise>
+					</c:choose>	
 						<ul class="post-meta">
 							<!--<c:if test="${dto.boardCategory=='1'}">
 								<li><a href="#">병원, 뷰티</a></li>
@@ -273,7 +288,7 @@
 	
 					<!-- back to list -->
 					<div class="list col-md-2" style="margin-top: 5px;">
-						<button type="button" class="button border margin-top-5" onclick="go_url(3,${param.page}, '${param.categoryCode}')" style="height: 48px;width: 125px;">back to list</button>
+						<button type="button" class="button border margin-top-5" onclick="go_url(3,${param.page}, '${param.categoryCode}','${param.orderBy}')" style="height: 48px;width: 125px;">back to list</button>
 					</div>
 					
 					<div class="optin button col-md-2" style="margin-top: 6px;">
@@ -366,7 +381,7 @@
 				<input type="hidden" id="isLogin" value="${member.nickname}">
 				<div class="clearfix col-md-9" style="margin-right: 26px;"></div>
 				<div class ="submit-cmt">
-					<button type = "button" class="button" onclick="add_cmt(${param.page})">Submit Comment</button>
+					<button type = "button" class="button" onclick="add_cmt('${param.page}','${param.orderBy}')">Submit Comment</button>
 				</div>
 				
 				<div class="clearfix"></div>

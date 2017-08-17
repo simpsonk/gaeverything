@@ -25,6 +25,7 @@ public class EventDTO {
 	private String regist;
 	private String thumbnail;
 	private String userLikeStatus;
+	
 	private int countLike;
 	private String categoryCode;
 	
@@ -33,8 +34,17 @@ public class EventDTO {
 	private int countRatings;
 	private int countReplies;
 
+	private int totalReview;
 	
 	
+	
+	
+	public int getTotalReview() {
+		return totalReview;
+	}
+	public void setTotalReview(int totalReview) {
+		this.totalReview = totalReview;
+	}
 	public int getEventNo() {
 		return eventNo;
 	}
@@ -198,15 +208,7 @@ public class EventDTO {
 		this.countRatings = countRatings;
 		this.countReplies = countReplies;
 		this.countLike = countLike;
-		
 	}
-	/*
-	public void setActUserResult( int countReplies, int countLike) {
-		
-		this.countReplies = countReplies;
-		this.countLike = countLike;
-		
-	}*/
 	
 	public String getCategoryCode() {
 		return categoryCode;
@@ -214,6 +216,10 @@ public class EventDTO {
 	public void setCategoryCode(String categoryCode) {
 		this.categoryCode = categoryCode;
 	}
+	
+	
+	
+	
 	@Override
 	public String toString() {
 		return "EventDTO [eventNo=" + eventNo + ", eventName=" + eventName + ", startDate=" + startDate + ", addDate="

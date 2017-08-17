@@ -133,7 +133,7 @@ function like_clicked(){
         dataType : 'json',
         type	 : "POST",
         success  : function(data) {
-        	id.innerHTML=data+' people bookmarked this event.'; 
+        	id.innerHTML = data+' people bookmarked this event.';
         },
         error : function(request, status, error) {
             alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -327,15 +327,17 @@ function getPhotoList(photo) {
 
 
 $(document).ready(function() {
+	
+	
 	var eventNo = document.getElementById("eventNo").value;
 	var url = "/event/detail/getNearby?eventNo="+eventNo;
 	$.ajax ({
 		url 	 : url,
 		dataType : 'JSON',
 		type 	 : "POST",
-		success	 : function(data){
-
-			makeNearByList(data);
+		success	 : function(list){
+			//alert(member.nickname);
+			makeNearByList(list.nearby, list.dto);
 			nearbySlide();
 		},
 		error : function(request, status, error) {
@@ -343,8 +345,11 @@ $(document).ready(function() {
       }
 	});
 	
+
 	
 });
+
+
 
 function nearbySlide(){
 	$('.sim').slick({
@@ -357,29 +362,83 @@ function nearbySlide(){
 
 
 
-function makeNearByList(near){
+function makeNearByList(near, event){
+	var date = event.startDate;
+	var startDate = date.toString();
+	alert('makeNearByList '+startDate);
 	var ele = document.getElementById("nearbyList");
+	nearbyFragment = document.createDocumentFragment();
 	for(var i=0; i<near.length; i++){
-		nearbyFragment = document.createDocumentFragment();
 		var itemEle = document.createElement("div");
+		
+		
 		var nearbyItem = 
-		'	<a href="https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query='+near[i].title+'" class="listing-item-container">'+
+		'	<div class="listing-item-container">'+
 		'		<div class="listing-item">'+
-		'			<img src="/resources/images/event-cafe.jpg" alt="">		'+
-		'			<div class="listing-item-content">'+
-		'				<span class="tag" style="background: #f91942;">Cafe</span>'+
-		'				<h3>'+near[i].title+'</h3>'+
-		'				<span>'+near[i].address+'</span>'+
-		'			</div>'+
-		'			<span class="like-icon"></span>'+
+		'		<a href="https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query='+near[i].title+'">'+
+		'				<img src="/resources/images/event-cafe.jpg" alt="">		'+
+		'				<div class="listing-item-content">'+
+		'					<span class="tag" style="background: #f91942;">Cafe</span>'+
+		'					<h3>'+near[i].title+'</h3>'+
+		'					<span>'+near[i].address+'</span>'+
+		'				</div>'+
+		'		</a>';
+		if(near[i].scheduleAdded == null){
+			nearbyItem += '	<span class="add-schedule" onclick = "no_log_in('+event.eventNo+')" id = "add-schedule'+i+'"></span>';	
+		}else {
+			
+			nearbyItem += '	<span class="'+near[i].scheduleAdded+'" id = "add-schedule'+i+'" onclick = "addToCal('+near[i].locationSeq+','+event.eventNo+',\''+startDate.toString()+'\','+i+')"></span>';
+		}
+		
+		nearbyItem +=
 		'		</div>'+
-		'	</a>';
+		'	</div>';
 		itemEle.innerHTML = nearbyItem;
+		
 		itemEle.className = 'carousel-item';
 		nearbyFragment.appendChild(itemEle);
-		ele.appendChild(nearbyFragment);
 	}
-	
+	ele.appendChild(nearbyFragment);
 	return ele;
 }
 
+
+function no_log_in(eventNo){
+		alert("일정등록은 회원만 가능합니다.");
+		location.href = "/viewLogin?uri=/event/detail/view?no="+eventNo;
+}
+	
+
+function addToCal(locationSeq, eventNo, startDate, index){
+	
+	//startDate = startDate.toString();
+	var added = document.getElementById("add-schedule"+index).className;
+	
+	alert('addToCal alert'+startDate.toString());
+	var url = "/mypage/calendar/addBookingNearby?added="+added+"&eventNo="+eventNo+"&startDate="+startDate+"&loc="+locationSeq;
+	location.href = url;
+	
+	var id ='#add-schedule'+index; 
+	$(id).toggleClass('liked');
+	$(id).children('.add-schedule').toggleClass('liked');
+	
+	
+	//alert("check");
+	//var eventNo = document.getElementById("eventNo4").value;
+	/*checkBooking(eventNo);
+	//var book = document.getElementById("addNearby");
+	var url = "/mypage/calendar/addBookingEvent";
+			book.action = url;
+			book.submit();	*/
+			
+}
+
+
+
+function checkBooking(eventNo){
+	var isLogin = document.getElementById("isLogin4");
+	if(isLogin.value==''){
+		alert("일정등록은 회원만 가능합니다.");
+		location.href = "/viewLogin?uri=/event/detail/view?no="+eventNo;
+	}
+}

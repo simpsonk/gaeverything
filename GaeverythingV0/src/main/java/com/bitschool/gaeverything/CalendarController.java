@@ -17,14 +17,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BookCalendarDTO;
 import com.bitschool.dto.BookEventCalendarDTO;
 import com.bitschool.dto.CalendarDTO;
 import com.bitschool.dto.CalendarFormat;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.dto.PetPageDTO;
+import com.bitschool.service.ActUserService;
 import com.bitschool.service.CalendarService;
 import com.bitschool.service.PetPageService;
+import com.bitschool.utils.ActUserManager;
 import com.google.gson.Gson;
 
 @RequestMapping("/mypage/calendar")
@@ -37,6 +40,11 @@ public class CalendarController {
 	
 	@Inject
 	private PetPageService Pservice;
+	
+	@Inject
+	private ActUserService aService;
+	
+	
 	
 	@RequestMapping(value="/viewCalendar", method={RequestMethod.GET,RequestMethod.POST})
 	public String viewCalendar(HttpSession session, Model model){
@@ -70,7 +78,6 @@ public class CalendarController {
 	@RequestMapping(value="/viewDetailCalendarLoc", method={RequestMethod.GET,RequestMethod.POST})
 	public String viewDetailCalendarLoc(HttpSession session, Model model, @RequestParam("seq") int seq,
 			@RequestParam(value="longitude",defaultValue="0") String longitude, @RequestParam(value="latitude",defaultValue="0") String latitude){
-		System.out.println(longitude+"       "+latitude);
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		String url = "mypage/calendar/detail_calendar_location";
 		model.addAttribute("member", member);
@@ -98,8 +105,7 @@ public class CalendarController {
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		model.addAttribute("member", member);
 		dto.setId(member.getEmail());
-		boolean flag = service.registCalendar(dto);
-		System.out.println(dto.getId());
+		boolean flag = service.registCalendar(dto);		
 		if(flag){
 			url = "redirect:/mypage/calendar/viewCalendar";
 		}
@@ -136,16 +142,41 @@ public class CalendarController {
 		}
 		return url;
 	}
-	@RequestMapping(value="/addBookingEvent",method=RequestMethod.POST)
+	
+	@RequestMapping(value="/addBookingNearby",method=RequestMethod.GET)
 	public String addBookingEvent(HttpSession session,Model model,
-			BookEventCalendarDTO dto){
+			@RequestParam("added") String added,
+			@RequestParam("eventNo") int eventNo,
+			@RequestParam("startDate") String startDate,
+			@RequestParam("loc") int locationSeq){
 		String url = null;
+		
+		//캘린더에 등록
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		boolean flag = service.bookingAdd2(dto,member.getEmail());
-		System.out.println("controller");
+		boolean flag = service.bookingAddNearby(eventNo, startDate, locationSeq, member.getEmail());
+		System.out.println("controller"+startDate);
 		if(flag){
-			url = "redirect:/event/detail/view?no="+dto.getEventNo();
+			url = "redirect:/event/detail/view?no="+eventNo;
 		}
+		
+		
+		//개인 등록상태 변경
+		ActUserManager manager = new ActUserManager(aService);
+		ActUserDTO dto = new ActUserDTO(member.getEmail(), ActUserManager.SHOP, locationSeq);
+		if(added.equals("add-schedule")){
+			flag = manager.registLikeStatus(dto);
+			if(!flag){
+				System.out.println("insert fail: DetailPageLike");
+			}
+		}else if(added.equals("add-schedule liked")){
+			flag = manager.deleteLikeStatus(dto);
+			if(!flag){
+				System.out.println("delete fail: DetailPageLike");
+			}
+		}
+		
+		
 		return url;
+		
 	}
 }

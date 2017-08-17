@@ -188,44 +188,57 @@ public class EventDetailService {
 			}
 		
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return dto;
 	}
-	
-
-	/*public List<BlogDTO> getBlogReviews(int eventNo){
-		List<BlogDTO> dto = null;
-		try {
-			dto = dao.getBlogReviews(eventNo);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return dto;
-	}*/
 
 	public EventDTO getEventActUserResult(ActUserManager manager, EventDTO dto) {
-		// TODO Auto-generated method stub
 		int countReview = this.countReviews(dto.getEventNo());	
-		
 		double averageRatings = this.getAverageRatings(this.getRatings(dto.getEventNo()),this.getReplyRatings(dto.getEventNo()));
 		averageRatings=(Double.isNaN(averageRatings))?0:averageRatings;
 		String temp = String.format("%.2f", averageRatings);
 		
 		int countRatings = this.getRatings(dto.getEventNo()).size()+this.getReplyRatings(dto.getEventNo()).size();
 		int countReplies = this.countReplies(dto.getEventNo());
-		int countLike = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.EVENT, dto.getEventNo()));
-		
+		int countLike = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.EVENT, dto.getEventNo()));		
 		dto.setActUserResult(countReview, temp, countRatings, countReplies, countLike);
-
+		int totalReview = countReplies + countReview;
+		dto.setTotalReview(totalReview);
+		return dto;
+	}
+	
+	public LocationDTO getNearbyActUserResult(ActUserManager manager, LocationDTO dto) {
+		
+		/*int countReview = this.countReviews(dto.getLocationSeq());	
+		double averageRatings = this.getAverageRatings(this.getRatings(dto.getLocationSeq()),this.getReplyRatings(dto.getLocationSeq()));
+		averageRatings=(Double.isNaN(averageRatings))?0:averageRatings;
+		String temp = String.format("%.2f", averageRatings);
+		
+		int countRatings = this.getRatings(dto.getLocationSeq()).size()+this.getReplyRatings(dto.getLocationSeq()).size();
+		int countReplies = this.countReplies(dto.getLocationSeq());
+		int countLike = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.SHOP, dto.getLocationSeq()));*/
+		
+		dto.setAddedResult(dto.getScheduleAdded());
 		
 		return dto;
+		
+		/*int countReview = this.countReviews(dto.getEventNo());	
+		double averageRatings = this.getAverageRatings(this.getRatings(dto.getEventNo()),this.getReplyRatings(dto.getEventNo()));
+		averageRatings=(Double.isNaN(averageRatings))?0:averageRatings;
+		String temp = String.format("%.2f", averageRatings);
+		
+		int countRatings = this.getRatings(dto.getEventNo()).size()+this.getReplyRatings(dto.getEventNo()).size();
+		int countReplies = this.countReplies(dto.getEventNo());
+		int countLike = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.EVENT, dto.getEventNo()));		
+		dto.setActUserResult(countReview, temp, countRatings, countReplies, countLike);
+		return dto;*/
 	}
 
 	public List<EventDTO> getEventActUserResults(ActUserManager manager, List<EventDTO> list) {
 		for(int i=0;i<list.size();i++){
 			this.getEventActUserResult(manager, list.get(i));
+			
 		}
 		return list;
 	}
@@ -253,31 +266,23 @@ public class EventDetailService {
 	}
 
 	//전체 카페리스트 중 내 반경 몇km이내의 정보만 빼서 새 리스트에 저장함 
-
 	public List<LocationDTO> getNearby(String lat, String lon) {
 		List<LocationDTO> list = this.getAllCafe();
-		System.out.println("카페 수:" + list.size());
 		List<LocationDTO> nList = new ArrayList<LocationDTO>();
 		
 		double startLat = Double.parseDouble(lat);
 		double startLon = Double.parseDouble(lon);
 		
-		//시작지점 : 해당 이벤트의 x, y
-		//거리구할 끝 지점 : 카페리스트 x, y
-		//받은 리스트랑 시작~거리 거리를 쫙 구하고  그게 특정 km이내인 리스트만 뽑아서 nList에 저장 
-		
+
 		for(int i=0;i<list.size();i++){
 			LocationDTO temp = list.get(i);
 			double endLat = Double.parseDouble(temp.getLatitude());
 			double endLon = Double.parseDouble(temp.getLongitude());
 			double radius = this.distanceCalcu(startLat, startLon, endLat, endLon, "kilometer");
-			//temp.setRadius(radius);
-			//System.out.println(radius);
 			if(!(radius>5)){
 				nList.add(temp);
 			}
 		}
-		System.out.println("근처:" + nList.size());
 		return nList;
 	}
 	
@@ -308,9 +313,11 @@ public class EventDetailService {
         return (rad * 180 / Math.PI);
     }
 
-
-
-	
-	
+	public List<LocationDTO> getNearbyActUserResults(ActUserManager manager, List<LocationDTO> list) {
+		for(int i=0;i<list.size();i++){
+			this.getNearbyActUserResult(manager, list.get(i));
+		}
+		return list;
+	}
 
 }

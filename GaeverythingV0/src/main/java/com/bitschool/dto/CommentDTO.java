@@ -20,6 +20,11 @@ public class CommentDTO {
 	public CommentDTO(){
 	}
 	
+	public CommentDTO(int groupNo, String nicknameCmt){
+		this.groupNo = groupNo;
+		this.nicknameCmt = nicknameCmt;
+	}
+	
 	public String getTitle() {
 		return title;
 	}

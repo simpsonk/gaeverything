@@ -1,7 +1,11 @@
 	package com.bitschool.gaeverything;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -10,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +24,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bitschool.dto.ActUserDTO;
+import com.bitschool.dto.EventDTO;
+import com.bitschool.dto.HomeListDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
+import com.bitschool.service.ActUserService;
+import com.bitschool.service.EventDetailService;
+import com.bitschool.service.EventService;
+import com.bitschool.service.HomeService;
 import com.bitschool.service.IBoardService;
+import com.bitschool.service.LocationDetailService;
 import com.bitschool.service.LocationService;
 import com.bitschool.service.LogService;
 import com.bitschool.service.SignUpService;
@@ -52,6 +64,21 @@ public class HomeController {
 	@Inject
 	private Email email;
 	
+	@Inject
+	private LocationDetailService lService;
+	
+	@Inject
+	private EventService eService;
+	
+	@Inject
+	private EventDetailService dService;
+	
+	@Inject
+	private ActUserService aService;
+	
+	@Inject
+	private HomeService hService;
+	
 	
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
@@ -60,7 +87,6 @@ public class HomeController {
 	public String home(Model model, HttpSession session) {
 		logger.info("Welcome home! The client locale is {}.", "connect");
 		boolean islogin = new LoginFilter().isLogin(session, model);
-		System.out.println(islogin);
 		return "home";
 	}
 	@RequestMapping(value = "login", method = {RequestMethod.POST, RequestMethod.GET})
@@ -105,13 +131,11 @@ public class HomeController {
 	    public ModelAndView findPW(@RequestParam("email") String e_mail,
 	    		@RequestParam("nickname") String nickname,
 	    		ModelMap model) throws Exception {
-		 	System.out.println("findPW 에 옴");
 	        ModelAndView mav;
 	        MemberDTO member = new MemberDTO();
 	        member.setEmail(e_mail);
 	        member.setNickname(nickname);
 	        String pw = sigService.findPW(member);	        
-	        System.out.println(pw);
 	        if(pw!=null) {
 	            email.setContent(nickname+"님, 안녕하세요. [Gaeverything]입니다. "
 	            		+ e_mail+" 계정의 비밀번호는 "+pw+" 입니다.");
@@ -132,9 +156,59 @@ public class HomeController {
 			MemberDTO member = new MemberDTO();
 			member.setEmail(email);
 			member.setNickname(nickname);
-			System.out.println("member :"+member);
 			boolean chkPoint = sigService.findPW(member)==null;	
-			System.out.println("chkPoint :"+chkPoint);
 			return chkPoint;
 		}
+		
+		@RequestMapping(value="mostReviewed", method={RequestMethod.GET, RequestMethod.POST})
+		public @ResponseBody List<HomeListDTO> mostReviewed(){
+
+			ActUserManager manager = new ActUserManager(aService);
+			List<LocationDTO> list = lService.getAllHospital(manager);
+			List<HomeListDTO> hList = hService.makeList1(list);
+		
+			List<EventDTO> eList = eService.getAllLists();
+			eList = dService.getEventActUserResults(manager, eList);
+			hList = hService.makeList2(hList, eList);
+
+			//totalReview순으로 정렬(내림차순)
+			Collections.sort(hList, new Comparator<HomeListDTO>() {
+				@Override
+				public int compare(HomeListDTO o1, HomeListDTO o2) {
+					return o2.getTotalReview() - o1.getTotalReview();
+				}
+			});
+			
+			System.out.println("1위: " +  hList.get(0).getTitle() + hList.get(0).getTotalReview()+ hList.get(0).getCategory());
+			System.out.println("2위: " +hList.get(1).getTitle()+ hList.get(1).getAvgRating());
+			return hList;
+		}
+		
+		@RequestMapping(value="mostRated", method={RequestMethod.GET, RequestMethod.POST})
+		public @ResponseBody List<HomeListDTO> mostRated(){
+
+			ActUserManager manager = new ActUserManager(aService);
+			List<LocationDTO> list = lService.getAllHospital(manager);
+			List<HomeListDTO> hList = hService.makeList1(list);
+		
+			List<EventDTO> eList = eService.getAllLists();
+			eList = dService.getEventActUserResults(manager, eList);
+			hList = hService.makeList2(hList, eList);
+
+			//totalReview순으로 정렬(내림차순)
+			Collections.sort(hList, new Comparator<HomeListDTO>() {
+				@Override
+				public int compare(HomeListDTO o1, HomeListDTO o2) {
+					double a = Double.parseDouble(o2.getAvgRating());
+					double b = Double.parseDouble(o1.getAvgRating());
+					return Double.compare(a, b);
+				}
+			});
+			
+			System.out.println("1위: " +  hList.get(0).getTitle() + hList.get(0).getAvgRating());
+			System.out.println("2위: " +hList.get(1).getTitle()+ hList.get(1).getAvgRating());
+			return hList;
+		}
+		
+		
 }
