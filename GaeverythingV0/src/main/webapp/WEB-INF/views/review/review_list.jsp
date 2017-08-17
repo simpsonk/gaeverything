@@ -78,7 +78,7 @@
 		
 			<!-- Img -->
 			<c:if test="${board.uploadImg != null}">
-				<a href="/review/readPost?boardNo=${board.boardNo}&page=${page}" class="post-img">
+				<a href="/review/readPost?boardNo=${board.boardNo}&page=${page}&orderBy=${orderBy}" class="post-img">
 				<img src="/resources/upload/${board.uploadImg}" alt="" style="width:100%; height:400px; object-fit:cover;">
 				</a>
 			</c:if>
@@ -89,7 +89,7 @@
 				<div id="titlebar" class="listing-titlebar  col-md-9" style="padding-top: 0px;padding-bottom: 0px; margin-bottom: 10px;">
 					<!-- title -->	
 					<div class="listing-titlebar-title">
-						<h3><a href = "/review/readPost?CategoryCode=${param.categoryCode }&boardNo=${board.boardNo}&page=${page}">${board.title}</a>
+						<h3><a href = "/review/readPost?CategoryCode=${param.categoryCode }&boardNo=${board.boardNo}&page=${page}&orderBy=${orderBy}">${board.title}</a>
 							<c:if test="${board.boardCategory=='CARE'}">
 								<span class = "listing-tag">CARE</span>
 							</c:if>
@@ -147,7 +147,7 @@
 				<div class="preview_box" id="preview" style="width: 100%; height:100px;">
 					<p>${board.onlyText}</p>
 				</div>
-				<a href="/review/readPost?categoryCode=${param.categoryCode}&boardNo=${board.boardNo}&page=${page}" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
+				<a href="/review/readPost?categoryCode=${param.categoryCode}&boardNo=${board.boardNo}&page=${page}&orderBy=${orderBy}" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
 			</div>
 		</div>
 	</c:forEach>

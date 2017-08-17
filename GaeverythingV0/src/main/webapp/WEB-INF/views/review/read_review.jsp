@@ -34,13 +34,16 @@
 		}
 	}
 	
-	function go_url(type, page, categoryCode){
+	function go_url(type, page, categoryCode, orderBy){
 		if(categoryCode==undefined){
 			categoryCode=0;
 		}
+		if(orderBy==undefined){
+			orderBy='boardNo';
+		}
 		var data = document.getElementById("postData");
 		var boardNo = document.getElementById("boardNo").value;
-		var url = "/review/viewReviewList?categoryCode="+categoryCode+"&page="+page;
+		var url = "/review/viewReviewList?categoryCode="+categoryCode+"&page="+page+"&orderBy="+orderBy;
 		if(type == 1){
 			url = "/review/clickModify?page="+page+"&boardNo="+boardNo;
 		}else if(type == 2){
@@ -273,7 +276,7 @@
 	
 					<!-- back to list -->
 					<div class="list col-md-2" style="margin-top: 5px;">
-						<button type="button" class="button border margin-top-5" onclick="go_url(3,${param.page}, '${param.categoryCode}')" style="height: 48px;width: 125px;">back to list</button>
+						<button type="button" class="button border margin-top-5" onclick="go_url(3,${param.page}, '${param.categoryCode}','${param.orderBy}')" style="height: 48px;width: 125px;">back to list</button>
 					</div>
 					
 					<div class="optin button col-md-2" style="margin-top: 6px;">

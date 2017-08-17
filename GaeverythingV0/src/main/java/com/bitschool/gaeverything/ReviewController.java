@@ -66,9 +66,11 @@ public class ReviewController {
 
 	@RequestMapping(value = "/viewDetailReviews", method = RequestMethod.GET)
 	public String viewDetailReviews(HttpSession session,  @RequestParam(value="locationSeq") int locationSeq,
-			@RequestParam(value="page", defaultValue="1") int page,Model model){
+			@RequestParam(value="page", defaultValue="1") int page,Model model,
+			@RequestParam(value="orderBy",defaultValue="boardNo") String orderBy){
 		String url = "review/review_list";
 		List<BoardDTO> reviewList = dService.getReviews(locationSeq);
+		model.addAttribute("orderBy",orderBy);
 		model.addAttribute("list",reviewList);
 		model.addAttribute("page",page);
 		return url;
