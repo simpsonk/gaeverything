@@ -43,7 +43,7 @@
 				<h2>Review</h2>
 				<span>Latest Reviews</span>							
 						
-					
+					<input id="categoryCode" type="hidden" value="${param.categoryCode}">
 				<!-- Breadcrumbs -->
 				<nav id="breadcrumbs">
 					<ul>
@@ -376,7 +376,8 @@
 	
 	$('#orderBy').change(function(){
 		var orderBy = document.getElementById('orderBy').value;
-		var url = '/review/viewReviewList?orderBy='+orderBy;
+		var categoryCode = document.getElementById('categoryCode').value;
+		var url = '/review/viewReviewList?orderBy='+orderBy+'&categoryCode='+categoryCode;
 		var data = document.getElementById('orderForm');
 		data.action = url;
 		data.submit();

@@ -57,6 +57,9 @@
 			  on B.groupno = C.groupno
 			  group by B.groupno) D, board E 
 			  where D.groupno=E.groupno 
+			  <if test="categoryCode!=null">
+			  and E.boardCategory = #{categoryCode} 
+			  </if>
 			  order by cntcomment desc) F)	where num between #{firstNo} and #{lastNo}
 		</if> 
 	</select>
