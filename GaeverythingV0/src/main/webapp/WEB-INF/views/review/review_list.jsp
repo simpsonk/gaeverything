@@ -173,8 +173,9 @@
 			<div class="widget">	
 				<h3 class="margin-top-0 margin-bottom-25">Order By</h3>			
 				<div>
-							<select data-placeholder="Reviews" class="chosen-select" style="display: none;">
-								<option>Reviews</option>	
+							<select data-placeholder="Date" class="chosen-select" style="display: none;">
+								<option>Date</option>	
+								<option>Comments</option>	
 								<option>Bookmarks</option>			
 								<option>Ratings</option>						
 							</select>
