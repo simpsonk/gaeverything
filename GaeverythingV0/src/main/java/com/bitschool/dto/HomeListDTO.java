@@ -2,6 +2,7 @@ package com.bitschool.dto;
 
 public class HomeListDTO {
 	
+	private int no;
 	private String title;
 	private String address;
 	private String category;
@@ -9,10 +10,18 @@ public class HomeListDTO {
 	private String content;
 	private String regiDate;
 	private int totalReview;
-	private double avgRating;
+	private String avgRating;
 	private int countLike;
 	private String image;
 	
+	
+	
+	public int getNo() {
+		return no;
+	}
+	public void setNo(int no) {
+		this.no = no;
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -55,10 +64,10 @@ public class HomeListDTO {
 	public void setTotalReview(int totalReview) {
 		this.totalReview = totalReview;
 	}
-	public double getAvgRating() {
+	public String getAvgRating() {
 		return avgRating;
 	}
-	public void setAvgRating(double avgRating) {
+	public void setAvgRating(String avgRating) {
 		this.avgRating = avgRating;
 	}
 	public int getCountLike() {

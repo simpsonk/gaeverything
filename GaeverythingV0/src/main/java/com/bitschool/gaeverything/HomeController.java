@@ -161,11 +161,8 @@ public class HomeController {
 		}
 		
 		@RequestMapping(value="mostReviewed", method={RequestMethod.GET, RequestMethod.POST})
-		public @ResponseBody List<HomeListDTO> mostReviewed(HttpSession session){
-			System.out.println("home controller");
-		//	HashMap<String, Object> data = null;
-			
-			//디테일 서비스에서 카운트리뷰, 카운트리플라이 값 나온걸 서로 더해서 토탈 리뷰 변수에 셋팅
+		public @ResponseBody List<HomeListDTO> mostReviewed(){
+
 			ActUserManager manager = new ActUserManager(aService);
 			List<LocationDTO> list = lService.getAllHospital(manager);
 			List<HomeListDTO> hList = hService.makeList1(list);
@@ -174,12 +171,40 @@ public class HomeController {
 			eList = dService.getEventActUserResults(manager, eList);
 			hList = hService.makeList2(hList, eList);
 
-			//totalReview순으로 정렬.
+			//totalReview순으로 정렬(내림차순)
 			Collections.sort(hList, new Comparator<HomeListDTO>() {
+				@Override
+				public int compare(HomeListDTO o1, HomeListDTO o2) {
+					return o2.getTotalReview() - o1.getTotalReview();
+				}
 			});
 			
-			
-			
+			System.out.println("1위: " +  hList.get(0).getTitle() + hList.get(0).getTotalReview()+ hList.get(0).getCategory());
+			System.out.println("2위: " +hList.get(1).getTitle()+ hList.get(1).getAvgRating());
+			return hList;
+		}
+		
+		@RequestMapping(value="mostRated", method={RequestMethod.GET, RequestMethod.POST})
+		public @ResponseBody List<HomeListDTO> mostRated(){
+
+			ActUserManager manager = new ActUserManager(aService);
+			List<LocationDTO> list = lService.getAllHospital(manager);
+			List<HomeListDTO> hList = hService.makeList1(list);
+		
+			List<EventDTO> eList = eService.getAllLists();
+			eList = dService.getEventActUserResults(manager, eList);
+			hList = hService.makeList2(hList, eList);
+
+			//totalReview순으로 정렬(내림차순)
+			/*Collections.sort(hList, new Comparator<HomeListDTO>() {
+				@Override
+				public int compare(HomeListDTO o1, HomeListDTO o2) {
+					return o2.getAvgRating() - o1.getAvgRating();
+				}
+			});
+			*/
+			System.out.println("1위: " +  hList.get(0).getTitle() + hList.get(0).getTotalReview()+ hList.get(0).getCategory());
+			System.out.println("2위: " +hList.get(1).getTitle()+ hList.get(1).getAvgRating());
 			return hList;
 		}
 		

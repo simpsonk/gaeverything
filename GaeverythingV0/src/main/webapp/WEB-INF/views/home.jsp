@@ -178,7 +178,7 @@
 
 
 
-<!-- Fullwidth Section -->
+<!-- Fullwidth Section1: 가장 리뷰 수 많은 곳 -->
 <section class="fullwidth margin-top-65 padding-top-75 padding-bottom-70" data-background-color="#f8f8f8">
 
 	<div class="container">
@@ -191,137 +191,9 @@
 			</div>
 
 			<div class="col-md-12">
-				<div class="simple-slick-carousel dots-nav">
+				<div class="sim" id="mostReviewed">
 
 				<!-- Listing Item -->
-				<div class="carousel-item">
- 					<a href="listings-single-page.html" class="listing-item-container">
-						<div class="listing-item">
- 							<img src="/resources/images/listing-item-01.jpg" alt="">
-							
-							<div class="listing-item-content">
-								<span class="tag">Eat & Drink</span>
-								<h3>Tom's Restaurantzzzzzzzz</h3>
-								<span>964 School Street, New York</span>
-							</div>
-							<span class="add-schedule"></span>
-						</div>
-						<div class="star-rating" data-rating="3.5">
-							<div class="rating-counter">(12 reviews)</div>
-						</div>
-					</a>
-				</div>
-				<!-- Listing Item / End -->
-
-				<!-- Listing Item -->
-				<div class="carousel-item">
-					<a href="listings-single-page.html" class="listing-item-container">
-						<div class="listing-item">
- 							<img src="/resources/images/listing-item-02.jpg" alt="">
- 							<div class="listing-item-details">
-								<ul>
-									<li>Friday, August 10</li>
-								</ul>
-							</div>
-							<div class="listing-item-content">
-								<span class="tag">Events</span>
-								<h3>Sticky Band</h3>
-								<span>Bishop Avenue, New York</span>
-							</div>
-							<span class="${likeStatus}"></span>
-						</div>
-						<div class="star-rating" data-rating="5.0">
-							<div class="rating-counter">(23 reviews)</div>
-						</div>
-					</a>
-				</div>
-				<!-- Listing Item / End -->		
-
-				<!-- Listing Item -->
-				<div class="carousel-item">
- 					<a href="listings-single-page.html" class="listing-item-container">
-						<div class="listing-item">
-							<img src="/resources/images/listing-item-03.jpg" alt="">
-							<div class="listing-item-details">
-								<ul>
-									<li>Starting from $59 per night</li>
-								</ul>
-							</div>
-							<div class="listing-item-content">
-								<span class="tag">Hotels</span>
-								<h3>Hotel Govendor</h3>
-								<span>778 Country Street, New York</span>
-							</div>
-							<span class="like-icon"></span>
-						</div>
-						<div class="star-rating" data-rating="2.0">
-							<div class="rating-counter">(17 reviews)</div>
-						</div>
-					</a>
-				</div>
-				<!-- Listing Item / End -->
-
-				<!-- Listing Item -->
-				<div class="carousel-item">
-					<a href="listings-single-page.html" class="listing-item-container">
-						<div class="listing-item">
-							<img src="/resources/images/listing-item-04.jpg" alt="">
-
-							<div class="listing-badge now-open">Now Open</div>
-
-							<div class="listing-item-content">
-								<span class="tag">Eat & Drink</span>
-								<h3>Burger House</h3>
-								<span>2726 Shinn Street, New York</span>
-							</div>
-							<span class="like-icon"></span>
-						</div>
-						<div class="star-rating" data-rating="5.0">
-							<div class="rating-counter">(31 reviews)</div>
-						</div>
-					</a>
-				</div>
-				<!-- Listing Item / End -->
-
-				<!-- Listing Item -->
-				<div class="carousel-item">
-					<a href="listings-single-page.html" class="listing-item-container">
-						<div class="listing-item">
-							<img src="/resources/images/listing-item-05.jpg" alt="">
-							<div class="listing-item-content">
-								<span class="tag">Other</span>
-								<h3>Airport</h3>
-								<span>1512 Duncan Avenue, New York</span>
-							</div>
-							<span class="like-icon"></span>
-						</div>
-						<div class="star-rating" data-rating="3.5">
-							<div class="rating-counter">(46 reviews)</div>
-						</div>
-					</a>
-				</div>
-				<!-- Listing Item / End -->
-
-				<!-- Listing Item -->
-				<div class="carousel-item">
-					<a href="listings-single-page.html" class="listing-item-container">
-						<div class="listing-item">
-							<img src="/resources/images/listing-item-06.jpg" alt="">
-
-							<div class="listing-badge now-closed">Now Closed</div>
-
-							<div class="listing-item-content">
-								<span class="tag">Eat & Drink</span>
-								<h3>Think Coffee</h3>
-								<span>215 Terry Lane, New York</span>
-							</div>
-							<span class="like-icon"></span>
-						</div>
-						<div class="star-rating" data-rating="4.5">
-							<div class="rating-counter">(15 reviews)</div>
-						</div>
-					</a>
-				</div>
 				<!-- Listing Item / End -->
 				</div>
 			</div>
@@ -329,6 +201,32 @@
 	</div>
 </section>
 <!-- Fullwidth Section / End -->
+
+
+<!-- Fullwidth Section2: 가장 별점 많이 받은 곳 -->
+<section class="fullwidth margin-top-65 padding-top-75 padding-bottom-70" data-background-color="#f8f8f8">
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h3 class="headline centered margin-bottom-45">
+					Most Rated Places
+					<span>Discover most-rated local places</span>
+				</h3>
+			</div>
+
+			<div class="col-md-12">
+				<div class="sim" id="mostRated">
+
+				<!-- Listing Item -->
+				<!-- Listing Item / End -->
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Fullwidth Section / End -->
+
 
 
 <!-- Info Section -->
@@ -456,6 +354,8 @@ $(document).ready(function(){
 			dataType : "json", 
 			type	 : 'post',
 			success  : function(hList){
+				makeMostReviewdList(hList);
+				nearbySlide();
 				
 			},
 			error : function(request, status, error) {
@@ -464,11 +364,77 @@ $(document).ready(function(){
 		});
 	}
 	
+	function nearbySlide(){
+		$('.sim').slick({
+			infinite: true,
+			slidesToShow: 3,
+			slidesToScroll: 3,
+			
+			});
+	}
 	
+	
+	
+	function makeMostReviewdList(hList){
+		var ele = document.getElementById("mostReviewed");
+		var fragment = document.createDocumentFragment();
+		for(var i=0; i<3; i++){
+			var itemEle = document.createElement("div");
+			var item = "";
+						if(hList[i].category == 'HP8'){
+							item = 	'	<a href="/map/detail/viewDetailPage?locationSeq='+hList[i].no+'" class="listing-item-container">'+
+							  		'		<div class="listing-item">';
+						}else{
+							item = 	'	<a href="/event/detail/view?no='+hList[i].no+'" class="listing-item-container">'+
+							   		'		<div class="listing-item">';
+						}
+
+					   if(hList[i].image== null && hList[i].category == "HP8"){
+						   item +='	<img src="/resources/images/hospital.jpg" alt="">';
+					   }else if(hList[i].image == null && hList[i].category == "event1"){
+						   item +='	<img src="/resources/images/dogevent.jpg" alt="">';
+					   }else if(hList[i].image != null && hList[i].category == "HP8"){
+						   item +='	<img src="'+hList[i].image+'" alt="">';
+					   }else if(hList[i].image != null && hList[i].category == "event1"){
+						   item +='	<img src="/resources/images/'+hList[i].image+'" alt="">';
+					   }
+					   
+					   item +=
+							'<div class="listing-item-details">'+
+							'	<ul>'+
+							'		<li><h1><strong>'+hList[i].totalReview+'</strong></h1> reviews</li>'+
+							'	</ul>'+
+							'</div>'+
+					 		'<div class="listing-item-content">';
+					   if(hList[i].category == 'HP8'){
+						   item +=	 '<span class="tag" style="background: #f91942;">Hospital</span>';
+					   }else if(hList[i].category == 'event1'){
+						   item +=	 '<span class="tag" style="background: #f91942;">Event</span>';
+					   }
+					   item +=
+					 /*  '		<span class="tag">Eat & Drink</span>'+ */
+					   '		<h3>'+hList[i].title+'</h3>'	+
+					   '		<span>'+hList[i].address+'</span>'+
+					   '	</div>'+
+					   '	<span class="add-schedule"></span>'+
+					   '</div>'+
+					   '<div class="star-rating" data-rating="'+hList[i].avgRating+'">'+
+					   '	<div class="rating-counter"> 평균 '+ hList[i].avgRating+' 점</div>'+
+					   '</div>'+
+					   '</a>';
+			itemEle.innerHTML = item;
+			itemEle.className = 'carousel-item';
+			fragment.appendChild(itemEle);
+		}
+		ele.appendChild(fragment);
+		starRating('.star-rating');
+		return ele;	   
+	}
+		
 	//most rated
 	function mostRated(){
 		$.ajax({
-			url 	 : "/mostReviewed",
+			url 	 : "/mostRated",
 			dataType : "json", 
 			type	 : 'post',
 			success  : function(data){

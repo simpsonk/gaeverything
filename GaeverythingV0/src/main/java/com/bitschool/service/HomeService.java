@@ -15,14 +15,14 @@ public class HomeService {
 	public List<HomeListDTO> makeList1(List<LocationDTO> list) {
 		List<HomeListDTO> hList = new ArrayList<HomeListDTO>();
 		HomeListDTO dto = null;
-		
+		System.out.println("강남25시 5.00점" + list.get(1).getAverageRatings());
 		for(int i=0; i<list.size(); i++){
 			dto = new HomeListDTO();
+			dto.setNo(list.get(i).getLocationSeq());
 			dto.setTitle(list.get(i).getTitle());
 			dto.setAddress(list.get(i).getAddress());
-			dto.setCategory(list.get(i).getCategory());
-			double rating = Double.parseDouble(list.get(i).getAverageRatings());
-			dto.setRating(rating);
+			dto.setCategory(list.get(i).getCategoryCode());
+			dto.setAvgRating(list.get(i).getAverageRatings());
 			dto.setTotalReview(list.get(i).getTotalReview());
 			dto.setCountLike(list.get(i).getCountLike());
 			dto.setImage(list.get(i).getImageUrl());
@@ -33,13 +33,15 @@ public class HomeService {
 	}
 
 	public List<HomeListDTO> makeList2(List<HomeListDTO> hList, List<EventDTO> list) {
-		HomeListDTO dto = new HomeListDTO();
+		HomeListDTO dto = null;
 		
 		for(int i=0; i<list.size(); i++){
+			dto = new HomeListDTO();
+			dto.setNo(list.get(i).getEventNo());
 			dto.setTitle(list.get(i).getEventName());
 			dto.setAddress(list.get(i).getAddress());
 			dto.setCategory(list.get(i).getCategoryCode());
-			dto.setRating(Double.parseDouble(list.get(i).getAverageRatings()));
+			dto.setAvgRating(list.get(i).getAverageRatings());
 			dto.setTotalReview(list.get(i).getTotalReview());
 			dto.setCountLike(list.get(i).getCountLike());
 			dto.setImage(list.get(i).getThumbnail());

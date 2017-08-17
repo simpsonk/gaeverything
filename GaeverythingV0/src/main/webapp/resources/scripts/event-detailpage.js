@@ -408,7 +408,7 @@ function addToCal(locationSeq, eventNo, startDate, index){
 	var added = document.getElementById("add-schedule"+index).className;
 	
 	alert('addToCal alert'+startDate.toString());
-	var url = "/mypage/calendar/addBookingNearby?added="+added+"&eventNo="+eventNo+"&startDate="+startDate.toString()+"&loc="+locationSeq;
+	var url = "/mypage/calendar/addBookingNearby?added="+added+"&eventNo="+eventNo+"&startDate="+startDate+"&loc="+locationSeq;
 	location.href = url;
 	
 	var id ='#add-schedule'+index; 
