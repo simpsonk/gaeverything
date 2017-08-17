@@ -66,9 +66,11 @@ public class ReviewController {
 
 	@RequestMapping(value = "/viewDetailReviews", method = RequestMethod.GET)
 	public String viewDetailReviews(HttpSession session,  @RequestParam(value="locationSeq") int locationSeq,
-			@RequestParam(value="page", defaultValue="1") int page,Model model){
+			@RequestParam(value="page", defaultValue="1") int page,Model model,
+			@RequestParam(value="orderBy",defaultValue="boardNo") String orderBy){
 		String url = "review/review_list";
 		List<BoardDTO> reviewList = dService.getReviews(locationSeq);
+		model.addAttribute("orderBy",orderBy);
 		model.addAttribute("list",reviewList);
 		model.addAttribute("page",page);
 		return url;
@@ -76,23 +78,31 @@ public class ReviewController {
 	
 	@RequestMapping(value = "/viewReviewList", method = {RequestMethod.GET, RequestMethod.POST})
 	public String viewReviewList(Model model, HttpSession session, @RequestParam(value="page", defaultValue="1") int page,
-			@RequestParam(value = "categoryCode", defaultValue = "0") String categoryCode){
+			@RequestParam(value = "categoryCode", defaultValue = "0") String categoryCode,
+			@RequestParam(value = "orderBy", defaultValue="boardNo") String orderBy){
+		System.out.println("orderBy : "+orderBy);
 		
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		
 		int amount = 5;
 		PageDTO pDTO = null;
 		if(categoryCode.equals("0")||categoryCode.equals("null")){
-			pDTO = new PageDTO(page, amount, null);
+			pDTO = new PageDTO(page, amount, null, orderBy);
 		}else{
-			pDTO = new PageDTO(page, amount, categoryCode);
+			pDTO = new PageDTO(page, amount, categoryCode, orderBy);
 		}
+		
+		System.out.println("pDTO : "+pDTO);
 		
 		String pList = pService.pageList(pDTO);
 		model.addAttribute("pList", pList);
 		
+		System.out.println("pList : "+pList);
+		
 		List<BoardDTO> list = service.getPagedList(pDTO); 
 		model.addAttribute("page", page);
+		
+		System.out.println("list : "+list);
 		
 		//user like status like
 		if(isLogin){
@@ -108,8 +118,8 @@ public class ReviewController {
 			list.get(i).setNumOfCmt(countCmts);
 		}
 		model.addAttribute("list", list);
+		model.addAttribute("orderBy",orderBy);
 		String url = "review/review_list";
-
 		return url;
 	}
 
@@ -266,6 +276,7 @@ public class ReviewController {
 	public String comment(CommentDTO cDTO,
 						  @RequestParam("boardNo") int boardNo, 
 						  @RequestParam(value="page", defaultValue="1") int page,
+						  @RequestParam(value="orderBy") String orderBy,
 						  Model model){
 		String url = null;
 		cDTO.setGroupNo(boardNo);
@@ -275,7 +286,7 @@ public class ReviewController {
 			model.addAttribute("boardNo", boardNo);
 			model.addAttribute("page", page);
 			
-			url = "redirect:/review/readPost";
+			url = "redirect:/review/readPost?orderBy="+orderBy;
 		}
 		return url;	
 	}

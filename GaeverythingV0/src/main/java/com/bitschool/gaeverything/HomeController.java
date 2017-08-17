@@ -196,14 +196,16 @@ public class HomeController {
 			hList = hService.makeList2(hList, eList);
 
 			//totalReview순으로 정렬(내림차순)
-			/*Collections.sort(hList, new Comparator<HomeListDTO>() {
+			Collections.sort(hList, new Comparator<HomeListDTO>() {
 				@Override
 				public int compare(HomeListDTO o1, HomeListDTO o2) {
-					return o2.getAvgRating() - o1.getAvgRating();
+					double a = Double.parseDouble(o2.getAvgRating());
+					double b = Double.parseDouble(o1.getAvgRating());
+					return Double.compare(a, b);
 				}
 			});
-			*/
-			System.out.println("1위: " +  hList.get(0).getTitle() + hList.get(0).getTotalReview()+ hList.get(0).getCategory());
+			
+			System.out.println("1위: " +  hList.get(0).getTitle() + hList.get(0).getAvgRating());
 			System.out.println("2위: " +hList.get(1).getTitle()+ hList.get(1).getAvgRating());
 			return hList;
 		}

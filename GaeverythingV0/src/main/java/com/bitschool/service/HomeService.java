@@ -15,7 +15,6 @@ public class HomeService {
 	public List<HomeListDTO> makeList1(List<LocationDTO> list) {
 		List<HomeListDTO> hList = new ArrayList<HomeListDTO>();
 		HomeListDTO dto = null;
-		System.out.println("강남25시 5.00점" + list.get(1).getAverageRatings());
 		for(int i=0; i<list.size(); i++){
 			dto = new HomeListDTO();
 			dto.setNo(list.get(i).getLocationSeq());
@@ -34,7 +33,6 @@ public class HomeService {
 
 	public List<HomeListDTO> makeList2(List<HomeListDTO> hList, List<EventDTO> list) {
 		HomeListDTO dto = null;
-		
 		for(int i=0; i<list.size(); i++){
 			dto = new HomeListDTO();
 			dto.setNo(list.get(i).getEventNo());

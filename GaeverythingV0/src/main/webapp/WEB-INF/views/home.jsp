@@ -344,6 +344,7 @@
 
 $(document).ready(function(){
 	mostReviewed();
+	mostRated();
 });
 
 
@@ -437,7 +438,7 @@ $(document).ready(function(){
 			url 	 : "/mostRated",
 			dataType : "json", 
 			type	 : 'post',
-			success  : function(data){
+			success  : function(hList){
 				
 			},
 			error : function(request, status, error) {

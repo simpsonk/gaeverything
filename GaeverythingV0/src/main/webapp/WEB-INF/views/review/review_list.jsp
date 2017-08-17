@@ -43,7 +43,7 @@
 				<h2>Review</h2>
 				<span>Latest Reviews</span>							
 						
-					
+					<input id="categoryCode" type="hidden" value="${param.categoryCode}">
 				<!-- Breadcrumbs -->
 				<nav id="breadcrumbs">
 					<ul>
@@ -78,7 +78,7 @@
 		
 			<!-- Img -->
 			<c:if test="${board.uploadImg != null}">
-				<a href="/review/readPost?boardNo=${board.boardNo}&page=${page}" class="post-img">
+				<a href="/review/readPost?boardNo=${board.boardNo}&page=${page}&orderBy=${orderBy}" class="post-img">
 				<img src="/resources/upload/${board.uploadImg}" alt="" style="width:100%; height:400px; object-fit:cover;">
 				</a>
 			</c:if>
@@ -89,7 +89,7 @@
 				<div id="titlebar" class="listing-titlebar  col-md-9" style="padding-top: 0px;padding-bottom: 0px; margin-bottom: 10px;">
 					<!-- title -->	
 					<div class="listing-titlebar-title">
-						<h3><a href = "/review/readPost?CategoryCode=${param.categoryCode }&boardNo=${board.boardNo}&page=${page}">${board.title}</a>
+						<h3><a href = "/review/readPost?CategoryCode=${param.categoryCode}&boardNo=${board.boardNo}&page=${page}&orderBy=${orderBy}">${board.title}</a>
 							<c:if test="${board.boardCategory=='CARE'}">
 								<span class = "listing-tag">CARE</span>
 							</c:if>
@@ -102,7 +102,7 @@
 				<div class="optin button col-md-3" style="margin-top: 0px;margin-bottom: 12px;height: 40px;">
 					<!-- Like -->
 					<c:choose>
-						<c:when test="${member.nickname == null }">
+						<c:when test="${member.nickname == null}">
 							<div class="like col-md-3" style="width: 80px; height: 0px; padding-left: 0px; margin-top: 25px; padding-right: 0px ; float: right;">
 								<div class="listing-item-container list-layout">
 									<span class="like-icon" id="like" onclick="no_login_like()"></span>
@@ -119,7 +119,18 @@
 					</c:choose>						
 				</div>
 				
-				
+				<c:choose>
+				<c:when test="${board.boardCategory=='CARE'}">
+				<a href="/map/detail/viewDetailPage?locationSeq=${board.locationSeq}">
+				<span><i class="sl sl-icon-location"></i>    ${board.address}</span>
+				</a>
+				</c:when>
+				<c:otherwise>
+				<a href="/event/detail/view?no=${board.eventNo}">
+				<span><i class="sl sl-icon-location"></i>    ${board.address}</span>
+				</a>
+				</c:otherwise>
+				</c:choose>
 				
 				<!-- nickname, comment, etc. -->	
 				<ul class="post-meta">
@@ -134,7 +145,7 @@
 						<li><i class="sl sl-icon-bubble"></i> ${board.numOfCmt}</li>
 						<li id="numOflike${board.boardNo}"><i class="sl sl-icon-heart"></i> ${board.countLike}</li>
 						<li><i class="sl sl-icon-eye"></i> ${board.readCount}</li>
-						<li><fmt:formatDate value = "${board.regiDate}" pattern="YYYY-MM-dd hh:mm:ss"/></li>
+						<li><fmt:formatDate value = "${board.regiDate}" pattern="YYYY-MM-dd hh:mm:ss"/></li>						
 				</ul>
 				
 								
@@ -147,7 +158,7 @@
 				<div class="preview_box" id="preview" style="width: 100%; height:100px;">
 					<p>${board.onlyText}</p>
 				</div>
-				<a href="/review/readPost?categoryCode=${param.categoryCode}&boardNo=${board.boardNo}&page=${page}" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
+				<a href="/review/readPost?categoryCode=${param.categoryCode}&boardNo=${board.boardNo}&page=${page}&orderBy=${orderBy}" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
 			</div>
 		</div>
 	</c:forEach>
@@ -169,18 +180,22 @@
 	<!-- Widgets -->
 	<div class="col-lg-3 col-md-4">
 		<div class="sidebar right">
-			<!-- Order -->		
+			<!-- Order -->
+			<form id="orderForm" action="" method="post">	
 			<div class="widget">	
 				<h3 class="margin-top-0 margin-bottom-25">Order By</h3>			
 				<div>
-							<select data-placeholder="Reviews" class="chosen-select" style="display: none;">
-								<option>Reviews</option>	
-								<option>Bookmarks</option>			
-								<option>Ratings</option>						
+							<select id="orderBy" data-placeholder="Date" class="chosen-select">
+								<option value="boardNo" ${orderBy == 'boardNo'?'selected="selected"':''}>Date</option>	
+								<option value="Comments" ${orderBy == 'Comments'?'selected="selected"':''}>Comments</option>	
+								<option value="Bookmarks" ${orderBy == 'Bookmarks'?'selected="selected"':''}>Bookmarks</option>			
+								<option value="Ratings" ${orderBy == 'Ratings'?'selected="selected"':''}>Ratings</option>						
 							</select>
 				</div>
 				<div class="clearfix"></div>
 			</div>
+			</form>
+			
 			<!-- Widget -->
 			<div class="widget">
 				<h3 class="margin-top-40 margin-bottom-25">Search Review</h3>
@@ -369,6 +384,15 @@
 		location.href = "/viewLogin?uri=/review/viewReviewList";
 	}
 	
+	
+	$('#orderBy').change(function(){
+		var orderBy = document.getElementById('orderBy').value;
+		var categoryCode = document.getElementById('categoryCode').value;
+		var url = '/review/viewReviewList?orderBy='+orderBy+'&categoryCode='+categoryCode;
+		var data = document.getElementById('orderForm');
+		data.action = url;
+		data.submit();
+	});
 </script>
 
 </body>
