@@ -22,9 +22,6 @@ public class PageDTO {
 		this.categoryCode = categoryCode;
 	}
 
-	public PageDTO(){
-		
-	}
 	
 	public PageDTO(int page, int amount, String categoryCode){
 		this.page = page;
@@ -81,14 +78,14 @@ public class PageDTO {
 	public void setOrder(String order) {
 		this.order = order;
 	}
+
 	@Override
 	public String toString() {
 		return "PageDTO [firstNo=" + firstNo + ", lastNo=" + lastNo + ", page=" + page + ", amount=" + amount
-				+ ", categoryCode=" + categoryCode + "]";
+				+ ", categoryCode=" + categoryCode + ", order=" + order + "]";
 	}
+
 	
-	
-	
-	
+		
 
 }

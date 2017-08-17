@@ -16,7 +16,7 @@
 		select * from board order by boardNo desc 
 	</select>
 	
-	<select id="perPage" parameterType="PageDTO" resultType="BoardDTO">
+<!-- 	<select id="perPage" parameterType="PageDTO" resultType="BoardDTO">
 		select * from 
 			(select rownum as num, temp.* from
 				(select * from board 
@@ -24,6 +24,19 @@
 						where boardCategory = #{categoryCode}
 					</if>
 				order by boardNo desc)temp) 
+		where num between #{firstNo} and #{lastNo}
+	</select> -->
+	
+	<select id="perPage" parameterType="PageDTO" resultType="BoardDTO">
+		select * from 
+			(select rownum as num, temp.* from
+				(select * from board 
+					<if test="categoryCode!=null">
+						where boardCategory = #{categoryCode}
+					</if>
+	
+				order by boardNo desc)temp) 
+			
 		where num between #{firstNo} and #{lastNo}
 	</select>
 	

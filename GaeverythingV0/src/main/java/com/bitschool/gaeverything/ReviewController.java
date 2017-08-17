@@ -83,16 +83,22 @@ public class ReviewController {
 		int amount = 5;
 		PageDTO pDTO = null;
 		if(categoryCode.equals("0")||categoryCode.equals("null")){
-			pDTO = new PageDTO(page, amount, null);
+			pDTO = new PageDTO(page, amount, null, "boardNo");
 		}else{
-			pDTO = new PageDTO(page, amount, categoryCode);
+			pDTO = new PageDTO(page, amount, categoryCode, "boardNo");
 		}
+		
+		System.out.println("pDTO : "+pDTO);
 		
 		String pList = pService.pageList(pDTO);
 		model.addAttribute("pList", pList);
 		
+		System.out.println("pList : "+pList);
+		
 		List<BoardDTO> list = service.getPagedList(pDTO); 
 		model.addAttribute("page", page);
+		
+		System.out.println("list : "+list);
 		
 		//user like status like
 		if(isLogin){
