@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.EventDTO;
 import com.bitschool.dto.HomeListDTO;
 import com.bitschool.dto.LocationDTO;
@@ -48,5 +49,23 @@ public class HomeService {
 		}
 		return hList;
 	}
-
+	
+	public List<HomeListDTO> makeList3(List<HomeListDTO> hList, List<BoardDTO> list) {
+		HomeListDTO dto = null;
+		for(int i=0; i<list.size(); i++){
+			dto = new HomeListDTO();
+			dto.setNo(list.get(i).getBoardNo());
+			dto.setTitle(list.get(i).getTitle());
+			dto.setAddress(list.get(i).getAddress());
+			dto.setCategory(list.get(i).getBoardCategory());
+			String rate = Double.toString(list.get(i).getRating());
+			dto.setAvgRating(rate);
+			//dto.setTotalReview(list.get(i).getTotalReview());
+			dto.setCountLike(list.get(i).getCountLike());
+			dto.setImage(list.get(i).getUploadImg());
+			hList.add(dto);
+			
+		}
+		return hList;
+	}
 }

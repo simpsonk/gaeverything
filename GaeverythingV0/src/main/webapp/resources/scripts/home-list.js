@@ -6,9 +6,10 @@
 			url 	 : "/mostReviewed",
 			dataType : "json", 
 			type	 : 'post',
-			success  : function(hList){
-				makeMostReviewdList(hList);
+			success  : function(hList1){
+				makeMostReviewdList(hList1);
 				nearbySlide();
+				
 				
 			},
 			error : function(request, status, error) {
@@ -24,8 +25,6 @@
 			slidesToScroll: 3,
 			});
 	}	
-	
-	
 	
 	function makeMostReviewdList(hList){
 		var ele = document.getElementById("mostReviewed");
@@ -69,7 +68,7 @@
 					   '	</div>'+
 					   '	<span class="like-icon"></span>'+
 					   '</div>'+
-					   '<div class="star-rating" data-rating="'+hList[i].avgRating+'">'+
+					   '<div class="star" data-rating="'+hList[i].avgRating+'">'+
 					   '	<div class="rating-counter"> 평균 '+ hList[i].avgRating+' 점</div>'+
 					   '</div>'+
 					   '</a>';
@@ -78,7 +77,9 @@
 			fragment.appendChild(itemEle);
 		}
 		ele.appendChild(fragment);
-		starRating('.star-rating');
+		 clearStarRating('.star');
+		starRating('.star');
+		
 		return ele;	   
 	}
 		
@@ -141,6 +142,7 @@
 			}
 			ele.appendChild(fragment);
 			numericalRating('.numerical-rating');
+			clearStarRating('.star-rating');
 			starRating('.star-rating');
 			return ele;	 	
 	}

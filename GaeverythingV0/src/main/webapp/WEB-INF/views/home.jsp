@@ -113,13 +113,17 @@
 					<h4>Review</h4>
 				</a>
 				
-								<!-- Box -->
+				<!-- Box -->
 				<a href="/mypage/calendar/viewCalendar" class="category-small-box">
 					<i class="im im-icon-Calendar"></i>
 					<h4>Calendar</h4>
 				</a>
-
 				
+				<!-- Box -->
+				<a href="/mypage/calendar/viewCalendar" class="category-small-box">
+					<i class="im im-icon-Bar-Chart2"></i>
+					<h4>Dashboard</h4>
+				</a>
 
 			</div>
 		</div>
@@ -133,14 +137,64 @@
 		<div class="row">
 			<div class="col-md-12">
 				<h3 class="headline centered margin-bottom-45">
-					Most Reviewed Places
-					<span>Discover most-reviewed local places</span>
+					Most <strong>Reviewed</strong> Places
 				</h3>
 			</div>
 
 			<div class="col-md-12">
-				<div class="sim" id="mostReviewed">
-				<!-- Listing Item -->
+				<div class="simple-slick-carousel dots-nav">
+					<!-- Listing Item -->
+					<c:forEach items ="${list1}" var="review" begin="0" end="4">
+						<div class="carousel-item">
+							<c:choose>
+							<c:when test="${review.category == 'HP8'}">
+								<a href="/map/detail/viewDetailPage?locationSeq=${review.no}" class="listing-item-container">
+							</c:when>
+							<c:otherwise>
+								<a href="/event/detail/view?no=${review.no}" class="listing-item-container">
+							</c:otherwise>
+							</c:choose>
+									<div class="listing-item">
+									<c:choose>
+										<c:when test="${(empty review.image) and (review.category == 'HP8')}">
+											<img src="/resources/images/hospital.jpg" alt="">
+										</c:when>
+										<c:when test="${(empty review.image) and (review.category == 'event1')}">
+											<img src="/resources/images/dogevent.jpg" alt="">
+										</c:when>
+										<c:when test="${(!empty review.image) and (review.category == 'HP8')}">
+											<img src="${review.image}" alt="">
+										</c:when>
+										<c:otherwise>
+											<img src="/resources/images/event/${review.image}" alt="">
+										</c:otherwise>
+									</c:choose>	
+					
+									<div class="listing-item-details">
+										<ul>
+											<li><h1><strong>${review.totalReview}</strong></h1> reviews</li>
+										</ul>
+									</div>
+									<div class="listing-item-content">
+									<c:choose>
+									<c:when test="${review.category =='HP8'}">
+										<span class="tag" style="background: #f91942;">Hospital</span>
+									</c:when>
+									<c:otherwise>
+										<span class="tag" style="background: #f91942;">Event</span>
+									</c:otherwise>
+									</c:choose> 
+					 					<h3>${review.title}</h3>
+									 	<span>${review.address}</span>
+					  				</div>
+					   				<span class="like-icon"></span>
+					  			</div>
+					   			<div class="star-rating" data-rating="${review.avgRating}">
+					  			 	<div class="rating-counter"> 평균 ${review.avgRating} 점</div>
+					  			 </div>
+					 		 </a>
+					  </div>				
+				</c:forEach>
 				<!-- Listing Item / End -->
 				</div>
 			</div>
@@ -156,14 +210,50 @@
 		<div class="row">
 			<div class="col-md-12">
 				<h3 class="headline centered margin-bottom-45">
-					Most Rated Places
-					<span>Discover most-rated local places</span>
+					Most <strong>Rated</strong> Places
 				</h3>
 			</div>
 		
 			 <div class="col-md-12">
-				 <div class="mostRated" id="mostRated">
-				<!-- Listing Item -->
+				 <div class="simple-slick-carousel dots-nav">
+				 <!-- Listing Item -->	
+				 <c:forEach items="${list2}" var="rate" begin="0" end="4">
+					<div class="carousel-item">
+						<c:choose>
+						<c:when test="${rate.category == 'HP8'}">
+							<a href="/map/detail/viewDetailPage?locationSeq=${rate.no}" class="listing-item-container compact">
+						</c:when>
+						<c:otherwise>
+							<a href="/event/detail/view?no=${rate.no}" class="listing-item-container compact">
+						</c:otherwise>
+						</c:choose>
+								<div class="listing-item">
+									<c:choose>
+										<c:when test="${(empty rate.image) and (rate.category == 'HP8')}">
+											<img src="/resources/images/hospital.jpg" alt="">
+										</c:when>
+										<c:when test="${(empty rate.image) and (rate.category == 'event1')}">
+											<img src="/resources/images/dogevent.jpg" alt="">
+										</c:when>
+										<c:when test="${(!empty rate.image) and (rate.category == 'HP8')}">
+											<img src="${rate.image}" alt="">
+										</c:when>
+										<c:otherwise>
+											<img src="/resources/images/event/${rate.image}" alt="">
+										</c:otherwise>
+									</c:choose>	
+								<div class="listing-item-content">
+					 				<div class="star-rating" data-rating="${rate.avgRating}">
+					 					<div class="numerical-rating" data-rating="${rate.avgRating}"></div></div>
+					 				<h3>${rate.title}</h3>
+									<span>${rate.address}</span>
+								</div>
+									<span class="like-icon"></span>
+								</div>
+							</a>
+						</div>
+						</c:forEach>
+					</div>	
 				<!-- Listing Item / End -->
 				</div>
 			</div>
@@ -178,14 +268,65 @@
 		<div class="row">
 			<div class="col-md-12">
 				<h3 class="headline centered margin-bottom-45">
-					Most Reviewed Places
-					<span>Discover most-reviewed local places</span>
+					Most <strong>Bookmarked</strong> Places
 				</h3>
 			</div>
 
 			<div class="col-md-12">
-				<div class="sim" id="mostBookmarked">
-				<!-- Listing Item -->
+					<div class="simple-slick-carousel dots-nav">
+					<!-- Listing Item -->
+					<c:forEach items ="${list3}" var="like" begin="0" end="4">
+						<div class="carousel-item">
+							
+							<c:choose>
+							<c:when test="${like.category == 'HP8'}">
+								<a href="/map/detail/viewDetailPage?locationSeq=${like.no}" class="listing-item-container">
+							</c:when>
+							<c:otherwise>
+								<a href="/event/detail/view?no=${like.no}" class="listing-item-container">
+							</c:otherwise>
+							</c:choose>
+									<div class="listing-item">
+									<c:choose>
+										<c:when test="${(empty like.image) and (like.category == 'HP8')}">
+											<img src="/resources/images/hospital.jpg" alt="">
+										</c:when>
+										<c:when test="${(empty like.image) and (like.category == 'event1')}">
+											<img src="/resources/images/dogevent.jpg" alt="">
+										</c:when>
+										<c:when test="${(!empty like.image) and (like.category == 'HP8')}">
+											<img src="${like.image}" alt="">
+										</c:when>
+										<c:otherwise>
+											<img src="/resources/images/event/${like.image}" alt="">
+										</c:otherwise>
+									</c:choose>	
+					
+									<div class="listing-item-details">
+										<ul>
+											<li><i class="im im-icon-Heart" style="color:#f91942; font-size: 50px;"></i>${like.countLike}</li>
+										</ul>
+									</div>
+									<div class="listing-item-content">
+									<c:choose>
+									<c:when test="${like.category =='HP8'}">
+										<span class="tag" style="background: #f91942;">Hospital</span>
+									</c:when>
+									<c:otherwise>
+										<span class="tag" style="background: #f91942;">Event</span>
+									</c:otherwise>
+									</c:choose> 
+					 					<h3>${like.title}</h3>
+									 	<span>${like.address}</span>
+					  				</div>
+					   				<span class="like-icon"></span>
+					  			</div>
+					   			<div class="star-rating" data-rating="${like.avgRating}">
+					  			 	<div class="rating-counter"> 평균 ${like.avgRating} 점</div>
+					  			 </div>
+					 		 </a>
+					  </div>				
+				</c:forEach>
 				<!-- Listing Item / End -->
 				</div>
 			</div>
@@ -208,7 +349,41 @@
 
 		<div class="row" id = "reviews">
 			<!-- Blog Post Item -->
-			<!-- Blog post Item / End -->
+			<c:forEach items="${list4}" var="post" begin="0" end="2">
+			<div class="col-md-4">
+				<a href="/review/readPost/${post.boardNo}" class="blog-compact-item-container">
+					<div class="blog-compact-item">
+					<c:choose>
+					<c:when test="${!empty post.uploadImg }">
+						<img src="/resources/upload/${post.uploadImg}" alt="">
+					</c:when>
+					<c:otherwise>	
+						<img src="/resources/images/walkthedog.jpg" alt="">
+					</c:otherwise>
+					</c:choose>
+					
+					<c:choose>	
+					<c:when test="${post.boardCategory =='CARE'}">
+						<span class="blog-item-tag">Care</span>
+					</c:when>
+					<c:otherwise>
+						<span class="blog-item-tag">Event</span>
+					</c:otherwise>
+					</c:choose>
+						<div class="blog-compact-item-content">
+				   			<ul class="blog-post-tags">
+				   				<li>${post.regiDate}</li>
+				   			</ul>
+					   		<h3>${post.title}</h3>'+
+					   		<div class="preview_box"  style="width: 100%; height:100px;"><p>${post.onlyText}</p></div>
+					   	</div>
+					  </div>
+				 </a>
+			</div>
+			</c:forEach>
+		</div>	
+		
+		<!-- Blog post Item / End -->
 		</div>
 		<div class="col-md-12 centered-content">
 			<a href="/review/viewReviewList" class="button border margin-top-10">View Blog</a>
@@ -254,9 +429,9 @@
 <script>
 
 $(document).ready(function(){
-	mostReviewed();
-	mostRated();
-	newestReview();
+	//mostReviewed();
+	//mostRated();
+	//newestReview();
 	$('.preview_box').dotdotdot({
 		ellipis : '...',
 		wrap    : 'word',
