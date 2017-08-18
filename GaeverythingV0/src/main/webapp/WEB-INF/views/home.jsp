@@ -82,105 +82,53 @@
 
 		<div class="col-md-12">
 			<h3 class="headline centered margin-top-75">
-				Popular Categories
-				<span>Browse <i>the most desirable</i> categories</span>
+				Browse Categories
 			</h3>
 		</div>
 
 	</div>
 </div>
 
-
-<!-- Categories Carousel -->
-<div class="fullwidth-carousel-container margin-top-25">
-	<div class="fullwidth-slick-carousel category-carousel">
-
-		<!-- Item -->
-		<div class="fw-carousel-item">
-
-			<!-- this (first) box will be hidden under 1680px resolution -->
-			<div class="category-box-container half">
-				<a href="listings-half-screen-map-grid-1.html" class="category-box" data-background-image="/resources/images/category-box-01.jpg">
-					<div class="category-box-content">
-						<h3>Hotels</h3>
-						<span>64 listings</span>
-					</div>
-					<span class="category-box-btn">Browse</span>
+<!-- Category Boxes -->
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="categories-boxes-container margin-top-5 margin-bottom-30">
+				
+				<!-- Box -->
+				<a href="/map/viewMapList" class="category-small-box">
+					<i class="im im-icon-Clinic"></i>
+					<h4>Care</h4>
 				</a>
-			</div>
 
-			<div class="category-box-container half">
-				<a href="listings-half-screen-map-grid-1.html" class="category-box" data-background-image="/resources/images/category-box-02.jpg">
-					<div class="category-box-content">
-						<h3>Shops</h3>
-						<span>14 listings</span>
-					</div>
-					<span class="category-box-btn">Browse</span>
+				<!-- Box -->
+				<a href="/event/viewEventList" class="category-small-box">
+					<i class="im im-icon-Clown"></i>
+					<h4>Event</h4>
 				</a>
-			</div>
-		</div>
 
-		<!-- Item -->
-		<div class="fw-carousel-item">
-			<div class="category-box-container">
-				<a href="listings-half-screen-map-grid-1.html" class="category-box" data-background-image="/resources/images/category-box-03.jpg">
-					<div class="category-box-content">
-						<h3>Events</h3>
-						<span>67 listings</span>
-					</div>
-					<span class="category-box-btn">Browse</span>
+				<!-- Box -->
+				<a href="/review/viewReviewList" class="category-small-box">
+					<i class="im im-icon-Bulleted-List"></i>
+					<h4>Review</h4>
 				</a>
+				
+								<!-- Box -->
+				<a href="/mypage/calendar/viewCalendar" class="category-small-box">
+					<i class="im im-icon-Calendar"></i>
+					<h4>Calendar</h4>
+				</a>
+
+				
+
 			</div>
 		</div>
-
-		<!-- Item -->
-		<div class="fw-carousel-item">
-			<div class="category-box-container">
-				<a href="listings-half-screen-map-grid-1.html" class="category-box" data-background-image="/resources/images/category-box-04.jpg">
-					<div class="category-box-content">
-						<h3>Fitness</h3>
-						<span>27 listings</span>
-					</div>
-					<span class="category-box-btn">Browse</span>
-				</a>
-			</div>
-		</div>
-
-		<!-- Item -->
-		<div class="fw-carousel-item">
-			<div class="category-box-container">
-				<a href="listings-half-screen-map-list.html" class="category-box" data-background-image="/resources/images/category-box-05.jpg">
-					<div class="category-box-content">
-						<h3>Nightlife</h3>
-						<span>22 listings</span>
-					</div>
-					<span class="category-box-btn">Browse</span>
-				</a>
-			</div>
-		</div>
-
-		<!-- Item -->
-		<div class="fw-carousel-item">
-			<div class="category-box-container">
-				<a href="listings-half-screen-map-list.html" class="category-box" data-background-image="/resources/images/category-box-06.jpg">
-					<div class="category-box-content">
-						<h3>Eat & Drink</h3>
-						<span>130 listings</span>
-					</div>
-					<span class="category-box-btn">Browse</span>
-				</a>
-			</div>
-		</div>
-
 	</div>
 </div>
-<!-- Categories Carousel / End -->
-
-
+<!-- Category Boxes / End -->
 
 <!-- Fullwidth Section1: 가장 리뷰 수 많은 곳 -->
-<section class="fullwidth margin-top-65 padding-top-75 padding-bottom-70" data-background-color="#f8f8f8">
-
+<section class="fullwidth  padding-top-75 padding-bottom-70" data-background-color="#f8f8f8">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
@@ -192,7 +140,6 @@
 
 			<div class="col-md-12">
 				<div class="sim" id="mostReviewed">
-
 				<!-- Listing Item -->
 				<!-- Listing Item / End -->
 				</div>
@@ -204,8 +151,7 @@
 
 
 <!-- Fullwidth Section2: 가장 별점 많이 받은 곳 -->
-<section class="fullwidth margin-top-65 padding-top-75 padding-bottom-70" data-background-color="#f8f8f8">
-
+<section class="fullwidth padding-bottom-70" data-background-color="#f8f8f8">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
@@ -214,10 +160,9 @@
 					<span>Discover most-rated local places</span>
 				</h3>
 			</div>
-
-			<div class="col-md-12">
-				<div class="sim" id="mostRated">
-
+		
+			 <div class="col-md-12">
+				 <div class="mostRated" id="mostRated">
 				<!-- Listing Item -->
 				<!-- Listing Item / End -->
 				</div>
@@ -235,13 +180,13 @@
 
 
 <!-- Recent Blog Posts -->
-<section class="fullwidth border-top margin-top-70 padding-top-75 padding-bottom-75" data-background-color="#fff">
+<section class="fullwidth border-top padding-top-75 padding-bottom-75" data-background-color="#fff">
 	<div class="container">
 
 		<div class="row">
 			<div class="col-md-12">
 				<h3 class="headline centered margin-bottom-45">
-					From The Blog
+					From The Review
 				</h3>
 			</div>
 		</div>
@@ -337,8 +282,8 @@
 <script type="text/javascript" src="<c:url value = '/resources/scripts/magnific-popup.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/waypoints.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/counterup.min.js'/>"></script>
-<script type="text/javascript" src="<c:url value = '/resources/scripts/jquery-ui.min.js'/>"></script>
-<script type="text/javascript" src="<c:url value = '/resources/scripts/tooltips.min.js'/>"></script>
+	<script type="text/javascript" src="<c:url value = '/resources/scripts/jquery-ui.min.js'/>"></script>
+	<script type="text/javascript" src="<c:url value = '/resources/scripts/tooltips.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/custom.js'/>"></script>
 <script>
 
@@ -370,16 +315,15 @@ $(document).ready(function(){
 			infinite: true,
 			slidesToShow: 3,
 			slidesToScroll: 3,
-			
 			});
-	}
+	}	
 	
 	
 	
 	function makeMostReviewdList(hList){
 		var ele = document.getElementById("mostReviewed");
 		var fragment = document.createDocumentFragment();
-		for(var i=0; i<3; i++){
+		for(var i=0; i<5; i++){
 			var itemEle = document.createElement("div");
 			var item = "";
 						if(hList[i].category == 'HP8'){
@@ -397,7 +341,7 @@ $(document).ready(function(){
 					   }else if(hList[i].image != null && hList[i].category == "HP8"){
 						   item +='	<img src="'+hList[i].image+'" alt="">';
 					   }else if(hList[i].image != null && hList[i].category == "event1"){
-						   item +='	<img src="/resources/images/'+hList[i].image+'" alt="">';
+						   item +='	<img src="/resources/images/event/'+hList[i].image+'" alt="">';
 					   }
 					   
 					   item +=
@@ -413,11 +357,10 @@ $(document).ready(function(){
 						   item +=	 '<span class="tag" style="background: #f91942;">Event</span>';
 					   }
 					   item +=
-					 /*  '		<span class="tag">Eat & Drink</span>'+ */
 					   '		<h3>'+hList[i].title+'</h3>'	+
 					   '		<span>'+hList[i].address+'</span>'+
 					   '	</div>'+
-					   '	<span class="add-schedule"></span>'+
+					   '	<span class="like-icon"></span>'+
 					   '</div>'+
 					   '<div class="star-rating" data-rating="'+hList[i].avgRating+'">'+
 					   '	<div class="rating-counter"> 평균 '+ hList[i].avgRating+' 점</div>'+
@@ -439,12 +382,60 @@ $(document).ready(function(){
 			dataType : "json", 
 			type	 : 'post',
 			success  : function(hList){
+				makeMostRatedList(hList);
+				nearbySlide2();
 				
 			},
 			error : function(request, status, error) {
 				alert("code:" + request.status + "\n" + "message:"+ request.responseText + "\n" + "error:"+ error);
 			}
 		});
+	}
+	
+	function makeMostRatedList(hList){
+		var ele = document.getElementById("mostRated");
+		var fragment = document.createDocumentFragment();
+		for(var i=0; i<5; i++){
+			var itemEle = document.createElement("div");
+			var item = "";
+			
+						if(hList[i].category == 'HP8'){
+							item = 	'	<a href="/map/detail/viewDetailPage?locationSeq='+hList[i].no+'" class="listing-item-container compact">'+
+							  		'		<div class="listing-item">';
+						}else{
+							item = 	'	<a href="/event/detail/view?no='+hList[i].no+'" class="listing-item-container compact">'+
+							   		'		<div class="listing-item">';
+						}
+						
+					 	if(hList[i].image== null && hList[i].category == "HP8"){
+						  	 item +='	<img src="/resources/images/hospital.jpg" alt="">';
+					 	}else if(hList[i].image == null && hList[i].category == "event1"){
+						   item +='	<img src="/resources/images/dogevent.jpg" alt="">';
+					  	}else if(hList[i].image != null && hList[i].category == "HP8"){
+						   item +='	<img src="'+hList[i].image+'" alt="">';
+					  	}else if(hList[i].image != null && hList[i].category == "event1"){
+						   item +='	<img src="/resources/images/event/'+hList[i].image+'" alt="">';
+					 	}
+						
+					 	item += '<div class="listing-item-content">'+
+					 			'<div class="star-rating" data-rating="'+hList[i].avgRating+'">'+
+					 			'<div class="numerical-rating" data-rating="'+hList[i].avgRating+'"></div></div>'+
+					 			'	<h3>'+hList[i].title+'</h3>'+
+								'	<span>'+hList[i].address+'</span>'+
+								'</div>'+
+								'<span class="like-icon"></span>'+
+								'</div>'+
+								'</a>'+
+								'</div>';
+				itemEle.className = 'carousel-item';
+				itemEle.style = 'padding-top: 10px;padding-bottom: 10px;padding-left: 15px;padding-right: 15px';
+				itemEle.innerHTML = item;
+				fragment.appendChild(itemEle);
+			}
+			ele.appendChild(fragment);
+			numericalRating('.numerical-rating');
+			starRating('.star-rating');
+			return ele;	 	
 	}
 	
 	//newest reviews
@@ -476,6 +467,16 @@ $(document).ready(function(){
 			}
 		});
 	}
+	
+	function nearbySlide2(){
+		$('.mostRated').slick({
+			infinite: true,
+			slidesToShow: 3,
+			slidesToScroll: 3,
+
+			});
+	}	
+	
 
 
 </script>

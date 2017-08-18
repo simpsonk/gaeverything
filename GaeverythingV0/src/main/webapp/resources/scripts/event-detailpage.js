@@ -365,7 +365,6 @@ function nearbySlide(){
 function makeNearByList(near, event){
 	var date = event.startDate;
 	var startDate = date.toString();
-	alert('makeNearByList '+startDate);
 	var ele = document.getElementById("nearbyList");
 	nearbyFragment = document.createDocumentFragment();
 	for(var i=0; i<near.length; i++){
@@ -436,7 +435,7 @@ function addToCal(locationSeq, eventNo, startDate, index){
 
 
 function checkBooking(eventNo){
-	var isLogin = document.getElementById("isLogin4");
+	var isLogin = document.getElementById("isLogin");
 	if(isLogin.value==''){
 		alert("일정등록은 회원만 가능합니다.");
 		location.href = "/viewLogin?uri=/event/detail/view?no="+eventNo;
