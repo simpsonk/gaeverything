@@ -64,6 +64,14 @@
 		</if> 
 	</select>
 	
+	<select id="highReadcountReviews" resultType="BoardDTO">
+		select * from board 
+					<if test="categoryCode!=null">
+						where boardCategory = #{categoryCode}
+					</if>
+		order by readcount desc
+	</select> 
+	
 	<select id="readOne" parameterType="Integer" resultType="BoardDTO">
 		select * from board where boardNo = #{boardNo}
 	</select>

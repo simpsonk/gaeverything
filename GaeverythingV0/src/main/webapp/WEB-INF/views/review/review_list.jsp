@@ -122,12 +122,12 @@
 				<c:choose>
 				<c:when test="${board.boardCategory=='CARE'}">
 				<a href="/map/detail/viewDetailPage?locationSeq=${board.locationSeq}">
-				<span><i class="sl sl-icon-location"></i>    ${board.address}</span>
+				<span><i class="sl sl-icon-location" style="color: #F91942"></i>    ${board.address}</span>
 				</a>
 				</c:when>
 				<c:otherwise>
 				<a href="/event/detail/view?no=${board.locationSeq}">
-				<span><i class="sl sl-icon-paper-plane "></i>    ${board.address}</span>
+				<span><i class="sl sl-icon-paper-plane " style="color: #F91942"></i>    ${board.address}</span>
 				</a>
 				</c:otherwise>
 				</c:choose>
@@ -230,54 +230,63 @@
 
 			<!-- Widget -->
 			<div class="widget margin-top-40">
-
-				<h3>Popular Posts</h3>
+				<!-- 조회수 높은순으로 보여주기 -->
+				<h3>Popular 5 Posts</h3>
 				<ul class="widget-tabs">
-
+				<c:forEach items="${popularList}" var="board" varStatus="status">
+				<c:if test="${status.index<5}">			
 					<!-- Post #1 -->
 					<li>
 						<div class="widget-content">
 								<div class="widget-thumb">
-								<a href="pages-blog-post.html"><img src="/resources/images/blog-widget-03.jpg" alt=""></a>
-							</div>
+								<a href="/review/readPost?boardNo=${board.boardNo}&page=${page}&orderBy=${orderBy}" >
+								<c:choose>
+								
+								<c:when test="${board.uploadImg != null}">
+									<img src="/resources/upload/${board.uploadImg}" alt="" style="width:150px; height:80px; object-fit:cover;"> 
+								</c:when>
+								<c:otherwise>
+									<c:choose>
+									<c:when test="${board.boardCategory=='EVENT'}">
+									<img src="/resources/images/walkthedog.jpg" alt="" style="width:150px; height:80px; object-fit:cover;"> 								
+									</c:when>
+									<c:otherwise>
+									<img src="/resources/images/hospital.jpg" alt="" style="width:150px; height:80px; object-fit:cover;">
+									</c:otherwise>
+									</c:choose>
+								</c:otherwise>
+								</c:choose> 
+								</a>
+								</div>
 							
 							<div class="widget-text">
-								<h5><a href="pages-blog-post.html">Hotels for All Budgets </a></h5>
-								<span>October 26, 2016</span>
+							
+									<h5><a href="/review/readPost?boardNo=${board.boardNo}&page=${page}&orderBy=${orderBy}">${board.title}</a></h5>
+									
+									<c:choose>
+									<c:when test="${board.boardCategory=='CARE'}">
+										<a href="/map/detail/viewDetailPage?locationSeq=${board.locationSeq}">
+										<span><i class="sl sl-icon-location" style="color: #F91942"></i>    ${board.address}</span>
+									</a>
+									</c:when>
+									<c:otherwise>
+										<a href="/event/detail/view?no=${board.locationSeq}">
+										<span><i class="sl sl-icon-paper-plane" style="color: #F91942"></i>    ${board.address}</span>
+									</a>
+									</c:otherwise>
+									</c:choose>
+									
+									<i class="sl sl-icon-bubble"></i> ${board.numOfCmt}
+									<i class="sl sl-icon-heart"></i> ${board.countLike}
+									<i class="sl sl-icon-eye"></i> ${board.readCount}					
+								
 							</div>
 							<div class="clearfix"></div>
 						</div>
 					</li>
+				</c:if>
+				</c:forEach>	
 					
-					<!-- Post #2 -->
-					<li>
-						<div class="widget-content">
-							<div class="widget-thumb">
-								<a href="pages-blog-post.html"><img src="/resources/images/blog-widget-02.jpg" alt=""></a>
-							</div>
-							
-							<div class="widget-text">
-								<h5><a href="pages-blog-post.html">The 50 Greatest Street Arts In London</a></h5>
-								<span>November 9, 2016</span>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-					</li>
-					
-					<!-- Post #3 -->
-					<li>
-						<div class="widget-content">
-							<div class="widget-thumb">
-								<a href="pages-blog-post.html"><img src="/resources/images/blog-widget-01.jpg" alt=""></a>
-							</div>
-							
-							<div class="widget-text">
-								<h5><a href="pages-blog-post.html">The Best Cofee Shops In Sydney Neighborhoods</a></h5>
-								<span>November 12, 2016</span>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-					</li>
 
 				</ul>
 

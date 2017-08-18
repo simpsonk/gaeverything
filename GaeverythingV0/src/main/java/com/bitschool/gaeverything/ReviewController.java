@@ -104,6 +104,8 @@ public class ReviewController {
 		
 		System.out.println("list : "+list);
 		
+		List<BoardDTO> popularList = service.highReadcountReviews();
+		
 		//user like status like
 		if(isLogin){
 			MemberDTO member = (MemberDTO)session.getAttribute("member");
@@ -117,8 +119,9 @@ public class ReviewController {
 			countCmts = service.getNumOfCmts(dto.getBoardNo());
 			list.get(i).setNumOfCmt(countCmts);
 		}
-		model.addAttribute("list", list);
+		model.addAttribute("list", list); //각 페이지마다 보여줄 리뷰목록
 		model.addAttribute("orderBy",orderBy);
+		model.addAttribute("popularList",popularList);
 		String url = "review/review_list";
 		return url;
 	}
