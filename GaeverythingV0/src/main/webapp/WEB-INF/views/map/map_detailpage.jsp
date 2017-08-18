@@ -45,29 +45,36 @@
 	<div class="row sticky-wrapper">
 		<div class="col-lg-8 col-md-8 padding-right-10 padding-left-10 ">
 			<input type="hidden" id = "memberEmail" value="${member.email}" >
-			<!-- Titlebar -->
-			<div id="titlebar" class="listing-titlebar " style="padding-bottom: 30px;">
+			<!-- Titlebar -->			
+			<div id="titlebar" class="listing-titlebar " style="padding-bottom: 15px;">
 				<div class="listing-titlebar-title">
 					<h2>${detail.title} <span class="listing-tag"> Hospital </span></h2>
 					<div>
-						<span>average rating: ${detail.averageRatings} (${detail.countRatings})</span><span style="margin-left: 20px;">${detail.countReview} Reviews</span>
-						<span>${detail.countReplies} Comments</span><span style="margin-left: 20px;" id = "numOflike">${detail.countLike} people bookmarked this place</span>
+						<div class="star-rating" data-rating=" ${detail.averageRatings}"  style="margin-left: 20px;">
+							<span style="margin-left: 15px;"><i class="sl sl-icon-note"></i>${detail.countReview}  Reviews</span>
+							<span style="margin-left: 15px;"><i class="sl sl-icon-bubble"></i> ${detail.countReplies} Comments</span>	
+						</div>
 					</div>					
 				</div>
 			</div>
 			
+			
 			<c:choose>
 				<c:when test="${member.nickname == null }">
-					<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
+					<div class="listing-share margin-bottom-20 no-border col-lg-4" style="text-align: left;">
 						<button type="button" class="like-button" onclick="no_login_like()"><span class="like-icon"></span> Bookmark this listing</button> 
 					</div>	
 				</c:when>
 				<c:otherwise>
-					<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
+					<div class="listing-share margin-bottom-20 no-border col-lg-4" style="text-align: left;">
 						<button type="button" class="like-button" onclick="like_clicked()"><span id = "like" class="${detail.userLikeStatus }"></span> Bookmark this listing</button> 
 					</div>	
 				</c:otherwise>
 			</c:choose>								
+			
+			<div class="listing-share margin-bottom-20 no-border col-lg-6" style="text-align: left; margin-top: 10px;">
+				<span>${detail.countLike} people bookmarked this event.</span>
+			</div>
 			
 			<!-- Location -->
 			<input type="hidden" id="longitude" value="${detail.longitude}">

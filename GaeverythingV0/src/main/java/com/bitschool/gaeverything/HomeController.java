@@ -1,15 +1,11 @@
 	package com.bitschool.gaeverything;
 
-import java.util.Collection;
+
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,8 +84,76 @@ public class HomeController {
 	public String home(Model model, HttpSession session) {
 		logger.info("Welcome home! The client locale is {}.", "connect");
 		boolean islogin = new LoginFilter().isLogin(session, model);
+		
+		//////////////////리뷰순 
+		ActUserManager manager = new ActUserManager(aService);
+		List<LocationDTO> list1 = lService.getAllHospital(manager);
+		List<HomeListDTO> hList1 = hService.makeList1(list1);
+	
+		List<EventDTO> eList1 = eService.getAllLists();
+		eList1 = dService.getEventActUserResults(manager, eList1);
+		hList1 = hService.makeList2(hList1, eList1);
+		
+		//totalReview순으로 정렬(내림차순)
+		Collections.sort(hList1, new Comparator<HomeListDTO>() {
+			@Override
+			public int compare(HomeListDTO o1, HomeListDTO o2) {
+				return o2.getTotalReview() - o1.getTotalReview();
+			}
+		});
+		model.addAttribute("list1", hList1);
+						
+		//////////////////별점순
+		List<LocationDTO> list2 = lService.getAllHospital(manager);
+		List<HomeListDTO> hList2 = hService.makeList1(list2);
+	
+		List<EventDTO> eList2 = eService.getAllLists();
+		eList2 = dService.getEventActUserResults(manager, eList2);
+		hList2 = hService.makeList2(hList2, eList2);
+		
+		//평균별점순으로 정렬(내림차순)
+		Collections.sort(hList2, new Comparator<HomeListDTO>() {
+			@Override
+			public int compare(HomeListDTO o1, HomeListDTO o2) {
+				double a = Double.parseDouble(o2.getAvgRating());
+				double b = Double.parseDouble(o1.getAvgRating());
+				return Double.compare(a, b);
+			}
+		});
+		model.addAttribute("list2", hList2);
+		
+		//////////////////북마크순
+		List<LocationDTO> list3 = lService.getAllHospital(manager);
+		List<HomeListDTO> hList3 = hService.makeList1(list3);
+		
+		List<EventDTO> eList3 = eService.getAllLists();
+		eList3 = dService.getEventActUserResults(manager, eList3);
+		hList3 = hService.makeList2(hList3, eList3);
+		
+		List<BoardDTO> bList = bService.getAllList();
+		hList3 = hService.makeList3(hList3, bList);
+		
+		//북마크순으로 정렬(내림차순)
+		Collections.sort(hList3, new Comparator<HomeListDTO>() {
+			@Override
+			public int compare(HomeListDTO o1, HomeListDTO o2) {
+				return o2.getCountLike() - o1.getCountLike();
+			}
+		});
+		
+		model.addAttribute("list3", hList3);
+		System.out.println("북마크1위 : " + hList3.get(0).getTitle() + hList3.get(0).getCountLike());
+		System.out.println("북마크2위 : " + hList3.get(1).getTitle() + hList3.get(1).getCountLike());
+		System.out.println("북마크3위 : " + hList3.get(2).getTitle() + hList3.get(2).getCountLike());
+		
+	
+		////////////////최신리뷰 3개
+		List<BoardDTO> list4 = bService.getAllList();
+		model.addAttribute("list4", list4);
+
 		return "home";
 	}
+	
 	@RequestMapping(value = "login", method = {RequestMethod.POST, RequestMethod.GET})
 	public String login(@RequestParam("email") String email, @RequestParam("pw") String pw, 
 			HttpSession session, @RequestParam(value="uri", defaultValue="/") String uri,
@@ -161,51 +225,6 @@ public class HomeController {
 			return chkPoint;
 		}
 		
-		@RequestMapping(value="mostReviewed", method={RequestMethod.GET, RequestMethod.POST})
-		public @ResponseBody List<HomeListDTO> mostReviewed(){
-
-			ActUserManager manager = new ActUserManager(aService);
-			List<LocationDTO> list = lService.getAllHospital(manager);
-			List<HomeListDTO> hList = hService.makeList1(list);
-		
-			List<EventDTO> eList = eService.getAllLists();
-			eList = dService.getEventActUserResults(manager, eList);
-			hList = hService.makeList2(hList, eList);
-							
-			//totalReview순으로 정렬(내림차순)
-			Collections.sort(hList, new Comparator<HomeListDTO>() {
-				@Override
-				public int compare(HomeListDTO o1, HomeListDTO o2) {
-					return o2.getTotalReview() - o1.getTotalReview();
-				}
-			});
-
-			return hList;
-		}
-		
-		@RequestMapping(value="mostRated", method={RequestMethod.GET, RequestMethod.POST})
-		public @ResponseBody List<HomeListDTO> mostRated(){
-
-			ActUserManager manager = new ActUserManager(aService);
-			List<LocationDTO> list = lService.getAllHospital(manager);
-			List<HomeListDTO> hList = hService.makeList1(list);
-		
-			List<EventDTO> eList = eService.getAllLists();
-			eList = dService.getEventActUserResults(manager, eList);
-			hList = hService.makeList2(hList, eList);
-
-			//totalReview순으로 정렬(내림차순)
-			Collections.sort(hList, new Comparator<HomeListDTO>() {
-				@Override
-				public int compare(HomeListDTO o1, HomeListDTO o2) {
-					double a = Double.parseDouble(o2.getAvgRating());
-					double b = Double.parseDouble(o1.getAvgRating());
-					return Double.compare(a, b);
-				}
-			});
-			
-			return hList;
-		}
 		
 		@RequestMapping(value="/newestReview",method={RequestMethod.GET, RequestMethod.POST})
 		public @ResponseBody List<BoardDTO> newestReview(){
