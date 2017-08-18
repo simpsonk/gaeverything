@@ -60,7 +60,6 @@
 			
 			<c:choose>
 				<c:when test="${member.nickname == null }">
-
 					<div class="listing-share margin-bottom-20 no-border col-lg-4" style="text-align: left;">
 						<button type="button" class="like-button" onclick="no_login_like()"><span class="like-icon"></span> Bookmark this event</button>
 					</div>	
