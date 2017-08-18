@@ -180,10 +180,10 @@ public class BoardService implements IBoardService {
 	}
 
 	@Override
-	public List<BoardDTO> highReadcountReviews() {
+	public List<BoardDTO> highReadcountReviews(BoardDTO board) {
 		List<BoardDTO> list = null;
 		try {
-			list = dao.highReadcountReviews();
+			list = dao.highReadcountReviews(board);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

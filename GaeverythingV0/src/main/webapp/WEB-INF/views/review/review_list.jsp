@@ -231,10 +231,10 @@
 			<!-- Widget -->
 			<div class="widget margin-top-40">
 				<!-- 조회수 높은순으로 보여주기 -->
-				<h3>Popular 5 Posts</h3>
+				<h3>Popular 3 Posts</h3>
 				<ul class="widget-tabs">
 				<c:forEach items="${popularList}" var="board" varStatus="status">
-				<c:if test="${status.index<5}">			
+				<c:if test="${status.index<3}">			
 					<!-- Post #1 -->
 					<li>
 						<div class="widget-content">

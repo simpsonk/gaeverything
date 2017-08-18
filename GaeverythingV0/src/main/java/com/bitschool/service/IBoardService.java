@@ -23,7 +23,7 @@ public interface IBoardService {
 	public BoardDTO searchPrev(int boardNo);
 	public BoardDTO searchNext(int boardNo);
 	public MyPageDTO getWriter(String email);
-	public List<BoardDTO> highReadcountReviews();
+	public List<BoardDTO> highReadcountReviews(BoardDTO board);
 
 
 }
