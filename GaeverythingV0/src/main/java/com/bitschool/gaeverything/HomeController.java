@@ -140,17 +140,11 @@ public class HomeController {
 				return o2.getCountLike() - o1.getCountLike();
 			}
 		});
-		
 		model.addAttribute("list3", hList3);
-		System.out.println("合付农1困 : " + hList3.get(0).getTitle() + hList3.get(0).getCountLike());
-		System.out.println("合付农2困 : " + hList3.get(1).getTitle() + hList3.get(1).getCountLike());
-		System.out.println("合付农3困 : " + hList3.get(2).getTitle() + hList3.get(2).getCountLike());
 		
-	
 		////////////////弥脚府轰 3俺
 		List<BoardDTO> list4 = bService.getAllList();
 		model.addAttribute("list4", list4);
-
 		return "home";
 	}
 	

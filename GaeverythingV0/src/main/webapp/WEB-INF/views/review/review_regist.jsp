@@ -400,7 +400,6 @@
 		function go_url(type, page, categoryCode){
 			var data = document.getElementById("postData");
 			var boardNo = document.getElementById("boardNo").value;
-			alert(categoryCode);
 			var url = "/review/viewReviewList";
 			var text = CKEDITOR.instances.editor1.document.getBody().getText();
 			document.getElementById("onlyText").value = text;
@@ -413,23 +412,12 @@
 				}else {
 					alert("수정이 취소되었습니다.");
 					return;
-				}
-				
-			}else if(type == 2){
-				/* 			var file = document.getElementById("upload").value;
-				
-				alert(file);
-	 */			//카테고리, 제목, 장소, 별점, 내용
-				//var category = document.getElementById("category").value;
+				}				
+			}else if(type == 2){ //글 작성
+
 				var title = document.getElementById("title").value;
 				var rating = $('input[name="rating"]:checked').val();
 				var content = CKEDITOR.instances.editor1.getData();
-				//alert('글내용::' + text);
-				//alert(rating);
-				/* if(category ===''){
-					alert("카테고리를 선택해주세요.")
-				} */
-
 				if(title === ''){
 					alert("제목을 입력하세요.");
 				}
@@ -451,6 +439,8 @@
 						alert("등록이 취소되었습니다.");
 						return;
 					}
+				}else{
+					return;
 				}
 			}
 			data.action = url;
