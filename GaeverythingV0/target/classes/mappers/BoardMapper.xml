@@ -13,7 +13,7 @@
 	</insert>
 	
 	<select id="readAll" resultType="BoardDTO">
-		select * from board order by boardNo desc 
+		select * from board order by regiDate desc 
 	</select>
 	
 <!-- 	<select id="perPage" parameterType="PageDTO" resultType="BoardDTO">

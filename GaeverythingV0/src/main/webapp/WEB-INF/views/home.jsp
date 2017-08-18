@@ -172,14 +172,29 @@
 </section>
 <!-- Fullwidth Section / End -->
 
+<!-- Fullwidth Section3: 가장 북마크수 많은 곳 -->
+<section class="fullwidth padding-bottom-70" data-background-color="#f8f8f8">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h3 class="headline centered margin-bottom-45">
+					Most Reviewed Places
+					<span>Discover most-reviewed local places</span>
+				</h3>
+			</div>
 
+			<div class="col-md-12">
+				<div class="sim" id="mostBookmarked">
+				<!-- Listing Item -->
+				<!-- Listing Item / End -->
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Fullwidth Section / End -->
 
-<!-- Info Section -->
-
-<!-- Info Section / End -->
-
-
-<!-- Recent Blog Posts -->
+<!-- Section4: 최신 리뷰 순 -->
 <section class="fullwidth border-top padding-top-75 padding-bottom-75" data-background-color="#fff">
 	<div class="container">
 
@@ -191,65 +206,12 @@
 			</div>
 		</div>
 
-		<div class="row">
+		<div class="row" id = "reviews">
 			<!-- Blog Post Item -->
-			<div class="col-md-4">
-				<a href="pages-blog-post.html" class="blog-compact-item-container">
-					<div class="blog-compact-item">
-						<img src="/resources/images/blog-compact-post-01.jpg" alt="">
-						<span class="blog-item-tag">Tips</span>
-						<div class="blog-compact-item-content">
-							<ul class="blog-post-tags">
-								<li>22 August 2017</li>
-							</ul>
-							<h3>Hotels for All Budgets</h3>
-							<p>Sed sed tristique nibh iam porta volutpat finibus. Donec in aliquet urneget mattis lorem. Pellentesque pellentesque.</p>
-						</div>
-					</div>
-				</a>
-			</div>
 			<!-- Blog post Item / End -->
-
-			<!-- Blog Post Item -->
-			<div class="col-md-4">
-				<a href="pages-blog-post.html" class="blog-compact-item-container">
-					<div class="blog-compact-item">
-						<img src="/resources/images/blog-compact-post-02.jpg" alt="">
-						<span class="blog-item-tag">Tips</span>
-						<div class="blog-compact-item-content">
-							<ul class="blog-post-tags">
-								<li>18 August 2017</li>
-							</ul>
-							<h3>The 50 Greatest Street Arts In London</h3>
-							<p>Sed sed tristique nibh iam porta volutpat finibus. Donec in aliquet urneget mattis lorem. Pellentesque pellentesque.</p>
-						</div>
-					</div>
-				</a>
-			</div>
-			<!-- Blog post Item / End -->
-
-			<!-- Blog Post Item -->
-			<div class="col-md-4">
-				<a href="pages-blog-post.html" class="blog-compact-item-container">
-					<div class="blog-compact-item">
-						<img src="/resources/images/blog-compact-post-03.jpg" alt="">
-						<span class="blog-item-tag">Tips</span>
-						<div class="blog-compact-item-content">
-							<ul class="blog-post-tags">
-								<li>10 August 2017</li>
-							</ul>
-							<h3>The Best Cofee Shops In Sydney Neighborhoods</h3>
-							<p>Sed sed tristique nibh iam porta volutpat finibus. Donec in aliquet urneget mattis lorem. Pellentesque pellentesque.</p>
-						</div>
-					</div>
-				</a>
-			</div>
-			<!-- Blog post Item / End -->
-
-			<div class="col-md-12 centered-content">
-				<a href="pages-blog.html" class="button border margin-top-10">View Blog</a>
-			</div>
-
+		</div>
+		<div class="col-md-12 centered-content">
+			<a href="/review/viewReviewList" class="button border margin-top-10">View Blog</a>
 		</div>
 
 	</div>
@@ -285,198 +247,29 @@
 	<script type="text/javascript" src="<c:url value = '/resources/scripts/jquery-ui.min.js'/>"></script>
 	<script type="text/javascript" src="<c:url value = '/resources/scripts/tooltips.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/custom.js'/>"></script>
+<script type="text/javascript" src="<c:url value = '/resources/scripts/home-list.js'/>"></script>
+<script type="text/javascript" src="<c:url value = '/resources/jQuery.dotdotdot-master/src/jquery.dotdotdot.js'/>"></script>
+
+
 <script>
 
 $(document).ready(function(){
 	mostReviewed();
 	mostRated();
+	newestReview();
+	$('.preview_box').dotdotdot({
+		ellipis : '...',
+		wrap    : 'word',
+		height  : '100px',
+		callback	: function( isTruncated, orgContent ) {},
+		lastCharacter : {
+			remove : ['','.',';','!','?'],
+			noEllipis: []
+		}
+	});
+	//starRating('.star-rating');
 });
 
-
-	//most reviewed 
-	function mostReviewed(){
-		$.ajax({
-			url 	 : "/mostReviewed",
-			dataType : "json", 
-			type	 : 'post',
-			success  : function(hList){
-				makeMostReviewdList(hList);
-				nearbySlide();
-				
-			},
-			error : function(request, status, error) {
-				alert("code:" + request.status + "\n" + "message:"+ request.responseText + "\n" + "error:"+ error);
-			}
-		});
-	}
-	
-	function nearbySlide(){
-		$('.sim').slick({
-			infinite: true,
-			slidesToShow: 3,
-			slidesToScroll: 3,
-			});
-	}	
-	
-	
-	
-	function makeMostReviewdList(hList){
-		var ele = document.getElementById("mostReviewed");
-		var fragment = document.createDocumentFragment();
-		for(var i=0; i<5; i++){
-			var itemEle = document.createElement("div");
-			var item = "";
-						if(hList[i].category == 'HP8'){
-							item = 	'	<a href="/map/detail/viewDetailPage?locationSeq='+hList[i].no+'" class="listing-item-container">'+
-							  		'		<div class="listing-item">';
-						}else{
-							item = 	'	<a href="/event/detail/view?no='+hList[i].no+'" class="listing-item-container">'+
-							   		'		<div class="listing-item">';
-						}
-
-					   if(hList[i].image== null && hList[i].category == "HP8"){
-						   item +='	<img src="/resources/images/hospital.jpg" alt="">';
-					   }else if(hList[i].image == null && hList[i].category == "event1"){
-						   item +='	<img src="/resources/images/dogevent.jpg" alt="">';
-					   }else if(hList[i].image != null && hList[i].category == "HP8"){
-						   item +='	<img src="'+hList[i].image+'" alt="">';
-					   }else if(hList[i].image != null && hList[i].category == "event1"){
-						   item +='	<img src="/resources/images/event/'+hList[i].image+'" alt="">';
-					   }
-					   
-					   item +=
-							'<div class="listing-item-details">'+
-							'	<ul>'+
-							'		<li><h1><strong>'+hList[i].totalReview+'</strong></h1> reviews</li>'+
-							'	</ul>'+
-							'</div>'+
-					 		'<div class="listing-item-content">';
-					   if(hList[i].category == 'HP8'){
-						   item +=	 '<span class="tag" style="background: #f91942;">Hospital</span>';
-					   }else if(hList[i].category == 'event1'){
-						   item +=	 '<span class="tag" style="background: #f91942;">Event</span>';
-					   }
-					   item +=
-					   '		<h3>'+hList[i].title+'</h3>'	+
-					   '		<span>'+hList[i].address+'</span>'+
-					   '	</div>'+
-					   '	<span class="like-icon"></span>'+
-					   '</div>'+
-					   '<div class="star-rating" data-rating="'+hList[i].avgRating+'">'+
-					   '	<div class="rating-counter"> 평균 '+ hList[i].avgRating+' 점</div>'+
-					   '</div>'+
-					   '</a>';
-			itemEle.innerHTML = item;
-			itemEle.className = 'carousel-item';
-			fragment.appendChild(itemEle);
-		}
-		ele.appendChild(fragment);
-		starRating('.star-rating');
-		return ele;	   
-	}
-		
-	//most rated
-	function mostRated(){
-		$.ajax({
-			url 	 : "/mostRated",
-			dataType : "json", 
-			type	 : 'post',
-			success  : function(hList){
-				makeMostRatedList(hList);
-				nearbySlide2();
-				
-			},
-			error : function(request, status, error) {
-				alert("code:" + request.status + "\n" + "message:"+ request.responseText + "\n" + "error:"+ error);
-			}
-		});
-	}
-	
-	function makeMostRatedList(hList){
-		var ele = document.getElementById("mostRated");
-		var fragment = document.createDocumentFragment();
-		for(var i=0; i<5; i++){
-			var itemEle = document.createElement("div");
-			var item = "";
-			
-						if(hList[i].category == 'HP8'){
-							item = 	'	<a href="/map/detail/viewDetailPage?locationSeq='+hList[i].no+'" class="listing-item-container compact">'+
-							  		'		<div class="listing-item">';
-						}else{
-							item = 	'	<a href="/event/detail/view?no='+hList[i].no+'" class="listing-item-container compact">'+
-							   		'		<div class="listing-item">';
-						}
-						
-					 	if(hList[i].image== null && hList[i].category == "HP8"){
-						  	 item +='	<img src="/resources/images/hospital.jpg" alt="">';
-					 	}else if(hList[i].image == null && hList[i].category == "event1"){
-						   item +='	<img src="/resources/images/dogevent.jpg" alt="">';
-					  	}else if(hList[i].image != null && hList[i].category == "HP8"){
-						   item +='	<img src="'+hList[i].image+'" alt="">';
-					  	}else if(hList[i].image != null && hList[i].category == "event1"){
-						   item +='	<img src="/resources/images/event/'+hList[i].image+'" alt="">';
-					 	}
-						
-					 	item += '<div class="listing-item-content">'+
-					 			'<div class="star-rating" data-rating="'+hList[i].avgRating+'">'+
-					 			'<div class="numerical-rating" data-rating="'+hList[i].avgRating+'"></div></div>'+
-					 			'	<h3>'+hList[i].title+'</h3>'+
-								'	<span>'+hList[i].address+'</span>'+
-								'</div>'+
-								'<span class="like-icon"></span>'+
-								'</div>'+
-								'</a>'+
-								'</div>';
-				itemEle.className = 'carousel-item';
-				itemEle.style = 'padding-top: 10px;padding-bottom: 10px;padding-left: 15px;padding-right: 15px';
-				itemEle.innerHTML = item;
-				fragment.appendChild(itemEle);
-			}
-			ele.appendChild(fragment);
-			numericalRating('.numerical-rating');
-			starRating('.star-rating');
-			return ele;	 	
-	}
-	
-	//newest reviews
-	function newestReview(){
-		$.ajax({
-			url 	 : "/mostReviewed",
-			dataType : "json", 
-			type	 : 'post',
-			success  : function(data){
-				
-			},
-			error : function(request, status, error) {
-				alert("code:" + request.status + "\n" + "message:"+ request.responseText + "\n" + "error:"+ error);
-			}
-		});
-	}
-	
-	//most bookmarked
-	function mostBookmarked(){
-		$.ajax({
-			url 	 : "/mostReviewed",
-			dataType : "json", 
-			type	 : 'post',
-			success  : function(data){
-				
-			},
-			error : function(request, status, error) {
-				alert("code:" + request.status + "\n" + "message:"+ request.responseText + "\n" + "error:"+ error);
-			}
-		});
-	}
-	
-	function nearbySlide2(){
-		$('.mostRated').slick({
-			infinite: true,
-			slidesToShow: 3,
-			slidesToScroll: 3,
-
-			});
-	}	
-	
 
 
 </script>

@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bitschool.dto.ActUserDTO;
+import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.EventDTO;
 import com.bitschool.dto.HomeListDTO;
 import com.bitschool.dto.LocationDTO;
@@ -170,7 +171,7 @@ public class HomeController {
 			List<EventDTO> eList = eService.getAllLists();
 			eList = dService.getEventActUserResults(manager, eList);
 			hList = hService.makeList2(hList, eList);
-
+							
 			//totalReview순으로 정렬(내림차순)
 			Collections.sort(hList, new Comparator<HomeListDTO>() {
 				@Override
@@ -178,9 +179,7 @@ public class HomeController {
 					return o2.getTotalReview() - o1.getTotalReview();
 				}
 			});
-			
-			System.out.println("1위: " +  hList.get(0).getTitle() + hList.get(0).getTotalReview()+ hList.get(0).getCategory());
-			System.out.println("2위: " +hList.get(1).getTitle()+ hList.get(1).getAvgRating());
+
 			return hList;
 		}
 		
@@ -205,10 +204,14 @@ public class HomeController {
 				}
 			});
 			
-			System.out.println("1위: " +  hList.get(0).getTitle() + hList.get(0).getAvgRating());
-			System.out.println("2위: " +hList.get(1).getTitle()+ hList.get(1).getAvgRating());
 			return hList;
 		}
 		
+		@RequestMapping(value="/newestReview",method={RequestMethod.GET, RequestMethod.POST})
+		public @ResponseBody List<BoardDTO> newestReview(){
+			List<BoardDTO> list = bService.getAllList();
+			return list;
+		}
+	
 		
 }
