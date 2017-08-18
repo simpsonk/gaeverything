@@ -590,18 +590,7 @@
 
 
 
-			<!-- Widget -->
-			<div class="widget margin-top-40">
-				<h3 class="margin-bottom-25">Social</h3>
-				<ul class="social-icons rounded">
-					<li><a class="facebook" href="#"><i class="icon-facebook"></i></a></li>
-					<li><a class="twitter" href="#"><i class="icon-twitter"></i></a></li>
-					<li><a class="gplus" href="#"><i class="icon-gplus"></i></a></li>
-					<li><a class="linkedin" href="#"><i class="icon-linkedin"></i></a></li>
-				</ul>
-
-			</div>
-			<!-- Widget / End-->
+			
 
 			<div class="clearfix"></div>
 			<div class="margin-bottom-40"></div>
