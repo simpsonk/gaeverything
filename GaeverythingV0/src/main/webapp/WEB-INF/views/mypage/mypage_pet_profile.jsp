@@ -111,15 +111,15 @@
 						<input name="email" value="${member.email}" hidden="hidden">
 							<input name="petno" value="${petpage.petno}" hidden="hidden">
 							<label>Name <span id="nameMsg"></span></label>
-							<input name="petname" id="petname" placeholder="Enter your pet's name" value="${petpage.petname}" type="text" >
+							<input name="petname" id="petname" placeholder="Enter pet's name" value="${petpage.petname}" type="text" >
 
 							<label>Species <span id="speciesMsg"></span></label>
 							<%-- <input name="species" id="species" placeholder="Enter your pet's species" value="${petpage.species}" type="text"> --%>
 							
 							<div class="widget">			
 								<div>
-											<select name="species" id="species" data-placeholder="Enter your pet's species" class="chosen-select">
-												<option value="0">Select your pet's species</option>	
+											<select name="species" id="species" data-placeholder="Select pet's species" class="chosen-select">
+												<option value="0">Select pet's species</option>	
 												<option value="골든 두들" >골든 두들</option>
 												<option value="골든 리트리버" >골든 리트리버</option>
 												<option value="그레이 하운드" >그레이 하운드</option>
@@ -279,7 +279,7 @@
                 			<input type="radio" name="gender" value="male" ${gender=='male'?'checked="checked"':''}>male 
 											
 							<label>Age <span id="ageMsg"></span> </label>
-							<input name="age" id="age" placeholder="Enter your pet's age" value="${petpage.age}" type="text">
+							<input name="age" id="age" placeholder="Enter pet's age" value="${petpage.age}" type="text">
 				
 							<label>Notes</label>
 							<textarea name="notes" placeholder="Notes" id="notes" cols="30" rows="10">${petpage.notes}</textarea>
@@ -330,7 +330,7 @@ $("#register").click(function(){
 	checkMessage();
 	var petname = document.getElementById("petname").value;
 	var species = document.getElementById("species").value;
-	if($("#petname").val()!='' && $("#species").val()!='' && 
+	if($("#petname").val()!='' && $("#species").val()!='0' && 
 			$('input:radio[name="gender"]').is(":checked") && $("#age").val()!=''){
 		var f = confirm("펫 등록을 완료하시겠습니까?");
 		if(f){
@@ -356,7 +356,7 @@ function checkMessage(){
 	  }else{
 		  nameMsg.innerHTML="";
 	  }
-	  if($("#species").val()==''){
+	  if($("#species").val()=='0'){
 		  speciesMsg.style.color = "#f91942";
 		  speciesMsg.innerHTML="필수 입력 항목입니다.";
 	  }else{
