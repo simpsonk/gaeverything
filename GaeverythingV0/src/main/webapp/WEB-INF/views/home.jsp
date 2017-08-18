@@ -187,7 +187,7 @@
 					 					<h3>${review.title}</h3>
 									 	<span>${review.address}</span>
 					  				</div>
-					   				<span class="like-icon"></span>
+					   				<span class="like-icon" onclick = "no_login_like()"></span>
 					  			</div>
 					   			<div class="star-rating" data-rating="${review.avgRating}">
 					  			 	<div class="rating-counter"> 평균 ${review.avgRating} 점</div>
@@ -248,7 +248,7 @@
 					 				<h3>${rate.title}</h3>
 									<span>${rate.address}</span>
 								</div>
-									<span class="like-icon"></span>
+									<span class="like-icon" onclick = "no_login_like()"></span>
 								</div>
 							</a>
 						</div>
@@ -319,7 +319,7 @@
 					 					<h3>${like.title}</h3>
 									 	<span>${like.address}</span>
 					  				</div>
-					   				<span class="like-icon"></span>
+					   				<span class="like-icon" onclick = "no_login_like()"></span>
 					  			</div>
 					   			<div class="star-rating" data-rating="${like.avgRating}">
 					  			 	<div class="rating-counter"> 평균 ${like.avgRating} 점</div>
@@ -445,7 +445,10 @@ $(document).ready(function(){
 	//starRating('.star-rating');
 });
 
-
+function no_login_like(){
+	alert("로그인을 해주세요!");
+	location.href = "/viewLogin?url=/home";
+}
 
 </script>
 </body>
