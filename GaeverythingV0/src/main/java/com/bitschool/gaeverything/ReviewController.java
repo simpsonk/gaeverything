@@ -204,7 +204,7 @@ public class ReviewController {
 	
 	@RequestMapping(value = "/readPost", method={RequestMethod.GET, RequestMethod.POST})
 	public String readPost(@RequestParam("boardNo") int boardNo, 
-							@RequestParam(value = "categoryCode", defaultValue="0") String categoryCode,
+							@RequestParam(value = "categoryCode", defaultValue="ALL") String categoryCode,
 						   @RequestParam(value="page", defaultValue="1") int page,
 						   HttpSession session,
 						   Model model){
@@ -237,6 +237,12 @@ public class ReviewController {
 			nextTitle = "(다음 글이 없습니다.)";
 		}
 
+		BoardDTO board = new BoardDTO();
+		board.setBoardCategory(categoryCode);
+		System.out.println("board : "+board);
+		List<BoardDTO> popularList = service.highReadcountReviews(board);
+		System.out.println("popularList : "+popularList);
+		
 		MyPageDTO mDTO = service.getWriter(dto.getNickname());
 		
 		model.addAttribute("numOfCmt", numOfCmt);
@@ -246,7 +252,7 @@ public class ReviewController {
 		model.addAttribute("prevTitle", prevTitle);
 		model.addAttribute("nextTitle",nextTitle);
 		model.addAttribute("profile",mDTO);
-		
+		model.addAttribute("popularList",popularList);
 		url = "review/read_review";
 		return url;
 	}
