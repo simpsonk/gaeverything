@@ -222,5 +222,12 @@ public class BoardDAO implements IBoardDAO{
 		return dto;
 	}
 
+	@Override
+	public List<BoardDTO> highReadcountReviews(BoardDTO board) throws SQLException {
+		List<BoardDTO> list = null;
+		list = session.selectList(nameSpace+".highReadcountReviews",board);
+		return list;
+	}
 
+	
 }

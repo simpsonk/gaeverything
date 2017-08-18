@@ -105,6 +105,19 @@
 							<label>Species <span id="speciesMsg"></span></label>
 							<input name="species" id="species" placeholder="Enter your pet's species" value="${petpage.species}" type="text">
 							
+							<div class="widget">	
+								<h3 class="margin-top-40 margin-bottom-25">Order By</h3>			
+								<div>
+											<select id="orderBy" data-placeholder="Date" class="chosen-select">
+												<option value="boardNo" ${orderBy == 'boardNo'?'selected="selected"':''}>Date</option>	
+												<option value="Comments" ${orderBy == 'Comments'?'selected="selected"':''}>Comments</option>	
+												<option value="Bookmarks" ${orderBy == 'Bookmarks'?'selected="selected"':''}>Bookmarks</option>			
+												<option value="Ratings" ${orderBy == 'Ratings'?'selected="selected"':''}>Ratings</option>						
+											</select>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							
 							<label>Gender <span id="genderMsg"></span></label>
 							<input type="radio" name="gender" value="female" ${petpage.gender=='female'?'checked="checked"':''}>female
                 			<input type="radio" name="gender" value="male" ${petpage.gender=='male'?'checked="checked"':''}>male 

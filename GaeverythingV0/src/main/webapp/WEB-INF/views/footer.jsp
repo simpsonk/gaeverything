@@ -11,11 +11,15 @@
 				<br><br>
 				<p>Gaeverything loves you.</p>
 			</div>
-
+			
+			
+			
 			<div class="col-md-4 col-sm-6 ">
+			
+			
 				<h4>Helpful Links</h4>
 				<ul class="footer-links">
-					<li><a href="#">Login</a></li>
+					<li><a href="#sign-in-dialog">Login</a></li>
 					<li><a href="#">Sign Up</a></li>
 					<li><a href="#">My Account</a></li>
 				</ul>
@@ -26,6 +30,8 @@
 				</ul>
 				<div class="clearfix"></div>
 			</div>		
+			
+	
 
 			<div class="col-md-3  col-sm-12">
 				<h4>Contact Us</h4>
@@ -35,12 +41,7 @@
 					<span> <a href="#"><i class="sl sl-icon-envelope-open"></i>   gaeverything.help@gmail.com</a> </span><br>
 				</div>
 
-				<ul class="social-icons margin-top-20">
-					<li><a class="facebook" href="#"><i class="icon-facebook"></i></a></li>
-					<li><a class="twitter" href="#"><i class="icon-twitter"></i></a></li>
-					<li><a class="gplus" href="#"><i class="icon-gplus"></i></a></li>
-					<li><a class="vimeo" href="#"><i class="icon-vimeo"></i></a></li>
-				</ul>
+				
 
 			</div>
 

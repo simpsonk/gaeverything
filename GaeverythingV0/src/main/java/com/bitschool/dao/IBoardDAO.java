@@ -26,7 +26,7 @@ public interface IBoardDAO {
 	public int getSearchTotal(SearchDTO sDTO) throws SQLException;
 	public boolean insertComment(CommentDTO cDTO) throws SQLException;
 	public List<CommentDTO> readAllCmt(int boardNo) throws SQLException;
-	
+	public List<BoardDTO> highReadcountReviews(BoardDTO board) throws SQLException;
 	
 	//public CommentDTO oneCmt(int commentNo)throws SQLException;
 	public boolean getOneCmt(CommentDTO cDTO) throws SQLException;
