@@ -181,7 +181,7 @@ public class EventDetailController {
 		//로그인 안된 상태면. 
 	//	nearby = service.getNearbyActUserResults(manager, nearby);
 		
-		System.out.println(nearby.get(1).getScheduleAdded());
+		//System.out.println(nearby.get(1).getScheduleAdded());
 		
 		
 		HashMap<String, Object> list = new HashMap<String, Object>();
