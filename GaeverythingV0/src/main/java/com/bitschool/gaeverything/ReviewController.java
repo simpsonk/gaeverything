@@ -80,8 +80,6 @@ public class ReviewController {
 	public String viewReviewList(Model model, HttpSession session, @RequestParam(value="page", defaultValue="1") int page,
 			@RequestParam(value = "categoryCode", defaultValue = "ALL") String categoryCode,
 			@RequestParam(value = "orderBy", defaultValue="boardNo") String orderBy){
-		System.out.println("categoryCode : "+categoryCode);
-		System.out.println("orderBy : "+orderBy);
 		
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		
@@ -93,22 +91,17 @@ public class ReviewController {
 			pDTO = new PageDTO(page, amount, categoryCode, orderBy);
 		}
 		
-		System.out.println("pDTO : "+pDTO);
 		
 		String pList = pService.pageList(pDTO);
 		model.addAttribute("pList", pList);
 		
-		System.out.println("pList : "+pList);
-		
 		List<BoardDTO> list = service.getPagedList(pDTO); 
 		model.addAttribute("page", page);
 		
-		System.out.println("list : "+list);
 		BoardDTO board = new BoardDTO();
 		board.setBoardCategory(categoryCode);
-		System.out.println("board : "+board);
+
 		List<BoardDTO> popularList = service.highReadcountReviews(board);
-		System.out.println("popularList : "+popularList);
 		//user like status like
 		if(isLogin){
 			MemberDTO member = (MemberDTO)session.getAttribute("member");
