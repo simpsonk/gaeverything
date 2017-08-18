@@ -40,9 +40,20 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<h2>Review</h2>
-				<span>Latest Reviews</span>							
-						
+				<h2>Review </h2>
+				<c:if test="${param.orderBy=='boardNo' || param.orderBy==null}">
+					<span>Latest Reviews</span>		
+				</c:if>
+				<c:if test="${param.orderBy=='Comments'}">
+					<span>Most Commented Reviews</span>		
+				</c:if>
+				<c:if test="${param.orderBy=='Bookmarks'}">
+					<span>Most Bookmarked Reviews</span>		
+				</c:if>
+				<c:if test="${param.orderBy=='Ratings'}">
+					<span>High-Rated Reviews</span>		
+				</c:if>
+				
 					<input id="categoryCode" type="hidden" value="${param.categoryCode}">
 				<!-- Breadcrumbs -->
 				<nav id="breadcrumbs">

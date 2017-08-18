@@ -11,8 +11,12 @@
 				<br><br>
 				<p>Gaeverything loves you.</p>
 			</div>
-
+			
+			
+			
 			<div class="col-md-4 col-sm-6 ">
+			
+			
 				<h4>Helpful Links</h4>
 				<ul class="footer-links">
 					<li><a href="#sign-in-dialog">Login</a></li>
