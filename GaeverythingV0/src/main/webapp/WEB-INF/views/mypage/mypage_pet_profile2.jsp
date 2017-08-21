@@ -263,9 +263,16 @@
 							
 							
 							<label>Gender <span id="genderMsg"></span></label>
-							<input type="radio" name="gender" value="female" ${petpage.gender=='female'?'checked="checked"':''}>female
-                			<input type="radio" name="gender" value="male" ${petpage.gender=='male'?'checked="checked"':''}>male 
+							<select name="gender" id="gender" data-placeholder="Select pet's gender" class="chosen-select">
+								<option value="0">Select pet's gender</option>
+								<option value="female" ${petpage.gender=='female'?'selected="selected"':''}>female</option>
+								<option value="male" ${petpage.gender=='male'?'selected="selected"':''}>male</option>
+							</select>
 							
+							
+							<%-- <input type="radio" name="gender" value="female" ${petpage.gender=='female'?'checked="checked"':''}>female
+                			<input type="radio" name="gender" value="male" ${petpage.gender=='male'?'checked="checked"':''}>male 
+							 --%>
 											
 							<label>Age <span id="ageMsg"></span></label>
 							<select name="age" id="age" data-placeholder="Select pet's age" class="chosen-select">
@@ -338,8 +345,8 @@
 <script type="text/javascript">
 $("#modify").click(function(){
 	checkMessage();
-	if($("#petname").val()!='' && $("#species").val()!='' && 
-			$('input:radio[name="gender"]').is(":checked") && $("#age").val()!=''
+	if($("#petname").val()!='' && $("#species").val()!='0' && 
+			$("#gender").val()!='0' && $("#age").val()!='0'
 			&&!isNaN($("#age").val())){
 		$('#updateform').submit();
 	}else{
@@ -360,19 +367,19 @@ function checkMessage(){
 	  }else{
 		  nameMsg.innerHTML="";
 	  }
-	  if($("#species").val()==''){
+	  if($("#species").val()=='0'){
 		  speciesMsg.style.color = "#f91942";
 		  speciesMsg.innerHTML="필수 입력 항목입니다.";
 	  }else{
 		  speciesMsg.innerHTML="";
 	  }
-	  if($('input:radio[name="gender"]').is(":checked")==false){
+	  if($("#gender").val()=='0'){
 		  genderMsg.style.color = "#f91942";
 		  genderMsg.innerHTML="필수 입력 항목입니다.";
 	  }else{
 		  genderMsg.innerHTML="";
 	  }
-	  if($("#age").val()==''){
+	  if($("#age").val()=='0'){
 		  ageMsg.style.color = "#f91942";
 		  ageMsg.innerHTML="필수 입력 항목입니다.";
 	  }else{

@@ -275,8 +275,14 @@
 							</div>
 							
 							<label>Gender <span id="genderMsg"></span></label>
-							<input type="radio" name="gender" value="female" ${gender=='female'?'checked="checked"':''}>female
-                			<input type="radio" name="gender" value="male" ${gender=='male'?'checked="checked"':''}>male 
+							<select name="gender" id="gender" data-placeholder="Select pet's gender" class="chosen-select">
+								<option value="0">Select pet's gender</option>
+								<option value="female">female</option>
+								<option value="male">male</option>
+							</select>
+							
+							<%-- <input type="radio" name="gender" value="female" ${gender=='female'?'checked="checked"':''}>female
+                			<input type="radio" name="gender" value="male" ${gender=='male'?'checked="checked"':''}>male  --%>
 											
 							<label>Age <span id="ageMsg"></span> </label>
 							<%-- <input name="age" id="age" placeholder="Enter pet's age" value="${petpage.age}" type="text"> --%>
@@ -356,7 +362,7 @@ $("#register").click(function(){
 	var petname = document.getElementById("petname").value;
 	var species = document.getElementById("species").value;
 	if($("#petname").val()!='' && $("#species").val()!='0' && 
-			$('input:radio[name="gender"]').is(":checked") && $("#age").val()!='0'){
+			$("#gender").val()!='0' && $("#age").val()!='0'){
 		var f = confirm("펫 등록을 완료하시겠습니까?");
 		if(f){
 			$('#addform').submit();
@@ -387,7 +393,7 @@ function checkMessage(){
 	  }else{
 		  speciesMsg.innerHTML="";
 	  }
-	  if($('input:radio[name="gender"]').is(":checked")==false){
+	  if($("#gender").val()=='0'){
 		  genderMsg.style.color = "#f91942";
 		  genderMsg.innerHTML="필수 입력 항목입니다.";
 	  }else{
