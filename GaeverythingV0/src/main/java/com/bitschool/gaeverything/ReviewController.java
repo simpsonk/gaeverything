@@ -80,8 +80,6 @@ public class ReviewController {
 	public String viewReviewList(Model model, HttpSession session, @RequestParam(value="page", defaultValue="1") int page,
 			@RequestParam(value = "categoryCode", defaultValue = "ALL") String categoryCode,
 			@RequestParam(value = "orderBy", defaultValue="boardNo") String orderBy){
-		System.out.println("categoryCode : "+categoryCode);
-		System.out.println("orderBy : "+orderBy);
 		
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		
@@ -97,15 +95,13 @@ public class ReviewController {
 		String pList = pService.pageList(pDTO);
 		model.addAttribute("pList", pList);
 		
-		
 		List<BoardDTO> list = service.getPagedList(pDTO); 
 		model.addAttribute("page", page);
-		;
+		
 		BoardDTO board = new BoardDTO();
 		board.setBoardCategory(categoryCode);
 
 		List<BoardDTO> popularList = service.highReadcountReviews(board);
-
 		//user like status like
 		if(isLogin){
 			MemberDTO member = (MemberDTO)session.getAttribute("member");
@@ -151,7 +147,6 @@ public class ReviewController {
 		
 		if(flag){
 			url = "redirect:/review/viewReviewList?categoryCode="+categoryCode;
-			System.out.println("글등록: " + categoryCode);
 		}
 		return url;
 	}
@@ -459,7 +454,7 @@ public class ReviewController {
 			}
 		}
 		data = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.EVENT, eventNo));
-		//System.out.println("좋아요개수: " + data);
+		System.out.println("좋아요개수: " + data);
 		return data;
 	}
 	

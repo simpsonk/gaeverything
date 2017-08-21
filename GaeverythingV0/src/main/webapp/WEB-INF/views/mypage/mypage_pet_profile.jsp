@@ -111,15 +111,15 @@
 						<input name="email" value="${member.email}" hidden="hidden">
 							<input name="petno" value="${petpage.petno}" hidden="hidden">
 							<label>Name <span id="nameMsg"></span></label>
-							<input name="petname" id="petname" placeholder="Enter your pet's name" value="${petpage.petname}" type="text" >
+							<input name="petname" id="petname" placeholder="Enter pet's name" value="${petpage.petname}" type="text" >
 
 							<label>Species <span id="speciesMsg"></span></label>
-							<input name="species" id="species" placeholder="Enter your pet's species" value="${petpage.species}" type="text">
+							<%-- <input name="species" id="species" placeholder="Enter your pet's species" value="${petpage.species}" type="text"> --%>
 							
 							<div class="widget">			
 								<div>
-											<select name="species" id="species" data-placeholder="Enter your pet's species" class="chosen-select">
-												<option value="0">Select your pet's species</option>	
+											<select name="species" id="species" data-placeholder="Select pet's species" class="chosen-select">
+												<option value="0">Select pet's species</option>	
 												<option value="골든 두들" >골든 두들</option>
 												<option value="골든 리트리버" >골든 리트리버</option>
 												<option value="그레이 하운드" >그레이 하운드</option>
@@ -184,23 +184,91 @@
 												<option value="비즐라">비즐라</option>
 												<option value="빠삐용">빠삐용</option>	
 												<option value="사모예드">사모예드</option>	
-												<option value=""></option>	
-												<option value=""></option>	
-												<option value=""></option>	
-												<option value=""></option>	
-												<option value=""></option>	
-												<option value=""></option>	
-												<option value=""></option>	
-												<option value=""></option>	
-												<option value=""></option>	
-												<option value=""></option>	
-												<option value=""></option>	
-												<option value=""></option>	
-												<option value=""></option>	
-												<option value=""></option>	
-												<option value=""></option>	
-												<option value=""></option>
-												<!-- https://namu.wiki/w/%EA%B2%AC%EC%A2%85/%E3%84%B1%E3%84%B4%E3%84%B7%EC%88%9C -->
+												<option value="사플라니낙">사플라니낙</option>	
+												<option value="살루키">살루키</option>	
+												<option value="삽살개">삽살개</option>	
+												<option value="샤를로스 울프독">샤를로스 울프독</option>	
+												<option value="샤페이">샤페이</option>	
+												<option value="세르비안 디펜스 독">세르비안 디펜스 독</option>	
+												<option value="세인트 버나드">세인트 버나드</option>	
+												<option value="셔틀랜드 쉽독">셔틀랜드 쉽독</option>	
+												<option value="셰퍼드">셰퍼드</option>	
+												<option value="슈나우저">슈나우저</option>	
+												<option value="스키퍼키">스키퍼키</option>	
+												<option value="스피츠">스피츠</option>	
+												<option value="시바견">시바견</option>	
+												<option value="시베리안 허스키">시베리안 허스키</option>	
+												<option value="시추">시추</option>	
+												<option value="시코쿠견">시코쿠견</option>
+												<option value="아메리칸 밴도지">아메리칸 밴도지</option>	
+												<option value="아메리칸 불리">아메리칸 불리</option>	
+												<option value="아이리시 세터">아이리시 세터</option>	
+												<option value="아이리시 울프 하운드">아이리시 울프 하운드</option>	
+												<option value="아크라이트 포인터">아크라이트 포인터</option>	
+												<option value="아크바시">아크바시</option>	
+												<option value="아키타견">아키타견</option>	
+												<option value="아펜 핀셔">아펜 핀셔</option>	
+												<option value="아프간 하운드">아프간 하운드</option>	
+												<option value="알래스칸 말라뮤트">알래스칸 말라뮤트</option>	
+												<option value="알로페키스">알로페키스</option>	
+												<option value="에스트렐라 마운틴 독">에스트렐라 마운틴 독</option>	
+												<option value="에어데일 테리어">에어데일 테리어</option>	
+												<option value="오브차카">오브차카</option>	
+												<option value="올드 잉글리시 쉽독">올드 잉글리시 쉽독</option>	
+												<option value="요크셔 테리어">요크셔 테리어</option>
+												<option value="웨스트 하이랜드 화이트테리어">웨스트 하이랜드 화이트테리어</option>	
+												<option value="웰시 코기">웰시 코기</option>	
+												<option value="잉글리시 마스티프">잉글리시 마스티프</option>	
+												<option value="자이언트 슈나우저">자이언트 슈나우저</option>	
+												<option value="재패니즈 스피츠">재패니즈 스피츠</option>	
+												<option value="재패니즈 친">재패니즈 친</option>	
+												<option value="잭 러셀 테리어">잭 러셀 테리어</option>	
+												<option value="저먼 셰퍼드">저먼 셰퍼드</option>	
+												<option value="저먼 핀셔">저먼 핀셔</option>	
+												<option value="진돗개">진돗개</option>
+												<option value="차우차우">차우차우</option>	
+												<option value="차이니스 크레스티드">차이니스 크레스티드</option>	
+												<option value="체코슬로바키안 울프독">체코슬로바키안 울프독</option>	
+												<option value="치와와">치와와</option>	
+												<option value="카발리에 킹 찰스 스파니엘">카발리에 킹 찰스 스파니엘</option>	
+												<option value="카이홋 하운드">카이홋 하운드</option>	
+												<option value="카타훌라">카타훌라</option>	
+												<option value="캉갈">캉갈</option>	
+												<option value="컬리 코티드 리트리버">컬리 코티드 리트리버</option>	
+												<option value="케니스펜더">케니스펜더</option>
+												<option value="케이스혼트">케이스혼트</option>	
+												<option value="케인 코르소">케인 코르소</option>	
+												<option value="코리안 마스티프">코리안 마스티프</option>	
+												<option value="코몬도르">코몬도르</option>
+												<option value="코카 스파니엘">코카 스파니엘</option>	
+												<option value="콜리">콜리</option>	
+												<option value="쿠바츠">쿠바츠</option>	
+												<option value="크레타 하운드">크레타 하운드</option>
+												<option value="킹 찰스 스패니얼">킹 찰스 스패니얼</option>	
+												<option value="타이 리지백">타이 리지백</option>
+												<option value="트라이 하운드">트라이 하운드</option>	
+												<option value="트란실바니안 하운드">트란실바니안 하운드</option>	
+												<option value="티베탄 마스티프">티베탄 마스티프</option>	
+												<option value="티베탄 스파니엘">티베탄 스파니엘</option>
+												<option value="티베탄 테리어">티베탄 테리어</option>	
+												<option value="파라오 하운드">파라오 하운드</option>
+												<option value="패터데일 테리어">패터데일 테리어</option>	
+												<option value="퍼그">퍼그</option>
+												<option value="페키니즈">페키니즈</option>	
+												<option value="포메라니안">포메라니안</option>
+												<option value="포인터">포인터</option>	
+												<option value="포르투갈 워터 도그">포르투갈 워터 도그</option>
+												<option value="폭스 테리어">폭스 테리어</option>	
+												<option value="푸들">푸들</option>
+												<option value="풀리">풀리</option>	
+												<option value="풍산개">풍산개</option>
+												<option value="프레사 까나리오">프레사 까나리오</option>	
+												<option value="프렌치 불도그">프렌치 불도그</option>
+												<option value="플랫 코티드 리트리버">플랫 코티드 리트리버</option>	
+												<option value="필라 브라질레이로">필라 브라질레이로</option>
+												<option value="핏 불 테리어">핏 불 테리어</option>
+												<option value="하바니즈">하바니즈</option>
+												<option value="해리어">해리어</option>
 											</select>
 								</div>
 								<div class="clearfix"></div>
@@ -211,7 +279,32 @@
                 			<input type="radio" name="gender" value="male" ${gender=='male'?'checked="checked"':''}>male 
 											
 							<label>Age <span id="ageMsg"></span> </label>
-							<input name="age" id="age" placeholder="Enter your pet's age" value="${petpage.age}" type="text">
+							<%-- <input name="age" id="age" placeholder="Enter pet's age" value="${petpage.age}" type="text"> --%>
+						
+							<select name="age" id="age" data-placeholder="Select pet's age" class="chosen-select">
+								<option value="0">Select pet's age</option>	
+								<option value="1">1</option>	
+								<option value="2">2</option>	
+								<option value="3">3</option>	
+								<option value="4">4</option>	
+								<option value="5">5</option>	
+								<option value="6">6</option>	
+								<option value="7">7</option>	
+								<option value="8">8</option>	
+								<option value="9">9</option>	
+								<option value="10">10</option>	
+								<option value="11">11</option>	
+								<option value="12">12</option>	
+								<option value="13">13</option>	
+								<option value="14">14</option>	
+								<option value="15">15</option>
+								<option value="16">16</option>	
+								<option value="17">17</option>	
+								<option value="18">18</option>	
+								<option value="19">19</option>	
+								<option value="20">20</option>
+							</select>
+				
 				
 							<label>Notes</label>
 							<textarea name="notes" placeholder="Notes" id="notes" cols="30" rows="10">${petpage.notes}</textarea>
@@ -262,8 +355,8 @@ $("#register").click(function(){
 	checkMessage();
 	var petname = document.getElementById("petname").value;
 	var species = document.getElementById("species").value;
-	if($("#petname").val()!='' && $("#species").val()!='' && 
-			$('input:radio[name="gender"]').is(":checked") && $("#age").val()!=''){
+	if($("#petname").val()!='' && $("#species").val()!='0' && 
+			$('input:radio[name="gender"]').is(":checked") && $("#age").val()!='0'){
 		var f = confirm("펫 등록을 완료하시겠습니까?");
 		if(f){
 			$('#addform').submit();
@@ -288,7 +381,7 @@ function checkMessage(){
 	  }else{
 		  nameMsg.innerHTML="";
 	  }
-	  if($("#species").val()==''){
+	  if($("#species").val()=='0'){
 		  speciesMsg.style.color = "#f91942";
 		  speciesMsg.innerHTML="필수 입력 항목입니다.";
 	  }else{
@@ -300,7 +393,7 @@ function checkMessage(){
 	  }else{
 		  genderMsg.innerHTML="";
 	  }
-	  if($("#age").val()==''){
+	  if($("#age").val()=='0'){
 		  ageMsg.style.color = "#f91942";
 		  ageMsg.innerHTML="필수 입력 항목입니다.";
 	  }else{
