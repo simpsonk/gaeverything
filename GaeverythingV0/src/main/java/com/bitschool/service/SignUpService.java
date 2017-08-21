@@ -7,8 +7,10 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import com.bitschool.dao.GradeDAO;
 import com.bitschool.dao.MyPageDAO;
 import com.bitschool.dao.SignUpDAO;
+import com.bitschool.dto.GradeDTO;
 import com.bitschool.dto.MemberDTO;
 
 @Service
@@ -20,6 +22,8 @@ public class SignUpService {
 	@Inject
 	private MyPageDAO mdao;
 	
+	@Inject
+	private GradeDAO gdao;
 	//패스워드 찾기
 	public String findPW(MemberDTO member){
 		String pw = null;
@@ -71,15 +75,18 @@ public class SignUpService {
 		// TODO Auto-generated method stub
 		boolean flag = false;
 		boolean flag2= false;
+		boolean flag3 = false;
+		GradeDTO dto = new GradeDTO(data.getNickname());
 		try {
 			flag = dao.insertUserData(data);
 			if(flag){
 				flag2 = mdao.insertData(data);
+				flag3 = gdao.insertNew(dto);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
-		return flag2;
+		return flag3;
 	}
 
 	public List<MemberDTO> getMemberList() {

@@ -33,6 +33,7 @@ import com.bitschool.service.ICommentService;
 import com.bitschool.service.IPagerService;
 import com.bitschool.service.LocationDetailService;
 import com.bitschool.service.LocationService;
+import com.bitschool.service.MyPageService;
 import com.bitschool.service.ReactionService;
 import com.bitschool.utils.ActUserManager;
 import com.bitschool.utils.LoginFilter;
@@ -63,6 +64,8 @@ public class ReviewController {
 	@Inject
 	private ReactionService rService;
 
+	@Inject
+	private MyPageService mService;
 
 	@RequestMapping(value = "/viewDetailReviews", method = RequestMethod.GET)
 	public String viewDetailReviews(HttpSession session,  @RequestParam(value="locationSeq") int locationSeq,
@@ -127,16 +130,24 @@ public class ReviewController {
 	@RequestMapping(value = "/viewReviewRegist", method = {RequestMethod.GET, RequestMethod.POST})
 	public String viewReviewRegist(HttpSession session, Model model,
 			@RequestParam(value="locationSeq", defaultValue = "0") int locationSeq,
-			@RequestParam(value="boardCategory",defaultValue="") String boardCategory,
+			@RequestParam(value="boardCategory",defaultValue="ALL") String boardCategory,
 			@RequestParam(value="address", defaultValue = "") String address,
-			@RequestParam(value="eventNo", defaultValue = "0") int eventNo){
+			@RequestParam(value="eventNo", defaultValue = "0") int eventNo,
+			@RequestParam(value="categoryCode", defaultValue = "ALL") String categoryCode){
 		
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		String url = "review/review_regist";
+		
+		System.out.println("categoryCode : "+categoryCode);
+		BoardDTO board = new BoardDTO();
+		board.setBoardCategory(categoryCode);
+
+		List<BoardDTO> popularList = service.highReadcountReviews(board);
 		model.addAttribute("locationSeq",locationSeq);
 		model.addAttribute("boardCategory",boardCategory);
 		model.addAttribute("address",address);
 		model.addAttribute("eventNo", eventNo);
+		model.addAttribute("popularList",popularList);
 		return url;
 	}
 	
@@ -241,6 +252,8 @@ public class ReviewController {
 		
 		MyPageDTO mDTO = service.getWriter(dto.getNickname());
 		
+		List<BoardDTO> otherList = mService.selectMyReviews(dto.getNickname());
+		
 		model.addAttribute("numOfCmt", numOfCmt);
 		model.addAttribute("dto", dto);
 		model.addAttribute("cList", cList);
@@ -249,6 +262,7 @@ public class ReviewController {
 		model.addAttribute("nextTitle",nextTitle);
 		model.addAttribute("profile",mDTO);
 		model.addAttribute("popularList",popularList);
+		model.addAttribute("otherList",otherList);
 		url = "review/read_review";
 		return url;
 	}

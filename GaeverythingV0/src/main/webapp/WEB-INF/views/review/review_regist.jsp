@@ -227,17 +227,7 @@
 	<div class="col-lg-3 col-md-4">
 		<div class="sidebar right">
 
-			<!-- Widget -->
-				<div class="widget">
-					<h3 class="margin-top-0 margin-bottom-25">Search Blog</h3>
-					<div class="search-blog-input">
-						<div class="input">
-							<input class="search-field" type="text" placeholder="Type and hit enter" value="" />
-						</div>
-					</div>
-					<div class="clearfix"></div>
-				</div>
-				<!-- Widget / End -->
+			
 
 			<!-- Widget -->
 			<div class="widget margin-top-40">
@@ -250,88 +240,70 @@
 			<!-- Widget / End -->
 
 
-			<!-- Widget -->
+				<!-- Widget -->
 			<div class="widget margin-top-40">
-				<h3>Popular Posts</h3>
-					<ul class="widget-tabs">
-
-							<!-- Post #1 -->
-							<li>
-								<div class="widget-content">
-									<div class="widget-thumb">
-										<a href="pages-blog-post.html"><img
-											src="/resources/images/blog-widget-03.jpg" alt=""></a>
-									</div>
-
-									<div class="widget-text">
-										<h5>
-											<a href="pages-blog-post.html">Hotels for All Budgets </a>
-										</h5>
-										<span>October 26, 2016</span>
-									</div>
-									<div class="clearfix"></div>
+				<!-- 조회수 높은순으로 보여주기 -->
+				<h3>3 Popular Posts</h3>
+				<ul class="widget-tabs">
+				<c:forEach items="${popularList}" var="board" varStatus="status">
+				<c:if test="${status.index<3}">			
+					<!-- Post #1 -->
+					<li>
+						<div class="widget-content">
+								<div class="widget-thumb">
+								<a href="/review/readPost?boardNo=${board.boardNo}&page=${page}&orderBy=${orderBy}" >
+								<c:choose>
+								
+								<c:when test="${board.uploadImg != null}">
+									<img src="/resources/upload/${board.uploadImg}" alt="" style="width:150px; height:80px; object-fit:cover;"> 
+								</c:when>
+								<c:otherwise>
+									<c:choose>
+									<c:when test="${board.boardCategory=='EVENT'}">
+									<img src="/resources/images/walkthedog.jpg" alt="" style="width:150px; height:80px; object-fit:cover;"> 								
+									</c:when>
+									<c:otherwise>
+									<img src="/resources/images/hospital.jpg" alt="" style="width:150px; height:80px; object-fit:cover;">
+									</c:otherwise>
+									</c:choose>
+								</c:otherwise>
+								</c:choose> 
+								</a>
 								</div>
-							</li>
+							
+							<div class="widget-text">
+							
+									<h5><a href="/review/readPost?boardNo=${board.boardNo}&page=${page}&orderBy=${orderBy}">${board.title}</a></h5>
+									
+									<c:choose>
+									<c:when test="${board.boardCategory=='CARE'}">
+										<a href="/map/detail/viewDetailPage?locationSeq=${board.locationSeq}">
+										<span><i class="sl sl-icon-location" style="color: #F91942"></i>    ${board.address}</span>
+									</a>
+									</c:when>
+									<c:otherwise>
+										<a href="/event/detail/view?no=${board.locationSeq}">
+										<span><i class="sl sl-icon-paper-plane" style="color: #F91942"></i>    ${board.address}</span>
+									</a>
+									</c:otherwise>
+									</c:choose>
+									
+									<i class="sl sl-icon-bubble"></i> ${board.numOfCmt}
+									<i class="sl sl-icon-heart"></i> ${board.countLike}
+									<i class="sl sl-icon-eye"></i> ${board.readCount}					
+								
+							</div>
+							<div class="clearfix"></div>
+						</div>
+					</li>
+				</c:if>
+				</c:forEach>	
+					
 
-							<!-- Post #2 -->
-							<li>
-								<div class="widget-content">
-									<div class="widget-thumb">
-										<a href="pages-blog-post.html"><img
-											src="/resources/images/blog-widget-02.jpg" alt=""></a>
-									</div>
+				</ul>
 
-									<div class="widget-text">
-										<h5>
-											<a href="pages-blog-post.html">The 50 Greatest Street
-												Arts In London</a>
-										</h5>
-										<span>November 9, 2016</span>
-									</div>
-									<div class="clearfix"></div>
-								</div>
-							</li>
-
-							<!-- Post #3 -->
-							<li>
-								<div class="widget-content">
-									<div class="widget-thumb">
-										<a href="pages-blog-post.html"><img
-											src="/resources/images/blog-widget-01.jpg" alt=""></a>
-									</div>
-
-									<div class="widget-text">
-										<h5>
-											<a href="pages-blog-post.html">The Best Cofee Shops In
-												Sydney Neighborhoods</a>
-										</h5>
-										<span>November 12, 2016</span>
-									</div>
-									<div class="clearfix"></div>
-								</div>
-							</li>
-
-						</ul>
-
-					</div>
-					<!-- Widget / End-->
-
-
-					<!-- Widget -->
-					<div class="widget margin-top-40">
-						<h3 class="margin-bottom-25">Social</h3>
-						<ul class="social-icons rounded">
-							<li><a class="facebook" href="#"><i
-									class="icon-facebook"></i></a></li>
-							<li><a class="twitter" href="#"><i
-									class="icon-twitter"></i></a></li>
-							<li><a class="gplus" href="#"><i class="icon-gplus"></i></a></li>
-							<li><a class="linkedin" href="#"><i
-									class="icon-linkedin"></i></a></li>
-						</ul>
-
-					</div>
-					<!-- Widget / End-->
+			</div>
+			<!-- Widget / End-->
 
 							<div class="clearfix"></div>
 							<div class="margin-bottom-40"></div>
@@ -434,7 +406,11 @@
 					var check = confirm("작성한 게시글을 등록하시겠습니까?");
 					if(check == true){
 						alert("게시글이 등록되었습니다.");
+						if(categoryCode==''){
+							url = "/review/newPost?categoryCode=ALL";
+						}else{
 						url = "/review/newPost?categoryCode="+categoryCode;
+						}
 					}else{
 						alert("등록이 취소되었습니다.");
 						return;

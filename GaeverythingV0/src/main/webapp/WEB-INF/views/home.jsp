@@ -120,7 +120,7 @@
 				</a>
 				
 				<!-- Box -->
-				<a href="/mypage/calendar/viewCalendar" class="category-small-box">
+				<a href="/mypage/viewMypageDashboard" class="category-small-box">
 					<i class="im im-icon-Bar-Chart2"></i>
 					<h4>Dashboard</h4>
 				</a>

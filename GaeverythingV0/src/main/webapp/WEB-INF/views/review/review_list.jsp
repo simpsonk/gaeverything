@@ -215,16 +215,7 @@
 			</div>
 			</form>
 			
-			<!-- Widget -->
-			<div class="widget">
-				<h3 class="margin-top-40 margin-bottom-25">Search Review</h3>
-				<div class="search-blog-input">
-					<div class="input"><input class="search-field" type="text" placeholder="Type and hit enter" value=""/></div>
-				</div>
-				<div class="clearfix"></div>
-			</div>
-			<!-- Widget / End -->
-
+		
 
 			<!-- Widget -->
 			<div class="widget margin-top-40">

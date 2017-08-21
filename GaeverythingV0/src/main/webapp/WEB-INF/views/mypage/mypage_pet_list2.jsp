@@ -40,6 +40,7 @@
   }
    
 
+
 </script>
 
 </head>
@@ -98,7 +99,7 @@
                
        <c:forEach var="petpage" items="${list}">        
                	<!-- Profile2 -->
-			<div class="col-lg-3 col-md-12">
+			<div class="col-lg-4 col-md-12">
 				<div class="dashboard-list-box margin-top-0">
 					<h4 style="background: #F91942; color: white;">${petpage.petname}</h4>
 					<div class="dashboard-list-box-static">			
@@ -117,18 +118,42 @@
 		
 						<!-- Details -->	
 						<div class="my-profile">
-									
-							<div>
-			
-						 	  <li><p>Name: <span>${petpage.petname}</span></p></li>                              
-                              <li><p>Species : <span>${petpage.species}</span></p></li>
-                              <li><p>Age : <span>${petpage.age}</span></p></li>
-                              <li><p>Gender : <span>${petpage.gender}</span></p></li>
-                              <li><p>Notes: <span><div>${petpage.notes}</div></span></p></li>
-		 					</div>		
-					<a href = "/mypage/viewModifyPetProfile?petno=${petpage.petno}"><button class="button margin-top-15" onclick="modify_func()" type="button">Edit</button></a>
-					<a href = "/mypage/removePet?petno=${petpage.petno}"><button class="button margin-top-15" onclick="remove_func()" type="button">Delete</button></a>
- 						</div>
+				<table class="basic-table">
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+	
+				<tr>
+					<td><b>Name</b></td>
+					<td colspan="4">${petpage.petname}</td>
+				</tr>
+
+				<tr>
+					<td><b>Species</b></td>
+					<td colspan="4">${petpage.species}</td>
+				</tr>
+
+				<tr>
+					<td><b>Age</b></td>
+					<td colspan="4">${petpage.age}</td>
+				</tr>
+
+				<tr>
+					<td><b>Gender</b></td>
+					<td colspan="4">${petpage.gender}</td>
+				</tr>
+				<tr>
+					<td><b>Notes</b></td>
+					<td colspan="4">${petpage.notes}</td>
+				</tr>
+				</table>
+				<a href="/mypage/viewModifyPetProfile?petno=${petpage.petno}" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-note"></i>Edit</a>
+				<a href = "/mypage/removePet?petno=${petpage.petno}" class="button border margin-top-10" style="height: 43px;"><i class="sl sl-icon-close"></i>Delete</a>
+				</div>
  						
  				</div></div></div>					
 		</c:forEach>
@@ -137,6 +162,7 @@
 				<div class="dashboard-list-box margin-top-0">
 					<h4 class="gray">My Pet </h4>
 					<div class="dashboard-list-box-static">	
+					
 								 <button class="button margin-top-15" id="add" onclick="regist_func()" type="button">+ Add</button>
 		</div></div></div>
 		
