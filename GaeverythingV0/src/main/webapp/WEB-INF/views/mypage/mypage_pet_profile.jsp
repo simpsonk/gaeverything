@@ -77,7 +77,7 @@
 <form method="post" action="/mypage/registNewPet" id="addform" enctype="multipart/form-data">	 
 		 <div class="row">
                	<!-- Profile -->
-			<div class="col-lg-3 col-md-12">
+			<div class="col-lg-4 col-md-12">
 				<div class="dashboard-list-box margin-top-0">
 					<h4 class="gray">Profile Details</h4>
 					<div class="dashboard-list-box-static">
