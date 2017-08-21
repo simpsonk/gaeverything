@@ -434,7 +434,11 @@
 					var check = confirm("작성한 게시글을 등록하시겠습니까?");
 					if(check == true){
 						alert("게시글이 등록되었습니다.");
+						if(categoryCode==''){
+							url = "/review/newPost?categoryCode=ALL";
+						}else{
 						url = "/review/newPost?categoryCode="+categoryCode;
+						}
 					}else{
 						alert("등록이 취소되었습니다.");
 						return;
