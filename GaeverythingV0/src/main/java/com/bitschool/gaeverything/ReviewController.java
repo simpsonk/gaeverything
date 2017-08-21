@@ -125,16 +125,24 @@ public class ReviewController {
 	@RequestMapping(value = "/viewReviewRegist", method = {RequestMethod.GET, RequestMethod.POST})
 	public String viewReviewRegist(HttpSession session, Model model,
 			@RequestParam(value="locationSeq", defaultValue = "0") int locationSeq,
-			@RequestParam(value="boardCategory",defaultValue="") String boardCategory,
+			@RequestParam(value="boardCategory",defaultValue="ALL") String boardCategory,
 			@RequestParam(value="address", defaultValue = "") String address,
-			@RequestParam(value="eventNo", defaultValue = "0") int eventNo){
+			@RequestParam(value="eventNo", defaultValue = "0") int eventNo,
+			@RequestParam(value="categoryCode", defaultValue = "ALL") String categoryCode){
 		
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		String url = "review/review_regist";
+		
+		System.out.println("categoryCode : "+categoryCode);
+		BoardDTO board = new BoardDTO();
+		board.setBoardCategory(categoryCode);
+
+		List<BoardDTO> popularList = service.highReadcountReviews(board);
 		model.addAttribute("locationSeq",locationSeq);
 		model.addAttribute("boardCategory",boardCategory);
 		model.addAttribute("address",address);
 		model.addAttribute("eventNo", eventNo);
+		model.addAttribute("popularList",popularList);
 		return url;
 	}
 	
