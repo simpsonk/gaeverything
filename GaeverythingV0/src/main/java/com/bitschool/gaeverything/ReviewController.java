@@ -95,14 +95,16 @@ public class ReviewController {
 		String pList = pService.pageList(pDTO);
 		model.addAttribute("pList", pList);
 		
+
+		
 		List<BoardDTO> list = service.getPagedList(pDTO); 
 		model.addAttribute("page", page);
 		
+
 		BoardDTO board = new BoardDTO();
 		board.setBoardCategory(categoryCode);
 
 		List<BoardDTO> popularList = service.highReadcountReviews(board);
-		//user like status like
 		if(isLogin){
 			MemberDTO member = (MemberDTO)session.getAttribute("member");
 			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.REVIEW);
@@ -147,6 +149,7 @@ public class ReviewController {
 		
 		if(flag){
 			url = "redirect:/review/viewReviewList?categoryCode="+categoryCode;
+			System.out.println("글등록: " + categoryCode);
 		}
 		return url;
 	}
@@ -454,7 +457,7 @@ public class ReviewController {
 			}
 		}
 		data = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.EVENT, eventNo));
-		System.out.println("좋아요개수: " + data);
+		//System.out.println("좋아요개수: " + data);
 		return data;
 	}
 	
