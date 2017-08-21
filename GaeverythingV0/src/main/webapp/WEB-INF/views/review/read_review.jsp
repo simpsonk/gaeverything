@@ -455,40 +455,31 @@
 			<div class="row">
 
 				<!-- Blog Post Item -->
+				
+				<c:forEach var="otherList" items="${otherList}" varStatus="status">
+				<c:if test="${status.index<2}">
 				<div class="col-md-6">
 					<a href="#" class="blog-compact-item-container" style="height: 250px;">
 						<div class="blog-compact-item" style="height: 250px;">
-							<img src="/resources/images/blog-compact-post-01.jpg" alt="" style="height: 250px;">
+							<img src="/resources/upload/${otherList.uploadImg}" alt="" style="height: 250px;">
 							<!-- <span class="blog-item-tag">Tips</span> -->
 							<div class="blog-compact-item-content">
 								<ul class="blog-post-tags">
-									<li>${dto.regiDate}</li>
+									<li>${otherList.regiDate}</li>
 								</ul>
-								<h3>${dto.title}</h3>
-								<p>${dto.onlyText} </p>
+								<h3>${otherList.title}</h3>
+								<p>${otherList.onlyText} </p>
 							</div>
 						</div>
 					</a>
 				</div>
+				<!-- read more로 링크연결하는거랑 해당하는글은 안뜨도록 추가구현해야함 -->
+				</c:if>
+				</c:forEach>
+			
 				<!-- Blog post Item / End -->
 
-				<!-- Blog Post Item -->
-				<div class="col-md-6">
-					<a href="#" class="blog-compact-item-container">
-						<div class="blog-compact-item">
-							<img src="/resources/images/blog-compact-post-03.jpg" alt="">
-							<span class="blog-item-tag">Tips</span>
-							<div class="blog-compact-item-content">
-								<ul class="blog-post-tags">
-									<li>10 August 2017</li>
-								</ul>
-								<h3>The Best Cofee Shops In Sydney Neighborhoods</h3>
-								<p>Sed sed tristique nibh iam porta volutpat finibus. Donec in aliquet urneget mattis lorem. Pellentesque pellentesque.</p>
-							</div>
-						</div>
-					</a>
-				</div>
-				<!-- Blog post Item / End -->
+				
 
 			</div>
 			<!-- Related Posts / End -->
@@ -502,15 +493,6 @@
 	<div class="col-lg-3 col-md-4">
 		<div class="sidebar right">
 
-			<!-- Widget -->
-			<div class="widget">
-				<h3 class="margin-top-0 margin-bottom-25">Search Blog</h3>
-				<div class="search-blog-input">
-					<div class="input"><input class="search-field" type="text" placeholder="Type and hit enter" value=""/></div>
-				</div>
-				<div class="clearfix"></div>
-			</div>
-			<!-- Widget / End -->
 
 			<!-- Widget -->
 			<div class="widget margin-top-40">

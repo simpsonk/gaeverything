@@ -33,6 +33,7 @@ import com.bitschool.service.ICommentService;
 import com.bitschool.service.IPagerService;
 import com.bitschool.service.LocationDetailService;
 import com.bitschool.service.LocationService;
+import com.bitschool.service.MyPageService;
 import com.bitschool.service.ReactionService;
 import com.bitschool.utils.ActUserManager;
 import com.bitschool.utils.LoginFilter;
@@ -63,6 +64,8 @@ public class ReviewController {
 	@Inject
 	private ReactionService rService;
 
+	@Inject
+	private MyPageService mService;
 
 	@RequestMapping(value = "/viewDetailReviews", method = RequestMethod.GET)
 	public String viewDetailReviews(HttpSession session,  @RequestParam(value="locationSeq") int locationSeq,
@@ -246,6 +249,8 @@ public class ReviewController {
 		
 		MyPageDTO mDTO = service.getWriter(dto.getNickname());
 		
+		List<BoardDTO> otherList = mService.selectMyReviews(dto.getNickname());
+		
 		model.addAttribute("numOfCmt", numOfCmt);
 		model.addAttribute("dto", dto);
 		model.addAttribute("cList", cList);
@@ -254,6 +259,7 @@ public class ReviewController {
 		model.addAttribute("nextTitle",nextTitle);
 		model.addAttribute("profile",mDTO);
 		model.addAttribute("popularList",popularList);
+		model.addAttribute("otherList",otherList);
 		url = "review/read_review";
 		return url;
 	}
