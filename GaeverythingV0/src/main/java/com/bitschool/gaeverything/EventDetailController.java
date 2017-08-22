@@ -153,6 +153,11 @@ public class EventDetailController {
 		EventCommentDTO dto = new EventCommentDTO();
 		dto.setNickname(member.getNickname());
 		dto.setCommentNo(commentNo);
+		
+		//delete ´ñ±Û¾´ÀÌÀÇ myComment, point-> -8 
+		GradeDTO gDTO = new GradeDTO(member.getNickname(),"myComment");
+		boolean flag2 = gService.deleteInfo(gDTO);
+		
 		boolean flag = service.commentDelete(dto);
 		if(flag){
 			url ="redirect:view?no="+eventNo;

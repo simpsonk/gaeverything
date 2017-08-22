@@ -287,6 +287,11 @@ public class ReviewController {
 			@RequestParam(value="mylisting", defaultValue="0") int mylisting,
 			@RequestParam(value="category", defaultValue="0") int category){
 		String url = null; 
+		
+		//delete 글쓴이의 myReview, point-> -10 
+		GradeDTO gDTO = new GradeDTO(service.selectNickname(boardNo),"myReview");
+		boolean flag2 = gService.deleteInfo(gDTO);
+		
 		boolean flag = service.remove(boardNo);
 		if(flag){
 			url = "redirect:/review/viewReviewList?page="+page;
