@@ -159,6 +159,9 @@ public class ReviewController {
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		dto.setNickname(member.getNickname());
 		boolean flag = service.insertPost(dto);
+		// 글쓴이의 point -> +10, myReview ->"T"
+		GradeDTO gDTO = new GradeDTO(dto.getNickname(),"F","F","T","F","F");
+		boolean flag2 = gService.insertInfo(gDTO);
 		
 		if(flag){
 			url = "redirect:/review/viewReviewList?categoryCode="+categoryCode;
