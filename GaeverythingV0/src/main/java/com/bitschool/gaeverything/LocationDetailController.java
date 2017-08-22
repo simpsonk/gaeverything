@@ -23,9 +23,11 @@ import com.bitschool.dto.BookCalendarDTO;
 import com.bitschool.dto.BookEventCalendarDTO;
 import com.bitschool.dto.DetailCommentDTO;
 import com.bitschool.dto.DetailPhotoDTO;
+import com.bitschool.dto.GradeDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.service.ActUserService;
+import com.bitschool.service.GradeService;
 import com.bitschool.service.LocationDetailService;
 import com.bitschool.utils.ActUserManager;
 import com.bitschool.utils.LoginFilter;
@@ -40,7 +42,9 @@ public class LocationDetailController {
 	@Inject
 	private ActUserService aService;
 
-		
+	@Inject
+	private GradeService gService;
+	
 	//디테일 리뷰데이터
 	@RequestMapping(value = "/getReviewData", method = {RequestMethod.POST,RequestMethod.GET})
 	public @ResponseBody List<DetailCommentDTO> getReviewData(@RequestParam(value="locationSeq") int locationSeq){
@@ -88,6 +92,10 @@ public class LocationDetailController {
 		dto.setNickname(member.getNickname());
 		dto.setPhoto(member.getPhoto());
 		boolean flag = service.commentAdd(dto);
+		// 댓글쓴이의 point -> +8, myComment ->"T"
+		GradeDTO gDTO = new GradeDTO(dto.getNickname(),"F","F","F","T","F");
+		boolean flag2 = gService.insertInfo(gDTO);
+		
 		if(flag){
 			url = "redirect:viewDetailPage?locationSeq="+dto.getLocationSeq();
 		}
