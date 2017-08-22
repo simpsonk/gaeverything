@@ -24,10 +24,12 @@ import com.bitschool.dto.DetailPhotoDTO;
 import com.bitschool.dto.EventCommentDTO;
 import com.bitschool.dto.EventDTO;
 import com.bitschool.dto.EventPhotoDTO;
+import com.bitschool.dto.GradeDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.service.ActUserService;
 import com.bitschool.service.EventDetailService;
+import com.bitschool.service.GradeService;
 import com.bitschool.utils.ActUserManager;
 import com.bitschool.utils.LoginFilter;
 
@@ -41,6 +43,8 @@ public class EventDetailController {
 	@Inject
 	private ActUserService aService;
 	
+	@Inject
+	private GradeService gService;
 	
 	@RequestMapping(value = "addComment", method=RequestMethod.POST)
 	public String addComment(HttpSession session,Model model,EventCommentDTO dto){
@@ -51,6 +55,10 @@ public class EventDetailController {
 		dto.setPhoto(member.getPhoto());
 		
 		boolean flag = service.commentAdd(dto);
+		// ´ñ±Û¾´ÀÌÀÇ point -> +8, myComment ->"T"
+		GradeDTO gDTO = new GradeDTO(dto.getNickname(),"F","F","F","T","F");
+		boolean flag2 = gService.insertInfo(gDTO);
+		
 		if(flag){
 			url = "redirect:view?no="+dto.getEventNo();
 		}
