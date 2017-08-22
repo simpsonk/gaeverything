@@ -432,6 +432,11 @@ public class ReviewController {
 		ActUserDTO dto = new ActUserDTO(email, ActUserManager.SHOP, locationSeq);
 		if(like.equals("like-icon")){
 			flag = manager.registLikeStatus(dto);
+			
+			//º´¿ø ºÏ¸¶Å© ´­·¶À» ¶§ ºÏ¸¶Å©´©¸¥»ç¶÷ point -> +3, myBookmark -> "T"
+			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"F","F","F","F","T");
+			gService.insertInfo(gDTO);
+			
 			if(!flag){
 				System.out.println("insert fail: DetailPageLike");
 			}
