@@ -140,6 +140,10 @@ public class HomeController {
 				return o2.getCountLike() - o1.getCountLike();
 			}
 		});
+		System.out.println(hList3.get(0).getTitle()+ hList3.get(0).getCategory());
+		System.out.println(hList3.get(1).getTitle()+ hList3.get(1).getCategory());
+		System.out.println(hList3.get(2).getTitle()+ hList3.get(2).getCategory());
+		
 		model.addAttribute("list3", hList3);
 		
 		////////////////√÷Ω≈∏Æ∫‰ 3∞≥

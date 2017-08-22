@@ -96,7 +96,7 @@
 							
 							<!-- User Menu -->
 							<div class="user-menu">
-								<div class="user-name"><span><img src="/resources/upload/${member.photo}" alt=""></span>${member.nickname}</div>
+								<div class="user-name"><span style="width: 38px; height: 38px; object-fit:cover;"><img src="/resources/upload/${member.photo}" alt="" style="width: 38px; height: 38px; object-fit:cover;"></span>${member.nickname}</div>
 								<ul>
 									<li><a href="/mypage/viewMypageDashboard"><i class="sl sl-icon-settings"></i> Dashboard</a></li>
 									<li><a href="/mypage/viewMypageProfile"><i class="sl sl-icon-user"></i> My Profile</a></li>
