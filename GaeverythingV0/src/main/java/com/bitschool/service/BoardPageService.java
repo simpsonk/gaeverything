@@ -54,7 +54,7 @@ public class BoardPageService implements IPagerService{
 		lastPage = (lastPage<=numOfPage)?lastPage:numOfPage;
 		String categoryCode = pDTO.getCategoryCode();
 		if(categoryCode == null){
-			categoryCode = "0";
+			categoryCode = "ALL";
 		}				
 		StringBuffer sb = new StringBuffer();
 		sb.append("<nav class='pagination'><ul>");		
