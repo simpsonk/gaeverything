@@ -40,7 +40,11 @@
 				    padding-top: 5px;">
 					<ul id="responsive">
 						<div></div>
-						<li><a href="/">Home</a></li>
+						<li><a href="/">Home</a>
+						<ul>
+								<li><a href="/viewMore">Top Places</a></li>
+							</ul>
+						</li>	
 						<li><a href="/map/viewMapList">Care</a></li>
 						<li><a href="/event/viewEventList">Event</a></li>
 						<li><a href="/review/viewReviewList">Review</a>

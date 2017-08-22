@@ -1,5 +1,7 @@
 package com.bitschool.dto;
 
+import java.util.List;
+
 public class HomeListDTO {
 	
 	private int no;
@@ -14,7 +16,15 @@ public class HomeListDTO {
 	private int countLike;
 	private String image;
 	
+	private List<HomeListDTO> list;
 	
+
+	public List<HomeListDTO> getList() {
+		return list;
+	}
+	public void setList(List<HomeListDTO> list) {
+		this.list = list;
+	}
 	
 	public int getNo() {
 		return no;

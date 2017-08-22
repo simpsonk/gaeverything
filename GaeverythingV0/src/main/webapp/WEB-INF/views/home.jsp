@@ -91,8 +91,11 @@
 
 <!-- Category Boxes -->
 <div class="container">
-	<div class="row">
+	<div class="row col-md-12">
+	<div class="col-md-1"></div>
+		<div class="col-md-10">
 		<div class="col-md-12">
+	
 			<div class="categories-boxes-container margin-top-5 margin-bottom-30">
 				
 				<!-- Box -->
@@ -128,6 +131,8 @@
 			</div>
 		</div>
 	</div>
+	<div class="col-md-1"></div>
+	</div>
 </div>
 <!-- Category Boxes / End -->
 
@@ -144,7 +149,8 @@
 			<div class="col-md-12">
 				<div class="simple-slick-carousel dots-nav">
 					<!-- Listing Item -->
-					<c:forEach items ="${list1}" var="review" begin="0" end="4">
+					<!-- <form method="post" action="" modelAttribute="data1"> -->
+					<c:forEach items ="${list1}" var="review" begin="0" end="4" >
 						<div class="carousel-item">
 							<c:choose>
 							<c:when test="${review.category == 'HP8'}">
@@ -193,10 +199,15 @@
 					  			 	<div class="rating-counter"> 평균 ${review.avgRating} 점</div>
 					  			 </div>
 					 		 </a>
-					  </div>				
+					  </div>	
 				</c:forEach>
+				</form>
+				<a href="/viewMore" style="width: 360px;padding-top: 130px;padding-bottom: 130px; color: #F91942;">View More <i class="fa fa-angle-right"></i></a>			
+				
 				<!-- Listing Item / End -->
 				</div>
+				
+								
 			</div>
 		</div>
 	</div>
@@ -253,6 +264,7 @@
 							</a>
 						</div>
 						</c:forEach>
+						<a href="/viewMore" style="width: 360px;padding-top: 130px;padding-bottom: 130px; color: #F91942;">View More <i class="fa fa-angle-right"></i></a>
 					</div>	
 				<!-- Listing Item / End -->
 				</div>
@@ -333,6 +345,7 @@
 					 		 </a>
 					  </div>				
 				</c:forEach>
+				<a href="/viewMore" style="width: 360px;padding-top: 130px;padding-bottom: 130px; color: #F91942;">View More <i class="fa fa-angle-right"></i></a>
 				<!-- Listing Item / End -->
 				</div>
 			</div>
@@ -387,12 +400,13 @@
 				 </a>
 			</div>
 			</c:forEach>
+			
 		</div>	
 		
 		<!-- Blog post Item / End -->
 		</div>
 		<div class="col-md-12 centered-content">
-			<a href="/review/viewReviewList" class="button border margin-top-10">View Blog</a>
+			<a href="/review/viewReviewList" class="button border margin-top-10">More Reviews</a>
 		</div>
 
 	</div>
