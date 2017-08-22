@@ -461,6 +461,11 @@ public class ReviewController {
 		ActUserDTO dto = new ActUserDTO(email, ActUserManager.EVENT, eventNo);
 		if(like.equals("like-icon")){
 			flag = manager.registLikeStatus(dto);
+			
+			//(이벤트디테일페이지에서) 이벤트 북마크 눌렀을 때 북마크누른사람 point -> +3, myBookmark -> "T"
+			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"F","F","F","F","T");
+			gService.insertInfo(gDTO);
+			
 			if(!flag){
 				System.out.println("insert fail: DetailPageLike");
 			}
@@ -486,6 +491,11 @@ public class ReviewController {
 		boolean flag = false;
 		if(like.equals("like-icon")){
 			flag = manager.registLikeStatus(dto);
+			
+			//(이벤트리스트에서) 이벤트 북마크 눌렀을 때 북마크누른사람 point -> +3, myBookmark -> "T"
+			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"F","F","F","F","T");
+			gService.insertInfo(gDTO);
+			
 			if(!flag){
 				System.out.println("insert fail: ReviewLike");
 			}
