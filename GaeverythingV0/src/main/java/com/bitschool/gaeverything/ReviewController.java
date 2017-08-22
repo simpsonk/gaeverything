@@ -160,7 +160,7 @@ public class ReviewController {
 		dto.setNickname(member.getNickname());
 		boolean flag = service.insertPost(dto);
 		// 글쓴이의 point -> +10, myReview ->"T"
-		GradeDTO gDTO = new GradeDTO(dto.getNickname(),"F","F","T","F","F");
+		GradeDTO gDTO = new GradeDTO(dto.getNickname(),"myReview");
 		boolean flag2 = gService.insertInfo(gDTO);
 		
 		if(flag){
@@ -310,10 +310,10 @@ public class ReviewController {
 		cDTO.setGroupNo(boardNo);
 		boolean flag = cService.addComment(cDTO); 
 		//1. insert 글쓴이의 resComment->"T", point-> +3 
-		GradeDTO gDTO1 = new GradeDTO(service.selectNickname(boardNo),"T","F","F","F","F");
+		GradeDTO gDTO1 = new GradeDTO(service.selectNickname(boardNo),"resComment");
 		boolean flag2 = gService.insertInfo(gDTO1);
 		//2. insert 댓쓴이의 myComment->"T", point->+8 
-		GradeDTO gDTO2 = new GradeDTO(cDTO.getNicknameCmt(),"F","F","F","T","F");
+		GradeDTO gDTO2 = new GradeDTO(cDTO.getNicknameCmt(),"myComment");
 		boolean flag3 = gService.insertInfo(gDTO2);
 		
 		if(flag){
@@ -398,11 +398,11 @@ public class ReviewController {
 			rService.insertReaction(rDTO);
 			
 			//북마크 눌렀을 때 리뷰글쓴이 point -> +6, resBookmark -> "T"
-			GradeDTO gDTO = new GradeDTO(service.selectNickname(boardNo),"F","T","F","F","F");
+			GradeDTO gDTO = new GradeDTO(service.selectNickname(boardNo),"resBookmark");
 			gService.insertInfo(gDTO);
 			
 			//북마크 눌렀을 때 북마크누른사람 point -> +3, myBookmark -> "T"
-			GradeDTO gDTO2 = new GradeDTO(nickname,"F","F","F","F","T");
+			GradeDTO gDTO2 = new GradeDTO(nickname,"myBookmark");
 			gService.insertInfo(gDTO2);
 			
 			if(!flag){
@@ -434,7 +434,7 @@ public class ReviewController {
 			flag = manager.registLikeStatus(dto);
 			
 			//병원 북마크 눌렀을 때 북마크누른사람 point -> +3, myBookmark -> "T"
-			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"F","F","F","F","T");
+			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"myBookmark");
 			gService.insertInfo(gDTO);
 			
 			if(!flag){
@@ -463,7 +463,7 @@ public class ReviewController {
 			flag = manager.registLikeStatus(dto);
 			
 			//(이벤트디테일페이지에서) 이벤트 북마크 눌렀을 때 북마크누른사람 point -> +3, myBookmark -> "T"
-			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"F","F","F","F","T");
+			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"myBookmark");
 			gService.insertInfo(gDTO);
 			
 			if(!flag){
@@ -493,7 +493,7 @@ public class ReviewController {
 			flag = manager.registLikeStatus(dto);
 			
 			//(이벤트리스트에서) 이벤트 북마크 눌렀을 때 북마크누른사람 point -> +3, myBookmark -> "T"
-			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"F","F","F","F","T");
+			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"myBookmark");
 			gService.insertInfo(gDTO);
 			
 			if(!flag){

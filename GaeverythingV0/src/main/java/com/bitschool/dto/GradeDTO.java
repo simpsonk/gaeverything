@@ -3,12 +3,14 @@ package com.bitschool.dto;
 public class GradeDTO {
 	private int gradeSeq;
 	private String nickname;
-	private String resComment;
+/*	private String resComment;
 	private String resBookmark;
 	private String myReview;
 	private String myComment;
-	private String myBookmark;
+	private String myBookmark;*/
+	private String type;
 	private int point;
+
 	private String grade;
 	
 	public GradeDTO(){
@@ -19,14 +21,18 @@ public class GradeDTO {
 		this.nickname = nickname;
 	}
 	
-	public GradeDTO(String nickname,String resComment,String resBookmark,String myReview, String myComment,String myBookmark){
+	public GradeDTO(String nickname, String type){
+		this.nickname = nickname;
+		this.type = type;
+	}
+/*	public GradeDTO(String nickname,String resComment,String resBookmark,String myReview, String myComment,String myBookmark){
 		this.nickname = nickname;
 		this.resComment = resComment;
 		this.resBookmark = resBookmark;
 		this.myReview = myReview;
 		this.myComment = myComment;
 		this.myBookmark = myBookmark;
-	}
+	}*/
 	
 	public int getGradeSeq() {
 		return gradeSeq;
@@ -40,7 +46,7 @@ public class GradeDTO {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-	public String getResComment() {
+/*	public String getResComment() {
 		return resComment;
 	}
 	public void setResComment(String resComment) {
@@ -69,7 +75,7 @@ public class GradeDTO {
 	}
 	public void setMyBookmark(String myBookmark) {
 		this.myBookmark = myBookmark;
-	}
+	}*/
 	public int getPoint() {
 		return point;
 	}
@@ -83,16 +89,18 @@ public class GradeDTO {
 		this.grade = grade;
 	}
 	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	@Override
 	public String toString() {
-		return "GradeDTO [gradeSeq=" + gradeSeq + ", nickname=" + nickname + ", resComment=" + resComment
-				+ ", resBookmark=" + resBookmark + ", myReview=" + myReview + ", myComment=" + myComment
-				+ ", myBookmark=" + myBookmark + ", point=" + point + ", grade=" + grade + ", getGradeSeq()="
-				+ getGradeSeq() + ", getNickname()=" + getNickname() + ", getResComment()=" + getResComment()
-				+ ", getResBookmark()=" + getResBookmark() + ", getMyReview()=" + getMyReview() + ", getMyComment()="
-				+ getMyComment() + ", getMyBookmark()=" + getMyBookmark() + ", getPoint()=" + getPoint()
-				+ ", getGrade()=" + getGrade() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
+		return "GradeDTO [gradeSeq=" + gradeSeq + ", nickname=" + nickname + ", type=" + type + ", point=" + point
+				+ ", grade=" + grade + "]";
 	}
 	
 	

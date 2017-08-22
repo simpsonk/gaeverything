@@ -93,7 +93,7 @@ public class LocationDetailController {
 		dto.setPhoto(member.getPhoto());
 		boolean flag = service.commentAdd(dto);
 		// ´ñ±Û¾´ÀÌÀÇ point -> +8, myComment ->"T"
-		GradeDTO gDTO = new GradeDTO(dto.getNickname(),"F","F","F","T","F");
+		GradeDTO gDTO = new GradeDTO(dto.getNickname(),"myComment");
 		boolean flag2 = gService.insertInfo(gDTO);
 		
 		if(flag){
