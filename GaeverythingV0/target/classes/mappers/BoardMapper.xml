@@ -196,4 +196,8 @@
 		select * from mypage where email = #{email}
 	</select>
 	
+	<select id="getPhoto" parameterType="String" resultType="String">
+		select photo from signup where nickname = #{nickName}
+	</select>
+	
 </mapper>

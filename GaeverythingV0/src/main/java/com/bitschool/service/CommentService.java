@@ -1,5 +1,7 @@
 package com.bitschool.service;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -9,8 +11,10 @@ import org.springframework.stereotype.Service;
 
 import com.bitschool.dao.IBoardDAO;
 import com.bitschool.dao.ReactionDAO;
+import com.bitschool.dao.SignUpDAO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.CommentDTO;
+import com.bitschool.dto.MemberDTO;
 import com.bitschool.dto.ReactionDTO;
 
 @Service
@@ -21,6 +25,9 @@ public class CommentService implements ICommentService{
 	
 	@Inject
 	private ReactionDAO rdao;
+	
+	@Inject
+	private SignUpDAO sDao;
 	
 	@Override
 	public boolean addComment(CommentDTO cDTO) {
@@ -41,6 +48,7 @@ public class CommentService implements ICommentService{
 		
 		try {
 			cList = dao.readAllCmt(boardNo);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -49,10 +57,7 @@ public class CommentService implements ICommentService{
 
 	@Override
 	public boolean updateCmt(CommentDTO cDTO) {
-		
-		
 		boolean flag = false;
-		
 		try {
 			flag = dao.updateCmt(cDTO); 
 		} catch (SQLException e) {
@@ -102,6 +107,20 @@ public class CommentService implements ICommentService{
 			e.printStackTrace();
 		}
 		return dto;
+	}
+
+	@Override
+	public List<CommentDTO> getPhotoInfo(List<CommentDTO> cList) {
+		try {
+			for (int i = 0; i < cList.size(); i++) {
+				String nickName = cList.get(i).getNicknameCmt();
+				String photo = dao.findPhoto(nickName);
+				cList.get(i).setPhoto(photo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cList;
 	}
 	
 	

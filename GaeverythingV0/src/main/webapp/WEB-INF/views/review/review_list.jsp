@@ -153,9 +153,9 @@
 					<c:if test="${board.boardCategory=='2'}">
 						<li><a href="#">애견동반 식당, 카페</a></li>
 					</c:if>-->
-						<li><i class="sl sl-icon-bubble"></i> ${board.numOfCmt}</li>
-						<li id="numOflike${board.boardNo}"><i class="sl sl-icon-heart"></i> ${board.countLike}</li>
-						<li><i class="sl sl-icon-eye"></i> ${board.readCount}</li>
+						<li><i class="sl sl-icon-bubble" style="color: #F91942"></i> ${board.numOfCmt}</li>
+						<li id="numOflike${board.boardNo}"><i class="sl sl-icon-heart" style="color: #F91942"></i> ${board.countLike}</li>
+						<li><i class="sl sl-icon-eye" style="color: #F91942"></i> ${board.readCount}</li>
 						<li><fmt:formatDate value = "${board.regiDate}" pattern="YYYY-MM-dd hh:mm:ss"/></li>						
 				</ul>
 				

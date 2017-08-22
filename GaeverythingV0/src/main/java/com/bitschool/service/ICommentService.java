@@ -16,5 +16,6 @@ public interface ICommentService {
 	public boolean removeCmt(int commentNo);
 	public int countCmt(int boardNo);
 	public CommentDTO getFullCmt(int commentNo);
+	public List<CommentDTO> getPhotoInfo(List<CommentDTO> cList);
 
 }

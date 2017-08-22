@@ -254,7 +254,7 @@
 					</c:when>
 					<c:otherwise>
 					<a href="/event/detail/view?no=${dto.locationSeq}">
-					<span><i class="sl sl-icon-paper-plane "></i>    ${dto.address}</span>
+					<span><i class="sl sl-icon-paper-plane" style="color: #F91942"></i>    ${dto.address}</span>
 					</a>
 					</c:otherwise>
 					</c:choose>	
@@ -266,9 +266,9 @@
 								<li><a href="#">애견동반 식당, 카페</a></li>
 							</c:if>-->
 							
-							<li><i class="sl sl-icon-bubble"></i> ${numOfCmt}</li>
-							<li id="numOflike"><i class="sl sl-icon-heart"></i> ${dto.countLike}</li>
-							<li><i class="sl sl-icon-eye"></i> ${dto.readCount}</li>
+							<li><i class="sl sl-icon-bubble" style="color: #F91942"></i> ${numOfCmt}</li>
+							<li id="numOflike"><i class="sl sl-icon-heart" style="color: #F91942"></i> ${dto.countLike}</li>
+							<li><i class="sl sl-icon-eye" style="color: #F91942"></i> ${dto.readCount}</li>
 							<li><fmt:formatDate value = "${dto.regiDate}" pattern="YYYY-MM-dd hh:mm:ss"/></li>
 						</ul>
 					</div>
@@ -340,7 +340,11 @@
 			</div>
 				<a href="#">${profile.email}</a> 
 			<div class="intro col-md-9" style="padding-left: 0px;padding-right: 0px;">	
+				
 				<p>${profile.notes}</p>
+				<c:if test="${empty profile.notes}">
+					<p>(등록된 소개가 없습니다.)</p>
+				</c:if>
 			</div>
 		</div>
 	</form>
@@ -397,7 +401,7 @@
 			<h4 class="headline margin-bottom-35">Comments <span class="comments-amount">(${numOfCmt})</span></h4>
 
 			<!-- 댓글리스트 -->
-			<div class="comments">
+			<div class="comments" style="padding-bottom: 50px;">
 			<c:forEach items = "${cList}" var ="cmt"  varStatus="loop">
 				<form action="" method="post" id="listOfComment${loop.index}">
 					<input type="hidden" name = "boardNo" value = "${dto.boardNo}">
@@ -406,7 +410,14 @@
 	
 					<ul> <!-- 댓글전체 -->
 						<li>
-							<div class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /></div>
+							<c:choose>
+							<c:when test="${empty cmt.photo}">
+								<div class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /></div>
+							</c:when>
+							<c:otherwise>
+								<div class="avatar"><img src="/resources/upload/${cmt.photo}" alt="" style="width:80px; height:80px; object-fit:cover;"/></div>
+							</c:otherwise>
+							</c:choose>
 							<div class="comment-content"><div class="arrow-comment"></div>
 							
 								<input type = "hidden" name = "commentNo" value = "${cmt.commentNo}">
@@ -457,11 +468,18 @@
 				<!-- Blog Post Item -->
 				
 				<c:forEach var="otherList" items="${otherList}" varStatus="status">
-				<c:if test="${status.index<2}">
+				<c:if test="${(status.index<2) and (otherList.boardNo != dto.boardNo)}">
 				<div class="col-md-6">
 					<a href="/review/readPost?boardNo=${otherList.boardNo}" class="blog-compact-item-container" style="height: 250px;">
 						<div class="blog-compact-item" style="height: 250px;">
-							<img src="/resources/upload/${otherList.uploadImg}" alt="" style="height: 250px;">
+							<c:choose>
+							<c:when test="${empty otherList.uploadImg}">
+								<img src="/resources/images/walkthedog.jpg" alt="" style="height: 250px;">
+							</c:when>
+							<c:otherwise>
+								<img src="/resources/upload/${otherList.uploadImg}" alt="" style="height: 250px;">
+							</c:otherwise>
+							</c:choose>
 							<div class="blog-compact-item-content">
 								<ul class="blog-post-tags">
 									<li>${otherList.regiDate}</li>
