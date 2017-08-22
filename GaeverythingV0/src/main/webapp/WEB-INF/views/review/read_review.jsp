@@ -125,6 +125,7 @@
 		
 		var icon = document.createElement('i');
 		icon.className = 'sl sl-icon-heart';
+		icon.style = 'color: #F91942';
 		var span = document.createElement('span');
 		
 		$.ajax({
@@ -335,7 +336,7 @@
 			</div>
 			<div class="about-description">
 				<div class="writer">
-					<h4>${dto.nickname}&nbsp;&nbsp;&nbsp;<a href="/review/follow"><i class="sl sl-icon-user-follow"></i></a></h4>
+					<h4>${dto.nickname}</h4>
 				</div>
 			</div>
 				<a href="#">${profile.email}</a> 

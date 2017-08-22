@@ -363,6 +363,7 @@
 
 		var icon = document.createElement('i');
 		icon.className = 'sl sl-icon-heart';
+		icon.style = 'color: #F91942';
 		var span = document.createElement('span');
 		
 		$.ajax({
