@@ -269,7 +269,7 @@
 							<li><i class="sl sl-icon-bubble"></i> ${numOfCmt}</li>
 							<li id="numOflike"><i class="sl sl-icon-heart"></i> ${dto.countLike}</li>
 							<li><i class="sl sl-icon-eye"></i> ${dto.readCount}</li>
-							<li><fmt:formatDate value = "${dto.regiDate}" pattern="YY/MM/dd hh:mm:ss"/></li>
+							<li><fmt:formatDate value = "${dto.regiDate}" pattern="YYYY-MM-dd hh:mm:ss"/></li>
 						</ul>
 					</div>
 					
@@ -459,10 +459,9 @@
 				<c:forEach var="otherList" items="${otherList}" varStatus="status">
 				<c:if test="${status.index<2}">
 				<div class="col-md-6">
-					<a href="#" class="blog-compact-item-container" style="height: 250px;">
+					<a href="/review/readPost?boardNo=${otherList.boardNo}" class="blog-compact-item-container" style="height: 250px;">
 						<div class="blog-compact-item" style="height: 250px;">
 							<img src="/resources/upload/${otherList.uploadImg}" alt="" style="height: 250px;">
-							<!-- <span class="blog-item-tag">Tips</span> -->
 							<div class="blog-compact-item-content">
 								<ul class="blog-post-tags">
 									<li>${otherList.regiDate}</li>
@@ -473,7 +472,7 @@
 						</div>
 					</a>
 				</div>
-				<!-- read more로 링크연결하는거랑 해당하는글은 안뜨도록 추가구현해야함 -->
+				<!--해당하는글은 안뜨도록 추가구현해야함 -->
 				</c:if>
 				</c:forEach>
 			

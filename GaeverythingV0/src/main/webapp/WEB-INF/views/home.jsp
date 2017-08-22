@@ -268,7 +268,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<h3 class="headline centered margin-bottom-45">
-					Most <strong>Bookmarked</strong> Places
+					Most <strong>Bookmarked</strong> Posts
 				</h3>
 			</div>
 
@@ -281,6 +281,9 @@
 							<c:choose>
 							<c:when test="${like.category == 'HP8'}">
 								<a href="/map/detail/viewDetailPage?locationSeq=${like.no}" class="listing-item-container">
+							</c:when>
+							<c:when test="${like.category == 'review'}">
+								<a href="/review/readPost?boardNo=${like.no}" class="listing-item-container">
 							</c:when>
 							<c:otherwise>
 								<a href="/event/detail/view?no=${like.no}" class="listing-item-container">
@@ -311,6 +314,9 @@
 									<c:choose>
 									<c:when test="${like.category =='HP8'}">
 										<span class="tag" style="background: #f91942;">Hospital</span>
+									</c:when>
+									<c:when test= "${like.category =='review'}">
+										<span class="tag" style="background: #f91942;">Review</span>
 									</c:when>
 									<c:otherwise>
 										<span class="tag" style="background: #f91942;">Event</span>

@@ -158,7 +158,7 @@ function no_login_like(locationSeq){
 	    regi = regi.getFullYear() + '-' + leadingZeros((regi.getMonth()+1),2) + '-' + leadingZeros(regi.getDate(),2)
 	    +' '+leadingZeros(regi.getHours(),2)+':'+leadingZeros(regi.getMinutes(),2)+':'+leadingZeros(regi.getSeconds(),2);
 	    var itemStr ='	<input type="hidden" id="ratingVal'+reply.commentSeq+'" value="'+reply.rating+'">'+
-		  	'<li><div class="avatar"><img src="/resources/upload/'+reply.photo+'" alt="" /></div>'+
+		  	'<li><div class="avatar"><img src="/resources/upload/'+reply.photo+'" alt="" style="width:80px; height:80px; object-fit:cover;"/></div>'+
 		'<div class="comment-content"><div class="arrow-comment"></div>'+
 			'<div class="comment-by">'+
 				reply.nickname+'<span class="date">'+regi+'</span>'+
