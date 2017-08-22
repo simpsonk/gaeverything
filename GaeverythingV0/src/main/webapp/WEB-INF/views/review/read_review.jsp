@@ -462,14 +462,18 @@
 				
 			
 			<div class="clearfix"></div>
-			<h4 class="headline margin-top-25">${dto.nickname} 님의 다른 글 보기 </h4>
+			
+			<!-- 글쓴이의 다른 글 보기 -->
+			<h4 class="headline margin-top-25">${dto.nickname} 님의 다른 글 보기(${numOfOther}) </h4>
 			<div class="row">
+			<div class="simple-slick-carousel dots-nav">
 
-				<!-- Blog Post Item -->
-				
+				<!-- 다른글 리스트 -->
 				<c:forEach var="otherList" items="${otherList}" varStatus="status">
-				<c:if test="${(status.index<2) and (otherList.boardNo != dto.boardNo)}">
+				<c:if test="${otherList.boardNo != dto.boardNo}">
+				
 				<div class="col-md-6">
+					<div class="carousel-item">
 					<a href="/review/readPost?boardNo=${otherList.boardNo}" class="blog-compact-item-container" style="height: 250px;">
 						<div class="blog-compact-item" style="height: 250px;">
 							<c:choose>
@@ -485,10 +489,13 @@
 									<li>${otherList.regiDate}</li>
 								</ul>
 								<h3>${otherList.title}</h3>
+								<div class="preview_box" id="preview" style="width: 100%; height:40px;">
 								<p>${otherList.onlyText} </p>
+								</div>
 							</div>
 						</div>
 					</a>
+				</div>
 				</div>
 				<!--해당하는글은 안뜨도록 추가구현해야함 -->
 				</c:if>
@@ -497,7 +504,7 @@
 				<!-- Blog post Item / End -->
 
 				
-
+			</div>
 			</div>
 			<!-- Related Posts / End -->
 
@@ -646,5 +653,21 @@
 		src="<c:url value = '/resources/scripts/custom.js'/>"></script>
 		<script type="text/javascript" src="<c:url value = '/resources/jQuery.dotdotdot-master/src/jquery.dotdotdot.js'/>"></script>
 		
+		
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$('.preview_box').dotdotdot({
+			ellipis : '...',
+			wrap    : 'word',
+			height  : '100px',
+			callback	: function( isTruncated, orgContent ) {},
+			lastCharacter : {
+				remove : ['','.',';','!','?'],
+				noEllipis: []
+			}
+		});
+	});
+	
+	</script>
 </body>
 </html>		

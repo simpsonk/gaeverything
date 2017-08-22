@@ -248,6 +248,7 @@ public class ReviewController {
 		MyPageDTO mDTO = service.getWriter(dto.getNickname());
 		
 		List<BoardDTO> otherList = mService.selectMyReviews(dto.getNickname());
+		int numOfOther = otherList.size() - 1;
 		
 		model.addAttribute("numOfCmt", numOfCmt);
 		model.addAttribute("dto", dto);
@@ -258,6 +259,7 @@ public class ReviewController {
 		model.addAttribute("profile",mDTO);
 		model.addAttribute("popularList",popularList);
 		model.addAttribute("otherList",otherList);
+		model.addAttribute("numOfOther", numOfOther);
 		url = "review/read_review";
 		return url;
 	}
