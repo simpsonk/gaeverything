@@ -27,4 +27,16 @@ public class GradeDAO {
 		}
 		return flag;
 	}
+	
+	//¸®ºä°Ô½Ã±Û¿¡ ´ñ±Û ´Ş·ÈÀ» ¶§ ±Û¾´ÀÌÀÇ resComment
+	public boolean insertInfo(GradeDTO dto) throws SQLException{
+		boolean flag = false;
+		int aCnt = session.insert(namespace+".insertInfo",dto);
+		if(aCnt>0){
+			flag = true;
+		}
+		return flag;
+	}
+	
+	
 }

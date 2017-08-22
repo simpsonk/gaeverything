@@ -10,5 +10,21 @@
 		insert into grade (gradeSeq,nickname) values(#{gradeSeq},#{nickname})
  	</insert>
   
-  
+<!--   	<insert id="insertInfo" parameterType="GradeDTO">
+  		<selectKey keyProperty="gradeSeq" order="BEFORE" resultType="Integer">
+			select grade_seq.nextval from dual
+		</selectKey>
+  		insert into grade (gradeSeq,nickname,resComment,resBookmark,myReview,myComment,myBookmark) 
+  		values(#{gradeSeq},#{nickname},#{resComment},#{resBookmark},#{myReview},#{myComment},#{myBookmark})
+  	</insert>  -->
+  	
+  	<insert id="insertInfo" parameterType="GradeDTO">
+  		<selectKey keyProperty="gradeSeq" order="BEFORE" resultType="Integer">
+			select grade_seq.nextval from dual
+		</selectKey>
+  		insert into grade (gradeSeq,nickname,type) 
+  		values(#{gradeSeq},#{nickname},#{type})
+  	</insert> 
+  	
+ 
  </mapper>

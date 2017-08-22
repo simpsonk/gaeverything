@@ -191,4 +191,17 @@ public class BoardService implements IBoardService {
 		return list;
 	}
 
+	@Override
+	public String selectNickname(int boardNo) {
+		String nickname = null;
+		try {
+			nickname = dao.selectNickname(boardNo);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return nickname;
+	}
+
+	
 }

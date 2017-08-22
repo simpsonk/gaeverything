@@ -33,5 +33,16 @@ public class GradeService {
 		return flag;
 	}
 
+	//리뷰게시글에 댓글 달렸을 때 글쓴이의 resComment
+	public boolean insertInfo(GradeDTO dto){
+		boolean flag = false;
+		try {
+			flag = dao.insertInfo(dto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		return flag;
+	}
 
 }
