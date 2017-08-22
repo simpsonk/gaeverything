@@ -229,5 +229,13 @@ public class BoardDAO implements IBoardDAO{
 		return list;
 	}
 
+	@Override
+	public String selectNickname(int boardNo) throws SQLException {
+		String nickname = null;
+		nickname = session.selectOne(nameSpace+".selectNickname",boardNo);	
+		return nickname;
+	}
+	
+	
 	
 }

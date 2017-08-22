@@ -19,6 +19,15 @@ public class GradeDTO {
 		this.nickname = nickname;
 	}
 	
+	public GradeDTO(String nickname,String resComment,String resBookmark,String myReview, String myComment,String myBookmark){
+		this.nickname = nickname;
+		this.resComment = resComment;
+		this.resBookmark = resBookmark;
+		this.myReview = myReview;
+		this.myComment = myComment;
+		this.myBookmark = myBookmark;
+	}
+	
 	public int getGradeSeq() {
 		return gradeSeq;
 	}

@@ -22,12 +22,14 @@ import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.CommentDTO;
 import com.bitschool.dto.EventDTO;
+import com.bitschool.dto.GradeDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.dto.MyPageDTO;
 import com.bitschool.dto.PageDTO;
 import com.bitschool.dto.ReactionDTO;
 import com.bitschool.service.ActUserService;
+import com.bitschool.service.GradeService;
 import com.bitschool.service.IBoardService;
 import com.bitschool.service.ICommentService;
 import com.bitschool.service.IPagerService;
@@ -67,6 +69,9 @@ public class ReviewController {
 	@Inject
 	private MyPageService mService;
 
+	@Inject
+	private GradeService gService;
+	
 	@RequestMapping(value = "/viewDetailReviews", method = RequestMethod.GET)
 	public String viewDetailReviews(HttpSession session,  @RequestParam(value="locationSeq") int locationSeq,
 			@RequestParam(value="page", defaultValue="1") int page,Model model,
@@ -304,7 +309,13 @@ public class ReviewController {
 		String url = null;
 		cDTO.setGroupNo(boardNo);
 		boolean flag = cService.addComment(cDTO); 
-
+		//1. insert 글쓴이의 resComment->"T", point-> +3 
+		GradeDTO gDTO1 = new GradeDTO(service.selectNickname(boardNo),"T","F","F","F","F");
+		boolean flag2 = gService.insertInfo(gDTO1);
+		//2. insert 댓쓴이의 myComment->"T", point->+8 
+		GradeDTO gDTO2 = new GradeDTO(cDTO.getNicknameCmt(),"F","F","F","T","F");
+		boolean flag3 = gService.insertInfo(gDTO2);
+		
 		if(flag){
 			model.addAttribute("boardNo", boardNo);
 			model.addAttribute("page", page);
