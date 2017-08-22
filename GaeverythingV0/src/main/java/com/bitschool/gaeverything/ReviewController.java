@@ -103,7 +103,6 @@ public class ReviewController {
 		String pList = pService.pageList(pDTO);
 		model.addAttribute("pList", pList);
 		
-
 		
 		List<BoardDTO> list = service.getPagedList(pDTO); 
 		model.addAttribute("page", page);
@@ -142,8 +141,6 @@ public class ReviewController {
 		
 		boolean isLogin = new LoginFilter().isLogin(session, model);
 		String url = "review/review_regist";
-		
-		System.out.println("categoryCode : "+categoryCode);
 		BoardDTO board = new BoardDTO();
 		board.setBoardCategory(categoryCode);
 
@@ -165,7 +162,6 @@ public class ReviewController {
 		
 		if(flag){
 			url = "redirect:/review/viewReviewList?categoryCode="+categoryCode;
-			System.out.println("±Ûµî·Ï: " + categoryCode);
 		}
 		return url;
 	}
@@ -231,6 +227,7 @@ public class ReviewController {
 			dto= new ActUserManager(aService).checkReLikeStatus(aDTO, dto);
 		}
 		List<CommentDTO> cList = cService.getAllComment(boardNo);
+		cList = cService.getPhotoInfo(cList);
 		int numOfCmt = cService.countCmt(boardNo);
 		
 		BoardDTO bDTO1 = service.searchPrev(boardNo);
@@ -251,13 +248,12 @@ public class ReviewController {
 
 		BoardDTO board = new BoardDTO();
 		board.setBoardCategory(categoryCode);
-		System.out.println("board : "+board);
 		List<BoardDTO> popularList = service.highReadcountReviews(board);
-		System.out.println("popularList : "+popularList);
-		
+	
 		MyPageDTO mDTO = service.getWriter(dto.getNickname());
 		
 		List<BoardDTO> otherList = mService.selectMyReviews(dto.getNickname());
+		int numOfOther = otherList.size() - 1;
 		
 		model.addAttribute("numOfCmt", numOfCmt);
 		model.addAttribute("dto", dto);
@@ -268,6 +264,7 @@ public class ReviewController {
 		model.addAttribute("profile",mDTO);
 		model.addAttribute("popularList",popularList);
 		model.addAttribute("otherList",otherList);
+		model.addAttribute("numOfOther", numOfOther);
 		url = "review/read_review";
 		return url;
 	}

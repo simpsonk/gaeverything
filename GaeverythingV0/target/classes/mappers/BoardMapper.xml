@@ -29,7 +29,7 @@
 	
 	<select id="perPage" parameterType="PageDTO" resultType="BoardDTO">
 		 <if test="orderBy!='Comments'">	
-		select * from 
+			select * from 
 			(select rownum as num, temp.* from
 				(select * from board 
 					<if test="categoryCode!=null">
@@ -198,5 +198,9 @@
 	
 	<select id="selectNickname" parameterType="Integer" resultType="String">
 		select nickname from board where boardNo = #{boardNo}
+	</select>
+	
+	<select id="getPhoto" parameterType="String" resultType="String">
+		select photo from signup where nickname = #{nickName}
 	</select>
 </mapper>

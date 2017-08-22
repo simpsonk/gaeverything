@@ -185,7 +185,7 @@ public class BoardService implements IBoardService {
 		try {
 			list = dao.highReadcountReviews(board);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		return list;

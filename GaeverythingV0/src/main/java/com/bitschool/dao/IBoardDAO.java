@@ -43,5 +43,7 @@ public interface IBoardDAO {
 	public MyPageDTO readProfile(String email) throws SQLException;
 	public CommentDTO getFullCmt(int commentNo) throws SQLException;
 	public String selectNickname(int boardNo) throws SQLException;
+	public String findPhoto(String nickName) throws SQLException;
+
 
 }

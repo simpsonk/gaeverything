@@ -224,7 +224,7 @@ public class GetDataController {
 	public List<Location2DTO> GetDatum(){
     	List<Location2DTO> list = null;
         try {
-            String text = URLEncoder.encode("서초구 애견카페", "UTF-8");      
+            String text = URLEncoder.encode("광주 서구 공원", "UTF-8");      
             String apiURL = "https://dapi.kakao.com/v2/local/search/keyword.json?query="+text+"&page=2&appkey=ebfbfbd7a5ec71c10c63936dd90beb22&size=15";
            
             URL url = new URL(apiURL);

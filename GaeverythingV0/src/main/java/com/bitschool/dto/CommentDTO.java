@@ -14,6 +14,19 @@ public class CommentDTO {
 	private int orderNo;
 	private int depth;
 	private int index;
+	
+	private String photo;
+	
+	
+	
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
 	//내가쓴 댓글의 원글제목을 가져오기위해
 	private String title;
 	

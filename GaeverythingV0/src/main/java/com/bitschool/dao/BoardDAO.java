@@ -230,6 +230,7 @@ public class BoardDAO implements IBoardDAO{
 	}
 
 	@Override
+
 	public String selectNickname(int boardNo) throws SQLException {
 		String nickname = null;
 		nickname = session.selectOne(nameSpace+".selectNickname",boardNo);	
@@ -237,5 +238,13 @@ public class BoardDAO implements IBoardDAO{
 	}
 	
 	
+
+	public String findPhoto(String nickName) throws SQLException {
+		String photo = session.selectOne(nameSpace+".getPhoto", nickName);
+		System.out.println("사진얻음? " + photo);
+		return photo;
+	}
+
+
 	
 }
