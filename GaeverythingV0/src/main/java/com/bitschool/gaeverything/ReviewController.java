@@ -396,6 +396,15 @@ public class ReviewController {
 
 			//ºÏ¸¶Å© ´­·¶À» ¶§ reaction Å×ÀÌºí¿¡ ³Ö¾îÁÖ±â!!
 			rService.insertReaction(rDTO);
+			
+			//ºÏ¸¶Å© ´­·¶À» ¶§ ¸®ºä±Û¾´ÀÌ point -> +6, resBookmark -> "T"
+			GradeDTO gDTO = new GradeDTO(service.selectNickname(boardNo),"F","T","F","F","F");
+			gService.insertInfo(gDTO);
+			
+			//ºÏ¸¶Å© ´­·¶À» ¶§ ºÏ¸¶Å©´©¸¥»ç¶÷ point -> +3, myBookmark -> "T"
+			GradeDTO gDTO2 = new GradeDTO(nickname,"F","F","F","F","T");
+			gService.insertInfo(gDTO2);
+			
 			if(!flag){
 				System.out.println("insert fail: ReviewLike");
 			}
