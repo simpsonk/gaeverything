@@ -28,10 +28,20 @@ public class GradeDAO {
 		return flag;
 	}
 	
-	//리뷰게시글에 댓글 달렸을 때 글쓴이의 resComment
+	//grade 테이블에 데이터 입력
 	public boolean insertInfo(GradeDTO dto) throws SQLException{
 		boolean flag = false;
 		int aCnt = session.insert(namespace+".insertInfo",dto);
+		if(aCnt>0){
+			flag = true;
+		}
+		return flag;
+	}
+	
+	//grade 테이블에 데이터 한개 삭제
+	public boolean deleteInfo(GradeDTO dto) throws SQLException{
+		boolean flag = false;
+		int aCnt = session.delete(namespace+".deleteInfo", dto);
 		if(aCnt>0){
 			flag = true;
 		}

@@ -287,6 +287,11 @@ public class ReviewController {
 			@RequestParam(value="mylisting", defaultValue="0") int mylisting,
 			@RequestParam(value="category", defaultValue="0") int category){
 		String url = null; 
+		
+		//delete 글쓴이의 myReview, point-> -10 
+		GradeDTO gDTO = new GradeDTO(service.selectNickname(boardNo),"myReview");
+		boolean flag2 = gService.deleteInfo(gDTO);
+		
 		boolean flag = service.remove(boardNo);
 		if(flag){
 			url = "redirect:/review/viewReviewList?page="+page;
@@ -371,7 +376,15 @@ public class ReviewController {
 							@RequestParam(value="page", defaultValue="1") int page,
 							Model model){
 		String url = "";
+		//1. delete 글쓴이의 resComment, point-> -3 
+		GradeDTO gDTO1 = new GradeDTO(service.selectNickname(boardNo),"resComment");
+		boolean flag2 = gService.deleteInfo(gDTO1);
+		//2. delete 댓쓴이의 myComment, point-> -8 
+		GradeDTO gDTO2 = new GradeDTO(cService.getFullCmt(commentNo).getNicknameCmt(),"myComment");
+		boolean flag3 = gService.deleteInfo(gDTO2);
+		
 		boolean flag = cService.removeCmt(commentNo);
+		
 		if(flag){
 			model.addAttribute("boardNo", boardNo);
 			model.addAttribute("page", page);

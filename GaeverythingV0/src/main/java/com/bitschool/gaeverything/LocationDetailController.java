@@ -183,6 +183,10 @@ public class LocationDetailController {
 		DetailCommentDTO dto = new DetailCommentDTO();
 		dto.setNickname(member.getNickname());
 		dto.setCommentSeq(commentSeq);
+		//delete ´ñ±Û¾´ÀÌÀÇ myComment, point-> -8 
+		GradeDTO gDTO = new GradeDTO(member.getNickname(),"myComment");
+		boolean flag2 = gService.deleteInfo(gDTO);
+		
 		boolean flag = service.commentDelete(dto);
 		if(flag){
 			url = "redirect:viewDetailPage?locationSeq="+locationSeq;

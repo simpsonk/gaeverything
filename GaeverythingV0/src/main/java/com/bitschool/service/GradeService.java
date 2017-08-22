@@ -33,7 +33,7 @@ public class GradeService {
 		return flag;
 	}
 
-	//리뷰게시글에 댓글 달렸을 때 글쓴이의 resComment
+	//grade 테이블에 데이터 insert
 	public boolean insertInfo(GradeDTO dto){
 		boolean flag = false;
 		try {
@@ -42,6 +42,18 @@ public class GradeService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
+		return flag;
+	}
+	
+	//grade 테이블에 데이터 한개 삭제
+	public boolean deleteInfo(GradeDTO dto){
+		boolean flag = false;
+		try {
+			flag = dao.deleteInfo(dto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return flag;
 	}
 

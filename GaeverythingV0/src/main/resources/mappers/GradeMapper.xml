@@ -8,16 +8,8 @@
 			select grade_seq.nextval from dual
 		</selectKey>
 		insert into grade (gradeSeq,nickname) values(#{gradeSeq},#{nickname})
- 	</insert>
-  
-<!--   	<insert id="insertInfo" parameterType="GradeDTO">
-  		<selectKey keyProperty="gradeSeq" order="BEFORE" resultType="Integer">
-			select grade_seq.nextval from dual
-		</selectKey>
-  		insert into grade (gradeSeq,nickname,resComment,resBookmark,myReview,myComment,myBookmark) 
-  		values(#{gradeSeq},#{nickname},#{resComment},#{resBookmark},#{myReview},#{myComment},#{myBookmark})
-  	</insert>  -->
-  	
+ 	</insert>  
+
   	<insert id="insertInfo" parameterType="GradeDTO">
   		<selectKey keyProperty="gradeSeq" order="BEFORE" resultType="Integer">
 			select grade_seq.nextval from dual
@@ -26,5 +18,15 @@
   		values(#{gradeSeq},#{nickname},#{type})
   	</insert> 
   	
+  	<!-- 한개 삭제  -->
+  	<delete id="deleteInfo" parameterType="GradeDTO">
+  		delete from grade where gradeSeq = 
+		(select gradeSeq from 
+		(select rownum as num, a.* from 
+		(select * from grade 
+		where nickname = #{nickname} and type = #{type} 
+		order by gradeseq desc) a) b 
+		where num = 1)
+  	</delete>
  
  </mapper>
