@@ -122,12 +122,13 @@
             						<div class="col-md-10">
 											<div><input id="resultValue" name="repeatview" value="${dto.repeatview }"></div>
             						</div>
-            						<div class="col-md-2">
+            						<%-- <div class="col-md-2">
 											<div>히든 요약</div>
             						</div>
             						<div class="col-md-10">
 											<div><input id="resultHiddenValue" name="repeatdata" value="${dto.repeatdata }"></div>
-            						</div>
+            						</div> --%>
+            						<input type="hidden" id="resultHiddenValue" name="repeatdata" value="${dto.repeatdata }">
             						<input type="hidden" id="calendarseq" name="calendarseq" value="${dto.calendarseq }">
 
 									<button class="button margin-top-15" onclick="schedule(2)">수정</button>
@@ -246,21 +247,21 @@
 											<div>시작 날짜</div>
             						</div>
             						<div class="col-md-10">
-											<input class='form-control startDate' type="date" id='repeatStartDate' name='repeatStartDate' value='${sd }'>
+											<input class='form-control startDate' type="date" id='repeatStartDate' name='repeatStartDate' value='${dto.startDate }'>
             						</div>
             						<div class="col-md-2">
 											<div>종료일</div>
             						</div>
             						<div class="col-md-10">
-											<input class='form-control startDate' type="date" id='repeatEndDate' name='repeatEndDate' value='${sd }'>
+											<input class='form-control startDate' type="date" id='repeatEndDate' name='repeatEndDate' value='${dto.endDate }'>
 											
             						</div>
             						<div class="col-md-2">
 											<div>요약</div>
             						</div>
             						<div class="col-md-10">
-											<div><input id="result" name="result" value="매주 월요일"></div>
-											<div><input id="resultHidden" name="resultHidden" value="2, 1,"></div>
+											<div><input id="result" name="result" value="${dto.repeatview }"></div>
+											<div><input type="hidden" id="resultHidden" name="resultHidden" value="${dto.repeatview }"></div>
             						</div>
 
 									<button class="button margin-top-15" onclick="repeatAdd()">적용</button>

@@ -108,7 +108,7 @@
 									<label>내용</label>
 									<textarea name="message" id="" cols="30" rows="10">${dto.message }</textarea>
 
-									<div class="col-md-2">
+									<%-- <div class="col-md-2">
 											<div>요약</div>
             						</div>
             						<div class="col-md-10">
@@ -119,7 +119,7 @@
             						</div>
             						<div class="col-md-10">
 											<div><input id="resultHiddenValue" name="repeatdata" value="${dto.repeatdata }"></div>
-            						</div>
+            						</div> --%>
             						<input type="hidden" id="calendarseq" name="calendarseq" value="${dto.calendarseq }">
 
 									<button class="button margin-top-15" onclick="schedule(2)">수정</button>
@@ -151,7 +151,7 @@
 										</div>
 									</div>
 									
-            						
+            						<button class="button margin-top-15" onclick="go_url()">길찾기</button>
 								</div>
 
 							</div>
@@ -405,7 +405,18 @@ marker.setMap(map);
 	      document.getElementById("resultHidden").value = selDataNum+selCountDataNum+dataNum;
 		});
 	});
-	
+	function go_url(){
+		var url = "http://map.daum.net/link/to/";
+		var title = document.getElementById("title");
+		var place = document.getElementById("place");
+		var longitude = document.getElementById("longitude");
+		var latitude = document.getElementById("latitude");
+		var gourl = url+title.value+","+latitude.value+","+longitude.value;
+		if(title.value=='병원예약'){
+			gourl = url+place.value+","+latitude.value+","+longitude.value;
+		}
+		location.href = gourl;
+	}
 	    
 	
 </script>
