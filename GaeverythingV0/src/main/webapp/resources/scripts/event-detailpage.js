@@ -18,15 +18,18 @@ $('#bookNow').on('click',function(){
 	var eventNo = document.getElementById("eventNo3").value;
 	checkBooking(eventNo);
 	var book = document.getElementById("booking-calendar");
-	var url = "/mypage/calendar/addBookingEvent";
-	var check = confirm("일정을 캘린더에 등록하시겠습니까?");
-	if(check == true){
-		alert("일정이 등록되었습니다.");
-		book.action = url;
-		book.submit();
-	}else{
-		alert("등록이 취소되었습니다.");
-		return;
+	var url = "/mypage/calendar/addBookingNearby";
+	var isLogin = document.getElementById("isLogin3");
+	if(isLogin.value!=''){
+		var check = confirm("일정을 캘린더에 등록하시겠습니까?");
+		if(check == true){
+			alert("일정이 등록되었습니다.");
+			book.action = url;
+			book.submit();
+		}else{
+			alert("등록이 취소되었습니다.");
+			return;
+		}
 	}
 });
 
@@ -65,11 +68,12 @@ $('#modifyComment').click(function(){
 function go_url(type, commNo){	
 	var commentNo = document.getElementById("commentNo");
 	var commMsg = document.getElementById("commMsg");
-	var changeMsg = document.getElementById("changeMsg"+commSeq);
-	var ratingVal = document.getElementById("ratingVal"+commSeq);
+	var changeMsg = document.getElementById("changeMsg"+commNo);
+	var ratingVal = document.getElementById("ratingVal"+commNo);
 	var ment = document.getElementById("ment");
+	alert(changeMsg.innerHTML);
 	if(type==1){		
-		commentNo.value = commSeq;
+		commentNo.value = commNo;
 		commMsg.innerHTML = changeMsg.innerHTML;
 		if(ratingVal.value==0.5){
 			$('input:radio[name=rating]:input[value="0.5"]').attr("checked", true);			
@@ -220,7 +224,7 @@ function getListItem(reply) {
 				reply.nickname+'<span class="date">'+regi+'</span>'+
 				'<div class="star star-rating" data-rating="'+reply.rating+'"></div>'+
 			'</div>'+
-			'<p id="changeMsg'+reply.commentSeq+'">'+reply.message+'</p></div>';
+			'<p id="changeMsg'+reply.commentNo+'">'+reply.message+'</p></div>';
 			if(nickname==reply.nickname){
 				itemStr +=	'<div class="comment-by" >'+
 							'	<a class="reply" style="margin-top: 20px;" " onclick="go_url(1, '+reply.commentNo+');" return false; ><i class="sl sl-icon-note"></i> Edit</a>'+
@@ -275,11 +279,6 @@ function photoListView(start,end,photoList){
 var photoStart;
 var photoEnd;
 
-/*$('#photoHide').click(function(){
-	for(var i=2;i<count;i++){
-		$('#mfp-'+i).hide();
-	}
-});*/
 
 $('#photoMore').click(function(){
 	 photoListView(photoStart,photoEnd,pList);	
@@ -327,8 +326,6 @@ function getPhotoList(photo) {
 
 
 $(document).ready(function() {
-	
-	
 	var eventNo = document.getElementById("eventNo").value;
 	var url = "/event/detail/getNearby?eventNo="+eventNo;
 	$.ajax ({
@@ -344,9 +341,6 @@ $(document).ready(function() {
 			 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
       }
 	});
-	
-
-	
 });
 
 
@@ -356,7 +350,6 @@ function nearbySlide(){
 		infinite: true,
 		slidesToShow: 3,
 		slidesToScroll: 3,
-		
 		});
 }
 
@@ -369,8 +362,6 @@ function makeNearByList(near, event){
 	nearbyFragment = document.createDocumentFragment();
 	for(var i=0; i<near.length; i++){
 		var itemEle = document.createElement("div");
-		
-		
 		var nearbyItem = 
 		'	<div class="listing-item-container">'+
 		'		<div class="listing-item">'+
@@ -412,24 +403,13 @@ function addToCal(locationSeq, eventNo, startDate, index){
 	
 	//startDate = startDate.toString();
 	var added = document.getElementById("add-schedule"+index).className;
-	
 	alert('addToCal alert'+startDate.toString());
 	var url = "/mypage/calendar/addBookingNearby?added="+added+"&eventNo="+eventNo+"&startDate="+startDate+"&loc="+locationSeq;
 	location.href = url;
-	
 	var id ='#add-schedule'+index; 
 	$(id).toggleClass('liked');
 	$(id).children('.add-schedule').toggleClass('liked');
-	
-	
-	//alert("check");
-	//var eventNo = document.getElementById("eventNo4").value;
-	/*checkBooking(eventNo);
-	//var book = document.getElementById("addNearby");
-	var url = "/mypage/calendar/addBookingEvent";
-			book.action = url;
-			book.submit();	*/
-			
+		
 }
 
 
