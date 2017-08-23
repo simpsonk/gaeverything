@@ -216,9 +216,9 @@
 						<span>Level :  <strong>${list.gradename}</strong></span>				
 						<span>Point : <strong>${list.total}p</strong></span>
 						</li>
-						
-						
-					</c:if>						
+					</c:if>		
+					
+									
 					</c:forEach> 
 					</ul>
 					<ul>

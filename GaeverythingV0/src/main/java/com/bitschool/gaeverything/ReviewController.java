@@ -258,6 +258,8 @@ public class ReviewController {
 		List<BoardDTO> otherList = mService.selectMyReviews(dto.getNickname());
 		int numOfOther = otherList.size() - 1;
 		
+		String gradeName = gService.selectGradeInfo(service.selectNickname(boardNo)).get(0).getGradename();
+		
 		model.addAttribute("numOfCmt", numOfCmt);
 		model.addAttribute("dto", dto);
 		model.addAttribute("cList", cList);
@@ -268,6 +270,7 @@ public class ReviewController {
 		model.addAttribute("popularList",popularList);
 		model.addAttribute("otherList",otherList);
 		model.addAttribute("numOfOther", numOfOther);
+		model.addAttribute("gradeName",gradeName);
 		url = "review/read_review";
 		return url;
 	}
