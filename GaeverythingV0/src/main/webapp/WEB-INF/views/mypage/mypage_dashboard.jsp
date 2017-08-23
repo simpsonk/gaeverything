@@ -215,28 +215,40 @@
 					</c:if>						
 					</c:forEach> 
 					</ul>
-				</div>
-		</div>
-		<!-- 나의 등급  grade 이력-->
-		<div class="col-lg-6 col-md-12">
-				<div class="dashboard-list-box invoices with-icons margin-top-20">
-					<h4 style="background: #37b6bd; color:white">GradeInfo</h4>
 					<ul>
 				
-					<c:forEach var="list" items="${gradeInfo}" varStatus="status">
-						<c:choose>
-						<c:when test="${list.type=='myBookmark'}">
+					<c:forEach var="list" items="${gradeInfo}" varStatus="status">						
+						<c:if test="${list.type=='myBookmark'}">
 						<li>
 							북마크를 하여 ${list.point}점을 얻었습니다.
 						</li>
-						</c:when>
-						<c:otherwise>
-						</c:otherwise>
-						</c:choose>									
+						</c:if>
+						<c:if test="${list.type=='myComment'}">
+						<li>
+							댓글을 작성하여 ${list.point}점을 얻었습니다.
+						</li>
+						</c:if>
+						<c:if test="${list.type=='myReview'}">
+						<li>
+							리뷰를 작성하여 ${list.point}점을 얻었습니다.
+						</li>
+						</c:if>
+						<c:if test="${list.type=='resBookmark'}">
+						<li>
+							작성한 글에 북마크가 생겨 ${list.point}점을 얻었습니다.
+						</li>
+						</c:if>
+						<c:if test="${list.type=='resComment'}">
+						<li>
+							작성한 글에 댓글이 달려 ${list.point}점을 얻었습니다.
+						</li>
+						</c:if>
+													
 					</c:forEach> 
 					</ul>
 				</div>
 		</div>
+		
 		
 			
 			<!-- Copyrights -->
