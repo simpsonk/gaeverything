@@ -160,7 +160,7 @@ public class ReviewController {
 		dto.setNickname(member.getNickname());
 		boolean flag = service.insertPost(dto);
 		// 글쓴이의 point -> +10, myReview ->"T"
-		GradeDTO gDTO = new GradeDTO(dto.getNickname(),"myReview");
+		GradeDTO gDTO = new GradeDTO(dto.getNickname(),"myReview", 10);
 		boolean flag2 = gService.insertInfo(gDTO);
 		
 		if(flag){
@@ -289,7 +289,7 @@ public class ReviewController {
 		String url = null; 
 		
 		//delete 글쓴이의 myReview, point-> -10 
-		GradeDTO gDTO = new GradeDTO(service.selectNickname(boardNo),"myReview");
+		GradeDTO gDTO = new GradeDTO(service.selectNickname(boardNo),"myReview", -10);
 		boolean flag2 = gService.deleteInfo(gDTO);
 		
 		boolean flag = service.remove(boardNo);
@@ -315,10 +315,10 @@ public class ReviewController {
 		cDTO.setGroupNo(boardNo);
 		boolean flag = cService.addComment(cDTO); 
 		//1. insert 글쓴이의 resComment->"T", point-> +3 
-		GradeDTO gDTO1 = new GradeDTO(service.selectNickname(boardNo),"resComment");
+		GradeDTO gDTO1 = new GradeDTO(service.selectNickname(boardNo),"resComment", 3);
 		boolean flag2 = gService.insertInfo(gDTO1);
 		//2. insert 댓쓴이의 myComment->"T", point->+8 
-		GradeDTO gDTO2 = new GradeDTO(cDTO.getNicknameCmt(),"myComment");
+		GradeDTO gDTO2 = new GradeDTO(cDTO.getNicknameCmt(),"myComment", 8);
 		boolean flag3 = gService.insertInfo(gDTO2);
 		
 		if(flag){
@@ -377,10 +377,10 @@ public class ReviewController {
 							Model model){
 		String url = "";
 		//1. delete 글쓴이의 resComment, point-> -3 
-		GradeDTO gDTO1 = new GradeDTO(service.selectNickname(boardNo),"resComment");
+		GradeDTO gDTO1 = new GradeDTO(service.selectNickname(boardNo),"resComment", -3);
 		boolean flag2 = gService.deleteInfo(gDTO1);
 		//2. delete 댓쓴이의 myComment, point-> -8 
-		GradeDTO gDTO2 = new GradeDTO(cService.getFullCmt(commentNo).getNicknameCmt(),"myComment");
+		GradeDTO gDTO2 = new GradeDTO(cService.getFullCmt(commentNo).getNicknameCmt(),"myComment", -8);
 		boolean flag3 = gService.deleteInfo(gDTO2);
 		
 		boolean flag = cService.removeCmt(commentNo);
@@ -411,11 +411,11 @@ public class ReviewController {
 			rService.insertReaction(rDTO);
 			
 			//북마크 눌렀을 때 리뷰글쓴이 point -> +6, resBookmark -> "T"
-			GradeDTO gDTO = new GradeDTO(service.selectNickname(boardNo),"resBookmark");
+			GradeDTO gDTO = new GradeDTO(service.selectNickname(boardNo),"resBookmark", 6);
 			gService.insertInfo(gDTO);
 			
 			//북마크 눌렀을 때 북마크누른사람 point -> +3, myBookmark -> "T"
-			GradeDTO gDTO2 = new GradeDTO(nickname,"myBookmark");
+			GradeDTO gDTO2 = new GradeDTO(nickname,"myBookmark", 3);
 			gService.insertInfo(gDTO2);
 			
 			if(!flag){
@@ -427,11 +427,11 @@ public class ReviewController {
 			rService.deleteReaction(rDTO);
 			
 			//북마크 해제 눌렀을 때 리뷰글쓴이 point -> -6, delete resBookmark 
-			GradeDTO gDTO = new GradeDTO(service.selectNickname(boardNo),"resBookmark");
+			GradeDTO gDTO = new GradeDTO(service.selectNickname(boardNo),"resBookmark", -6);
 			gService.deleteInfo(gDTO);
 			
 			//북마크 해제 눌렀을 때 북마크누른사람 point -> -3, delete myBookmark 
-			GradeDTO gDTO2 = new GradeDTO(nickname,"myBookmark");			
+			GradeDTO gDTO2 = new GradeDTO(nickname,"myBookmark", -3);			
 			gService.deleteInfo(gDTO2);
 			
 			if(!flag){
@@ -456,7 +456,7 @@ public class ReviewController {
 			flag = manager.registLikeStatus(dto);
 			
 			//병원 북마크 눌렀을 때 북마크누른사람 point -> +3, myBookmark -> "T"
-			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"myBookmark");
+			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"myBookmark", 3);
 			gService.insertInfo(gDTO);
 			
 			if(!flag){
@@ -466,7 +466,7 @@ public class ReviewController {
 			flag = manager.deleteLikeStatus(dto);
 			
 			//병원 북마크 해제 눌렀을 때 북마크누른사람 point -> -3, delete myBookmark
-			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"myBookmark");
+			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"myBookmark", -3);
 			gService.deleteInfo(gDTO);
 			
 			if(!flag){
@@ -490,7 +490,7 @@ public class ReviewController {
 			flag = manager.registLikeStatus(dto);
 			
 			//(이벤트디테일페이지에서) 이벤트 북마크 눌렀을 때 북마크누른사람 point -> +3, myBookmark -> "T"
-			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"myBookmark");
+			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"myBookmark",3);
 			gService.insertInfo(gDTO);
 			
 			if(!flag){
@@ -500,7 +500,7 @@ public class ReviewController {
 			flag = manager.deleteLikeStatus(dto);
 			
 			//(이벤트디테일페이지에서) 이벤트 북마크 해제 눌렀을 때 북마크누른사람 point -> -3, delete myBookmark
-			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"myBookmark");
+			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"myBookmark", -3);
 			gService.deleteInfo(gDTO);
 			
 			if(!flag){
@@ -525,7 +525,7 @@ public class ReviewController {
 			flag = manager.registLikeStatus(dto);
 			
 			//(이벤트리스트에서) 이벤트 북마크 눌렀을 때 북마크누른사람 point -> +3, myBookmark -> "T"
-			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"myBookmark");
+			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"myBookmark", 3);
 			gService.insertInfo(gDTO);
 			
 			if(!flag){
@@ -535,7 +535,7 @@ public class ReviewController {
 			flag = manager.deleteLikeStatus(dto);
 			
 			//(이벤트리스트에서) 이벤트 북마크 해제 눌렀을 때 북마크누른사람 point -> -3, delete myBookmark
-			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"myBookmark");
+			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"myBookmark", -3);
 			gService.deleteInfo(gDTO);
 			
 			if(!flag){

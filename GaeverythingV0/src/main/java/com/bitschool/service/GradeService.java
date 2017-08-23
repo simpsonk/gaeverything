@@ -38,6 +38,7 @@ public class GradeService {
 		boolean flag = false;
 		try {
 			flag = dao.insertInfo(dto);
+			this.updateTotal(dto.getNickname());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -50,6 +51,7 @@ public class GradeService {
 		boolean flag = false;
 		try {
 			flag = dao.deleteInfo(dto);
+			this.updateTotal(dto.getNickname());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -57,4 +59,15 @@ public class GradeService {
 		return flag;
 	}
 
+	//point 합계설정(total)
+	public boolean updateTotal(String nickname){
+		boolean flag = false;
+		try {
+			flag = dao.updateTotal(nickname);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return flag; 
+	}
 }
