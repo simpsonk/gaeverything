@@ -233,6 +233,10 @@ public class HomeController {
 		public String viewMore (HttpSession session, Model model){
 			boolean isLogin = new LoginFilter().isLogin(session, model);
 			String url = "top_listing";
+			model.addAttribute("list1", hList1);
+			model.addAttribute("list2", hList2);
+			model.addAttribute("list3", hList3);
+			
 			
 			return url;
 		}
