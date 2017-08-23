@@ -488,14 +488,17 @@ $('#bookNow').on('click',function(){
 	checkBooking(locationSeq);
 	var book = document.getElementById("booking-calendar");
 	var url = "/mypage/calendar/addBooking";
-	var check = confirm("일정을 캘린더에 등록하시겠습니까?");
-	if(check == true){
-		alert("일정이 등록되었습니다.");
-		book.action = url;
-		book.submit();
-	}else{
-		alert("등록이 취소되었습니다.");
-		return;
+	var isLogin = document.getElementById("isLogin3");
+	if(isLogin.value!=''){
+		var check = confirm("일정을 캘린더에 등록하시겠습니까?");
+		if(check == true){
+			alert("일정이 등록되었습니다.");
+			book.action = url;
+			book.submit();
+		}else{
+			alert("등록이 취소되었습니다.");
+			return;
+		}
 	}
 });
 
