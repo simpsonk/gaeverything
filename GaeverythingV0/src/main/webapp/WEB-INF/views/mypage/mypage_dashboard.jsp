@@ -211,7 +211,13 @@
 				
 					<c:forEach var="list" items="${gradeInfo}" varStatus="status">
 					<c:if test="${status.index<1}"> 
-						<li> your grade is <strong>${list.gradename}</strong>.</li>
+						<li >
+						<i class="list-box-icon sl sl-icon-badge"></i> 
+						<span>Grade :  <strong>${list.gradename}</strong></span>				
+						<span>Point : <strong>${list.total}p</strong></span>
+						</li>
+						
+						
 					</c:if>						
 					</c:forEach> 
 					</ul>
@@ -219,27 +225,27 @@
 				
 					<c:forEach var="list" items="${gradeInfo}" varStatus="status">						
 						<c:if test="${list.type=='myBookmark'}">
-						<li>
+						<li><i class="list-box-icon sl sl-icon-heart"></i>
 							북마크를 하여 ${list.point}점을 얻었습니다.
 						</li>
 						</c:if>
 						<c:if test="${list.type=='myComment'}">
-						<li>
+						<li><i class="list-box-icon sl sl-icon-pencil"></i>
 							댓글을 작성하여 ${list.point}점을 얻었습니다.
 						</li>
 						</c:if>
 						<c:if test="${list.type=='myReview'}">
-						<li>
+						<li><i class="list-box-icon sl sl-icon-note"></i>
 							리뷰를 작성하여 ${list.point}점을 얻었습니다.
 						</li>
 						</c:if>
 						<c:if test="${list.type=='resBookmark'}">
-						<li>
-							작성한 글에 북마크가 생겨 ${list.point}점을 얻었습니다.
+						<li><i class="list-box-icon sl sl-icon-heart"></i>
+							작성한 글에 북마크가 달려 ${list.point}점을 얻었습니다.
 						</li>
 						</c:if>
 						<c:if test="${list.type=='resComment'}">
-						<li>
+						<li><i class="list-box-icon sl sl-icon-pencil"></i>
 							작성한 글에 댓글이 달려 ${list.point}점을 얻었습니다.
 						</li>
 						</c:if>
