@@ -308,4 +308,22 @@ public class CalendarService{
 		}
 		return flag;
 	}
+	
+	public boolean bookingEvent(int eventNo, String startDate, String eventName, String address, String email) {
+		boolean flag = false;
+		//LocationDTO Ldto = ldao.selectLocationSeq(locationSeq);
+		CalendarDTO Cdto = new CalendarDTO();
+		Cdto.setId(email);
+		Cdto.setDogid(0);
+		Cdto.setTitle(eventName);//병원, 카페에 따라 다르게
+		Cdto.setPlace(address);
+		Cdto.setStartDate(startDate);
+		Cdto.setStartTime("00:00");
+		Cdto.setEndDate(startDate);
+		Cdto.setEndTime("00:00");
+		Cdto.setMessage(null);
+		Cdto.setLocationseq(eventNo);
+		flag = Cdao.insert2(Cdto);
+		return flag;
+	}
 }

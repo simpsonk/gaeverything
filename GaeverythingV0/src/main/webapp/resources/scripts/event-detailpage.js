@@ -15,10 +15,14 @@ map.setCenter(new daum.maps.LatLng(latitude, longitude));
 marker.setMap(map);
 
 $('#bookNow').on('click',function(){
-	var eventNo = document.getElementById("eventNo3").value;
+	var eventNo = document.getElementById("eventNo").value;
+	
+	var date = document.getElementById("booking-date").value;
+	var name = document.getElementById("eventName").value;	
+	var address = document.getElementById("eventAddress").value
 	checkBooking(eventNo);
 	var book = document.getElementById("booking-calendar");
-	var url = "/mypage/calendar/addBookingNearby";
+	var url = "/mypage/calendar/addBookingEvent?eventNo="+eventNo+"&startDate="+date+"&name="+name+"&address="+address;
 	var isLogin = document.getElementById("isLogin3");
 	if(isLogin.value!=''){
 		var check = confirm("일정을 캘린더에 등록하시겠습니까?");
