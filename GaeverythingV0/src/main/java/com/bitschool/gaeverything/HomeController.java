@@ -224,7 +224,7 @@ public class HomeController {
 		
 	
 		@RequestMapping(value="/viewMore", method=RequestMethod.GET)
-		public String viewMore (HttpSession session, Model model, @RequestParam(value= "sort", defaultValue="reviewed") String sort){
+		public String viewMore (HttpSession session, Model model, @RequestParam(value= "sort", defaultValue="default") String sort){
 			boolean isLogin = new LoginFilter().isLogin(session, model);
 			System.out.println(sort);
 			String url = "top_listing";

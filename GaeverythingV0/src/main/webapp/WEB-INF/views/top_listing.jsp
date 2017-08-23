@@ -38,7 +38,20 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<h2>Top-Listed Places</h2><span>Find <strong> the 20 most reviewed, rated and bookmarked</strong> places!</span>
+				<c:choose>
+				<c:when test="${sort == 'reviewed'}">
+					<h2>Top-Listed Places</h2><span>Check out<strong> the 20 most reviewed</strong> places!</span>
+				</c:when>
+				<c:when test="${sort == 'rated'}">
+					<h2>Top-Listed Places</h2><span>Check out<strong> the 20 most rated</strong> places!</span>
+				</c:when>
+				<c:when test="${sort == 'bookmarked'}">
+					<h2>Top-Listed Places</h2><span>Check out<strong> the 20 most bookmarked</strong> places!</span>
+				</c:when>
+				<c:otherwise>
+					<h2>Top-Listed Places</h2><span>Check out<strong> the 20 most reviewed, rated and bookmarked</strong> places!</span>
+				</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 	</div>
@@ -68,7 +81,7 @@
 		<div class="col-md-12">
 			<!-- Sorting - Filtering Section -->
 			<!-- most reviewd places -->
-			<c:if test="${sort == 'reviewed'}">
+			<c:if test="${sort == 'reviewed'||sort =='default'}">
 			<c:forEach items ="${list1}" var="review" begin="0" end="19" >
 				<div class="col-lg-4 col-md-6">
 						<c:choose>
