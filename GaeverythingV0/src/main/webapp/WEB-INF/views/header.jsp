@@ -53,6 +53,7 @@
 								<li><a href="/review/viewReviewList?categoryCode=EVENT">Event</a></li>
 							</ul>
 						</li>
+						
 						<li><a href="/mypage/viewMypageDashboard">MyPage</a>
 							<ul>
 								<li><a href="/mypage/viewMypageDashboard">Dashboard</a></li>
