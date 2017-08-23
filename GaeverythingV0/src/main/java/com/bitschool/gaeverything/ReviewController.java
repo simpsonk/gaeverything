@@ -425,6 +425,15 @@ public class ReviewController {
 			flag = manager.deleteLikeStatus(dto);
 			//북마크 해제 눌렀을 때 reaction 테이블에서 지우기!!
 			rService.deleteReaction(rDTO);
+			
+			//북마크 해제 눌렀을 때 리뷰글쓴이 point -> -6, delete resBookmark 
+			GradeDTO gDTO = new GradeDTO(service.selectNickname(boardNo),"resBookmark");
+			gService.deleteInfo(gDTO);
+			
+			//북마크 해제 눌렀을 때 북마크누른사람 point -> -3, delete myBookmark 
+			GradeDTO gDTO2 = new GradeDTO(nickname,"myBookmark");			
+			gService.deleteInfo(gDTO2);
+			
 			if(!flag){
 				System.out.println("delete fail: ReviewLike");
 			}
@@ -455,6 +464,11 @@ public class ReviewController {
 			}
 		}else if(like.equals("like-icon liked")){
 			flag = manager.deleteLikeStatus(dto);
+			
+			//병원 북마크 해제 눌렀을 때 북마크누른사람 point -> -3, delete myBookmark
+			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"myBookmark");
+			gService.deleteInfo(gDTO);
+			
 			if(!flag){
 				System.out.println("delete fail: DetailPageLike");
 			}
@@ -484,6 +498,11 @@ public class ReviewController {
 			}
 		}else if(like.equals("like-icon liked")){
 			flag = manager.deleteLikeStatus(dto);
+			
+			//(이벤트디테일페이지에서) 이벤트 북마크 해제 눌렀을 때 북마크누른사람 point -> -3, delete myBookmark
+			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"myBookmark");
+			gService.deleteInfo(gDTO);
+			
 			if(!flag){
 				System.out.println("delete fail: DetailPageLike");
 			}
@@ -514,6 +533,11 @@ public class ReviewController {
 			}
 		}else if(like.equals("like-icon liked")){
 			flag = manager.deleteLikeStatus(dto);
+			
+			//(이벤트리스트에서) 이벤트 북마크 해제 눌렀을 때 북마크누른사람 point -> -3, delete myBookmark
+			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"myBookmark");
+			gService.deleteInfo(gDTO);
+			
 			if(!flag){
 				System.out.println("delete fail: ReviewLike");
 			}

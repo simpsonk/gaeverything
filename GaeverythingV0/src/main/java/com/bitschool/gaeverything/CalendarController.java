@@ -143,8 +143,44 @@ public class CalendarController {
 		return url;
 	}
 	
-	@RequestMapping(value="/addBookingNearby",method=RequestMethod.GET)
+	@RequestMapping(value="/addBookingEvent",method={RequestMethod.GET,RequestMethod.POST})
 	public String addBookingEvent(HttpSession session,Model model,
+			@RequestParam("added") String added,
+			@RequestParam("eventNo") int eventNo,
+			@RequestParam("startDate") String startDate,
+			@RequestParam("loc") int locationSeq){
+		String url = null;
+		
+		//캘린더에 등록
+		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		boolean flag = service.bookingAddNearby(eventNo, startDate, locationSeq, member.getEmail());
+		System.out.println("controller"+startDate);
+		if(flag){
+			url = "redirect:/event/detail/view?no="+eventNo;
+		}
+		
+		
+		//개인 등록상태 변경
+		ActUserManager manager = new ActUserManager(aService);
+		ActUserDTO dto = new ActUserDTO(member.getEmail(), ActUserManager.SHOP, locationSeq);
+		if(added.equals("add-schedule")){
+			flag = manager.registLikeStatus(dto);
+			if(!flag){
+				System.out.println("insert fail: DetailPageLike");
+			}
+		}else if(added.equals("add-schedule liked")){
+			flag = manager.deleteLikeStatus(dto);
+			if(!flag){
+				System.out.println("delete fail: DetailPageLike");
+			}
+		}
+		
+		
+		return url;
+		
+	}
+	@RequestMapping(value="/addBookingNearby",method={RequestMethod.GET,RequestMethod.POST})
+	public String addBookingNearby(HttpSession session,Model model,
 			@RequestParam("added") String added,
 			@RequestParam("eventNo") int eventNo,
 			@RequestParam("startDate") String startDate,
