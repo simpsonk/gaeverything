@@ -48,5 +48,15 @@ public class GradeDAO {
 		return flag;
 	}
 	
+	//point 합계설정(total)
+	public boolean updateTotal(String nickname) throws SQLException{
+		boolean flag = false;
+		int aCnt = session.update(namespace+".updateTotal",nickname);
+		if(aCnt>0){
+			flag = true;
+		}
+		return flag; 
+	}
+	
 	
 }
