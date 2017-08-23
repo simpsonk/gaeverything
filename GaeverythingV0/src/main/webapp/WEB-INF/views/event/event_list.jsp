@@ -418,50 +418,31 @@
 		}); 
 	}
 
-	function createOverlay(event) {
-			//예쁘지만 어려운 오버레이 ............
-			 /* var contentStr =
-				'<div class="infoBox" style="width: 270px; transform: translateZ(0px); position: absolute; visibility: visible; left: 284.75px; bottom: -185.3px; cursor: default;">' + 
-		        '    <div class="map-box">' + 
-		        '      <a href="#" class="listing-img-container">'+
-		        '         <div class="infoBox-close" onclick="closeOverlay('+ i+ ')" ><i class="fa fa-times"></i></div>'+
-		        '         <img src="/resources/images/event/'+events[i].thumbnail+'" style="object-fit:cover; height:100%" alt="">'+
-		        '         <div class="listing-item-content">'+
-		        '            <h3>'+events[i].eventName+'</h3>'+
-		        '            <span>'+events[i].address+'</span>'+
-		        '         </div>'+
-		        '      </a>'+
-		        '      <div class="listing-content">   '+
-		        '         <div class="listing-title">'+
-		        '            <div class="star-rating" data-rating="3.5">'+
-		        '      		</div>46 Review'+
-		        '   </div>'+
-		        '</div>';  */
-		        
-		        var contentStr = 
-		        '<div class="wrap">' + 
-	            '    <div class="info">' + 
-	            '        <div class="title">' +event.eventName+ 
-	            '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
-	            '        </div>' + 
-	            '        <div class="body">' + 
-	            '            <div class="img">' +
-	            '                <img src="/resources/images/event/'+event.thumbnail+'" width="73" height="70">' +
-	            '           </div>' + 
-	            '            <div class="desc">' + 
-	            '                <div class="ellipsis">'+event.address+'</div>' + 
-	            '                <div class="jibun ellipsis">'+ event.startDate+ '  ~  '+ event.endDate	+ '</div>' + 
-	            '                <div><a href="'+event.link+'" target="_blank" class="link">홈페이지</a></div>' + 
-	            '            </div>' + 
-	            '        </div>' + 
-	            '    </div>' +    
-	            '</div>';
+	function createOverlay(event) {    
+        var contentStr = 
+        '<div class="wrap">' + 
+           '    <div class="info">' + 
+           '        <div class="title">' +event.eventName+ 
+           '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
+           '        </div>' + 
+           '        <div class="body">' + 
+           '            <div class="img">' +
+           '                <img src="/resources/images/event/'+event.thumbnail+'" width="73" height="70">' +
+           '           </div>' + 
+           '            <div class="desc">' + 
+           '                <div class="ellipsis">'+event.address+'</div>' + 
+           '                <div class="jibun ellipsis">'+ event.startDate+ '  ~  '+ event.endDate	+ '</div>' + 
+           '                <div><a href="'+event.link+'" target="_blank" class="link">홈페이지</a></div>' + 
+           '            </div>' + 
+           '        </div>' + 
+           '    </div>' +    
+           '</div>';
 
-			//2)오버레이 찍을 위치
-			var overlayPosition = new daum.maps.LatLng(event.latitude, event.longitude)		
-			//3) 오버레이 생성
-			overlay.setContent(contentStr);
-			overlay.setPosition(overlayPosition);
+	//2)오버레이 찍을 위치
+	var overlayPosition = new daum.maps.LatLng(event.latitude, event.longitude)		
+	//3) 오버레이 생성
+	overlay.setContent(contentStr);
+	overlay.setPosition(overlayPosition);
 	}
 
 	 function closeOverlay(){

@@ -201,7 +201,6 @@
 					 		 </a>
 					  </div>	
 				</c:forEach>
-				</form>
 				<a href="/viewMore" style="width: 360px;padding-top: 130px;padding-bottom: 130px; color: #F91942;">View More <i class="fa fa-angle-right"></i></a>			
 				
 				<!-- Listing Item / End -->

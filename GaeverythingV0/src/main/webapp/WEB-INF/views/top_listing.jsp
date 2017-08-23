@@ -38,13 +38,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-
-				<h2>Top-Listed Places</h2><span>Find the most reviewed, rated and bookmarked places!</span>
-
-				<!-- Breadcrumbs -->
-	
-				</nav>
-
+				<h2>Top-Listed Places</h2><span>Find <strong> the 20 most reviewed, rated and bookmarked</strong> places!</span>
 			</div>
 		</div>
 	</div>
@@ -55,19 +49,17 @@
 ================================================== -->
 <div class="container">
 	<div class="row">
-		
 		<!-- Search -->
 		<div class="col-md-6">
-			<div class="main-search-input gray-style margin-top-0 margin-bottom-10  col-md-4">
+			<div class="main-search-input gray-style margin-top-0 margin-bottom-10  col-md-2">
 				<div class="main-search-input-item col-md-12">
-					<select data-placeholder="All Categories" class="chosen-select" >
-						<option>Latest</option>	
-						<option>Most Reviewed places</option>
-						<option>Most Rated Places</option>
-						<option>Most Bookmarked Posts</option>
+					<select data-placeholder="All Categories" class="chosen-select" name ="categories" id="categories">
+						<option value ="reviewed" ${sort == 'reviewed'?'selected="selected"':''}>Most Reviewed places</option>
+						<option value ="rated" ${sort == 'rated'?'selected="selected"':''}>Most Rated Places</option>
+						<option value ="bookmarked" ${sort == 'bookmarked'?'selected="selected"':''}>Most Bookmarked Posts</option>
 					</select>
 				</div>
-				<button class="button">Search</button>	
+				
 			</div>
 		</div>
 		<!-- Search Section / End -->
@@ -75,142 +67,171 @@
 
 		<div class="col-md-12">
 			<!-- Sorting - Filtering Section -->
+			<!-- most reviewd places -->
+			<c:if test="${sort == 'reviewed'}">
+			<c:forEach items ="${list1}" var="review" begin="0" end="19" >
+				<div class="col-lg-4 col-md-6">
+						<c:choose>
+							<c:when test="${review.category == 'HP8'}">
+								<a href="/map/detail/viewDetailPage?locationSeq=${review.no}" class="listing-item-container">
+							</c:when>
+							<c:otherwise>
+								<a href="/event/detail/view?no=${review.no}" class="listing-item-container">
+							</c:otherwise>
+						</c:choose>
+									<div class="listing-item">
+										<c:choose>
+											<c:when test="${(empty review.image) and (review.category == 'HP8')}">
+												<img src="/resources/images/hospital.jpg" alt="">
+											</c:when>
+											<c:when test="${(empty review.image) and (review.category == 'event1')}">
+												<img src="/resources/images/dogevent.jpg" alt="">
+											</c:when>
+											<c:when test="${(!empty review.image) and (review.category == 'HP8')}">
+												<img src="${review.image}" alt="">
+											</c:when>
+											<c:otherwise>
+												<img src="/resources/images/event/${review.image}" alt="">
+											</c:otherwise>
+										</c:choose>	
+					
+									<div class="listing-item-details">
+										<ul>
+											<li><h1><strong>${review.totalReview}</strong></h1> reviews</li>
+										</ul>
+									</div>
+									<div class="listing-item-content">
+									<c:choose>
+									<c:when test="${review.category =='HP8'}">
+										<span class="tag" style="background: #f91942;">Hospital</span>
+									</c:when>
+									<c:otherwise>
+										<span class="tag" style="background: #f91942;">Event</span>
+									</c:otherwise>
+									</c:choose> 
+					 					<h3>${review.title}</h3>
+									 	<span>${review.address}</span>
+					  				</div>
+					   				<span class="like-icon" onclick = "no_login_like()"></span>
+					  			</div>
+					   			<div class="star-rating" data-rating="${review.avgRating}">
+					  			 	<div class="rating-counter"> 평균 ${review.avgRating} 점</div>
+					  			 </div>
+					 		 </a>
+					
+					  </div>	
+				</c:forEach>
+				</c:if>
+				
+				
+				<c:if test="${sort == 'rated'}">
+				<c:forEach items="${list2}" var="rate" begin="0" end="19">
+				<div class="col-lg-4 col-md-6">
+					
+						<c:choose>
+						<c:when test="${rate.category == 'HP8'}">
+							<a href="/map/detail/viewDetailPage?locationSeq=${rate.no}" class="listing-item-container compact">
+						</c:when>
+						<c:otherwise>
+							<a href="/event/detail/view?no=${rate.no}" class="listing-item-container compact">
+						</c:otherwise>
+						</c:choose>
+								<div class="listing-item">
+									<c:choose>
+										<c:when test="${(empty rate.image) and (rate.category == 'HP8')}">
+											<img src="/resources/images/hospital.jpg" alt="">
+										</c:when>
+										<c:when test="${(empty rate.image) and (rate.category == 'event1')}">
+											<img src="/resources/images/dogevent.jpg" alt="">
+										</c:when>
+										<c:when test="${(!empty rate.image) and (rate.category == 'HP8')}">
+											<img src="${rate.image}" alt="">
+										</c:when>
+										<c:otherwise>
+											<img src="/resources/images/event/${rate.image}" alt="">
+										</c:otherwise>
+									</c:choose>	
+								<div class="listing-item-content">
+					 				<div class="star-rating" data-rating="${rate.avgRating}">
+					 					<div class="numerical-rating" data-rating="${rate.avgRating}"></div></div>
+					 				<h3>${rate.title}</h3>
+									<span>${rate.address}</span>
+								</div>
+									<span class="like-icon" onclick = "no_login_like()"></span>
+								</div>
+							</a>
+						</div>
+						</c:forEach>
+				</c:if>		
+				
+				<c:if test="${sort == 'bookmarked'}">
+				<c:forEach items ="${list3}" var="like" begin="0" end="19">
+				<div class="col-lg-4 col-md-6">
+							
+							<c:choose>
+							<c:when test="${like.category == 'HP8'}">
+								<a href="/map/detail/viewDetailPage?locationSeq=${like.no}" class="listing-item-container">
+							</c:when>
+							<c:when test="${like.category == 'review'}">
+								<a href="/review/readPost?boardNo=${like.no}" class="listing-item-container">
+							</c:when>
+							<c:otherwise>
+								<a href="/event/detail/view?no=${like.no}" class="listing-item-container">
+							</c:otherwise>
+							</c:choose>
+									<div class="listing-item">
+									<c:choose>
+										<c:when test="${(empty like.image) and (like.category == 'HP8')}">
+											<img src="/resources/images/hospital.jpg" alt="">
+										</c:when>
+										<c:when test="${(empty like.image) and (like.category == 'event1')}">
+											<img src="/resources/images/dogevent.jpg" alt="">
+										</c:when>
+										<c:when test="${(!empty like.image) and (like.category == 'HP8')}">
+											<img src="${like.image}" alt="">
+										</c:when>
+										<c:otherwise>
+											<img src="/resources/images/event/${like.image}" alt="">
+										</c:otherwise>
+									</c:choose>	
+					
+									<div class="listing-item-details">
+										<ul>
+											<li><i class="im im-icon-Heart" style="color:#f91942; font-size: 50px;"></i>${like.countLike}</li>
+										</ul>
+									</div>
+									<div class="listing-item-content">
+									<c:choose>
+									<c:when test="${like.category =='HP8'}">
+										<span class="tag" style="background: #f91942;">Hospital</span>
+									</c:when>
+									<c:when test= "${like.category =='review'}">
+										<span class="tag" style="background: #f91942;">Review</span>
+									</c:when>
+									<c:otherwise>
+										<span class="tag" style="background: #f91942;">Event</span>
+									</c:otherwise>
+									</c:choose> 
+					 					<h3>${like.title}</h3>
+									 	<span>${like.address}</span>
+					  				</div>
+					   				<span class="like-icon" onclick = "no_login_like()"></span>
+					  			</div>
+					   			<div class="star-rating" data-rating="${like.avgRating}">
+					  			 	<div class="rating-counter"> 평균 ${like.avgRating} 점</div>
+					  			 </div>
+					 		 </a>
+					  </div>				
+				</c:forEach>
+				</c:if>		
 			<!-- Sorting - Filtering Section / End -->
 
-			<div class="row">
+			<!-- <div class="row">-->
 				<!-- Listing Item -->
-				<div class="col-lg-4 col-md-6">
-					<a href="listings-single-page.html" class="listing-item-container compact">
-						<div class="listing-item">
-							<img src="images/listing-item-01.jpg" alt="">
-
-							<div class="listing-item-content">
-								<div class="numerical-rating" data-rating="3.5"></div>
-								<h3>Tom's Restaurant</h3>
-								<span>964 School Street, New York</span>
-							</div>
-							<span class="like-icon"></span>
-						</div>
-					</a>
-				</div>
-				<!-- Listing Item / End -->
-
-				<!-- Listing Item -->
-				<div class="col-lg-4 col-md-6">
-					<a href="listings-single-page.html" class="listing-item-container compact">
-						<div class="listing-item">
-							<img src="images/listing-item-02.jpg" alt="">
-							<div class="listing-item-details">
-								<ul>
-									<li>Friday, August 10</li>
-								</ul>
-							</div>
-							<div class="listing-item-content">
-								<div class="numerical-rating" data-rating="5.0"></div>
-								<h3>Sticky Band</h3>
-								<span>Bishop Avenue, New York</span>
-							</div>
-							<span class="like-icon"></span>
-						</div>
-					</a>
-				</div>
-				<!-- Listing Item / End -->		
-
-				<!-- Listing Item -->
-				<div class="col-lg-4 col-md-6">
-					<a href="listings-single-page.html" class="listing-item-container compact">
-						<div class="listing-item">
-							<img src="images/listing-item-03.jpg" alt="">
-							<div class="listing-item-details">
-								<ul>
-									<li>Starting from $59 per night</li>
-								</ul>
-							</div>
-							<div class="listing-item-content">
-								<div class="numerical-rating" data-rating="2.0"></div>
-								<h3>Hotel Govendor</h3>
-								<span>778 Country Street, New York</span>
-							</div>
-							<span class="like-icon"></span>
-						</div>
-
-					</a>
-				</div>
-				<!-- Listing Item / End -->
-
-				<!-- Listing Item -->
-				<div class="col-lg-4 col-md-6">
-					<a href="listings-single-page.html" class="listing-item-container compact">
-						<div class="listing-item">
-							<img src="images/listing-item-04.jpg" alt="">
-
-							<div class="listing-badge now-open">Now Open</div>
-
-							<div class="listing-item-content">
-								<div class="numerical-rating" data-rating="5.0"></div>
-								<h3>Burger House</h3>
-								<span>2726 Shinn Street, New York</span>
-							</div>
-							<span class="like-icon"></span>
-						</div>
-					</a>
-				</div>
-				<!-- Listing Item / End -->
-
-				<!-- Listing Item -->
-				<div class="col-lg-4 col-md-6">
-					<a href="listings-single-page.html" class="listing-item-container compact">
-						<div class="listing-item">
-							<img src="images/listing-item-05.jpg" alt="">
-							<div class="listing-item-content">
-								<div class="numerical-rating" data-rating="3.5"></div>
-								<h3>Airport</h3>
-								<span>1512 Duncan Avenue, New York</span>
-							</div>
-							<span class="like-icon"></span>
-						</div>
-					</a>
-				</div>
-				<!-- Listing Item / End -->
-
-				<!-- Listing Item -->
-				<div class="col-lg-4 col-md-6">
-					<a href="listings-single-page.html" class="listing-item-container compact">
-						<div class="listing-item">
-							<img src="images/listing-item-06.jpg" alt="">
-
-							<div class="listing-badge now-closed">Now Closed</div>
-
-							<div class="listing-item-content">
-								<div class="numerical-rating" data-rating="4.5"></div>
-								<h3>Think Coffee</h3>
-								<span>215 Terry Lane, New York</span>
-							</div>
-							<span class="like-icon"></span>
-						</div>
-					</a>
-				</div>
-				<!-- Listing Item / End -->
-
-			</div>
-
+			<!--  </div> -->
+  
 			<!-- Pagination -->
-			<div class="clearfix"></div>
-			<div class="row">
-				<div class="col-md-12">
-					<!-- Pagination -->
-					<div class="pagination-container margin-top-20 margin-bottom-40">
-						<nav class="pagination">
-							<ul>
-								<li><a href="#" class="current-page">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
-							</ul>
-						</nav>
-					</div>
-				</div>
-			</div>
+				<!-- ////삭제//// -->
 			<!-- Pagination / End -->
 
 		</div>
@@ -267,8 +288,12 @@ $(document).ready(function(){
 		}
 	});
 	
-	
-	//starRating('.star-rating');
+	$('#categories').change(function(){
+		var opt = $('select[name="categories"]').val();
+		var url = '/viewMore?sort='+opt;
+		location.href = url;
+	});
+
 });
 
 function no_login_like(){

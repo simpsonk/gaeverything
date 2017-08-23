@@ -199,7 +199,7 @@ public class HomeController {
 	        member.setNickname(nickname);
 	        String pw = sigService.findPW(member);	        
 	        if(pw!=null) {
-	            email.setContent(nickname+"님, 안녕하세요. [Gaeverything]입니다. "
+	            email.setContent(nickname+"님, 안녕하세요. [gaeverything]입니다. "
 	            		+ e_mail+" 계정의 비밀번호는 "+pw+" 입니다.");
 	            email.setReceiver(e_mail);
 	            email.setSubject("[Gaeverything] "+nickname+"님 비밀번호 찾기 메일입니다.");
@@ -222,22 +222,16 @@ public class HomeController {
 			return chkPoint;
 		}
 		
-		
-		@RequestMapping(value="/newestReview",method={RequestMethod.GET, RequestMethod.POST})
-		public @ResponseBody List<BoardDTO> newestReview(){
-			List<BoardDTO> list = bService.getAllList();
-			return list;
-		}
 	
 		@RequestMapping(value="/viewMore", method=RequestMethod.GET)
-		public String viewMore (HttpSession session, Model model){
+		public String viewMore (HttpSession session, Model model, @RequestParam(value= "sort", defaultValue="reviewed") String sort){
 			boolean isLogin = new LoginFilter().isLogin(session, model);
+			System.out.println(sort);
 			String url = "top_listing";
 			model.addAttribute("list1", hList1);
 			model.addAttribute("list2", hList2);
 			model.addAttribute("list3", hList3);
-			
-			
+			model.addAttribute("sort", sort);
 			return url;
 		}
 		
