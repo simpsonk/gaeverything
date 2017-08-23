@@ -76,9 +76,11 @@ public class HomeController {
 	@Inject
 	private HomeService hService;
 	
-	
-	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
+	private List<HomeListDTO> hList1;
+	private List<HomeListDTO> hList2;
+	private List<HomeListDTO> hList3;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model, HttpSession session) {
@@ -88,7 +90,7 @@ public class HomeController {
 		//////////////////¸®ºä¼ø 
 		ActUserManager manager = new ActUserManager(aService);
 		List<LocationDTO> list1 = lService.getAllHospital(manager);
-		List<HomeListDTO> hList1 = hService.makeList1(list1);
+		hList1 = hService.makeList1(list1);
 	
 		List<EventDTO> eList1 = eService.getAllLists();
 		eList1 = dService.getEventActUserResults(manager, eList1);
@@ -105,7 +107,7 @@ public class HomeController {
 						
 		//////////////////º°Á¡¼ø
 		List<LocationDTO> list2 = lService.getAllHospital(manager);
-		List<HomeListDTO> hList2 = hService.makeList1(list2);
+		hList2 = hService.makeList1(list2);
 	
 		List<EventDTO> eList2 = eService.getAllLists();
 		eList2 = dService.getEventActUserResults(manager, eList2);
@@ -124,7 +126,7 @@ public class HomeController {
 		
 		//////////////////ºÏ¸¶Å©¼ø
 		List<LocationDTO> list3 = lService.getAllHospital(manager);
-		List<HomeListDTO> hList3 = hService.makeList1(list3);
+		hList3 = hService.makeList1(list3);
 		
 		List<EventDTO> eList3 = eService.getAllLists();
 		eList3 = dService.getEventActUserResults(manager, eList3);
@@ -145,6 +147,7 @@ public class HomeController {
 		////////////////ÃÖ½Å¸®ºä 3°³
 		List<BoardDTO> list4 = bService.getAllList();
 		model.addAttribute("list4", list4);
+		
 		return "home";
 	}
 	
@@ -230,7 +233,7 @@ public class HomeController {
 		public String viewMore (HttpSession session, Model model){
 			boolean isLogin = new LoginFilter().isLogin(session, model);
 			String url = "top_listing";
-			//ModelAttribute list 
+			
 			return url;
 		}
 		
