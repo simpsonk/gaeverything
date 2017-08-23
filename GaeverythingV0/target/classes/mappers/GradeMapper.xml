@@ -28,5 +28,11 @@
 		order by gradeseq desc) a) b 
 		where num = 1)
   	</delete>
+  	
+  	<update id="updateTotal" parameterType="String">
+  		update grade set total = (select sum(point) from grade where nickname= #{nickname}) where nickname=#{nickname}
+  	</update>
+  	
+  	
  
  </mapper>

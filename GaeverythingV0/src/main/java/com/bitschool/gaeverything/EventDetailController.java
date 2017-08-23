@@ -56,7 +56,7 @@ public class EventDetailController {
 		
 		boolean flag = service.commentAdd(dto);
 		// ´ñ±Û¾´ÀÌÀÇ point -> +8, myComment ->"T"
-		GradeDTO gDTO = new GradeDTO(dto.getNickname(),"myComment");
+		GradeDTO gDTO = new GradeDTO(dto.getNickname(),"myComment",8);
 		boolean flag2 = gService.insertInfo(gDTO);
 		
 		if(flag){
@@ -155,7 +155,7 @@ public class EventDetailController {
 		dto.setCommentNo(commentNo);
 		
 		//delete ´ñ±Û¾´ÀÌÀÇ myComment, point-> -8 
-		GradeDTO gDTO = new GradeDTO(member.getNickname(),"myComment");
+		GradeDTO gDTO = new GradeDTO(member.getNickname(),"myComment",-8);
 		boolean flag2 = gService.deleteInfo(gDTO);
 		
 		boolean flag = service.commentDelete(dto);
