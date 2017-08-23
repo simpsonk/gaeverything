@@ -369,7 +369,9 @@
 							<input type="text" id="booking-time" name="bookTime" value="09:00 am">
 						</div>
 						<input type="hidden" id="isLogin3" name="bookEmail" value="${member.nickname}">
-						<input type="hidden" id="eventNo3" name="eventNo" value="${dto.eventNo}">
+						<input type="hidden" id="eventName" name="eventName" value="${dto.eventName}">
+						<input type="hidden" id="eventAddress" name="eventAddress" value="${dto.address}">
+						
 					</form>
 				</div>
 				
@@ -384,7 +386,7 @@
 				<h3><i class="sl sl-icon-pin"></i> Contact</h3>
 				<ul class="listing-details-sidebar">
 					<li><i class="fa fa-phone"></i> ${dto.call}</li>
-					<li><i class="fa fa-map-marker"></i> <a href="#location" class="listing-address">${dto.address}</a></li>
+					<li><i class="fa fa-map-marker"></i> <a href="#location" class="listing-address" id="address">${dto.address}</a></li>
 					<li><i class="fa fa-link"></i> <a href="${dto.link}" class="listing-address">홈페이지 확인</a></li>
 				</ul>
 			</div>

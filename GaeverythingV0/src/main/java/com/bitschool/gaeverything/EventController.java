@@ -79,10 +79,8 @@ public class EventController {
 	public String detail (HttpSession session, Model model, @RequestParam("no") int eventNo){
 		String url = "event/event_detail2";
 		boolean isLogin = new LoginFilter().isLogin(session, model);
-		System.out.println(eventNo);
 		EventDTO detail = service.readOne(eventNo);
 		model.addAttribute("dto", detail);
-		System.out.println("해당이벤트 좋아요 수:" + detail.getCountLike());
 		return url;
 	}
 	

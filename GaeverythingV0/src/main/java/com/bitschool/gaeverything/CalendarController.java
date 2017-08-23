@@ -145,21 +145,21 @@ public class CalendarController {
 	
 	@RequestMapping(value="/addBookingEvent",method={RequestMethod.GET,RequestMethod.POST})
 	public String addBookingEvent(HttpSession session,Model model,
-			@RequestParam("added") String added,
 			@RequestParam("eventNo") int eventNo,
 			@RequestParam("startDate") String startDate,
-			@RequestParam("loc") int locationSeq){
+			@RequestParam("name") String eventName,
+			@RequestParam("address") String address){
 		String url = null;
 		
 		//캘린더에 등록
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		boolean flag = service.bookingAddNearby(eventNo, startDate, locationSeq, member.getEmail());
+		boolean flag = service.bookingEvent(eventNo, startDate, eventName, address, member.getEmail());
 		System.out.println("controller"+startDate);
 		if(flag){
 			url = "redirect:/event/detail/view?no="+eventNo;
 		}
 		
-		
+		/*
 		//개인 등록상태 변경
 		ActUserManager manager = new ActUserManager(aService);
 		ActUserDTO dto = new ActUserDTO(member.getEmail(), ActUserManager.SHOP, locationSeq);
@@ -174,7 +174,7 @@ public class CalendarController {
 				System.out.println("delete fail: DetailPageLike");
 			}
 		}
-		
+		*/
 		
 		return url;
 		
