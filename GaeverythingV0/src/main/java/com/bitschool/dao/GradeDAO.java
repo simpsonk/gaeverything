@@ -58,5 +58,39 @@ public class GradeDAO {
 		return flag; 
 	}
 	
+	//gradename °è»ê
+	public boolean updateGrade1() throws SQLException{
+		boolean flag = false;
+		int aCnt = session.update(namespace+".updateGrade1");
+		if(aCnt>0){
+			flag = true;
+		}
+		return flag;
+	}
+	public boolean updateGrade2() throws SQLException{
+		boolean flag = false;
+		int aCnt = session.update(namespace+".updateGrade2");
+		if(aCnt>0){
+			flag = true;
+		}
+		return flag;
+	}
+	public boolean updateGrade3() throws SQLException{
+		boolean flag = false;
+		int aCnt = session.update(namespace+".updateGrade3");
+		if(aCnt>0){
+			flag = true;
+		}
+		return flag;
+	}
+	public boolean updateGrade4() throws SQLException{
+		boolean flag = false;
+		int aCnt = session.update(namespace+".updateGrade4");
+		if(aCnt>0){
+			flag = true;
+		}
+		return flag;
+	}
+	
 	
 }

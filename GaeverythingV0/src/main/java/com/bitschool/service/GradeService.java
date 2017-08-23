@@ -64,10 +64,26 @@ public class GradeService {
 		boolean flag = false;
 		try {
 			flag = dao.updateTotal(nickname);
+			this.updateGrade();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return flag; 
+	}
+	
+	//gradename °è»ê
+	public boolean updateGrade(){
+		boolean flag = false;
+		try {
+			flag = dao.updateGrade1();
+			dao.updateGrade2();
+			dao.updateGrade3();
+			dao.updateGrade4();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		return flag;
 	}
 }

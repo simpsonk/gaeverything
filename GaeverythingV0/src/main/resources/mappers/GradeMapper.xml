@@ -29,10 +29,24 @@
 		where num = 1)
   	</delete>
   	
+  	<!-- total 계산 -->
   	<update id="updateTotal" parameterType="String">
   		update grade set total = (select sum(point) from grade where nickname= #{nickname}) where nickname=#{nickname}
   	</update>
   	
+  	<!-- gradename 계산 -->
+  	<update id="updateGrade1">
+  		update grade set gradename = 'D' where total between 0 and 30
+  	</update>
+  	<update id="updateGrade2">
+		update grade set gradename = 'C' where total between 31 and 70
+  	</update>
+  	<update id="updateGrade3">
+		update grade set gradename = 'B' where total between 71 and 120
+  	</update>
+  	<update id="updateGrade4">
+		update grade set gradename = 'A' where total >= 121
+  	</update>
   	
  
  </mapper>
