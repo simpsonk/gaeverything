@@ -3,14 +3,9 @@ package com.bitschool.dto;
 public class GradeDTO {
 	private int gradeSeq;
 	private String nickname;
-/*	private String resComment;
-	private String resBookmark;
-	private String myReview;
-	private String myComment;
-	private String myBookmark;*/
 	private String type;
 	private int point;
-
+	private int total;
 	private String grade;
 	
 	public GradeDTO(){
@@ -21,18 +16,11 @@ public class GradeDTO {
 		this.nickname = nickname;
 	}
 	
-	public GradeDTO(String nickname, String type){
+	public GradeDTO(String nickname, String type, int point){
 		this.nickname = nickname;
 		this.type = type;
+		this.point = point;
 	}
-/*	public GradeDTO(String nickname,String resComment,String resBookmark,String myReview, String myComment,String myBookmark){
-		this.nickname = nickname;
-		this.resComment = resComment;
-		this.resBookmark = resBookmark;
-		this.myReview = myReview;
-		this.myComment = myComment;
-		this.myBookmark = myBookmark;
-	}*/
 	
 	public int getGradeSeq() {
 		return gradeSeq;
@@ -46,36 +34,7 @@ public class GradeDTO {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-/*	public String getResComment() {
-		return resComment;
-	}
-	public void setResComment(String resComment) {
-		this.resComment = resComment;
-	}
-	public String getResBookmark() {
-		return resBookmark;
-	}
-	public void setResBookmark(String resBookmark) {
-		this.resBookmark = resBookmark;
-	}
-	public String getMyReview() {
-		return myReview;
-	}
-	public void setMyReview(String myReview) {
-		this.myReview = myReview;
-	}
-	public String getMyComment() {
-		return myComment;
-	}
-	public void setMyComment(String myComment) {
-		this.myComment = myComment;
-	}
-	public String getMyBookmark() {
-		return myBookmark;
-	}
-	public void setMyBookmark(String myBookmark) {
-		this.myBookmark = myBookmark;
-	}*/
+
 	public int getPoint() {
 		return point;
 	}
@@ -97,11 +56,18 @@ public class GradeDTO {
 		this.type = type;
 	}
 
+	public int getTotal() {
+		return total;
+	}
+
+	public void setTotal(int total) {
+		this.total = total;
+	}
+
 	@Override
 	public String toString() {
 		return "GradeDTO [gradeSeq=" + gradeSeq + ", nickname=" + nickname + ", type=" + type + ", point=" + point
-				+ ", grade=" + grade + "]";
+				+ ", total=" + total + ", grade=" + grade + "]";
 	}
-	
 	
 }

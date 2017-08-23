@@ -14,8 +14,8 @@
   		<selectKey keyProperty="gradeSeq" order="BEFORE" resultType="Integer">
 			select grade_seq.nextval from dual
 		</selectKey>
-  		insert into grade (gradeSeq,nickname,type) 
-  		values(#{gradeSeq},#{nickname},#{type})
+  		insert into grade (gradeSeq,nickname,type,point) 
+  		values(#{gradeSeq},#{nickname},#{type},#{point})
   	</insert> 
   	
   	<!-- 한개 삭제  -->
