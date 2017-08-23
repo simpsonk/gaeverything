@@ -292,7 +292,7 @@ public class CalendarService{
 			LocationDTO Ldto = ldao.selectLocationSeq(locationSeq);
 			CalendarDTO Cdto = new CalendarDTO();
 			Cdto.setId(email);
-			Cdto.setDogid(0);
+			Cdto.setDogid(1);
 			Cdto.setTitle(Ldto.getTitle());//병원, 카페에 따라 다르게
 			Cdto.setPlace(Ldto.getTitle());
 			Cdto.setStartDate(startDate);
@@ -314,11 +314,11 @@ public class CalendarService{
 		//LocationDTO Ldto = ldao.selectLocationSeq(locationSeq);
 		CalendarDTO Cdto = new CalendarDTO();
 		Cdto.setId(email);
-		Cdto.setDogid(0);
+		Cdto.setDogid(1);
 		Cdto.setTitle(eventName);//병원, 카페에 따라 다르게
 		Cdto.setPlace(address);
 		Cdto.setStartDate(startDate);
-		Cdto.setStartTime("00:00");
+		Cdto.setStartTime("10:00");
 		Cdto.setEndDate(startDate);
 		Cdto.setEndTime("00:00");
 		Cdto.setMessage(null);
