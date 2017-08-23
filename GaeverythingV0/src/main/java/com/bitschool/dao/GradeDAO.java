@@ -2,6 +2,7 @@ package com.bitschool.dao;
 
 
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -58,7 +59,7 @@ public class GradeDAO {
 		return flag; 
 	}
 	
-	//gradename 계산
+	//gradename 계산////////////////////////////////////////////
 	public boolean updateGrade1() throws SQLException{
 		boolean flag = false;
 		int aCnt = session.update(namespace+".updateGrade1");
@@ -91,6 +92,15 @@ public class GradeDAO {
 		}
 		return flag;
 	}
+	/////////////////////////////////////////////////////////
+	
+	// 회원 grade 기록 가져오기
+	public List<GradeDTO> selectGradeInfo(String nickname) throws SQLException{
+		List<GradeDTO> list = null;
+		list = session.selectList(namespace+".selectGradeInfo", nickname);
+		return list;
+	}
+	
 	
 	
 }

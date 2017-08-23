@@ -202,7 +202,42 @@
 				</div>
 			</div>
 		</div>	 --%>
-
+		
+		<!-- 나의 등급  gradename-->
+		<div class="col-lg-6 col-md-12">
+				<div class="dashboard-list-box invoices with-icons margin-top-20">
+					<h4 style="background: #37b6bd; color:white">Grade</h4>
+					<ul>
+				
+					<c:forEach var="list" items="${gradeInfo}" varStatus="status">
+					<c:if test="${status.index<1}"> 
+						<li> your grade is <strong>${list.gradename}</strong>.</li>
+					</c:if>						
+					</c:forEach> 
+					</ul>
+				</div>
+		</div>
+		<!-- 나의 등급  grade 이력-->
+		<div class="col-lg-6 col-md-12">
+				<div class="dashboard-list-box invoices with-icons margin-top-20">
+					<h4 style="background: #37b6bd; color:white">GradeInfo</h4>
+					<ul>
+				
+					<c:forEach var="list" items="${gradeInfo}" varStatus="status">
+						<c:choose>
+						<c:when test="${list.type=='myBookmark'}">
+						<li>
+							북마크를 하여 ${list.point}점을 얻었습니다.
+						</li>
+						</c:when>
+						<c:otherwise>
+						</c:otherwise>
+						</c:choose>									
+					</c:forEach> 
+					</ul>
+				</div>
+		</div>
+		
 			
 			<!-- Copyrights -->
 			<div class="col-md-12">

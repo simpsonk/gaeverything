@@ -48,5 +48,11 @@
 		update grade set gradename = 'A' where total >= 121
   	</update>
   	
+  	<!-- 회원 grade 기록 가져오기 -->
+  	<select id="selectGradeInfo" parameterType="String" resultType="GradeDTO">
+  		select * from grade where nickname = #{nickname} 
+  	</select>
+  	
+  	
  
  </mapper>

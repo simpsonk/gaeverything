@@ -374,6 +374,8 @@ public class MypageController {
 		member.setBookmarkEventSize(el.size());
 		///////////////////////////////////////////////////////////////////////
 		List<ReactionDTO> reactions = rservice.selectReaction(member.getNickname());
+		List<GradeDTO> gradeInfo = gservice.selectGradeInfo(member.getNickname());
+		System.out.println("gradeInfo : "+gradeInfo);
 		int countReviewBookmark = 0; //리뷰북마크수,댓글수,조회수
 		int countReviewCmt = 0;
 		int countRead = 0;	
@@ -396,9 +398,7 @@ public class MypageController {
 				commentList2.add(commentList.get(j));
 			}
 
-		}
-		
-	
+		}	
 		if(!isLogin){
 			url = "login_page";
 		}else{
@@ -410,6 +410,7 @@ public class MypageController {
 			model.addAttribute("countLocReviews",countLocReviews);
 			model.addAttribute("commentList",commentList2);
 			model.addAttribute("reactions", reactions);
+			model.addAttribute("gradeInfo",gradeInfo);
 		}
 		return url;
 	}
