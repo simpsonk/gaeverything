@@ -36,21 +36,21 @@
   	
   	<!-- gradename 계산 -->
   	<update id="updateGrade1">
-  		update grade set gradename = 'D' where total between 0 and 30
+  		update grade set gradename = 'beganner' where total between 0 and 30
   	</update>
   	<update id="updateGrade2">
-		update grade set gradename = 'C' where total between 31 and 70
+		update grade set gradename = 'gaeneral' where total between 31 and 70
   	</update>
   	<update id="updateGrade3">
-		update grade set gradename = 'B' where total between 71 and 120
+		update grade set gradename = 'gaexpert' where total between 71 and 120
   	</update>
   	<update id="updateGrade4">
-		update grade set gradename = 'A' where total >= 121
+		update grade set gradename = 'gaenius' where total >= 121
   	</update>
   	
   	<!-- 회원 grade 기록 가져오기 -->
   	<select id="selectGradeInfo" parameterType="String" resultType="GradeDTO">
-  		select * from grade where nickname = #{nickname} 
+  		select * from grade where nickname = #{nickname} order by gradeseq desc
   	</select>
   	
   	

@@ -366,7 +366,7 @@
 	
 						<!-- Time Picker - docs: http://www.vasterad.com/docs/listeo/#!/time_picker -->
 						<div class="col-lg-6 col-md-12">
-							<input type="text" id="booking-time" name="bookTime" value="09:00 am">
+							<input type="text" id="booking-time" name="bookTime" value="10:00 am">
 						</div>
 						<input type="hidden" id="isLogin3" name="bookEmail" value="${member.nickname}">
 						<input type="hidden" id="eventName" name="eventName" value="${dto.eventName}">

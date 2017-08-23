@@ -201,8 +201,7 @@
 					 		 </a>
 					  </div>	
 				</c:forEach>
-				</form>
-				<a href="/viewMore" style="width: 360px;padding-top: 130px;padding-bottom: 130px; color: #F91942;">View More <i class="fa fa-angle-right"></i></a>			
+				<a href="/viewMore?sort=reviewed" style="width: 360px;padding-top: 130px;padding-bottom: 130px; color: #F91942;">View More <i class="fa fa-angle-right"></i></a>			
 				
 				<!-- Listing Item / End -->
 				</div>
@@ -264,7 +263,7 @@
 							</a>
 						</div>
 						</c:forEach>
-						<a href="/viewMore" style="width: 360px;padding-top: 130px;padding-bottom: 130px; color: #F91942;">View More <i class="fa fa-angle-right"></i></a>
+						<a href="/viewMore?sort=rated" style="width: 360px;padding-top: 130px;padding-bottom: 130px; color: #F91942;">View More <i class="fa fa-angle-right"></i></a>
 					</div>	
 				<!-- Listing Item / End -->
 				</div>
@@ -345,7 +344,7 @@
 					 		 </a>
 					  </div>				
 				</c:forEach>
-				<a href="/viewMore" style="width: 360px;padding-top: 130px;padding-bottom: 130px; color: #F91942;">View More <i class="fa fa-angle-right"></i></a>
+				<a href="/viewMore?sort=bookmarked" style="width: 360px;padding-top: 130px;padding-bottom: 130px; color: #F91942;">View More <i class="fa fa-angle-right"></i></a>
 				<!-- Listing Item / End -->
 				</div>
 			</div>
