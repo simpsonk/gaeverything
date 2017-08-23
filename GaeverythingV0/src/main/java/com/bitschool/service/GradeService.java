@@ -5,6 +5,7 @@ package com.bitschool.service;
 
 
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -64,10 +65,38 @@ public class GradeService {
 		boolean flag = false;
 		try {
 			flag = dao.updateTotal(nickname);
+			this.updateGrade();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return flag; 
+	}
+	
+	//gradename 계산
+	public boolean updateGrade(){
+		boolean flag = false;
+		try {
+			flag = dao.updateGrade1();
+			dao.updateGrade2();
+			dao.updateGrade3();
+			dao.updateGrade4();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		return flag;
+	}
+	
+	// 회원 grade 기록 가져오기
+	public List<GradeDTO> selectGradeInfo(String nickname){
+		List<GradeDTO> list = null;
+		try {
+			list = dao.selectGradeInfo(nickname);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
 	}
 }

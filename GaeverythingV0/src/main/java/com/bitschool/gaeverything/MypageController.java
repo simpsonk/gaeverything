@@ -28,6 +28,7 @@ import com.bitschool.dto.CommentDTO;
 import com.bitschool.dto.DetailCommentDTO;
 import com.bitschool.dto.DetailPhotoDTO;
 import com.bitschool.dto.EventDTO;
+import com.bitschool.dto.GradeDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.dto.MyPageDTO;
@@ -35,6 +36,7 @@ import com.bitschool.dto.PetPageDTO;
 import com.bitschool.dto.ReactionDTO;
 import com.bitschool.service.ActUserService;
 import com.bitschool.service.BoardService;
+import com.bitschool.service.GradeService;
 import com.bitschool.service.ICommentService;
 import com.bitschool.service.LocationDetailService;
 import com.bitschool.service.MyPageService;
@@ -74,7 +76,8 @@ public class MypageController {
 	@Inject
 	private ReactionService rservice;
 	
-
+	@Inject
+	private GradeService gservice;
 	   
 
 	
@@ -371,6 +374,8 @@ public class MypageController {
 		member.setBookmarkEventSize(el.size());
 		///////////////////////////////////////////////////////////////////////
 		List<ReactionDTO> reactions = rservice.selectReaction(member.getNickname());
+		List<GradeDTO> gradeInfo = gservice.selectGradeInfo(member.getNickname());
+		System.out.println("gradeInfo : "+gradeInfo);
 		int countReviewBookmark = 0; //리뷰북마크수,댓글수,조회수
 		int countReviewCmt = 0;
 		int countRead = 0;	
@@ -393,9 +398,7 @@ public class MypageController {
 				commentList2.add(commentList.get(j));
 			}
 
-		}
-		
-	
+		}	
 		if(!isLogin){
 			url = "login_page";
 		}else{
@@ -407,6 +410,7 @@ public class MypageController {
 			model.addAttribute("countLocReviews",countLocReviews);
 			model.addAttribute("commentList",commentList2);
 			model.addAttribute("reactions", reactions);
+			model.addAttribute("gradeInfo",gradeInfo);
 		}
 		return url;
 	}
@@ -425,17 +429,22 @@ public class MypageController {
 	}
 	
 	//북마크한 이벤트 제거
-		@RequestMapping(value = "/deleteEventBookmarks", method = RequestMethod.GET)
-		public String deleteEventBookmarks(HttpSession session, Model model,
-				@RequestParam(value="contentno") int contentno,
-				@RequestParam(value="category",defaultValue="0") int category){
-			String url = null;
-			MemberDTO member = (MemberDTO)session.getAttribute("member");
-			ActUserDTO aDTO = new ActUserDTO(member.getEmail(),"20",contentno);
-			aservice.deleteDetailPageLikeStatus(aDTO);
-			url = "redirect:viewMypageBookmarks?category="+category;	
-			return url;
-		}	
+	@RequestMapping(value = "/deleteEventBookmarks", method = RequestMethod.GET)
+	public String deleteEventBookmarks(HttpSession session, Model model,
+			@RequestParam(value="contentno") int contentno,
+			@RequestParam(value="category",defaultValue="0") int category){
+		String url = null;
+		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		ActUserDTO aDTO = new ActUserDTO(member.getEmail(),"20",contentno);
+		
+		//이벤트 북마크 해제 눌렀을 때 북마크누른사람 point -> -3, delete myBookmark
+		GradeDTO gDTO = new GradeDTO(member.getNickname(),"myBookmark", -3);
+		gservice.deleteInfo(gDTO);
+		
+		aservice.deleteDetailPageLikeStatus(aDTO);
+		url = "redirect:viewMypageBookmarks?category="+category;	
+		return url;
+	}	
 	
 	//북마크한 병원 제거
 	@RequestMapping(value = "/deleteShopBookmarks", method = RequestMethod.GET)
@@ -445,6 +454,11 @@ public class MypageController {
 		String url = null;
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		ActUserDTO aDTO = new ActUserDTO(member.getEmail(),"10",contentno);
+		
+		//병원 북마크 해제 눌렀을 때 북마크누른사람 point -> -3, delete myBookmark
+		GradeDTO gDTO = new GradeDTO(member.getNickname(),"myBookmark", -3);
+		gservice.deleteInfo(gDTO);	
+		
 		aservice.deleteDetailPageLikeStatus(aDTO);
 		url = "redirect:viewMypageBookmarks?category="+category;	
 		return url;
@@ -458,6 +472,15 @@ public class MypageController {
 		String url = null;
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		ActUserDTO aDTO = new ActUserDTO(member.getEmail(),"00",contentno);
+		
+		//북마크 해제 눌렀을 때 리뷰글쓴이 point -> -6, delete resBookmark 
+		GradeDTO gDTO = new GradeDTO(bservice.selectNickname(contentno),"resBookmark", -6);
+		gservice.deleteInfo(gDTO);
+		
+		//북마크 해제 눌렀을 때 북마크누른사람 point -> -3, delete myBookmark 
+		GradeDTO gDTO2 = new GradeDTO(member.getNickname(),"myBookmark", -3);			
+		gservice.deleteInfo(gDTO2);
+		
 		aservice.deleteDetailPageLikeStatus(aDTO);
 		url = "redirect:viewMypageBookmarks?category="+category;		
 		return url;

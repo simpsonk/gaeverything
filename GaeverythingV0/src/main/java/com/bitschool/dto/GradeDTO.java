@@ -6,7 +6,7 @@ public class GradeDTO {
 	private String type;
 	private int point;
 	private int total;
-	private String grade;
+	private String gradename;
 	
 	public GradeDTO(){
 		
@@ -41,11 +41,11 @@ public class GradeDTO {
 	public void setPoint(int point) {
 		this.point = point;
 	}
-	public String getGrade() {
-		return grade;
+	public String getGradename() {
+		return gradename;
 	}
-	public void setGrade(String grade) {
-		this.grade = grade;
+	public void setGradename(String gradename) {
+		this.gradename = gradename;
 	}
 	
 	public String getType() {
@@ -67,7 +67,7 @@ public class GradeDTO {
 	@Override
 	public String toString() {
 		return "GradeDTO [gradeSeq=" + gradeSeq + ", nickname=" + nickname + ", type=" + type + ", point=" + point
-				+ ", total=" + total + ", grade=" + grade + "]";
+				+ ", total=" + total + ", gradename=" + gradename + "]";
 	}
 	
 }

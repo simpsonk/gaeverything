@@ -202,7 +202,60 @@
 				</div>
 			</div>
 		</div>	 --%>
-
+		
+		<!-- 나의 등급  gradename-->
+		<div class="col-lg-6 col-md-12">
+				<div class="dashboard-list-box invoices with-icons margin-top-20">
+					<h4 style="background: #37b6bd; color:white">Level</h4>
+					<ul>
+				
+					<c:forEach var="list" items="${gradeInfo}" varStatus="status">
+					<c:if test="${status.index<1}"> 
+						<li >
+						<i class="list-box-icon sl sl-icon-badge"></i> 
+						<span>Level :  <strong>${list.gradename}</strong></span>				
+						<span>Point : <strong>${list.total}p</strong></span>
+						</li>
+						
+						
+					</c:if>						
+					</c:forEach> 
+					</ul>
+					<ul>
+				
+					<c:forEach var="list" items="${gradeInfo}" varStatus="status">						
+						<c:if test="${list.type=='myBookmark'}">
+						<li><i class="list-box-icon sl sl-icon-heart"></i>
+							북마크를 하였습니다.  <b>(+${list.point})</b>
+						</li>
+						</c:if>
+						<c:if test="${list.type=='myComment'}">
+						<li><i class="list-box-icon sl sl-icon-pencil"></i>
+							댓글을 작성하였습니다.  <b>(+${list.point})</b>
+						</li>
+						</c:if>
+						<c:if test="${list.type=='myReview'}">
+						<li><i class="list-box-icon sl sl-icon-note"></i>
+							리뷰를 작성하였습니다.  <b>(+${list.point})</b>
+						</li>
+						</c:if>
+						<c:if test="${list.type=='resBookmark'}">
+						<li><i class="list-box-icon sl sl-icon-heart"></i>
+							작성한 글이 북마크되었습니다.  <b>(+${list.point})</b>
+						</li>
+						</c:if>
+						<c:if test="${list.type=='resComment'}">
+						<li><i class="list-box-icon sl sl-icon-pencil"></i>
+							작성한 글에 댓글이 등록되었습니다.  <b>(+${list.point})</b>
+						</li>
+						</c:if>
+													
+					</c:forEach> 
+					</ul>
+				</div>
+		</div>
+		
+		
 			
 			<!-- Copyrights -->
 			<div class="col-md-12">
