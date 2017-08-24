@@ -15,7 +15,23 @@ public class HomeListDTO {
 	private String avgRating;
 	private int countLike;
 	private String image;
+	private String userLikeStatus;
+	private String from;
 	
+	
+	
+	public String getFrom() {
+		return from;
+	}
+	public void setFrom(String from) {
+		this.from = from;
+	}
+	public String getUserLikeStatus() {
+		return userLikeStatus;
+	}
+	public void setUserLikeStatus(String userLikeStatus) {
+		this.userLikeStatus = userLikeStatus;
+	}
 	private List<HomeListDTO> list;
 	
 
