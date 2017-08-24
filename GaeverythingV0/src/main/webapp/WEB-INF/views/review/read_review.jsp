@@ -334,14 +334,14 @@
 					<img src="/resources/upload/user_icon.png" alt="" />
 				</c:if>
 			</div>
-			<div class="about-description">
+			<div class="about-description">			
 				<div class="writer">
 					<h4>${dto.nickname}</h4>
+					<h5><i class="im im-icon-Dog"></i>${gradeName}</h5> 
 				</div>
 			</div>
 				<a href="#">${profile.email}</a> 
 			<div class="intro col-md-9" style="padding-left: 0px;padding-right: 0px;">	
-				
 				<p>${profile.notes}</p>
 				<c:if test="${empty profile.notes}">
 					<p>(등록된 소개가 없습니다.)</p>

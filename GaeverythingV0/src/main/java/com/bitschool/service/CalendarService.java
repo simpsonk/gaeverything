@@ -98,7 +98,6 @@ public class CalendarService{
 					}
 				}
 				calendar.add(c);
-				System.out.println(calendar.toString());
 			}else{
 				String repeat = list.get(i).getRepeatdata();
 				String[] repeatSplit = repeat.split(",");
