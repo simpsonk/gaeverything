@@ -28,6 +28,8 @@ public class BoardDTO {
 	private String encodeUTF;
 	private int countLike;
 	
+	private String gradename;
+	
 	public int getEventNo() {
 		return eventNo;
 	}
@@ -199,19 +201,24 @@ public class BoardDTO {
 		this.onlyText = onlyText;
 	}
 
-	@Override
-	public String toString() {
-		return "BoardDTO [boardCategory=" + boardCategory + ", locationSeq=" + locationSeq + ", boardNo=" + boardNo
-				+ ", nickname=" + nickname + ", title=" + title + ", rating=" + rating + ", message=" + message
-				+ ", onlyText=" + onlyText + ", uploadImg=" + uploadImg + ", regiDate=" + regiDate + ", readCount="
-				+ readCount + ", groupNo=" + groupNo + ", parentNo=" + parentNo + ", orderNo=" + orderNo + ", depth="
-				+ depth + ", numOfCmt=" + numOfCmt + ", userLikeStatus=" + userLikeStatus + ", address=" + address
-				+ ", encodeUTF=" + encodeUTF + ", countLike=" + countLike + "]";
+	
+	public String getGradename() {
+		return gradename;
 	}
 
+	public void setGradename(String gradename) {
+		this.gradename = gradename;
+	}
 
-
-	
-	
+	@Override
+	public String toString() {
+		return "BoardDTO [boardCategory=" + boardCategory + ", locationSeq=" + locationSeq + ", eventNo=" + eventNo
+				+ ", boardNo=" + boardNo + ", nickname=" + nickname + ", title=" + title + ", rating=" + rating
+				+ ", message=" + message + ", onlyText=" + onlyText + ", uploadImg=" + uploadImg + ", regiDate="
+				+ regiDate + ", readCount=" + readCount + ", groupNo=" + groupNo + ", parentNo=" + parentNo
+				+ ", orderNo=" + orderNo + ", depth=" + depth + ", numOfCmt=" + numOfCmt + ", userLikeStatus="
+				+ userLikeStatus + ", address=" + address + ", encodeUTF=" + encodeUTF + ", countLike=" + countLike
+				+ ", gradename=" + gradename + "]";
+	}
 
 }

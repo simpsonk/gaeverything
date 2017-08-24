@@ -79,7 +79,7 @@ public class EventDetailController {
 		dto = service.getEventActUserResult(manager, dto);
 		List<EventPhotoDTO> photoList = service.selectPhoto(eventNo);
 		List<BoardDTO> reviewList = service.getReviews(eventNo);
-		List<LocationDTO> nList = service.getNearby(dto.getLatitude(), dto.getLongitude()); 
+		List<LocationDTO> nList = service.getNearby(dto.getLatitude(), dto.getLongitude()); 	
 		
 		//좋아요 상태 유지
 		if(isLogin){
@@ -142,6 +142,11 @@ public class EventDetailController {
 	@RequestMapping(value = "/getCmtData", method = {RequestMethod.POST,RequestMethod.GET})
 	public @ResponseBody List<EventCommentDTO> getReviewData(@RequestParam(value="eventNo") int eventNo){
 		List<EventCommentDTO> commentlist = service.commentList(eventNo);	
+		//이벤트댓글에 레벨 셋팅
+		for(int i=0;i<commentlist.size();i++){
+			String gradename = gService.selectGradeInfo(commentlist.get(i).getNickname()).get(0).getGradename();
+			commentlist.get(i).setGradename(gradename);
+		}
 		return commentlist;
 	}
 	

@@ -100,8 +100,13 @@
        <c:forEach var="petpage" items="${list}">        
                	<!-- Profile2 -->
 			<div class="col-lg-4 col-md-12">
-				<div class="dashboard-list-box margin-top-0">
-					<h4 style="background: #F91942; color: white;">${petpage.petname}</h4>
+				<div class="dashboard-list-box margin-top-0">			
+					<h4 style="background: #F91942; color: white;">
+					<span style="float:right;">
+						<i class="im im-icon-Dog"></i>
+						${petpage.petname}
+					</span>
+					</h4>
 					<div class="dashboard-list-box-static">			
 
 						<!-- Avatar -->
