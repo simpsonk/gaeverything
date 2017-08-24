@@ -101,7 +101,7 @@
 				<div class="dashboard-list-box margin-top-0">
 					<h4 style="background: #F91942; color: white;">
 					<span style="float:right;">
-						<c:if test="${gradename=='beganner'}"><i class='fa fa-smile-o'></i></c:if>
+						<c:if test="${gradename=='beganner'}"><i class='im im-icon-Environmental'></i></c:if>
 						<c:if test="${gradename=='gaeneral'}"> <i class='fa fa-trophy'></i></c:if>
 						<c:if test="${gradename=='gaexpert'}"> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i></c:if>
 						<c:if test="${gradename=='gaenius'}"> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i></c:if>

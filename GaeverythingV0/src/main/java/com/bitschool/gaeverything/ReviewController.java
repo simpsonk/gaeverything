@@ -235,6 +235,12 @@ public class ReviewController {
 		}
 		List<CommentDTO> cList = cService.getAllComment(boardNo);
 		cList = cService.getPhotoInfo(cList);
+		//¸®ºä ´ñ±Û¿¡ ·¹º§ ¼ÂÆÃ
+		for(int i=0;i<cList.size();i++){
+			String gradename = gService.selectGradeInfo(cList.get(i).getNicknameCmt()).get(0).getGradename();
+			cList.get(i).setGradename(gradename);
+		}
+		
 		int numOfCmt = cService.countCmt(boardNo);
 		
 		BoardDTO bDTO1 = service.searchPrev(boardNo);

@@ -164,11 +164,11 @@
 									<!-- nickname, comment, etc. -->
 									<ul class="post-meta">
 										<li>
-											<c:if test="${board.gradename=='beganner'}"><i class='fa fa-smile-o'></i></c:if>
+											<strong>${board.nickname} </strong>
+											<c:if test="${board.gradename=='beganner'}"><i class='im im-icon-Environmental'></i></c:if>
 											<c:if test="${board.gradename=='gaeneral'}"> <i class='fa fa-trophy'></i></c:if>
 											<c:if test="${board.gradename=='gaexpert'}"> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i></c:if>
 											<c:if test="${board.gradename=='gaenius'}"> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i></c:if>
-											<strong>${board.nickname}</strong>
 										</li>
 										<!--<c:if test="${board.boardCategory=='1'}">
 						<li><a href="#">병원, 뷰티</a></li>

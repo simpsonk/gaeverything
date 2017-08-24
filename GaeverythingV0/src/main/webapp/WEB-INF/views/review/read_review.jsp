@@ -337,7 +337,7 @@
 			<div class="about-description">			
 				<div class="writer">
 					<h4>${dto.nickname}</h4>
-					<h5>	<c:if test="${gradeName=='beganner'}"><i class='fa fa-smile-o'></i></c:if>
+					<h5>	<c:if test="${gradeName=='beganner'}"><i class='im im-icon-Environmental'></i></c:if>
 							<c:if test="${gradeName=='gaeneral'}"> <i class='fa fa-trophy'></i></c:if>
 							<c:if test="${gradeName=='gaexpert'}"> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i></c:if>
 							<c:if test="${gradeName=='gaenius'}"> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i></c:if>
@@ -430,7 +430,12 @@
 								<input type = "hidden" name = "nicknameCmt" value = "${cmt.nicknameCmt}">
 								<input type = "hidden" name = "groupNo" value = "${cmt.groupNo}">
 							
-								<div class="comment-by" style="height: 70px;padding-bottom: 5px;">${cmt.nicknameCmt}
+								<div class="comment-by" style="height: 70px;padding-bottom: 5px;">${cmt.nicknameCmt} 
+								<c:if test="${cmt.gradename=='beganner'}"><i class='im im-icon-Environmental'></i></c:if>
+								<c:if test="${cmt.gradename=='gaeneral'}"> <i class='fa fa-trophy'></i></c:if>
+								<c:if test="${cmt.gradename=='gaexpert'}"> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i></c:if>
+								<c:if test="${cmt.gradename=='gaenius'}"> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i></c:if>
+							
 								<span class="date" id="date" style="font-size: 8px;">등록일 <fmt:formatDate value = "${dto.regiDate}" pattern="YYYY-MM-dd hh:mm:ss"/></span>	
 									
 								<c:if test="${member.nickname == cmt.nicknameCmt}">

@@ -75,7 +75,6 @@ function go_url(type, commNo){
 	var changeMsg = document.getElementById("changeMsg"+commNo);
 	var ratingVal = document.getElementById("ratingVal"+commNo);
 	var ment = document.getElementById("ment");
-	alert(changeMsg.innerHTML);
 	if(type==1){		
 		commentNo.value = commNo;
 		commMsg.innerHTML = changeMsg.innerHTML;
@@ -226,7 +225,7 @@ function getListItem(reply) {
 		'<div class="comment-content"><div class="arrow-comment"></div>'+
 			'<div class="comment-by">'+reply.nickname+ ' ';
 	    if(reply.gradename=='beganner'){
-	    	itemStr += "<i class='fa fa-smile-o'></i>";
+	    	itemStr += "<i class='im im-icon-Environmental'></i>";
 	    }else if(reply.gradename=='gaeneral'){
 	    	itemStr += "<i class='fa fa-trophy'></i>";
 	    }else if(reply.gradename=='gaexpert'){

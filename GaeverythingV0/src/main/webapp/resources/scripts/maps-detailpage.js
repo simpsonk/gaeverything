@@ -163,7 +163,7 @@ function no_login_like(locationSeq){
 		'<div class="comment-content"><div class="arrow-comment"></div>'+
 			'<div class="comment-by">'+reply.nickname+ ' ';
 	    if(reply.gradename=='beganner'){
-	    	itemStr += "<i class='fa fa-smile-o'></i>";
+	    	itemStr += "<i class='im im-icon-Environmental'></i>";
 	    }else if(reply.gradename=='gaeneral'){
 	    	itemStr += "<i class='fa fa-trophy'></i>";
 	    }else if(reply.gradename=='gaexpert'){
