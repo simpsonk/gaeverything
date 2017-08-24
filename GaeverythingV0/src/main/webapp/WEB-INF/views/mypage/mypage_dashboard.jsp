@@ -10,7 +10,7 @@
 <title>gaeverything</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <!-- CSS
 ================================================== -->
 <link rel="stylesheet" href= "<c:url value = '/resources/css/style.css'/>">
@@ -137,6 +137,71 @@
 			</div> --%>
 			
 			
+		<!-- 나의 등급  gradename-->
+		<div class="col-lg-6 col-md-12">
+				<div class="dashboard-list-box invoices with-icons margin-top-20">
+					<!-- 팝오버로 레벨가이드 보여주기 -->
+					 <a href="#" id="guide" title="Level Guide" data-placement="top" data-toggle="popover" data-trigger="hover" 
+					 data-content="<i class='fa fa-smile-o'></i> beganner : 0-30p<br>
+					 <i class='fa fa-trophy'></i> gaeneral : 31-70p<br>
+					 <i class='fa fa-trophy'></i><i class='fa fa-trophy'></i> gaexpert : 71-120p<br>
+					 <i class='fa fa-trophy'></i><i class='fa fa-trophy'></i><i class='fa fa-trophy'></i> gaenius : 121p ~">
+
+					<h4 style="background: #37b6bd; color:white">Level</h4>
+					</a><ul>
+				
+					<c:forEach var="list" items="${gradeInfo}" varStatus="status">
+					<c:if test="${status.index<1}"> 
+						<li >
+						<i class="list-box-icon sl sl-icon-badge"></i> 
+						<span> 
+							<c:if test="${list.gradename=='beganner'}"><i class='fa fa-smile-o'></i></c:if>
+							<c:if test="${list.gradename=='gaeneral'}"> <i class='fa fa-trophy'></i></c:if>
+							<c:if test="${list.gradename=='gaexpert'}"> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i></c:if>
+							<c:if test="${list.gradename=='gaenius'}"> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i></c:if>
+							<strong>${list.gradename} / </strong>
+						</span>				
+						<span><strong>${list.total}p</strong></span>
+						</li>
+					</c:if>		
+					
+									
+					</c:forEach> 
+					</ul>
+					<ul>
+				
+					<c:forEach var="list" items="${gradeInfo}" varStatus="status">						
+						<c:if test="${list.type=='myBookmark'}">
+						<li><i class="list-box-icon sl sl-icon-heart"></i>
+							북마크를 하였습니다.  <b>(+${list.point})</b>
+						</li>
+						</c:if>
+						<c:if test="${list.type=='myComment'}">
+						<li><i class="list-box-icon sl sl-icon-pencil"></i>
+							댓글을 작성하였습니다.  <b>(+${list.point})</b>
+						</li>
+						</c:if>
+						<c:if test="${list.type=='myReview'}">
+						<li><i class="list-box-icon sl sl-icon-note"></i>
+							리뷰를 작성하였습니다.  <b>(+${list.point})</b>
+						</li>
+						</c:if>
+						<c:if test="${list.type=='resBookmark'}">
+						<li><i class="list-box-icon sl sl-icon-heart"></i>
+							작성한 글이 북마크되었습니다.  <b>(+${list.point})</b>
+						</li>
+						</c:if>
+						<c:if test="${list.type=='resComment'}">
+						<li><i class="list-box-icon sl sl-icon-pencil"></i>
+							작성한 글에 댓글이 등록되었습니다.  <b>(+${list.point})</b>
+						</li>
+						</c:if>
+													
+					</c:forEach> 
+					</ul>
+				</div>
+		</div>
+			
 			<!-- 내 리뷰의 반응 (댓글,북마크) -->
 			<div class="col-lg-6 col-md-12">
 				<div class="dashboard-list-box invoices with-icons margin-top-20">
@@ -203,57 +268,7 @@
 			</div>
 		</div>	 --%>
 		
-		<!-- 나의 등급  gradename-->
-		<div class="col-lg-6 col-md-12">
-				<div class="dashboard-list-box invoices with-icons margin-top-20">
-					<h4 style="background: #37b6bd; color:white">Level</h4>
-					<ul>
-				
-					<c:forEach var="list" items="${gradeInfo}" varStatus="status">
-					<c:if test="${status.index<1}"> 
-						<li >
-						<i class="list-box-icon sl sl-icon-badge"></i> 
-						<span>Level :  <strong>${list.gradename}</strong></span>				
-						<span>Point : <strong>${list.total}p</strong></span>
-						</li>
-					</c:if>		
-					
-									
-					</c:forEach> 
-					</ul>
-					<ul>
-				
-					<c:forEach var="list" items="${gradeInfo}" varStatus="status">						
-						<c:if test="${list.type=='myBookmark'}">
-						<li><i class="list-box-icon sl sl-icon-heart"></i>
-							북마크를 하였습니다.  <b>(+${list.point})</b>
-						</li>
-						</c:if>
-						<c:if test="${list.type=='myComment'}">
-						<li><i class="list-box-icon sl sl-icon-pencil"></i>
-							댓글을 작성하였습니다.  <b>(+${list.point})</b>
-						</li>
-						</c:if>
-						<c:if test="${list.type=='myReview'}">
-						<li><i class="list-box-icon sl sl-icon-note"></i>
-							리뷰를 작성하였습니다.  <b>(+${list.point})</b>
-						</li>
-						</c:if>
-						<c:if test="${list.type=='resBookmark'}">
-						<li><i class="list-box-icon sl sl-icon-heart"></i>
-							작성한 글이 북마크되었습니다.  <b>(+${list.point})</b>
-						</li>
-						</c:if>
-						<c:if test="${list.type=='resComment'}">
-						<li><i class="list-box-icon sl sl-icon-pencil"></i>
-							작성한 글에 댓글이 등록되었습니다.  <b>(+${list.point})</b>
-						</li>
-						</c:if>
-													
-					</c:forEach> 
-					</ul>
-				</div>
-		</div>
+		
 		
 		
 			
@@ -289,6 +304,20 @@
 <script type="text/javascript" src="<c:url value = '/resources/scripts/tooltips.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/custom.js'/>"></script>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();   
+});
+
+//
+$('#guide').popover({
+	  html: true
+});
+</script>
 
 </body>
 </html>
