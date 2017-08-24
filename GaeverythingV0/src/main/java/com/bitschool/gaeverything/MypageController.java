@@ -87,12 +87,14 @@ public class MypageController {
 		String url = "mypage/mypage_profile";
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		boolean isLogin = member!=null?true:false;
+		String gradename = gservice.selectGradeInfo(member.getNickname()).get(0).getGradename();
 		if(!isLogin){
 			url = "login_page";
 		}else{
 			MyPageDTO mypage = service.readData(member);
 			model.addAttribute("member", member);
 			model.addAttribute("mypage", mypage);
+			model.addAttribute("gradename",gradename);
 		}
 		return url;
 	}
