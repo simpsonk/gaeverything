@@ -137,7 +137,46 @@
 			</div> --%>
 			
 			
-		<!-- 나의 등급  gradename-->
+		
+			
+			<!-- 내 리뷰의 반응 (댓글,북마크) -->
+			<div class="col-lg-6 col-md-12">
+				<div class="dashboard-list-box invoices with-icons margin-top-20">
+					<h4 style="background:#fa5b0f; color:white">Reactions</h4>
+					<ul>
+					<c:choose>
+					<c:when test="${reactions.size()==0}">
+						<li>
+							<span>표시할 알림이 없습니다.</span>
+						</li>
+					</c:when>
+					
+					<c:otherwise>
+					<c:forEach var="list" items="${reactions}" varStatus="status"> 
+						<c:choose>
+						<c:when test="${list.type=='B'}">
+						<li>
+							<i class="list-box-icon sl sl-icon-heart"></i><b> ${list.nicknameReact}</b> bookmarked your <strong><a href="/review/readPost?boardNo=${list.groupNo}&page=1">${list.title}</a></strong> listing!
+							<a href="/mypage/deleteReaction?reactionSeq=${list.reactionSeq}" class="close-list-item"><i class="fa fa-close"></i></a>
+						</li>
+						</c:when>
+						<c:otherwise>
+						<li>
+							<i class="list-box-icon sl sl-icon-pencil"></i><b>${list.nicknameReact}</b> left a comment on <strong><a href="/review/readPost?boardNo=${list.groupNo}&page=1"">${list.title}</a></strong>
+							<a href="/mypage/deleteReaction?reactionSeq=${list.reactionSeq}" class="close-list-item"><i class="fa fa-close"></i></a>
+						</li>
+						</c:otherwise>
+						</c:choose>
+						
+						
+					</c:forEach> 
+					</c:otherwise>
+					</c:choose>
+					</ul>
+				</div>
+			</div>
+			
+			<!-- 나의 등급  gradename-->
 		<div class="col-lg-6 col-md-12">
 				<div class="dashboard-list-box invoices with-icons margin-top-20">
 					<!-- 팝오버로 레벨가이드 보여주기 -->
@@ -201,43 +240,6 @@
 					</ul>
 				</div>
 		</div>
-			
-			<!-- 내 리뷰의 반응 (댓글,북마크) -->
-			<div class="col-lg-6 col-md-12">
-				<div class="dashboard-list-box invoices with-icons margin-top-20">
-					<h4 style="background:#fa5b0f; color:white">Reactions</h4>
-					<ul>
-					<c:choose>
-					<c:when test="${reactions.size()==0}">
-						<li>
-							<span>표시할 알림이 없습니다.</span>
-						</li>
-					</c:when>
-					
-					<c:otherwise>
-					<c:forEach var="list" items="${reactions}" varStatus="status"> 
-						<c:choose>
-						<c:when test="${list.type=='B'}">
-						<li>
-							<i class="list-box-icon sl sl-icon-heart"></i><b> ${list.nicknameReact}</b> bookmarked your <strong><a href="/review/readPost?boardNo=${list.groupNo}&page=1">${list.title}</a></strong> listing!
-							<a href="/mypage/deleteReaction?reactionSeq=${list.reactionSeq}" class="close-list-item"><i class="fa fa-close"></i></a>
-						</li>
-						</c:when>
-						<c:otherwise>
-						<li>
-							<i class="list-box-icon sl sl-icon-pencil"></i><b>${list.nicknameReact}</b> left a comment on <strong><a href="/review/readPost?boardNo=${list.groupNo}&page=1"">${list.title}</a></strong>
-							<a href="/mypage/deleteReaction?reactionSeq=${list.reactionSeq}" class="close-list-item"><i class="fa fa-close"></i></a>
-						</li>
-						</c:otherwise>
-						</c:choose>
-						
-						
-					</c:forEach> 
-					</c:otherwise>
-					</c:choose>
-					</ul>
-				</div>
-			</div>
 			
 			<!-- 내글에 대한 조회수,댓글,북마크수 -->
 	 <%-- 	 <div class="row">

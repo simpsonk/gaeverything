@@ -99,14 +99,14 @@
 			<!-- Profile -->
 			<div class="col-lg-6 col-md-12">
 				<div class="dashboard-list-box margin-top-0">
-					<h4 style="background: #F91942; color: white;">profile details</h4>
+					<h4 style="background: #F91942; color: white;"><span style="float:right;">${member.nickname}</span></h4>
 					<div class="dashboard-list-box-static">
 
 <form method="post" action="" id="dataset" enctype="multipart/form-data">	
 						<div class="edit-profile-photo">
 					<c:choose>	
 					<c:when test="${mypage.photo==null}">
-						<img id="photoImage" src="/resources/upload/user_icon.png" alt="">
+						<img id="photoImage"  src="/resources/upload/user_icon.png" alt="">
 					</c:when>
 					<c:otherwise>
 						<img id="photoImage" src="/resources/upload/${mypage.photo}" alt="">
@@ -127,23 +127,46 @@
 	
 						<!-- Details -->
 						<div class="my-profile">
-
-							<label>Nickname</label>
-							<input name="nickname" value="${member.nickname}" type="text" readonly="readonly" >
-
-							<label>Email</label>
-							<input name="email"  value="${member.email}" type="text" readonly="readonly">
+							<input name="nickname" value="${member.nickname}" type="hidden">
+							<input name="email"  value="${member.email}" type="hidden">
 							
-							<label>Your Name</label>
-							<input name="name" placeholder="Put down your name" value="${mypage.name}" type="text" >
-											
-							<label>Phone</label>
-							<input name="phone" placeholder="Put down your phone number" value="${mypage.phone}" type="text">
+							<table class="basic-table">
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+					
+								<tr>
+									<td><b>Nickname</b></td>
+									<td colspan="4">${member.nickname}</td>
+								</tr>
 				
-							<label>Notes</label>
-							<textarea name="notes" placeholder="Put down your notes" id="notes" cols="30" rows="10">${mypage.notes}</textarea>
-	
-						<button class="button margin-top-15" id="button1" onclick="regist_func()">Save Changes</button>
+								<tr>
+									<td><b>Email</b></td>
+									<td colspan="4">${member.email}</td>
+								</tr>
+					
+								<tr>
+									<td><b>Name</b></td>
+									<td colspan="4"><input name="name" placeholder="Put down your name" value="${mypage.name}" type="text" ></td>
+								</tr>
+				
+								<tr>
+									<td><b>Phone</b></td>
+									<td colspan="4"><input name="phone" placeholder="Put down your phone number" value="${mypage.phone}" type="text"></td>
+								</tr>
+								
+								<tr>
+									<td><b>Notes</b></td>
+									<td colspan="4"><textarea name="notes" placeholder="Put down your notes" id="notes" cols="30" rows="10">${mypage.notes}</textarea></td>
+								</tr>
+								
+							</table>
+						
+						<button class="button margin-top-15" id="button1" onclick="regist_func()">Save</button>
 	</form>					
 						</div>
 	
