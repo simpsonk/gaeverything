@@ -337,7 +337,11 @@
 			<div class="about-description">			
 				<div class="writer">
 					<h4>${dto.nickname}</h4>
-					<h5><i class="im im-icon-Dog"></i>${gradeName}</h5> 
+					<h5>	<c:if test="${gradeName=='beganner'}"><i class='fa fa-smile-o'></i></c:if>
+							<c:if test="${gradeName=='gaeneral'}"> <i class='fa fa-trophy'></i></c:if>
+							<c:if test="${gradeName=='gaexpert'}"> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i></c:if>
+							<c:if test="${gradeName=='gaenius'}"> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i></c:if>
+							${gradeName}</h5> 
 				</div>
 			</div>
 				<a href="#">${profile.email}</a> 
