@@ -91,9 +91,8 @@
 
 <!-- Category Boxes -->
 <div class="container">
-	<div class="row col-md-12">
-	<div class="col-md-1"></div>
-		<div class="col-md-10">
+	<div class="row">
+
 		<div class="col-md-12">
 	
 			<div class="categories-boxes-container margin-top-5 margin-bottom-30">
@@ -117,6 +116,12 @@
 				</a>
 				
 				<!-- Box -->
+				<a href="/mypage/viewMypageDashboard" class="category-small-box">
+					<i class="im im-icon-Newspaper-2"></i>
+					<h4>News</h4>
+				</a>
+				
+				<!-- Box -->
 				<a href="/mypage/calendar/viewCalendar" class="category-small-box">
 					<i class="im im-icon-Calendar"></i>
 					<h4>Calendar</h4>
@@ -127,9 +132,11 @@
 					<i class="im im-icon-Bar-Chart2"></i>
 					<h4>Dashboard</h4>
 				</a>
+				
+				
 
 			</div>
-		</div>
+
 	</div>
 	<div class="col-md-1"></div>
 	</div>
