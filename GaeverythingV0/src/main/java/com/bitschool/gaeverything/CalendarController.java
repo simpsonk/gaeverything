@@ -136,7 +136,6 @@ public class CalendarController {
 		String url = null;
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		boolean flag = service.bookingAdd(dto,member.getEmail());
-		System.out.println("controller");
 		if(flag){
 			url = "redirect:/map/detail/viewDetailPage?locationSeq="+dto.getLocationSeq();
 		}

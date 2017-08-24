@@ -123,8 +123,8 @@
 					</div>
 					
 					<c:if test="${fn:length(detailphoto)>4}">
-					<input type="button" id="photoMore" value="Read More">
-					<input type="button" id="photoHide" value="Hide">
+					<!-- <input type="button" id="photoMore" value="Read More">
+					<input type="button" id="photoHide" value="Hide"> -->
 					</c:if>
 					<c:if test="${fn:length(detailphoto) > 4}">
 					<div class="row">
@@ -374,7 +374,7 @@
 			
 
 			<!-- Opening Hours -->
-			<div class="boxed-widget opening-hours margin-top-35">
+			<!-- <div class="boxed-widget opening-hours margin-top-35">
 				<div class="listing-badge now-open">Now Open</div>
 				<h3><i class="sl sl-icon-clock"></i> Opening Hours</h3>
 				<ul>
@@ -386,13 +386,13 @@
 					<li>Saturday <span>9 AM - 3 PM</span></li>
 					<li>Sunday <span>Closed</span></li>
 				</ul>
-			</div>
+			</div> -->
 			<!-- Opening Hours / End -->
 
 
 			<!-- Share / Like -->
-			<div class="listing-share margin-top-40 margin-bottom-40 no-border">
-				<c:choose>
+			 <div class="listing-share margin-top-40 margin-bottom-40 no-border">
+				<%-- <c:choose>
 				<c:when test="${member.nickname == null }">
 					<div class="listing-share margin-bottom-20 no-border" style="text-align: left;">
 						<button type="button" class="like-button" onclick="no_login_like()"><span class="like-icon"></span> Bookmark this listing</button> 
@@ -404,7 +404,7 @@
 					</div>	
 				</c:otherwise>
 				</c:choose> 
-				<span>${detail.countLike} people bookmarked this place</span>
+				<span>${detail.countLike} people bookmarked this place</span> --%>
 
 					<!-- Share Buttons -->
 					<ul class="share-buttons margin-top-40 margin-bottom-0">
@@ -414,7 +414,7 @@
 						<!-- <li><a class="pinterest-share" href="#"><i class="fa fa-pinterest-p"></i> Pin</a></li> -->
 					</ul>
 					<div class="clearfix"></div>
-			</div>
+			</div> 
 
 		</div>
 </div>

@@ -36,12 +36,11 @@
 				</div>
 
 				<!-- Main Navigation -->
-				<nav id="navigation" class="style-1" style="
-				    padding-top: 5px;">
+				<nav id="navigation" class="style-1" style="padding-top: 5px;">
 					<ul id="responsive">
-						<div></div>
+						
 						<li><a href="/">Home</a>
-						<ul>
+							<ul>
 								<li><a href="/viewMore">Top Places</a></li>
 							</ul>
 						</li>	
@@ -53,7 +52,6 @@
 								<li><a href="/review/viewReviewList?categoryCode=EVENT">Event</a></li>
 							</ul>
 						</li>
-						
 						<li><a href="/mypage/viewMypageDashboard">MyPage</a>
 							<ul>
 								<li><a href="/mypage/viewMypageDashboard">Dashboard</a></li>
