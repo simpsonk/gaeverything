@@ -1,5 +1,6 @@
 package com.bitschool.gaeverything;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -49,6 +50,11 @@ public class LocationDetailController {
 	@RequestMapping(value = "/getReviewData", method = {RequestMethod.POST,RequestMethod.GET})
 	public @ResponseBody List<DetailCommentDTO> getReviewData(@RequestParam(value="locationSeq") int locationSeq){
 		List<DetailCommentDTO> commentlist = service.commentList(locationSeq);	
+		//댓글쓴사람의 레벨 셋팅
+		for(int i=0;i<commentlist.size();i++){
+			String gradename = gService.selectGradeInfo(commentlist.get(i).getNickname()).get(0).getGradename();
+			commentlist.get(i).setGradename(gradename);
+		}
 		return commentlist;
 	}
 	
@@ -63,8 +69,8 @@ public class LocationDetailController {
 		
 		LocationDTO dto	 = service.selectOne(locationSeq);		
 		List<BoardDTO> reviewList = service.getReviews(locationSeq);
-		List<DetailCommentDTO> list = service.commentList(locationSeq);
-		
+		List<DetailCommentDTO> list = service.commentList(locationSeq);		
+		System.out.println("getGradename "+list.get(0).getGradename());
 		dto = service.getLocActUserResult(manager, dto);
 		List<DetailPhotoDTO> photoList = service.selectPhoto(locationSeq);
 		List<BlogDTO> blogList = service.getBlogReviews(locationSeq);

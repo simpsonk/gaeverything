@@ -151,7 +151,10 @@ function no_login_like(locationSeq){
 	 commentEnd = commentEnd>list.length?list.length:commentEnd;
  });   
  
+ 
+ //수정중!~!~!~~
  function getListItem(reply) {
+
 	    var el = document.createElement('div');
 	    var nickname = document.getElementById('isLogin').value;
 	    var regi = new Date(reply.regiDate); 
@@ -160,7 +163,8 @@ function no_login_like(locationSeq){
 	    var itemStr ='	<input type="hidden" id="ratingVal'+reply.commentSeq+'" value="'+reply.rating+'">'+
 		  	'<li><div class="avatar"><img src="/resources/upload/'+reply.photo+'" alt="" style="width:80px; height:80px; object-fit:cover;"/></div>'+
 		'<div class="comment-content"><div class="arrow-comment"></div>'+
-			'<div class="comment-by">'+
+			'<div class="comment-by">'+ 
+			reply.gradename + 
 				reply.nickname+'<span class="date">'+regi+'</span>'+
 				'<div class="star star-rating" data-rating="'+reply.rating+'"></div>'+
 			'</div>'+
