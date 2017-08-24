@@ -69,8 +69,7 @@ public class LocationDetailController {
 		
 		LocationDTO dto	 = service.selectOne(locationSeq);		
 		List<BoardDTO> reviewList = service.getReviews(locationSeq);
-		List<DetailCommentDTO> list = service.commentList(locationSeq);		
-		System.out.println("getGradename "+list.get(0).getGradename());
+		List<DetailCommentDTO> list = service.commentList(locationSeq);	
 		dto = service.getLocActUserResult(manager, dto);
 		List<DetailPhotoDTO> photoList = service.selectPhoto(locationSeq);
 		List<BlogDTO> blogList = service.getBlogReviews(locationSeq);

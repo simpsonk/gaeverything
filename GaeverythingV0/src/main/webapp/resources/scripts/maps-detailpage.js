@@ -151,8 +151,6 @@ function no_login_like(locationSeq){
 	 commentEnd = commentEnd>list.length?list.length:commentEnd;
  });   
  
- 
- //수정중!~!~!~~
  function getListItem(reply) {
 
 	    var el = document.createElement('div');
