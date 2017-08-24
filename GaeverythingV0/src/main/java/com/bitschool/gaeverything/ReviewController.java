@@ -105,6 +105,10 @@ public class ReviewController {
 		
 		
 		List<BoardDTO> list = service.getPagedList(pDTO); 
+		for(int i=0;i<list.size();i++){
+			String gradename = gService.selectGradeInfo(list.get(i).getNickname()).get(0).getGradename();
+			list.get(i).setGradename(gradename);
+		}
 		model.addAttribute("page", page);
 		
 
