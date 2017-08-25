@@ -152,6 +152,7 @@ function no_login_like(locationSeq){
  });   
  
  function getListItem(reply) {
+
 	    var el = document.createElement('div');
 	    var nickname = document.getElementById('isLogin').value;
 	    var regi = new Date(reply.regiDate); 
@@ -160,8 +161,18 @@ function no_login_like(locationSeq){
 	    var itemStr ='	<input type="hidden" id="ratingVal'+reply.commentSeq+'" value="'+reply.rating+'">'+
 		  	'<li><div class="avatar"><img src="/resources/upload/'+reply.photo+'" alt="" style="width:80px; height:80px; object-fit:cover;"/></div>'+
 		'<div class="comment-content"><div class="arrow-comment"></div>'+
-			'<div class="comment-by">'+
-				reply.nickname+'<span class="date">'+regi+'</span>'+
+			'<div class="comment-by">'+reply.nickname+ ' ';
+	    if(reply.gradename=='beganner'){
+	    	itemStr += "<i class='im im-icon-Environmental'></i>";
+	    }else if(reply.gradename=='gaeneral'){
+	    	itemStr += "<i class='fa fa-trophy'></i>";
+	    }else if(reply.gradename=='gaexpert'){
+	    	itemStr += "<i class='fa fa-trophy'></i><i class='fa fa-trophy'></i>";
+	    }else if(reply.gradename=='gaenius'){
+	    	itemStr += "<i class='fa fa-trophy'></i><i class='fa fa-trophy'></i><i class='fa fa-trophy'></i>";
+	    }
+	    
+	    itemStr+= '<span class="date">'+regi+'</span>'+
 				'<div class="star star-rating" data-rating="'+reply.rating+'"></div>'+
 			'</div>'+
 			'<p id="changeMsg'+reply.commentSeq+'">'+reply.message+'</p></div>';

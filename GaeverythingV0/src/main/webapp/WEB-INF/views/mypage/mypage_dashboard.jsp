@@ -10,7 +10,7 @@
 <title>gaeverything</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <!-- CSS
 ================================================== -->
 <link rel="stylesheet" href= "<c:url value = '/resources/css/style.css'/>">
@@ -137,6 +137,8 @@
 			</div> --%>
 			
 			
+		
+			
 			<!-- 내 리뷰의 반응 (댓글,북마크) -->
 			<div class="col-lg-6 col-md-12">
 				<div class="dashboard-list-box invoices with-icons margin-top-20">
@@ -174,47 +176,31 @@
 				</div>
 			</div>
 			
-			<!-- 내글에 대한 조회수,댓글,북마크수 -->
-	 <%-- 	 <div class="row">
-
-			<!-- Item -->
-			<div class="col-lg-3 col-md-6">
-				<div class="dashboard-stat color-2">
-					<div class="dashboard-stat-content"><h4>${countRead}</h4> <span>Total Views</span></div>
-					<div class="dashboard-stat-icon"><i class="im im-icon-Line-Chart"></i></div>
-				</div>
-			</div>
-
-			
-			<!-- Item -->
-			<div class="col-lg-3 col-md-6">
-				<div class="dashboard-stat color-3">
-					<div class="dashboard-stat-content"><h4>${countReviewCmt}</h4> <span>Times Replied</span></div>
-					<div class="dashboard-stat-icon"><i class="im im-icon-Add-UserStar"></i></div>
-				</div>
-			</div> 
-
-			<!-- Item -->
-			<div class="col-lg-3 col-md-6">
-				<div class="dashboard-stat color-4">
-					<div class="dashboard-stat-content"><h4>${countReviewBookmark}</h4> <span>Times Bookmarked</span></div>
-					<div class="dashboard-stat-icon"><i class="im im-icon-Heart"></i></div>
-				</div>
-			</div>
-		</div>	 --%>
-		
-		<!-- 나의 등급  gradename-->
+			<!-- 나의 등급  gradename-->
 		<div class="col-lg-6 col-md-12">
 				<div class="dashboard-list-box invoices with-icons margin-top-20">
+					<!-- 팝오버로 레벨가이드 보여주기 -->
+					 <a href="#" id="guide" title="Level Guide" data-placement="top" data-toggle="popover" data-trigger="hover" 
+					 data-content="<i class='fa fa-smile-o'></i> beganner : 0-30p<br>
+					 <i class='fa fa-trophy'></i> gaeneral : 31-70p<br>
+					 <i class='fa fa-trophy'></i><i class='fa fa-trophy'></i> gaexpert : 71-120p<br>
+					 <i class='fa fa-trophy'></i><i class='fa fa-trophy'></i><i class='fa fa-trophy'></i> gaenius : 121p ~">
+
 					<h4 style="background: #37b6bd; color:white">Level</h4>
-					<ul>
+					</a><ul>
 				
 					<c:forEach var="list" items="${gradeInfo}" varStatus="status">
 					<c:if test="${status.index<1}"> 
 						<li >
 						<i class="list-box-icon sl sl-icon-badge"></i> 
-						<span>Level :  <strong>${list.gradename}</strong></span>				
-						<span>Point : <strong>${list.total}p</strong></span>
+						<span> 
+							<c:if test="${list.gradename=='beganner'}"><i class='fa fa-smile-o'></i></c:if>
+							<c:if test="${list.gradename=='gaeneral'}"> <i class='fa fa-trophy'></i></c:if>
+							<c:if test="${list.gradename=='gaexpert'}"> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i></c:if>
+							<c:if test="${list.gradename=='gaenius'}"> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i></c:if>
+							<strong>${list.gradename} / </strong>
+						</span>				
+						<span><strong>${list.total}p</strong></span>
 						</li>
 					</c:if>		
 					
@@ -254,6 +240,37 @@
 					</ul>
 				</div>
 		</div>
+			
+			<!-- 내글에 대한 조회수,댓글,북마크수 -->
+	 <%-- 	 <div class="row">
+
+			<!-- Item -->
+			<div class="col-lg-3 col-md-6">
+				<div class="dashboard-stat color-2">
+					<div class="dashboard-stat-content"><h4>${countRead}</h4> <span>Total Views</span></div>
+					<div class="dashboard-stat-icon"><i class="im im-icon-Line-Chart"></i></div>
+				</div>
+			</div>
+
+			
+			<!-- Item -->
+			<div class="col-lg-3 col-md-6">
+				<div class="dashboard-stat color-3">
+					<div class="dashboard-stat-content"><h4>${countReviewCmt}</h4> <span>Times Replied</span></div>
+					<div class="dashboard-stat-icon"><i class="im im-icon-Add-UserStar"></i></div>
+				</div>
+			</div> 
+
+			<!-- Item -->
+			<div class="col-lg-3 col-md-6">
+				<div class="dashboard-stat color-4">
+					<div class="dashboard-stat-content"><h4>${countReviewBookmark}</h4> <span>Times Bookmarked</span></div>
+					<div class="dashboard-stat-icon"><i class="im im-icon-Heart"></i></div>
+				</div>
+			</div>
+		</div>	 --%>
+		
+		
 		
 		
 			
@@ -289,6 +306,20 @@
 <script type="text/javascript" src="<c:url value = '/resources/scripts/tooltips.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value = '/resources/scripts/custom.js'/>"></script>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();   
+});
+
+//
+$('#guide').popover({
+	  html: true
+});
+</script>
 
 </body>
 </html>

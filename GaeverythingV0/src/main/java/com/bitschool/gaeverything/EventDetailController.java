@@ -55,9 +55,11 @@ public class EventDetailController {
 		dto.setPhoto(member.getPhoto());
 		
 		boolean flag = service.commentAdd(dto);
-		// 댓글쓴이의 point -> +8, myComment ->"T"
+		
+		
+/*		// 댓글쓴이의 point -> +8, myComment ->"T"
 		GradeDTO gDTO = new GradeDTO(dto.getNickname(),"myComment",8);
-		boolean flag2 = gService.insertInfo(gDTO);
+		boolean flag2 = gService.insertInfo(gDTO);*/
 		
 		if(flag){
 			url = "redirect:view?no="+dto.getEventNo();
@@ -77,7 +79,7 @@ public class EventDetailController {
 		dto = service.getEventActUserResult(manager, dto);
 		List<EventPhotoDTO> photoList = service.selectPhoto(eventNo);
 		List<BoardDTO> reviewList = service.getReviews(eventNo);
-		List<LocationDTO> nList = service.getNearby(dto.getLatitude(), dto.getLongitude()); 
+		List<LocationDTO> nList = service.getNearby(dto.getLatitude(), dto.getLongitude()); 	
 		
 		//좋아요 상태 유지
 		if(isLogin){
@@ -127,10 +129,8 @@ public class EventDetailController {
 		}
 		boolean flag = service.photoAdd(Pdto);
 		List<EventPhotoDTO> list = service.selectPhoto(eventNo);
-		//int PCnt = 0;
-		//PCnt = service.photoCnt(LNo);
 		model.addAttribute("eventphoto",list);
-		//model.addAttribute("detailphotocnt",PCnt);
+
 		
 		if(flag){
 			url = "redirect:view?no="+Pdto.getEventNo();
@@ -142,6 +142,11 @@ public class EventDetailController {
 	@RequestMapping(value = "/getCmtData", method = {RequestMethod.POST,RequestMethod.GET})
 	public @ResponseBody List<EventCommentDTO> getReviewData(@RequestParam(value="eventNo") int eventNo){
 		List<EventCommentDTO> commentlist = service.commentList(eventNo);	
+		//이벤트댓글에 레벨 셋팅
+		for(int i=0;i<commentlist.size();i++){
+			String gradename = gService.selectGradeInfo(commentlist.get(i).getNickname()).get(0).getGradename();
+			commentlist.get(i).setGradename(gradename);
+		}
 		return commentlist;
 	}
 	
@@ -178,33 +183,15 @@ public class EventDetailController {
 		List<LocationDTO> nearby = service.getNearby(dto.getLatitude(), dto.getLongitude()); 
 		boolean isLogin = new LoginFilter().isLogin(session, model); //로그인유지
 		ActUserManager manager = new ActUserManager(aService);
-		//MemberDTO member = (MemberDTO)session.getAttribute("member");
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		
 		if(member!=null){
 			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.EVENT);
 			nearby =manager.checkAddStatus(aDTO, nearby);
-				/*//System.out.println(nearby.size());
-				LocationDTO Ldto = nearby.get(i);
-				//System.out.println(member.getEmail());
-				ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.Nearby, nearby.get(i).getLocationSeq());
-				Ldto= manager.checkAddStatus(aDTO, Ldto);
-				nearby.add(Ldto);*/
-			}
-		//로그인 안된 상태면. 
-	//	nearby = service.getNearbyActUserResults(manager, nearby);
-		
-		//System.out.println(nearby.get(1).getScheduleAdded());
-		
-		
+		}
 		HashMap<String, Object> list = new HashMap<String, Object>();
-		//list.put("member", isLogin);
-//		System.out.println();
-		//list.put("member", member);
 		list.put("nearby", nearby);
 		list.put("dto", dto);
-		//System.out.println(member.getNickname());
-		//System.out.println("근처리스트 개수: " + data.size());
+
 		return list;
 	}
 	

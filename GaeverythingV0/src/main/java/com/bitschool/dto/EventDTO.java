@@ -36,7 +36,7 @@ public class EventDTO {
 
 	private int totalReview;
 	
-	
+
 	
 	
 	public int getTotalReview() {
@@ -216,10 +216,7 @@ public class EventDTO {
 	public void setCategoryCode(String categoryCode) {
 		this.categoryCode = categoryCode;
 	}
-	
-	
-	
-	
+
 	@Override
 	public String toString() {
 		return "EventDTO [eventNo=" + eventNo + ", eventName=" + eventName + ", startDate=" + startDate + ", addDate="
@@ -228,10 +225,9 @@ public class EventDTO {
 				+ ", link=" + link + ", fee=" + fee + ", discountInfo=" + discountInfo + ", regist=" + regist
 				+ ", thumbnail=" + thumbnail + ", userLikeStatus=" + userLikeStatus + ", countLike=" + countLike
 				+ ", categoryCode=" + categoryCode + ", countReview=" + countReview + ", averageRatings="
-				+ averageRatings + ", countRatings=" + countRatings + ", countReplies=" + countReplies + "]";
+				+ averageRatings + ", countRatings=" + countRatings + ", countReplies=" + countReplies
+				+ ", totalReview=" + totalReview +  "]";
 	}
-	
-	
 	
 	
 

@@ -91,9 +91,8 @@
 
 <!-- Category Boxes -->
 <div class="container">
-	<div class="row col-md-12">
-	<div class="col-md-1"></div>
-		<div class="col-md-10">
+	<div class="row">
+
 		<div class="col-md-12">
 	
 			<div class="categories-boxes-container margin-top-5 margin-bottom-30">
@@ -117,6 +116,12 @@
 				</a>
 				
 				<!-- Box -->
+				<a href="/mypage/viewMypageDashboard" class="category-small-box">
+					<i class="im im-icon-Newspaper-2"></i>
+					<h4>News</h4>
+				</a>
+				
+				<!-- Box -->
 				<a href="/mypage/calendar/viewCalendar" class="category-small-box">
 					<i class="im im-icon-Calendar"></i>
 					<h4>Calendar</h4>
@@ -127,9 +132,11 @@
 					<i class="im im-icon-Bar-Chart2"></i>
 					<h4>Dashboard</h4>
 				</a>
+				
+				
 
 			</div>
-		</div>
+
 	</div>
 	<div class="col-md-1"></div>
 	</div>
@@ -138,6 +145,8 @@
 
 <!-- Fullwidth Section1: 가장 리뷰 수 많은 곳 -->
 <section class="fullwidth  padding-top-75 padding-bottom-70" data-background-color="#f8f8f8">
+<input type="hidden" id = "email" value = "${member.email}">
+
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
@@ -150,7 +159,7 @@
 				<div class="simple-slick-carousel dots-nav">
 					<!-- Listing Item -->
 					<!-- <form method="post" action="" modelAttribute="data1"> -->
-					<c:forEach items ="${list1}" var="review" begin="0" end="4" >
+					<c:forEach items ="${list1}" var="review" varStatus="loop" begin="0" end="4" >
 						<div class="carousel-item">
 							<c:choose>
 							<c:when test="${review.category == 'HP8'}">
@@ -193,7 +202,15 @@
 					 					<h3>${review.title}</h3>
 									 	<span>${review.address}</span>
 					  				</div>
-					   				<span class="like-icon" onclick = "no_login_like()"></span>
+					  				<c:choose>
+					  				<c:when test="${empty review.userLikeStatus}">
+					  					<span class="like-icon" id="like" onclick = "no_login_like()"></span>
+					  				</c:when>
+					  				<c:otherwise>
+					  					<span class="${review.userLikeStatus}" id="like${review.no}" onclick = "click_like(${review.no})"></span>
+					  				</c:otherwise>
+					  				</c:choose>
+					   				
 					  			</div>
 					   			<div class="star-rating" data-rating="${review.avgRating}">
 					  			 	<div class="rating-counter"> 평균 ${review.avgRating} 점</div>
@@ -229,6 +246,7 @@
 				 <!-- Listing Item -->	
 				 <c:forEach items="${list2}" var="rate" begin="0" end="4">
 					<div class="carousel-item">
+					<input type="hidden" id="from" value="${rate.from}">
 						<c:choose>
 						<c:when test="${rate.category == 'HP8'}">
 							<a href="/map/detail/viewDetailPage?locationSeq=${rate.no}" class="listing-item-container compact">
@@ -238,6 +256,7 @@
 						</c:otherwise>
 						</c:choose>
 								<div class="listing-item">
+								
 									<c:choose>
 										<c:when test="${(empty rate.image) and (rate.category == 'HP8')}">
 											<img src="/resources/images/hospital.jpg" alt="">
@@ -258,7 +277,14 @@
 					 				<h3>${rate.title}</h3>
 									<span>${rate.address}</span>
 								</div>
-									<span class="like-icon" onclick = "no_login_like()"></span>
+									<c:choose>
+					  				<c:when test="${empty rate.userLikeStatus}">
+					  					<span class="like-icon" id="like" onclick = "no_login_like()"></span>
+					  				</c:when>
+					  				<c:otherwise>
+					  					<span class="${rate.userLikeStatus}" id="like${rate.no}" onclick = "click_like(${rate.no})"></span>
+					  				</c:otherwise>
+					  				</c:choose>
 								</div>
 							</a>
 						</div>
@@ -288,7 +314,7 @@
 					<!-- Listing Item -->
 					<c:forEach items ="${list3}" var="like" begin="0" end="4">
 						<div class="carousel-item">
-							
+							<input type="hidden" id="from" value="${like.from}">
 							<c:choose>
 							<c:when test="${like.category == 'HP8'}">
 								<a href="/map/detail/viewDetailPage?locationSeq=${like.no}" class="listing-item-container">
@@ -336,7 +362,15 @@
 					 					<h3>${like.title}</h3>
 									 	<span>${like.address}</span>
 					  				</div>
-					   				<span class="like-icon" onclick = "no_login_like()"></span>
+					  				
+					   				<c:choose>
+					  				<c:when test="${empty like.userLikeStatus}">
+					  					<span class="like-icon" id="like" onclick = "no_login_like()"></span>
+					  				</c:when>
+					  				<c:otherwise>
+					  					<span class="${like.userLikeStatus}" id="like${like.no}" onclick = "click_like(${like.no})"></span>
+					  				</c:otherwise>
+					  				</c:choose>
 					  			</div>
 					   			<div class="star-rating" data-rating="${like.avgRating}">
 					  			 	<div class="rating-counter"> 평균 ${like.avgRating} 점</div>
@@ -369,6 +403,7 @@
 			<!-- Blog Post Item -->
 			<c:forEach items="${list4}" var="post" begin="0" end="2">
 			<div class="col-md-4">
+			
 				<a href="/review/readPost/${post.boardNo}" class="blog-compact-item-container">
 					<div class="blog-compact-item">
 					<c:choose>
@@ -448,9 +483,7 @@
 <script>
 
 $(document).ready(function(){
-	//mostReviewed();
-	//mostRated();
-	//newestReview();
+	
 	$('.preview_box').dotdotdot({
 		ellipis : '...',
 		wrap    : 'word',
@@ -466,8 +499,19 @@ $(document).ready(function(){
 
 function no_login_like(){
 	alert("로그인을 해주세요!");
-	location.href = "/viewLogin?url=/home";
+	location.href = "/viewLogin";
 }
+
+function click_like(no){
+	var like = document.getElementById("like"+no);
+	var class_name = like.className;
+	var from = document.getElementById("from").value;
+	var email = document.getElementById("email").value;
+	var url = "/updateHomeListLike?from="+from+"&like="+class_name+"&no="+no+"&email="+email;
+	location.href = url;
+}
+
+
 
 </script>
 </body>

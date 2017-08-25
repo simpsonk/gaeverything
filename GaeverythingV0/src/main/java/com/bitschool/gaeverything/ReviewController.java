@@ -105,6 +105,10 @@ public class ReviewController {
 		
 		
 		List<BoardDTO> list = service.getPagedList(pDTO); 
+		for(int i=0;i<list.size();i++){
+			String gradename = gService.selectGradeInfo(list.get(i).getNickname()).get(0).getGradename();
+			list.get(i).setGradename(gradename);
+		}
 		model.addAttribute("page", page);
 		
 
@@ -231,6 +235,12 @@ public class ReviewController {
 		}
 		List<CommentDTO> cList = cService.getAllComment(boardNo);
 		cList = cService.getPhotoInfo(cList);
+		//리뷰 댓글에 레벨 셋팅
+		for(int i=0;i<cList.size();i++){
+			String gradename = gService.selectGradeInfo(cList.get(i).getNicknameCmt()).get(0).getGradename();
+			cList.get(i).setGradename(gradename);
+		}
+		
 		int numOfCmt = cService.countCmt(boardNo);
 		
 		BoardDTO bDTO1 = service.searchPrev(boardNo);
@@ -549,6 +559,9 @@ public class ReviewController {
 		//System.out.println("좋아요개수: " + data);
 		return data;
 	}
+	
+
+	
 	
 	
 	

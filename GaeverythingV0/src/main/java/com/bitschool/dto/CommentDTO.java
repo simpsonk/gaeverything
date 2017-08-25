@@ -17,7 +17,7 @@ public class CommentDTO {
 	
 	private String photo;
 	
-	
+	private String gradename;
 	
 	public String getPhoto() {
 		return photo;
@@ -122,6 +122,16 @@ public class CommentDTO {
 
 	public void setIndex(int index) {
 		this.index = index;
+	}
+
+	
+	
+	public String getGradename() {
+		return gradename;
+	}
+
+	public void setGradename(String gradename) {
+		this.gradename = gradename;
 	}
 
 	@Override

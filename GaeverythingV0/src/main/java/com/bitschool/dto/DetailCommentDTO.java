@@ -13,6 +13,8 @@ public class DetailCommentDTO {
 	
 	//댓글모아보기할때 상호명을 보여주기위해
 	private String address;
+	//댓글쓴사람의 레벨을 표시하기위해
+	private String gradename;
 	
 	public String getAddress() {
 		return address;
@@ -62,11 +64,19 @@ public class DetailCommentDTO {
 	}
 	public void setPhoto(String photo) {
 		this.photo = photo;
-	}
+	}	
 	
+	public String getGradename() {
+		return gradename;
+	}
+	public void setGradename(String gradename) {
+		this.gradename = gradename;
+	}
 	@Override
 	public String toString() {
 		return "DetailCommentDTO [locationSeq=" + locationSeq + ", commentSeq=" + commentSeq + ", nickname=" + nickname
-				+ ", message=" + message + ", rating=" + rating + ", regiDate=" + regiDate + ", photo=" + photo + "]";
+				+ ", message=" + message + ", rating=" + rating + ", regiDate=" + regiDate + ", photo=" + photo
+				+ ", address=" + address + ", gradename=" + gradename + "]";
 	}
+	
 }

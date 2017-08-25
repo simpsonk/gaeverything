@@ -75,7 +75,6 @@ function go_url(type, commNo){
 	var changeMsg = document.getElementById("changeMsg"+commNo);
 	var ratingVal = document.getElementById("ratingVal"+commNo);
 	var ment = document.getElementById("ment");
-	alert(changeMsg.innerHTML);
 	if(type==1){		
 		commentNo.value = commNo;
 		commMsg.innerHTML = changeMsg.innerHTML;
@@ -224,8 +223,18 @@ function getListItem(reply) {
 	    var itemStr ='	<input type="hidden" id="ratingVal'+reply.commentNo+'" value="'+reply.rating+'">'+
 		  	'<li><div class="avatar" ><img src="/resources/upload/'+reply.photo+'" alt="" style="width:80px; height:80px; object-fit:cover;"/></div>'+
 		'<div class="comment-content"><div class="arrow-comment"></div>'+
-			'<div class="comment-by">'+
-				reply.nickname+'<span class="date">'+regi+'</span>'+
+			'<div class="comment-by">'+reply.nickname+ ' ';
+	    if(reply.gradename=='beganner'){
+	    	itemStr += "<i class='im im-icon-Environmental'></i>";
+	    }else if(reply.gradename=='gaeneral'){
+	    	itemStr += "<i class='fa fa-trophy'></i>";
+	    }else if(reply.gradename=='gaexpert'){
+	    	itemStr += "<i class='fa fa-trophy'></i><i class='fa fa-trophy'></i>";
+	    }else if(reply.gradename=='gaenius'){
+	    	itemStr += "<i class='fa fa-trophy'></i><i class='fa fa-trophy'></i><i class='fa fa-trophy'></i>";
+	    }
+	    
+	    itemStr += '<span class="date">'+regi+'</span>'+
 				'<div class="star star-rating" data-rating="'+reply.rating+'"></div>'+
 			'</div>'+
 			'<p id="changeMsg'+reply.commentNo+'">'+reply.message+'</p></div>';
