@@ -130,7 +130,7 @@ footer {
 					<div id='calendar'></div>
 				</div>
 			</div>
-
+			
 
 			<!-- Copyrights -->
 			<div class="col-md-12">
@@ -226,7 +226,28 @@ footer {
 				    });
 			});
 </script>
-<form method="post" id="sd">
+<div id="openweathermap-widget-11"></div>
+	<script
+		src='https://openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
+	<script>
+		window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];
+		window.myWidgetParam.push({
+			id : 11,
+			cityid : '1835848',
+			appid : '111a89d164c8b2c8d90b5cd3a8aaac54',
+			units : 'metric',
+			containerid : 'openweathermap-widget-11',
+		});
+		(function() {
+			var script = document.createElement('script');
+			script.async = true;
+			script.charset = "utf-8";
+			script.src = "https://openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
+			var s = document.getElementsByTagName('script')[0];
+			s.parentNode.insertBefore(script, s);
+		})();
+	</script>
+	<form method="post" id="sd">
 	<input type="hidden" name="startDate" id="startDate" value=''>
 </form>
 <form method="post" id="submitSeq">
