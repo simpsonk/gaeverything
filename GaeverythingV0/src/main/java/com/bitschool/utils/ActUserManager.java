@@ -8,6 +8,7 @@ import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.DetailCommentDTO;
 import com.bitschool.dto.EventDTO;
+import com.bitschool.dto.HomeListDTO;
 import com.bitschool.dto.LocationDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.service.ActUserService;
@@ -61,6 +62,18 @@ public class ActUserManager {
 		return dto;
 	}
 	
+	public HomeListDTO checkHomeLikeStatus(ActUserDTO aDTO, HomeListDTO dto) {
+		String userLikeStatus = "like-icon";
+		boolean flag = service.isCheckedLikeStatus(aDTO);
+		if(flag){
+			userLikeStatus = "like-icon liked";
+		}
+		dto.setUserLikeStatus(userLikeStatus);
+		dto.setCountLike(service.getLikeCount(aDTO));
+		return dto;
+	}
+	
+	
 	
 	public List<LocationDTO> checkListLocLikeStatus(ActUserDTO aDTO, List<LocationDTO> list) {
 		for(int i=0;i<list.size();i++){
@@ -106,6 +119,34 @@ public class ActUserManager {
 	}
 	
 	
+	public List<LocationDTO> checkAddStatus(ActUserDTO aDTO, List<LocationDTO> list) {
+		for(int i=0;i<list.size();i++){
+			String scheduleAdded = "add-schedule";
+			aDTO.setContentNo(list.get(i).getLocationSeq());
+			boolean flag = service.isCheckedLikeStatus(aDTO);
+			if(flag){
+				scheduleAdded = "add-schedule liked";
+			}
+			list.get(i).setScheduleAdded(scheduleAdded);
+		}
+		return list;
+	}
+	
+	
+	public List<HomeListDTO> checkHomeLikeStatus(ActUserDTO aDTO, List<HomeListDTO> list) {
+		for(int i=0;i<list.size();i++){
+			String userLikeStatus = "like-icon";
+			aDTO.setContentNo(list.get(i).getNo());
+			boolean flag = service.isCheckedLikeStatus(aDTO);
+			if(flag){
+				userLikeStatus = "like-icon liked";
+			}
+			list.get(i).setUserLikeStatus(userLikeStatus);
+		}
+		return list;
+	}
+	
+	
 	
 	public boolean registLikeStatus(ActUserDTO dto){
 		boolean flag = false;
@@ -125,17 +166,6 @@ public class ActUserManager {
 		return count;
 	}
 
-	public List<LocationDTO> checkAddStatus(ActUserDTO aDTO, List<LocationDTO> list) {
-		for(int i=0;i<list.size();i++){
-			String scheduleAdded = "add-schedule";
-			aDTO.setContentNo(list.get(i).getLocationSeq());
-			boolean flag = service.isCheckedLikeStatus(aDTO);
-			if(flag){
-				scheduleAdded = "add-schedule liked";
-			}
-			list.get(i).setScheduleAdded(scheduleAdded);
-		}
-		return list;
-	}
+
 
 }

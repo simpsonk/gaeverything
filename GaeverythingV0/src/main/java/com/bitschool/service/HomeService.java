@@ -5,10 +5,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.bitschool.dto.ActUserDTO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.EventDTO;
 import com.bitschool.dto.HomeListDTO;
 import com.bitschool.dto.LocationDTO;
+import com.bitschool.utils.ActUserManager;
 
 @Service
 public class HomeService {
@@ -26,7 +28,7 @@ public class HomeService {
 			dto.setTotalReview(list.get(i).getTotalReview());
 			dto.setCountLike(list.get(i).getCountLike());
 			dto.setImage(list.get(i).getImageUrl());
-			
+			dto.setFrom("care");
 			hList.add(dto);
 			}
 		return hList;
@@ -44,6 +46,7 @@ public class HomeService {
 			dto.setTotalReview(list.get(i).getTotalReview());
 			dto.setCountLike(list.get(i).getCountLike());
 			dto.setImage(list.get(i).getThumbnail());
+			dto.setFrom("event");
 			hList.add(dto);
 			
 		}
@@ -67,4 +70,16 @@ public class HomeService {
 		}
 		return hList;
 	}
+	
+	public HomeListDTO getEventActUserResult(ActUserManager manager, List<LocationDTO> list1,List<EventDTO> list2, List<BoardDTO> list3, LocationDTO Ldto, EventDTO eDTO, HomeListDTO dto ) {
+		//홈에서 좋아요 눌린 것들 각 테이블에 좋아요 카운팅 올림 
+		
+
+		//int countLike = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.EVENT, dto.getEventNo()));		
+		//dto.setActUserResult(countReview, temp, countRatings, countReplies, countLike);
+		//int totalReview = countReplies + countReview;
+		//dto.setTotalReview(totalReview);
+		return dto;
+	}
+	
 }

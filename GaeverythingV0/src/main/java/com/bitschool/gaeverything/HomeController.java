@@ -86,6 +86,7 @@ public class HomeController {
 	public String home(Model model, HttpSession session) {
 		logger.info("Welcome home! The client locale is {}.", "connect");
 		boolean islogin = new LoginFilter().isLogin(session, model);
+		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		
 		//////////////////리뷰순 
 		ActUserManager manager = new ActUserManager(aService);
@@ -103,6 +104,19 @@ public class HomeController {
 				return o2.getTotalReview() - o1.getTotalReview();
 			}
 		});
+		
+		if(member!=null){
+			for(int i=0; i<hList1.size(); i++){
+				if(hList1.get(i).getFrom() == "care"){
+					ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.SHOP);
+					hList1 =manager.checkHomeLikeStatus(aDTO, hList1);
+				}else if(hList1.get(i).getFrom() == "event"){
+					ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.EVENT);
+					hList1 =manager.checkHomeLikeStatus(aDTO, hList1);
+				}
+			}
+		}
+		
 		model.addAttribute("list1", hList1);
 						
 		//////////////////별점순
@@ -122,6 +136,18 @@ public class HomeController {
 				return Double.compare(a, b);
 			}
 		});
+		
+		if(member!=null){
+			for(int i=0; i<hList2.size(); i++){
+				if(hList2.get(i).getFrom() == "care"){
+					ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.SHOP);
+					hList2 =manager.checkHomeLikeStatus(aDTO, hList2);
+				}else if(hList2.get(i).getFrom() == "event"){
+					ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.EVENT);
+					hList2 =manager.checkHomeLikeStatus(aDTO, hList2);
+				}
+			}
+		}
 		model.addAttribute("list2", hList2);
 		
 		//////////////////북마크순
@@ -142,6 +168,18 @@ public class HomeController {
 				return o2.getCountLike() - o1.getCountLike();
 			}
 		});
+		
+		if(member!=null){
+			for(int i=0; i<hList3.size(); i++){
+				if(hList3.get(i).getFrom() == "care"){
+					ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.SHOP);
+					hList3 =manager.checkHomeLikeStatus(aDTO, hList3);
+				}else if(hList3.get(i).getFrom() == "event"){
+					ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.EVENT);
+					hList3 =manager.checkHomeLikeStatus(aDTO, hList3);
+				}
+			}
+		}
 		model.addAttribute("list3", hList3);
 		
 		////////////////최신리뷰 3개
@@ -150,11 +188,66 @@ public class HomeController {
 		
 		return "home";
 	}
-	
+		
+	@RequestMapping(value="/viewMore", method=RequestMethod.GET)
+	public String viewMore (HttpSession session, Model model, @RequestParam(value= "sort", defaultValue="default") String sort){
+		boolean isLogin = new LoginFilter().isLogin(session, model);
+		System.out.println(sort);
+		String url = "top_listing";
+		model.addAttribute("list1", hList1);
+		model.addAttribute("list2", hList2);
+		model.addAttribute("list3", hList3);
+		model.addAttribute("sort", sort);
+		return url;
+	}
+		
+		
+	@RequestMapping(value="/updateHomeListLike", method={RequestMethod.GET, RequestMethod.POST})
+	public String updateHomeListLike(
+			 				@RequestParam("from") String from,
+							@RequestParam("like") String like,
+							@RequestParam("no") int no,
+							@RequestParam("email") String email){
+		String url = "";
+		ActUserManager manager = new ActUserManager(aService);
+		//좋아요 눌려진 타입에 따라 actusermanager.static 설정
+		ActUserDTO dto = null;
+		if(from.equals("care")){
+			dto = new ActUserDTO(email, ActUserManager.SHOP, no);
+		}else if(from.equals("event")){
+			dto = new ActUserDTO(email, ActUserManager.EVENT, no);
+		}
+		boolean flag = false;
+		if(like.equals("like-icon")){
+			flag = manager.registLikeStatus(dto);
+			
+			/*//(이벤트리스트에서) 이벤트 북마크 눌렀을 때 북마크누른사람 point -> +3, myBookmark -> "T"
+			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"myBookmark", 3);
+			gService.insertInfo(gDTO);*/
+			
+			if(!flag){
+				System.out.println("insert fail: ReviewLike");
+			}
+		}else if(like.equals("like-icon liked")){
+			flag = manager.deleteLikeStatus(dto);
+			
+			/*//(이벤트리스트에서) 이벤트 북마크 해제 눌렀을 때 북마크누른사람 point -> -3, delete myBookmark
+			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"myBookmark", -3);
+			gService.deleteInfo(gDTO);*/
+			
+			if(!flag){
+				System.out.println("delete fail: ReviewLike");
+			}
+		}
+		return "redirect:/";
+	}
+		
 	@RequestMapping(value = "login", method = {RequestMethod.POST, RequestMethod.GET})
-	public String login(@RequestParam("email") String email, @RequestParam("pw") String pw, 
-			HttpSession session, @RequestParam(value="uri", defaultValue="/") String uri,
-			@RequestParam(value = "url") String loginUrl){
+	public String login(HttpSession session,
+						@RequestParam("email") String email, 
+						@RequestParam("pw") String pw, 
+						@RequestParam(value="uri", defaultValue="/") String uri,
+						@RequestParam(value = "url") String loginUrl){
 		String url = null;
 		boolean flag = logService.loginCheckService(email, pw);
 		if(flag){
@@ -162,13 +255,16 @@ public class HomeController {
 			session.setAttribute("member", member);
 			if(uri.equals("/")){
 				url = "redirect:"+loginUrl;
+				if(loginUrl.equals("/viewLogin")){
+					url =  "redirect:/";
+				}
 			}else{
 				url = "redirect:"+uri;
 			}
 		}
 		return url;
 	}
-	
+		
 	@RequestMapping(value = "logout", method = RequestMethod.GET)
 	public String logout(HttpSession session){
 		String url = "redirect:/";
@@ -190,49 +286,35 @@ public class HomeController {
 	
 	/*비밀번호 찾기*/
 	@RequestMapping(value = "/findPW", method = RequestMethod.POST)
-	    public ModelAndView findPW(@RequestParam("email") String e_mail,
-	    		@RequestParam("nickname") String nickname,
-	    		ModelMap model) throws Exception {
-	        ModelAndView mav;
-	        MemberDTO member = new MemberDTO();
-	        member.setEmail(e_mail);
-	        member.setNickname(nickname);
-	        String pw = sigService.findPW(member);	        
-	        if(pw!=null) {
-	            email.setContent(nickname+"님, 안녕하세요. [gaeverything]입니다. "
-	            		+ e_mail+" 계정의 비밀번호는 "+pw+" 입니다.");
-	            email.setReceiver(e_mail);
-	            email.setSubject("[Gaeverything] "+nickname+"님 비밀번호 찾기 메일입니다.");
-	            emailSender.SendEmail(email);
-	            mav= new ModelAndView("find_pw_result");
-	            return mav;
-	        }else {
-	            mav=new ModelAndView("find_pw");
-	            return mav;
-	        }
-	    }	 
-		//비밀번호 찾기할때 입력한 닉네임과 이메일이 한 계정으로 일치하는지 체크 
-		@RequestMapping(value="/checkPW", method=RequestMethod.POST)
-		public @ResponseBody boolean checkPW(@RequestParam(value = "email") String email,
-				@RequestParam("nickname") String nickname) throws Exception{
-			MemberDTO member = new MemberDTO();
-			member.setEmail(email);
-			member.setNickname(nickname);
-			boolean chkPoint = sigService.findPW(member)==null;	
-			return chkPoint;
-		}
-		
-	
-		@RequestMapping(value="/viewMore", method=RequestMethod.GET)
-		public String viewMore (HttpSession session, Model model, @RequestParam(value= "sort", defaultValue="default") String sort){
-			boolean isLogin = new LoginFilter().isLogin(session, model);
-			System.out.println(sort);
-			String url = "top_listing";
-			model.addAttribute("list1", hList1);
-			model.addAttribute("list2", hList2);
-			model.addAttribute("list3", hList3);
-			model.addAttribute("sort", sort);
-			return url;
-		}
-		
+    public ModelAndView findPW(@RequestParam("email") String e_mail,
+    						   @RequestParam("nickname") String nickname,
+    						   ModelMap model) throws Exception {
+        ModelAndView mav;
+        MemberDTO member = new MemberDTO();
+        member.setEmail(e_mail);
+        member.setNickname(nickname);
+        String pw = sigService.findPW(member);	        
+        if(pw!=null) {
+            email.setContent(nickname+"님, 안녕하세요. [gaeverything]입니다. "
+            		+ e_mail+" 계정의 비밀번호는 "+pw+" 입니다.");
+            email.setReceiver(e_mail);
+            email.setSubject("[Gaeverything] "+nickname+"님 비밀번호 찾기 메일입니다.");
+            emailSender.SendEmail(email);
+            mav= new ModelAndView("find_pw_result");
+            return mav;
+        }else {
+            mav=new ModelAndView("find_pw");
+            return mav;
+        }
+    }	 
+	//비밀번호 찾기할때 입력한 닉네임과 이메일이 한 계정으로 일치하는지 체크 
+	@RequestMapping(value="/checkPW", method=RequestMethod.POST)
+	public @ResponseBody boolean checkPW(@RequestParam(value = "email") String email,
+										 @RequestParam("nickname") String nickname) throws Exception{
+		MemberDTO member = new MemberDTO();
+		member.setEmail(email);
+		member.setNickname(nickname);
+		boolean chkPoint = sigService.findPW(member)==null;	
+		return chkPoint;
+	}
 }
