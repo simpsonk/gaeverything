@@ -127,14 +127,7 @@
 					 					<h3>${review.title}</h3>
 									 	<span>${review.address}</span>
 					  				</div>
-					   				<c:choose>
-					  				<c:when test="${empty review.userLikeStatus}">
-					  					<span class="like-icon" id="like" onclick = "no_login_like()"></span>
-					  				</c:when>
-					  				<c:otherwise>
-					  					<span class="${review.userLikeStatus}" id="like${review.no}" onclick = "click_like(${review.no})"></span>
-					  				</c:otherwise>
-					  				</c:choose>
+					   				
 					  			</div>
 					   			<div class="star-rating" data-rating="${review.avgRating}">
 					  			 	<div class="rating-counter"> 평균 ${review.avgRating} 점</div>
@@ -179,14 +172,7 @@
 					 				<h3>${rate.title}</h3>
 									<span>${rate.address}</span>
 								</div>
-									<c:choose>
-					  				<c:when test="${empty rate.userLikeStatus}">
-					  					<span class="like-icon" id="like" onclick = "no_login_like()"></span>
-					  				</c:when>
-					  				<c:otherwise>
-					  					<span class="${rate.userLikeStatus}" id="like${rate.no}" onclick = "click_like(${rate.no})"></span>
-					  				</c:otherwise>
-					  				</c:choose>
+									
 								</div>
 							</a>
 						</div>
@@ -244,14 +230,7 @@
 					 					<h3>${like.title}</h3>
 									 	<span>${like.address}</span>
 					  				</div>
-					   				<c:choose>
-					  				<c:when test="${empty like.userLikeStatus}">
-					  					<span class="like-icon" id="like" onclick = "no_login_like()"></span>
-					  				</c:when>
-					  				<c:otherwise>
-					  					<span class="${like.userLikeStatus}" id="like${like.no}" onclick = "click_like(${like.no})"></span>
-					  				</c:otherwise>
-					  				</c:choose>
+					   				
 					  			</div>
 					   			<div class="star-rating" data-rating="${like.avgRating}">
 					  			 	<div class="rating-counter"> 평균 ${like.avgRating} 점</div>
@@ -344,7 +323,20 @@ function click_like(no){
 	var from = document.getElementById("from").value;
 	var email = document.getElementById("email").value;
 	var url = "/updateHomeListLike?from="+from+"&like="+class_name+"&no="+no+"&email="+email;
-	location.href = url;
+	//location.href = url;
+	
+	$.ajax({
+		url : url,
+		type : 'post',
+		dataType: 'json',
+		success : function(data){
+			
+		},
+		error : function(request, status, error) {
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+          }
+		
+	});
 }
 
 

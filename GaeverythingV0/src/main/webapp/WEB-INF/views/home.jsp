@@ -204,14 +204,7 @@
 					 					<h3>${review.title}</h3>
 									 	<span>${review.address}</span>
 					  				</div>
-					  				<c:choose>
-					  				<c:when test="${empty review.userLikeStatus}">
-					  					<span class="like-icon" id="like" onclick = "no_login_like()"></span>
-					  				</c:when>
-					  				<c:otherwise>
-					  					<span class="${review.userLikeStatus}" id="like${loop.index}" onclick = "click_like(${review.no}, ${loop.index}, 'review')"></span>
-					  				</c:otherwise>
-					  				</c:choose>
+					  				
 					   				
 					  			</div>
 					   			<div class="star-rating" data-rating="${review.avgRating}">
@@ -280,14 +273,7 @@
 					 				<h3>${rate.title}</h3>
 									<span>${rate.address}</span>
 								</div>
-									<c:choose>
-					  				<c:when test="${empty rate.userLikeStatus}">
-					  					<span class="like-icon" id="like" onclick = "no_login_like()"></span>
-					  				</c:when>
-					  				<c:otherwise>
-					  					<span class="${rate.userLikeStatus}" id="like${loop.index}" onclick = "click_like(${rate.no}, ${loop.index}, 'rate')"></span>
-					  				</c:otherwise>
-					  				</c:choose>
+									
 								</div>
 							</a>
 						</div>
@@ -368,14 +354,7 @@
 									 	<span>${like.address}</span>
 					  				</div>
 					  				
-					   				<c:choose>
-					  				<c:when test="${empty like.userLikeStatus}">
-					  					<span class="like-icon" id="like" onclick = "no_login_like()"></span>
-					  				</c:when>
-					  				<c:otherwise>
-					  					<span class="${like.userLikeStatus}" id="like${loop.index}" onclick = "click_like(${like.no}, ${loop.index}, 'like')"></span>
-					  				</c:otherwise>
-					  				</c:choose>
+					   				
 					  			</div>
 					   			<div class="star-rating" data-rating="${like.avgRating}">
 					  			 	<div class="rating-counter"> 평균 ${like.avgRating} 점</div>

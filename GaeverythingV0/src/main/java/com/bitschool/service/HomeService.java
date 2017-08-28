@@ -152,7 +152,6 @@ public class HomeService {
 	public List<HomeListDTO> checkLikeStatus(ActUserManager manager, String email, List<HomeListDTO> list) {
 		
 		for(int i=0; i<list.size(); i++){
-			System.out.println(list.get(i).getFrom());
 			if(list.get(i).getFrom() == "care"){
 				ActUserDTO aDTO = new ActUserDTO(email, ActUserManager.SHOP);
 				list = manager.checkHomeLikeStatus(aDTO, list);

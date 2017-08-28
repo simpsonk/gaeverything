@@ -90,7 +90,7 @@ public class HomeController {
 		boolean islogin = new LoginFilter().isLogin(session, model);
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		
-		//////////////////¸®ºä¼ø 
+		//¸®ºä¼ø 
 		String by1 = "review";
 		ActUserManager manager = new ActUserManager(aService);
 		List<LocationDTO> list1 = lService.getAllHospital(manager);
@@ -104,7 +104,7 @@ public class HomeController {
 		}
 		model.addAttribute("list1", hList1);
 						
-		//////////////////º°Á¡¼ø
+		//º°Á¡¼ø
 		List<LocationDTO> list2 = lService.getAllHospital(manager);
 		hList2 = hService.makeList1(list2);
 		String by2 = "rate";
@@ -118,7 +118,7 @@ public class HomeController {
 		}
 		model.addAttribute("list2", hList2);
 		
-		//////////////////ºÏ¸¶Å©¼ø
+		//ºÏ¸¶Å©¼ø
 		String by3 = "bookmark";
 		List<LocationDTO> list3 = lService.getAllHospital(manager);
 		hList3 = hService.makeList1(list3);
@@ -133,7 +133,7 @@ public class HomeController {
 		}
 		model.addAttribute("list3", hList3);
 		
-		////////////////ÃÖ½Å¸®ºä 3°³
+		//ÃÖ½Å¸®ºä 3°³
 		List<BoardDTO> list4 = bService.getAllList();
 		model.addAttribute("list4", list4);
 		
@@ -158,6 +158,7 @@ public class HomeController {
 							@RequestParam("like") String like,
 							@RequestParam("no") int no,
 							@RequestParam("email") String email){
+		System.out.println(like);
 		String url = "";
 		int data = 0;
 		ActUserManager manager = new ActUserManager(aService);
