@@ -522,9 +522,22 @@ function click_like(no, index, from){
 	
 	//alert(from);
 	var email = document.getElementById("email").value;
-	
+
 	var url = "/updateHomeListLike?from="+from+"&like="+class_name+"&no="+no+"&email="+email;
-	location.href = url;
+	
+	$.ajax({
+		url : url,
+		type : 'post',
+		dataType: 'json',
+		success : function(data){
+			
+		},
+		error : function(request, status, error) {
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+          }
+		
+	});
+	//location.href = url;
 }
 
 

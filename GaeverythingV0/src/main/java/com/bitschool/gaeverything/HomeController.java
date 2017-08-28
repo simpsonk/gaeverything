@@ -153,14 +153,14 @@ public class HomeController {
 		
 		
 	@RequestMapping(value="/updateHomeListLike", method={RequestMethod.GET, RequestMethod.POST})
-	public String updateHomeListLike(
+	public @ResponseBody int updateHomeListLike(
 			 				@RequestParam("from") String from,
 							@RequestParam("like") String like,
 							@RequestParam("no") int no,
 							@RequestParam("email") String email){
 		String url = "";
+		int data = 0;
 		ActUserManager manager = new ActUserManager(aService);
-		//좋아요 눌려진 타입에 따라 actusermanager.static 설정
 		ActUserDTO dto = null;
 		if(from.equals("care")){
 			dto = new ActUserDTO(email, ActUserManager.SHOP, no);
@@ -189,7 +189,9 @@ public class HomeController {
 				System.out.println("delete fail: ReviewLike");
 			}
 		}
-		return "redirect:/";
+		
+		data = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.EVENT, no));
+		return data;
 	}
 		
 	@RequestMapping(value = "login", method = {RequestMethod.POST, RequestMethod.GET})
@@ -212,7 +214,6 @@ public class HomeController {
 				url = "redirect:"+uri;
 			}
 		}
-		System.out.println(url);
 		return url;
 	}
 		

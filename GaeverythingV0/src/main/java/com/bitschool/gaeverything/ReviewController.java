@@ -521,7 +521,7 @@ public class ReviewController {
 			}
 		}
 		data = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.EVENT, eventNo));
-		System.out.println("좋아요개수: " + data);
+		//System.out.println("좋아요개수: " + data);
 		return data;
 	}
 	
