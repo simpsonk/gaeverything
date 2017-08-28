@@ -409,7 +409,7 @@
 			<c:forEach items="${list4}" varStatus="loop" var="post" begin="0" end="2">
 			<div class="col-md-4">
 			
-				<a href="/review/readPost/${post.boardNo}" class="blog-compact-item-container">
+				<a href="/review/readPost?boardNo=${post.boardNo}" class="blog-compact-item-container">
 					<div class="blog-compact-item">
 					<c:choose>
 					<c:when test="${!empty post.uploadImg }">
@@ -520,12 +520,7 @@ function click_like(no, index, from){
 		var from = document.getElementById("likeFrom"+index).value;
 	}
 	
-	
-	
-	//var category = document.getElementById("category"+index).value;
-	
-	alert(from);
-	//alert(category);
+	//alert(from);
 	var email = document.getElementById("email").value;
 	
 	var url = "/updateHomeListLike?from="+from+"&like="+class_name+"&no="+no+"&email="+email;

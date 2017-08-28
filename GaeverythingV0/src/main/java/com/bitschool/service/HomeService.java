@@ -150,8 +150,7 @@ public class HomeService {
 	}
 
 	public List<HomeListDTO> checkLikeStatus(ActUserManager manager, String email, List<HomeListDTO> list) {
-		System.out.println("좋아요체크할 리스트개수 " + list.size());
-		System.out.println(list.get(0).getFrom());
+		
 		for(int i=0; i<list.size(); i++){
 			System.out.println(list.get(i).getFrom());
 			if(list.get(i).getFrom() == "care"){
@@ -162,7 +161,7 @@ public class HomeService {
 				list = manager.checkHomeLikeStatus(aDTO, list);
 			}
 		}
-		System.out.println("좋아요체크끗 "+list.size());
+		
 		return list;
 	}
 	
