@@ -27,6 +27,7 @@ import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.CommentDTO;
 import com.bitschool.dto.DetailCommentDTO;
 import com.bitschool.dto.DetailPhotoDTO;
+import com.bitschool.dto.EventCommentDTO;
 import com.bitschool.dto.EventDTO;
 import com.bitschool.dto.GradeDTO;
 import com.bitschool.dto.LocationDTO;
@@ -36,6 +37,7 @@ import com.bitschool.dto.PetPageDTO;
 import com.bitschool.dto.ReactionDTO;
 import com.bitschool.service.ActUserService;
 import com.bitschool.service.BoardService;
+import com.bitschool.service.EventDetailService;
 import com.bitschool.service.GradeService;
 import com.bitschool.service.ICommentService;
 import com.bitschool.service.LocationDetailService;
@@ -79,7 +81,8 @@ public class MypageController {
 	@Inject
 	private GradeService gservice;
 	   
-
+	@Inject
+	private EventDetailService eservice;
 	
 	/*마이페이지 열기*/
 	@RequestMapping(value = "/viewMypageProfile", method = RequestMethod.GET)
@@ -517,6 +520,13 @@ public class MypageController {
 		for(int i=0;i<mapList.size();i++){
 			dto = lservice.getLocActUserResult(manager, mapList.get(i));
 			mapList2.add(dto);
+		}
+		for(int i=0;i<eventList.size();i++){
+			//평가수 셋팅
+			int eventReviews = eservice.getReviews(eventList.get(i).getEventNo()).size();
+			int eventComments = eservice.commentList(eventList.get(i).getEventNo()).size();
+			int count = eventReviews + eventComments;
+			eventList.get(i).setCount(count);
 		}
 		boolean isLogin = member!=null?true:false;
 		if(!isLogin){

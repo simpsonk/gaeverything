@@ -96,7 +96,7 @@
 											<div class="rating-counter">(${list.countRatings} ratings)</div>
 										</div> 아직 아래에 하드코딩으로 돼있음--%>
 										<div class="star-rating" data-rating="3.5">
-											<div class="rating-counter">(12 ratings)</div>
+											<div class="rating-counter">(${list.count} ratings)</div>
 										</div>
 									</div>
 								</div>
