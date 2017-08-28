@@ -63,7 +63,6 @@ public class EventController {
 		if(member!=null){
 			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.EVENT);
 			list =manager.checkLikeStatusEvent(aDTO, list);
-			//유저라이크스테이터스, 라이크갯수
 		}
 		list = eService.getEventActUserResults(manager, list);
 		HashMap<String, Object> map = pService.makeEventSerachList(0, 6, list);

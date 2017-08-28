@@ -27,7 +27,6 @@ public class BoardDTO {
 	private String address;
 	private String encodeUTF;
 	private int countLike;
-	
 	private String gradename;
 	
 	public int getEventNo() {

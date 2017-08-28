@@ -161,6 +161,8 @@
 					<!-- <form method="post" action="" modelAttribute="data1"> -->
 					<c:forEach items ="${list1}" var="review" varStatus="loop" begin="0" end="4" >
 						<div class="carousel-item">
+						<input type="hidden" id="reviewFrom${loop.index}" value="${review.from}">
+						<input type="hidden" id="reviewCategory${loop.index}" value="${review.category}">
 							<c:choose>
 							<c:when test="${review.category == 'HP8'}">
 								<a href="/map/detail/viewDetailPage?locationSeq=${review.no}" class="listing-item-container">
@@ -202,14 +204,7 @@
 					 					<h3>${review.title}</h3>
 									 	<span>${review.address}</span>
 					  				</div>
-					  				<c:choose>
-					  				<c:when test="${empty review.userLikeStatus}">
-					  					<span class="like-icon" id="like" onclick = "no_login_like()"></span>
-					  				</c:when>
-					  				<c:otherwise>
-					  					<span class="${review.userLikeStatus}" id="like${review.no}" onclick = "click_like(${review.no})"></span>
-					  				</c:otherwise>
-					  				</c:choose>
+					  				
 					   				
 					  			</div>
 					   			<div class="star-rating" data-rating="${review.avgRating}">
@@ -244,9 +239,10 @@
 			 <div class="col-md-12">
 				 <div class="simple-slick-carousel dots-nav">
 				 <!-- Listing Item -->	
-				 <c:forEach items="${list2}" var="rate" begin="0" end="4">
+				 <c:forEach items="${list2}" varStatus="loop" var="rate" begin="0" end="4">
 					<div class="carousel-item">
-					<input type="hidden" id="from" value="${rate.from}">
+					<input type="hidden" id="rateFrom${loop.index}" value="${rate.from}">
+					<input type="hidden" id="rateCategory${loop.index}" value="${rate.category}">
 						<c:choose>
 						<c:when test="${rate.category == 'HP8'}">
 							<a href="/map/detail/viewDetailPage?locationSeq=${rate.no}" class="listing-item-container compact">
@@ -277,14 +273,7 @@
 					 				<h3>${rate.title}</h3>
 									<span>${rate.address}</span>
 								</div>
-									<c:choose>
-					  				<c:when test="${empty rate.userLikeStatus}">
-					  					<span class="like-icon" id="like" onclick = "no_login_like()"></span>
-					  				</c:when>
-					  				<c:otherwise>
-					  					<span class="${rate.userLikeStatus}" id="like${rate.no}" onclick = "click_like(${rate.no})"></span>
-					  				</c:otherwise>
-					  				</c:choose>
+									
 								</div>
 							</a>
 						</div>
@@ -312,9 +301,11 @@
 			<div class="col-md-12">
 					<div class="simple-slick-carousel dots-nav">
 					<!-- Listing Item -->
-					<c:forEach items ="${list3}" var="like" begin="0" end="4">
+					<c:forEach items ="${list3}" varStatus="loop" var="like" begin="0" end="4">
 						<div class="carousel-item">
-							<input type="hidden" id="from" value="${like.from}">
+							<input type="hidden" id="likeFrom${loop.index}" value="${like.from}">
+							<input type="hidden" id="likeCategory${loop.index}" value="${like.category}">
+
 							<c:choose>
 							<c:when test="${like.category == 'HP8'}">
 								<a href="/map/detail/viewDetailPage?locationSeq=${like.no}" class="listing-item-container">
@@ -363,14 +354,7 @@
 									 	<span>${like.address}</span>
 					  				</div>
 					  				
-					   				<c:choose>
-					  				<c:when test="${empty like.userLikeStatus}">
-					  					<span class="like-icon" id="like" onclick = "no_login_like()"></span>
-					  				</c:when>
-					  				<c:otherwise>
-					  					<span class="${like.userLikeStatus}" id="like${like.no}" onclick = "click_like(${like.no})"></span>
-					  				</c:otherwise>
-					  				</c:choose>
+					   				
 					  			</div>
 					   			<div class="star-rating" data-rating="${like.avgRating}">
 					  			 	<div class="rating-counter"> 평균 ${like.avgRating} 점</div>
@@ -401,10 +385,10 @@
 
 		<div class="row" id = "reviews">
 			<!-- Blog Post Item -->
-			<c:forEach items="${list4}" var="post" begin="0" end="2">
+			<c:forEach items="${list4}" varStatus="loop" var="post" begin="0" end="2">
 			<div class="col-md-4">
 			
-				<a href="/review/readPost/${post.boardNo}" class="blog-compact-item-container">
+				<a href="/review/readPost?boardNo=${post.boardNo}" class="blog-compact-item-container">
 					<div class="blog-compact-item">
 					<c:choose>
 					<c:when test="${!empty post.uploadImg }">
@@ -502,13 +486,37 @@ function no_login_like(){
 	location.href = "/viewLogin";
 }
 
-function click_like(no){
-	var like = document.getElementById("like"+no);
+function click_like(no, index, from){
+
+	var like = document.getElementById("like"+index);
 	var class_name = like.className;
-	var from = document.getElementById("from").value;
+	
+	if(from == "review"){
+		var from = document.getElementById("reviewFrom"+index).value;
+	}else if(from =="rate"){
+		var from = document.getElementById("rateFrom"+index).value;
+	}else if(from =="like"){
+		var from = document.getElementById("likeFrom"+index).value;
+	}
+	
+	//alert(from);
 	var email = document.getElementById("email").value;
+
 	var url = "/updateHomeListLike?from="+from+"&like="+class_name+"&no="+no+"&email="+email;
-	location.href = url;
+	
+	$.ajax({
+		url : url,
+		type : 'post',
+		dataType: 'json',
+		success : function(data){
+			
+		},
+		error : function(request, status, error) {
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+          }
+		
+	});
+	//location.href = url;
 }
 
 

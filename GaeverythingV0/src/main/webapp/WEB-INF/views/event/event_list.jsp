@@ -386,7 +386,7 @@
 		
 		for(var i=0; i<events.length; i++){
 			//1) 마커이미지 셋팅
-			var imgSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png', 
+			var imgSrc = 'http://icon-park.com/imagefiles/location_map_pin_red5.png', 
 				imgSize = new daum.maps.Size(24, 36), 
 				imgOption = { offset : new daum.maps.Point(27, 69)
 			};

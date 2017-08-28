@@ -71,17 +71,22 @@ public class EventDetailController {
 	public String eventDetail(HttpServletRequest request, @RequestParam(value="no") int eventNo, 
 							  HttpSession session, Model model){
 		String url = "event/event_detail2";
-		boolean isLogin = new LoginFilter().isLogin(session, model); //로그인유지
+		boolean isLogin = new LoginFilter().isLogin(session, model); 
 		ActUserManager manager = new ActUserManager(aService);
 		
-		EventDTO dto = service.selectOne(eventNo);	 //이벤트 정보	
+		EventDTO dto = service.selectOne(eventNo);
 		List<EventCommentDTO> list = service.commentList(eventNo);
+		/*for(int i=0;i<list.size();i++){
+			String gradename = gService.selectGradeInfo(list.get(i).getNickname()).get(0).getGradename();
+			list.get(i).setGradename(gradename);
+		}*/
+		
 		dto = service.getEventActUserResult(manager, dto);
 		List<EventPhotoDTO> photoList = service.selectPhoto(eventNo);
 		List<BoardDTO> reviewList = service.getReviews(eventNo);
 		List<LocationDTO> nList = service.getNearby(dto.getLatitude(), dto.getLongitude()); 	
 		
-		//좋아요 상태 유지
+		
 		if(isLogin){
 			MemberDTO member = (MemberDTO)session.getAttribute("member");
 			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.EVENT, eventNo);
@@ -143,10 +148,12 @@ public class EventDetailController {
 	public @ResponseBody List<EventCommentDTO> getReviewData(@RequestParam(value="eventNo") int eventNo){
 		List<EventCommentDTO> commentlist = service.commentList(eventNo);	
 		//이벤트댓글에 레벨 셋팅
+		//System.out.println("이벤트 코멘트 수1"+commentlist.size());
 		for(int i=0;i<commentlist.size();i++){
 			String gradename = gService.selectGradeInfo(commentlist.get(i).getNickname()).get(0).getGradename();
 			commentlist.get(i).setGradename(gradename);
 		}
+		//System.out.println("이벤트 코멘트 수2"+commentlist.size());
 		return commentlist;
 	}
 	

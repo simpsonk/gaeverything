@@ -73,7 +73,7 @@
 			</c:choose>								
 			
 			<div class="listing-share margin-bottom-20 no-border col-lg-6" style="text-align: left; margin-top: 10px;">
-				<span>${detail.countLike} people bookmarked this event.</span>
+				<span id="numOflike">${detail.countLike} people bookmarked this place.</span>
 			</div>
 			
 			<!-- Location -->

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -85,104 +86,54 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model, HttpSession session) {
 		logger.info("Welcome home! The client locale is {}.", "connect");
+	
 		boolean islogin = new LoginFilter().isLogin(session, model);
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		
-		//////////////////리뷰순 
+		//리뷰순 
+		String by1 = "review";
 		ActUserManager manager = new ActUserManager(aService);
 		List<LocationDTO> list1 = lService.getAllHospital(manager);
 		hList1 = hService.makeList1(list1);
-	
 		List<EventDTO> eList1 = eService.getAllLists();
 		eList1 = dService.getEventActUserResults(manager, eList1);
-		hList1 = hService.makeList2(hList1, eList1);
+		hList1 = hService.makeList2(hList1, eList1, by1);
 		
-		//totalReview순으로 정렬(내림차순)
-		Collections.sort(hList1, new Comparator<HomeListDTO>() {
-			@Override
-			public int compare(HomeListDTO o1, HomeListDTO o2) {
-				return o2.getTotalReview() - o1.getTotalReview();
-			}
-		});
-		
-		/*if(member!=null){
-			for(int i=0; i<hList1.size(); i++){
-				if(hList1.get(i).getFrom() == "care"){
-					ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.SHOP);
-					hList1 =manager.checkHomeLikeStatus(aDTO, hList1);
-				}else if(hList1.get(i).getFrom() == "event"){
-					ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.EVENT);
-					hList1 =manager.checkHomeLikeStatus(aDTO, hList1);
-				}
-			}
-		}*/
-		
+		if(member!=null){
+			hList1 = hService.checkLikeStatus(manager, member.getEmail(), hList1);
+		}
 		model.addAttribute("list1", hList1);
 						
-		//////////////////별점순
+		//별점순
 		List<LocationDTO> list2 = lService.getAllHospital(manager);
 		hList2 = hService.makeList1(list2);
-	
+		String by2 = "rate";
 		List<EventDTO> eList2 = eService.getAllLists();
+
 		eList2 = dService.getEventActUserResults(manager, eList2);
-		hList2 = hService.makeList2(hList2, eList2);
-		
-		//평균별점순으로 정렬(내림차순)
-		Collections.sort(hList2, new Comparator<HomeListDTO>() {
-			@Override
-			public int compare(HomeListDTO o1, HomeListDTO o2) {
-				double a = Double.parseDouble(o2.getAvgRating());
-				double b = Double.parseDouble(o1.getAvgRating());
-				return Double.compare(a, b);
-			}
-		});
-		
-		/*if(member!=null){
-			for(int i=0; i<hList2.size(); i++){
-				if(hList2.get(i).getFrom() == "care"){
-					ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.SHOP);
-					hList2 =manager.checkHomeLikeStatus(aDTO, hList2);
-				}else if(hList2.get(i).getFrom() == "event"){
-					ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.EVENT);
-					hList2 =manager.checkHomeLikeStatus(aDTO, hList2);
-				}
-			}
-		}*/
+		hList2 = hService.makeList2(hList2, eList2, by2);
+
+		if(member!=null){
+			hList2 = hService.checkLikeStatus(manager, member.getEmail(), hList2);
+		}
 		model.addAttribute("list2", hList2);
 		
-		//////////////////북마크순
+		//북마크순
+		String by3 = "bookmark";
 		List<LocationDTO> list3 = lService.getAllHospital(manager);
 		hList3 = hService.makeList1(list3);
-		
 		List<EventDTO> eList3 = eService.getAllLists();
 		eList3 = dService.getEventActUserResults(manager, eList3);
-		hList3 = hService.makeList2(hList3, eList3);
-		
+		hList3 = hService.makeList2(hList3, eList3, by3);
 		List<BoardDTO> bList = bService.getAllList();
 		hList3 = hService.makeList3(hList3, bList);
 		
-		//북마크순으로 정렬(내림차순)
-		Collections.sort(hList3, new Comparator<HomeListDTO>() {
-			@Override
-			public int compare(HomeListDTO o1, HomeListDTO o2) {
-				return o2.getCountLike() - o1.getCountLike();
-			}
-		});
-		
-		/*if(member!=null){
-			for(int i=0; i<hList3.size(); i++){
-				if(hList3.get(i).getFrom() == "care"){
-					ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.SHOP);
-					hList3 =manager.checkHomeLikeStatus(aDTO, hList3);
-				}else if(hList3.get(i).getFrom() == "event"){
-					ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.EVENT);
-					hList3 =manager.checkHomeLikeStatus(aDTO, hList3);
-				}
-			}
-		}*/
+		if(member!=null){
+			hList3 = hService.checkLikeStatus(manager, member.getEmail(), hList3);
+		}
 		model.addAttribute("list3", hList3);
 		
-		////////////////최신리뷰 3개
+		//최신리뷰 3개
 		List<BoardDTO> list4 = bService.getAllList();
 		model.addAttribute("list4", list4);
 		
@@ -192,7 +143,6 @@ public class HomeController {
 	@RequestMapping(value="/viewMore", method=RequestMethod.GET)
 	public String viewMore (HttpSession session, Model model, @RequestParam(value= "sort", defaultValue="default") String sort){
 		boolean isLogin = new LoginFilter().isLogin(session, model);
-		System.out.println(sort);
 		String url = "top_listing";
 		model.addAttribute("list1", hList1);
 		model.addAttribute("list2", hList2);
@@ -203,14 +153,15 @@ public class HomeController {
 		
 		
 	@RequestMapping(value="/updateHomeListLike", method={RequestMethod.GET, RequestMethod.POST})
-	public String updateHomeListLike(
+	public @ResponseBody int updateHomeListLike(
 			 				@RequestParam("from") String from,
 							@RequestParam("like") String like,
 							@RequestParam("no") int no,
 							@RequestParam("email") String email){
+		System.out.println(like);
 		String url = "";
+		int data = 0;
 		ActUserManager manager = new ActUserManager(aService);
-		//좋아요 눌려진 타입에 따라 actusermanager.static 설정
 		ActUserDTO dto = null;
 		if(from.equals("care")){
 			dto = new ActUserDTO(email, ActUserManager.SHOP, no);
@@ -239,7 +190,9 @@ public class HomeController {
 				System.out.println("delete fail: ReviewLike");
 			}
 		}
-		return "redirect:/";
+		
+		data = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.EVENT, no));
+		return data;
 	}
 		
 	@RequestMapping(value = "login", method = {RequestMethod.POST, RequestMethod.GET})
@@ -256,7 +209,7 @@ public class HomeController {
 			if(uri.equals("/")){
 				url = "redirect:"+loginUrl;
 				if(loginUrl.equals("/viewLogin")){
-					url =  "redirect:/";
+					url = "redirect:/";
 				}
 			}else{
 				url = "redirect:"+uri;

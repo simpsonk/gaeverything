@@ -75,6 +75,7 @@
 				
 			</div>
 		</div>
+		<input type="hidden" id = "email" value = "${member.email}">
 		<!-- Search Section / End -->
 
 
@@ -84,6 +85,7 @@
 			<c:if test="${sort == 'reviewed'||sort =='default'}">
 			<c:forEach items ="${list1}" var="review" begin="0" end="19" >
 				<div class="col-lg-4 col-md-6">
+				<input type="hidden" id="from" value="${review.from}">
 						<c:choose>
 							<c:when test="${review.category == 'HP8'}">
 								<a href="/map/detail/viewDetailPage?locationSeq=${review.no}" class="listing-item-container">
@@ -125,7 +127,7 @@
 					 					<h3>${review.title}</h3>
 									 	<span>${review.address}</span>
 					  				</div>
-					   				<span class="like-icon" onclick = "no_login_like()"></span>
+					   				
 					  			</div>
 					   			<div class="star-rating" data-rating="${review.avgRating}">
 					  			 	<div class="rating-counter"> 평균 ${review.avgRating} 점</div>
@@ -140,7 +142,7 @@
 				<c:if test="${sort == 'rated'}">
 				<c:forEach items="${list2}" var="rate" begin="0" end="19">
 				<div class="col-lg-4 col-md-6">
-					
+					<input type="hidden" id="from" value="${rate.from}">
 						<c:choose>
 						<c:when test="${rate.category == 'HP8'}">
 							<a href="/map/detail/viewDetailPage?locationSeq=${rate.no}" class="listing-item-container compact">
@@ -170,7 +172,7 @@
 					 				<h3>${rate.title}</h3>
 									<span>${rate.address}</span>
 								</div>
-									<span class="like-icon" onclick = "no_login_like()"></span>
+									
 								</div>
 							</a>
 						</div>
@@ -180,7 +182,7 @@
 				<c:if test="${sort == 'bookmarked'}">
 				<c:forEach items ="${list3}" var="like" begin="0" end="19">
 				<div class="col-lg-4 col-md-6">
-							
+							<input type="hidden" id="from" value="${like.from}">
 							<c:choose>
 							<c:when test="${like.category == 'HP8'}">
 								<a href="/map/detail/viewDetailPage?locationSeq=${like.no}" class="listing-item-container">
@@ -228,7 +230,7 @@
 					 					<h3>${like.title}</h3>
 									 	<span>${like.address}</span>
 					  				</div>
-					   				<span class="like-icon" onclick = "no_login_like()"></span>
+					   				
 					  			</div>
 					   			<div class="star-rating" data-rating="${like.avgRating}">
 					  			 	<div class="rating-counter"> 평균 ${like.avgRating} 점</div>
@@ -309,10 +311,34 @@ $(document).ready(function(){
 
 });
 
+
 function no_login_like(){
 	alert("로그인을 해주세요!");
-	location.href = "/viewLogin?url=/home";
+	location.href = "/viewLogin";
 }
+
+function click_like(no){
+	var like = document.getElementById("like"+no);
+	var class_name = like.className;
+	var from = document.getElementById("from").value;
+	var email = document.getElementById("email").value;
+	var url = "/updateHomeListLike?from="+from+"&like="+class_name+"&no="+no+"&email="+email;
+	//location.href = url;
+	
+	$.ajax({
+		url : url,
+		type : 'post',
+		dataType: 'json',
+		success : function(data){
+			
+		},
+		error : function(request, status, error) {
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+          }
+		
+	});
+}
+
 
 
 

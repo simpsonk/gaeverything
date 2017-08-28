@@ -36,7 +36,7 @@ public class EventDTO {
 
 	private int totalReview;
 	
-
+	private int count;
 	
 	
 	public int getTotalReview() {
@@ -217,6 +217,13 @@ public class EventDTO {
 		this.categoryCode = categoryCode;
 	}
 
+	
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
 	@Override
 	public String toString() {
 		return "EventDTO [eventNo=" + eventNo + ", eventName=" + eventName + ", startDate=" + startDate + ", addDate="
