@@ -503,10 +503,15 @@ function no_login_like(){
 }
 
 function click_like(no){
+	alert(no);
 	var like = document.getElementById("like"+no);
+	
 	var class_name = like.className;
+	alert(class_name);
 	var from = document.getElementById("from").value;
+	alert(from);
 	var email = document.getElementById("email").value;
+	alert(email);
 	var url = "/updateHomeListLike?from="+from+"&like="+class_name+"&no="+no+"&email="+email;
 	location.href = url;
 }

@@ -24,17 +24,23 @@ public class HomeService {
 			dto.setTitle(list.get(i).getTitle());
 			dto.setAddress(list.get(i).getAddress());
 			dto.setCategory(list.get(i).getCategoryCode());
+			if(list.get(i).getCategoryCode() == "HP8"){
+				dto.setFrom("care");
+			}else{
+				dto.setFrom("event");
+			}
 			dto.setAvgRating(list.get(i).getAverageRatings());
 			dto.setTotalReview(list.get(i).getTotalReview());
 			dto.setCountLike(list.get(i).getCountLike());
 			dto.setImage(list.get(i).getImageUrl());
-			dto.setFrom("care");
+			
 			hList.add(dto);
 			}
 		return hList;
 	}
 
 	public List<HomeListDTO> makeList2(List<HomeListDTO> hList, List<EventDTO> list) {
+		System.out.println("이벤트개수: " + list.size());
 		HomeListDTO dto = null;
 		for(int i=0; i<list.size(); i++){
 			dto = new HomeListDTO();
@@ -50,6 +56,7 @@ public class HomeService {
 			hList.add(dto);
 			
 		}
+		System.out.println("총 개수" + hList.size());
 		return hList;
 	}
 	
@@ -73,13 +80,25 @@ public class HomeService {
 	
 	public HomeListDTO getEventActUserResult(ActUserManager manager, List<LocationDTO> list1,List<EventDTO> list2, List<BoardDTO> list3, LocationDTO Ldto, EventDTO eDTO, HomeListDTO dto ) {
 		//홈에서 좋아요 눌린 것들 각 테이블에 좋아요 카운팅 올림 
-		
-
 		//int countLike = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.EVENT, dto.getEventNo()));		
 		//dto.setActUserResult(countReview, temp, countRatings, countReplies, countLike);
 		//int totalReview = countReplies + countReview;
 		//dto.setTotalReview(totalReview);
 		return dto;
+	}
+
+	public List<HomeListDTO> checkLikeStatus(ActUserManager manager, String email, List<HomeListDTO> list) {
+		
+		for(int i=0; i<4; i++){
+			if(list.get(i).getFrom() == "care"){
+				ActUserDTO aDTO = new ActUserDTO(email, ActUserManager.SHOP);
+				list = manager.checkHomeLikeStatus(aDTO, list);
+			}else if(list.get(i).getFrom() == "event"){
+				ActUserDTO aDTO = new ActUserDTO(email, ActUserManager.EVENT);
+				list = manager.checkHomeLikeStatus(aDTO, list);
+			}
+		}
+		return list;
 	}
 	
 }

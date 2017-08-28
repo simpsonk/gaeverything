@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -92,7 +93,8 @@ public class HomeController {
 		ActUserManager manager = new ActUserManager(aService);
 		List<LocationDTO> list1 = lService.getAllHospital(manager);
 		hList1 = hService.makeList1(list1);
-	
+		System.out.println("ÄÉ¾î°¹¼ö:" + hList1.size());
+		
 		List<EventDTO> eList1 = eService.getAllLists();
 		eList1 = dService.getEventActUserResults(manager, eList1);
 		hList1 = hService.makeList2(hList1, eList1);
@@ -105,16 +107,9 @@ public class HomeController {
 			}
 		});
 		
+		
 		if(member!=null){
-			for(int i=0; i<hList1.size(); i++){
-				if(hList1.get(i).getFrom() == "care"){
-					ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.SHOP);
-					hList1 =manager.checkHomeLikeStatus(aDTO, hList1);
-				}else if(hList1.get(i).getFrom() == "event"){
-					ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.EVENT);
-					hList1 =manager.checkHomeLikeStatus(aDTO, hList1);
-				}
-			}
+			hList1 = hService.checkLikeStatus(manager, member.getEmail(), hList1);
 		}
 		
 		model.addAttribute("list1", hList1);
@@ -138,16 +133,9 @@ public class HomeController {
 		});
 		
 		if(member!=null){
-			for(int i=0; i<hList2.size(); i++){
-				if(hList2.get(i).getFrom() == "care"){
-					ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.SHOP);
-					hList2 =manager.checkHomeLikeStatus(aDTO, hList2);
-				}else if(hList2.get(i).getFrom() == "event"){
-					ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.EVENT);
-					hList2 =manager.checkHomeLikeStatus(aDTO, hList2);
-				}
-			}
+			hList2 = hService.checkLikeStatus(manager, member.getEmail(), hList2);
 		}
+		
 		model.addAttribute("list2", hList2);
 		
 		//////////////////ºÏ¸¶Å©¼ø
@@ -170,16 +158,9 @@ public class HomeController {
 		});
 		
 		if(member!=null){
-			for(int i=0; i<hList3.size(); i++){
-				if(hList3.get(i).getFrom() == "care"){
-					ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.SHOP);
-					hList3 =manager.checkHomeLikeStatus(aDTO, hList3);
-				}else if(hList3.get(i).getFrom() == "event"){
-					ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.EVENT);
-					hList3 =manager.checkHomeLikeStatus(aDTO, hList3);
-				}
-			}
+			hList3 = hService.checkLikeStatus(manager, member.getEmail(), hList3);
 		}
+		
 		model.addAttribute("list3", hList3);
 		
 		////////////////ÃÖ½Å¸®ºä 3°³
@@ -192,7 +173,6 @@ public class HomeController {
 	@RequestMapping(value="/viewMore", method=RequestMethod.GET)
 	public String viewMore (HttpSession session, Model model, @RequestParam(value= "sort", defaultValue="default") String sort){
 		boolean isLogin = new LoginFilter().isLogin(session, model);
-		System.out.println(sort);
 		String url = "top_listing";
 		model.addAttribute("list1", hList1);
 		model.addAttribute("list2", hList2);
@@ -256,12 +236,14 @@ public class HomeController {
 			if(uri.equals("/")){
 				url = "redirect:"+loginUrl;
 				if(loginUrl.equals("/viewLogin")){
-					url =  "redirect:/";
+					url = "redirect:/";
 				}
+				System.out.println(loginUrl);
 			}else{
 				url = "redirect:"+uri;
 			}
 		}
+		System.out.println(url);
 		return url;
 	}
 		
