@@ -181,7 +181,7 @@
 				<div class="dashboard-list-box invoices with-icons margin-top-20">
 					<!-- 팝오버로 레벨가이드 보여주기 -->
 					 <a href="#" id="guide" title="Level Guide" data-placement="top" data-toggle="popover" data-trigger="hover" 
-					 data-content="<i class='fa fa-smile-o'></i> beganner : 0-30p<br>
+					 data-content="<i class='im im-icon-Environmental'></i> beganner : 0-30p<br>
 					 <i class='fa fa-trophy'></i> gaeneral : 31-70p<br>
 					 <i class='fa fa-trophy'></i><i class='fa fa-trophy'></i> gaexpert : 71-120p<br>
 					 <i class='fa fa-trophy'></i><i class='fa fa-trophy'></i><i class='fa fa-trophy'></i> gaenius : 121p ~">
@@ -194,7 +194,7 @@
 						<li >
 						<i class="list-box-icon sl sl-icon-badge"></i> 
 						<span> 
-							<c:if test="${list.gradename=='beganner'}"><i class='fa fa-smile-o'></i></c:if>
+							<c:if test="${list.gradename=='beganner'}"><i class='im im-icon-Environmental'></i></c:if>
 							<c:if test="${list.gradename=='gaeneral'}"> <i class='fa fa-trophy'></i></c:if>
 							<c:if test="${list.gradename=='gaexpert'}"> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i></c:if>
 							<c:if test="${list.gradename=='gaenius'}"> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i></c:if>
