@@ -86,81 +86,51 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model, HttpSession session) {
 		logger.info("Welcome home! The client locale is {}.", "connect");
+	
 		boolean islogin = new LoginFilter().isLogin(session, model);
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		
 		//////////////////리뷰순 
+		String by1 = "review";
 		ActUserManager manager = new ActUserManager(aService);
 		List<LocationDTO> list1 = lService.getAllHospital(manager);
 		hList1 = hService.makeList1(list1);
-		System.out.println("케어갯수:" + hList1.size());
-		
 		List<EventDTO> eList1 = eService.getAllLists();
 		eList1 = dService.getEventActUserResults(manager, eList1);
-		hList1 = hService.makeList2(hList1, eList1);
-		
-		//totalReview순으로 정렬(내림차순)
-		Collections.sort(hList1, new Comparator<HomeListDTO>() {
-			@Override
-			public int compare(HomeListDTO o1, HomeListDTO o2) {
-				return o2.getTotalReview() - o1.getTotalReview();
-			}
-		});
-		
+		hList1 = hService.makeList2(hList1, eList1, by1);
 		
 		if(member!=null){
 			hList1 = hService.checkLikeStatus(manager, member.getEmail(), hList1);
 		}
-		
 		model.addAttribute("list1", hList1);
 						
 		//////////////////별점순
 		List<LocationDTO> list2 = lService.getAllHospital(manager);
 		hList2 = hService.makeList1(list2);
-	
+		String by2 = "rate";
 		List<EventDTO> eList2 = eService.getAllLists();
+
 		eList2 = dService.getEventActUserResults(manager, eList2);
-		hList2 = hService.makeList2(hList2, eList2);
-		
-		//평균별점순으로 정렬(내림차순)
-		Collections.sort(hList2, new Comparator<HomeListDTO>() {
-			@Override
-			public int compare(HomeListDTO o1, HomeListDTO o2) {
-				double a = Double.parseDouble(o2.getAvgRating());
-				double b = Double.parseDouble(o1.getAvgRating());
-				return Double.compare(a, b);
-			}
-		});
-		
+		hList2 = hService.makeList2(hList2, eList2, by2);
+
 		if(member!=null){
 			hList2 = hService.checkLikeStatus(manager, member.getEmail(), hList2);
 		}
-		
 		model.addAttribute("list2", hList2);
 		
 		//////////////////북마크순
+		String by3 = "bookmark";
 		List<LocationDTO> list3 = lService.getAllHospital(manager);
 		hList3 = hService.makeList1(list3);
-		
 		List<EventDTO> eList3 = eService.getAllLists();
 		eList3 = dService.getEventActUserResults(manager, eList3);
-		hList3 = hService.makeList2(hList3, eList3);
-		
+		hList3 = hService.makeList2(hList3, eList3, by3);
 		List<BoardDTO> bList = bService.getAllList();
 		hList3 = hService.makeList3(hList3, bList);
-		
-		//북마크순으로 정렬(내림차순)
-		Collections.sort(hList3, new Comparator<HomeListDTO>() {
-			@Override
-			public int compare(HomeListDTO o1, HomeListDTO o2) {
-				return o2.getCountLike() - o1.getCountLike();
-			}
-		});
 		
 		if(member!=null){
 			hList3 = hService.checkLikeStatus(manager, member.getEmail(), hList3);
 		}
-		
 		model.addAttribute("list3", hList3);
 		
 		////////////////최신리뷰 3개
@@ -238,7 +208,6 @@ public class HomeController {
 				if(loginUrl.equals("/viewLogin")){
 					url = "redirect:/";
 				}
-				System.out.println(loginUrl);
 			}else{
 				url = "redirect:"+uri;
 			}

@@ -161,6 +161,8 @@
 					<!-- <form method="post" action="" modelAttribute="data1"> -->
 					<c:forEach items ="${list1}" var="review" varStatus="loop" begin="0" end="4" >
 						<div class="carousel-item">
+						<input type="hidden" id="reviewFrom${loop.index}" value="${review.from}">
+						<input type="hidden" id="reviewCategory${loop.index}" value="${review.category}">
 							<c:choose>
 							<c:when test="${review.category == 'HP8'}">
 								<a href="/map/detail/viewDetailPage?locationSeq=${review.no}" class="listing-item-container">
@@ -207,7 +209,7 @@
 					  					<span class="like-icon" id="like" onclick = "no_login_like()"></span>
 					  				</c:when>
 					  				<c:otherwise>
-					  					<span class="${review.userLikeStatus}" id="like${review.no}" onclick = "click_like(${review.no})"></span>
+					  					<span class="${review.userLikeStatus}" id="like${loop.index}" onclick = "click_like(${review.no}, ${loop.index}, 'review')"></span>
 					  				</c:otherwise>
 					  				</c:choose>
 					   				
@@ -244,9 +246,10 @@
 			 <div class="col-md-12">
 				 <div class="simple-slick-carousel dots-nav">
 				 <!-- Listing Item -->	
-				 <c:forEach items="${list2}" var="rate" begin="0" end="4">
+				 <c:forEach items="${list2}" varStatus="loop" var="rate" begin="0" end="4">
 					<div class="carousel-item">
-					<input type="hidden" id="from" value="${rate.from}">
+					<input type="hidden" id="rateFrom${loop.index}" value="${rate.from}">
+					<input type="hidden" id="rateCategory${loop.index}" value="${rate.category}">
 						<c:choose>
 						<c:when test="${rate.category == 'HP8'}">
 							<a href="/map/detail/viewDetailPage?locationSeq=${rate.no}" class="listing-item-container compact">
@@ -282,7 +285,7 @@
 					  					<span class="like-icon" id="like" onclick = "no_login_like()"></span>
 					  				</c:when>
 					  				<c:otherwise>
-					  					<span class="${rate.userLikeStatus}" id="like${rate.no}" onclick = "click_like(${rate.no})"></span>
+					  					<span class="${rate.userLikeStatus}" id="like${loop.index}" onclick = "click_like(${rate.no}, ${loop.index}, 'rate')"></span>
 					  				</c:otherwise>
 					  				</c:choose>
 								</div>
@@ -312,9 +315,11 @@
 			<div class="col-md-12">
 					<div class="simple-slick-carousel dots-nav">
 					<!-- Listing Item -->
-					<c:forEach items ="${list3}" var="like" begin="0" end="4">
+					<c:forEach items ="${list3}" varStatus="loop" var="like" begin="0" end="4">
 						<div class="carousel-item">
-							<input type="hidden" id="from" value="${like.from}">
+							<input type="hidden" id="likeFrom${loop.index}" value="${like.from}">
+							<input type="hidden" id="likeCategory${loop.index}" value="${like.category}">
+
 							<c:choose>
 							<c:when test="${like.category == 'HP8'}">
 								<a href="/map/detail/viewDetailPage?locationSeq=${like.no}" class="listing-item-container">
@@ -368,7 +373,7 @@
 					  					<span class="like-icon" id="like" onclick = "no_login_like()"></span>
 					  				</c:when>
 					  				<c:otherwise>
-					  					<span class="${like.userLikeStatus}" id="like${like.no}" onclick = "click_like(${like.no})"></span>
+					  					<span class="${like.userLikeStatus}" id="like${loop.index}" onclick = "click_like(${like.no}, ${loop.index}, 'like')"></span>
 					  				</c:otherwise>
 					  				</c:choose>
 					  			</div>
@@ -401,7 +406,7 @@
 
 		<div class="row" id = "reviews">
 			<!-- Blog Post Item -->
-			<c:forEach items="${list4}" var="post" begin="0" end="2">
+			<c:forEach items="${list4}" varStatus="loop" var="post" begin="0" end="2">
 			<div class="col-md-4">
 			
 				<a href="/review/readPost/${post.boardNo}" class="blog-compact-item-container">
@@ -502,16 +507,27 @@ function no_login_like(){
 	location.href = "/viewLogin";
 }
 
-function click_like(no){
-	alert(no);
-	var like = document.getElementById("like"+no);
-	
+function click_like(no, index, from){
+
+	var like = document.getElementById("like"+index);
 	var class_name = like.className;
-	alert(class_name);
-	var from = document.getElementById("from").value;
+	
+	if(from == "review"){
+		var from = document.getElementById("reviewFrom"+index).value;
+	}else if(from =="rate"){
+		var from = document.getElementById("rateFrom"+index).value;
+	}else if(from =="like"){
+		var from = document.getElementById("likeFrom"+index).value;
+	}
+	
+	
+	
+	//var category = document.getElementById("category"+index).value;
+	
 	alert(from);
+	//alert(category);
 	var email = document.getElementById("email").value;
-	alert(email);
+	
 	var url = "/updateHomeListLike?from="+from+"&like="+class_name+"&no="+no+"&email="+email;
 	location.href = url;
 }

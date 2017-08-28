@@ -1,6 +1,8 @@
 package com.bitschool.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -24,11 +26,7 @@ public class HomeService {
 			dto.setTitle(list.get(i).getTitle());
 			dto.setAddress(list.get(i).getAddress());
 			dto.setCategory(list.get(i).getCategoryCode());
-			if(list.get(i).getCategoryCode() == "HP8"){
-				dto.setFrom("care");
-			}else{
-				dto.setFrom("event");
-			}
+			dto.setFrom("care");
 			dto.setAvgRating(list.get(i).getAverageRatings());
 			dto.setTotalReview(list.get(i).getTotalReview());
 			dto.setCountLike(list.get(i).getCountLike());
@@ -39,25 +37,77 @@ public class HomeService {
 		return hList;
 	}
 
-	public List<HomeListDTO> makeList2(List<HomeListDTO> hList, List<EventDTO> list) {
-		System.out.println("이벤트개수: " + list.size());
+	public List<HomeListDTO> makeList2(List<HomeListDTO> hList, List<EventDTO> list, String by) {
 		HomeListDTO dto = null;
+		List<HomeListDTO> newHomeList = null;
 		for(int i=0; i<list.size(); i++){
 			dto = new HomeListDTO();
 			dto.setNo(list.get(i).getEventNo());
 			dto.setTitle(list.get(i).getEventName());
 			dto.setAddress(list.get(i).getAddress());
 			dto.setCategory(list.get(i).getCategoryCode());
+			dto.setFrom("event");
 			dto.setAvgRating(list.get(i).getAverageRatings());
 			dto.setTotalReview(list.get(i).getTotalReview());
 			dto.setCountLike(list.get(i).getCountLike());
 			dto.setImage(list.get(i).getThumbnail());
-			dto.setFrom("event");
 			hList.add(dto);
+		}
+	//	System.out.println("makeList2 hList "+hList);
+		
+		if(by == "review"){
+			Collections.sort(hList, new Comparator<HomeListDTO>() {
+				@Override
+				public int compare(HomeListDTO o1, HomeListDTO o2) {
+					return o2.getTotalReview() - o1.getTotalReview();
+				}
+			});
+			List<HomeListDTO> newHomeList1 = new ArrayList<HomeListDTO>();
+			for(int i=0; i<20; i++){
+				newHomeList1.add(hList.get(i));
+			}
+			return newHomeList1;
+			
+			
+		}else if(by == "rate"){
+			Collections.sort(hList, new Comparator<HomeListDTO>() {
+				@Override
+				public int compare(HomeListDTO o1, HomeListDTO o2) {
+					double a = Double.parseDouble(o2.getAvgRating());
+					double b = Double.parseDouble(o1.getAvgRating());
+					return Double.compare(a, b);
+				}
+			});	
+			List<HomeListDTO> newHomeList2 = new ArrayList<HomeListDTO>();
+			for(int i=0; i<20; i++){
+				newHomeList2.add(hList.get(i));
+			}
+			return newHomeList2;
+			
+		}else if(by == "bookmark"){
+			Collections.sort(hList, new Comparator<HomeListDTO>() {
+				@Override
+				public int compare(HomeListDTO o1, HomeListDTO o2) {
+					return o2.getCountLike() - o1.getCountLike();
+				}
+			});
+
+			List<HomeListDTO> newHomeList3 = new ArrayList<HomeListDTO>();
+			for(int i=0; i<20; i++){
+				newHomeList3.add(hList.get(i));
+			}
+			return newHomeList3;
 			
 		}
-		System.out.println("총 개수" + hList.size());
-		return hList;
+		
+	/*	List<HomeListDTO> newHomeList1 = new ArrayList<HomeListDTO>();
+		List<HomeListDTO> newHomeList2 = new ArrayList<HomeListDTO>();
+		List<HomeListDTO> newHomeList3 = new ArrayList<HomeListDTO>();
+		
+		for(int i=0; i<20; i++){
+			newHomeList1.add(hList.get(i));
+		}*/
+		return newHomeList;
 	}
 	
 	public List<HomeListDTO> makeList3(List<HomeListDTO> hList, List<BoardDTO> list) {
@@ -75,7 +125,19 @@ public class HomeService {
 			dto.setImage(list.get(i).getUploadImg());
 			hList.add(dto);
 		}
-		return hList;
+		
+		Collections.sort(hList, new Comparator<HomeListDTO>() {
+			@Override
+			public int compare(HomeListDTO o1, HomeListDTO o2) {
+				return o2.getCountLike() - o1.getCountLike();
+			}
+		});
+		
+		List<HomeListDTO> newHomeList = new ArrayList<HomeListDTO>();
+		for(int i=0; i<20; i++){
+			newHomeList.add(hList.get(i));
+		}
+		return newHomeList;
 	}
 	
 	public HomeListDTO getEventActUserResult(ActUserManager manager, List<LocationDTO> list1,List<EventDTO> list2, List<BoardDTO> list3, LocationDTO Ldto, EventDTO eDTO, HomeListDTO dto ) {
@@ -88,8 +150,10 @@ public class HomeService {
 	}
 
 	public List<HomeListDTO> checkLikeStatus(ActUserManager manager, String email, List<HomeListDTO> list) {
-		
-		for(int i=0; i<4; i++){
+		System.out.println("좋아요체크할 리스트개수 " + list.size());
+		System.out.println(list.get(0).getFrom());
+		for(int i=0; i<list.size(); i++){
+			System.out.println(list.get(i).getFrom());
 			if(list.get(i).getFrom() == "care"){
 				ActUserDTO aDTO = new ActUserDTO(email, ActUserManager.SHOP);
 				list = manager.checkHomeLikeStatus(aDTO, list);
@@ -98,6 +162,7 @@ public class HomeService {
 				list = manager.checkHomeLikeStatus(aDTO, list);
 			}
 		}
+		System.out.println("좋아요체크끗 "+list.size());
 		return list;
 	}
 	

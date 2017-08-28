@@ -108,6 +108,13 @@ public class HomeListDTO {
 	public void setImage(String image) {
 		this.image = image;
 	}
+	@Override
+	public String toString() {
+		return "HomeListDTO [no=" + no + ", title=" + title + ", address=" + address + ", category=" + category
+				+ ", rating=" + rating + ", content=" + content + ", regiDate=" + regiDate + ", totalReview="
+				+ totalReview + ", avgRating=" + avgRating + ", countLike=" + countLike + ", image=" + image
+				+ ", userLikeStatus=" + userLikeStatus + ", from=" + from + ", list=" + list + "]";
+	}
 
 	
 	

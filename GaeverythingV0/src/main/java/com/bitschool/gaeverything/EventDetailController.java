@@ -148,12 +148,12 @@ public class EventDetailController {
 	public @ResponseBody List<EventCommentDTO> getReviewData(@RequestParam(value="eventNo") int eventNo){
 		List<EventCommentDTO> commentlist = service.commentList(eventNo);	
 		//이벤트댓글에 레벨 셋팅
-		System.out.println("이벤트 코멘트 수1"+commentlist.size());
+		//System.out.println("이벤트 코멘트 수1"+commentlist.size());
 		for(int i=0;i<commentlist.size();i++){
 			String gradename = gService.selectGradeInfo(commentlist.get(i).getNickname()).get(0).getGradename();
 			commentlist.get(i).setGradename(gradename);
 		}
-		System.out.println("이벤트 코멘트 수2"+commentlist.size());
+		//System.out.println("이벤트 코멘트 수2"+commentlist.size());
 		return commentlist;
 	}
 	

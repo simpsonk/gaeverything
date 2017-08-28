@@ -66,14 +66,14 @@
 				</c:when>
 				<c:otherwise>
 					<div class="listing-share margin-bottom-20 no-border col-lg-4" style="text-align: left;">
-						<button type="button" class="like-button" onclick="like_clicked()"><span id = "like" class="${dto.userLikeStatus }"></span> Bookmark this event</button>
+						<button type="button" class="like-button" onclick="like_clicked()"><span id = "like" class="${dto.userLikeStatus}"></span> Bookmark this event</button>
 					</div>	
 				</c:otherwise>
 			</c:choose>	
 			
 			
 				<div class="listing-share margin-bottom-20 no-border col-lg-6" style="text-align: left; margin-top: 10px;">
-					<span>${dto.countLike} people bookmarked this event.</span>
+					<span id="numOflike">${dto.countLike} people bookmarked this event.</span>
 				</div>
 			
 		

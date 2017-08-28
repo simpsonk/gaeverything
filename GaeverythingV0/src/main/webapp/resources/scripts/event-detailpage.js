@@ -140,6 +140,7 @@ function like_clicked(){
         dataType : 'json',
         type	 : "POST",
         success  : function(data) {
+        	
         	id.innerHTML = data+' people bookmarked this event.';
         },
         error : function(request, status, error) {
