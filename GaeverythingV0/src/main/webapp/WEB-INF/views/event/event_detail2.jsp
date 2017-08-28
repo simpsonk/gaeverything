@@ -160,10 +160,10 @@
 						
 					</div>
 					
-					<c:if test="${fn:length(eventphoto)>4}">
+					<%-- <c:if test="${fn:length(eventphoto)>4}">
 					<input type="button" id="photoMore" value="Read More">
 					<input type="button" id="photoHide" value="Hide">
-					</c:if>
+					</c:if> --%>
 					<c:if test="${fn:length(eventphoto) > 4}">
 					<div class="row">
 					<div class="col-lg-12">

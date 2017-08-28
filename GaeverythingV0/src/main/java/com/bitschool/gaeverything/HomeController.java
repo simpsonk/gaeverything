@@ -105,7 +105,7 @@ public class HomeController {
 			}
 		});
 		
-		if(member!=null){
+		/*if(member!=null){
 			for(int i=0; i<hList1.size(); i++){
 				if(hList1.get(i).getFrom() == "care"){
 					ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.SHOP);
@@ -115,7 +115,7 @@ public class HomeController {
 					hList1 =manager.checkHomeLikeStatus(aDTO, hList1);
 				}
 			}
-		}
+		}*/
 		
 		model.addAttribute("list1", hList1);
 						
@@ -137,7 +137,7 @@ public class HomeController {
 			}
 		});
 		
-		if(member!=null){
+		/*if(member!=null){
 			for(int i=0; i<hList2.size(); i++){
 				if(hList2.get(i).getFrom() == "care"){
 					ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.SHOP);
@@ -147,7 +147,7 @@ public class HomeController {
 					hList2 =manager.checkHomeLikeStatus(aDTO, hList2);
 				}
 			}
-		}
+		}*/
 		model.addAttribute("list2", hList2);
 		
 		//////////////////ºÏ¸¶Å©¼ø
@@ -169,7 +169,7 @@ public class HomeController {
 			}
 		});
 		
-		if(member!=null){
+		/*if(member!=null){
 			for(int i=0; i<hList3.size(); i++){
 				if(hList3.get(i).getFrom() == "care"){
 					ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.SHOP);
@@ -179,7 +179,7 @@ public class HomeController {
 					hList3 =manager.checkHomeLikeStatus(aDTO, hList3);
 				}
 			}
-		}
+		}*/
 		model.addAttribute("list3", hList3);
 		
 		////////////////ÃÖ½Å¸®ºä 3°³

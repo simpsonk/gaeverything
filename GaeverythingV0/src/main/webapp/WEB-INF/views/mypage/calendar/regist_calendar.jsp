@@ -85,7 +85,7 @@
 
 									<label>제목</label> 
 									<input type='text' id='title' size=30px
-										name='title' placeholder="예: 오후 7시에 멕시코 음식점에서 저녁식사" value=''>
+										name='title' placeholder="예: 강아지 목욕시키기" value=''>
 
 									<label>강아지 선택</label> 
 									
@@ -134,12 +134,13 @@
             						<div class="col-md-10">
 											<div><input id="resultValue" name="repeatview" value=""></div>
             						</div>
-            						<div class="col-md-2">
+            						<input type="hidden" id="resultHiddenValue" name="repeatdata" value="">
+            						<!-- <div class="col-md-2">
 											<div>히든 요약</div>
             						</div>
             						<div class="col-md-10">
-											<div><input id="resultHiddenValue" name="repeatdata" value=""></div>
-            						</div>
+											<div></div>
+            						</div> -->
 
 									<button class="button margin-top-15" onclick="schedule(1)">등록</button>
 								</form>
@@ -167,8 +168,8 @@
 											<!--  <select id="repeatWeek" name="repeatWeek" onchange="alert(this.options[this.selectedIndex].text)"> -->
 												<option value="1">매일
 												<option value="2" selected='selected'>매주
-												<option value="3">매월
-												<option value="4">매년
+												<!-- <option value="3">매월
+												<option value="4">매년 -->
 											</select>
             						</div>
             						<div class="col-md-2">
@@ -269,7 +270,7 @@
             						</div>
             						<div class="col-md-10">
 											<div><input id="result" name="result" value="매주 월요일"></div>
-											<div><input id="resultHidden" name="resultHidden" value="2, 1,"></div>
+											<input type="hidden" id="resultHidden" name="resultHidden" value="2, 1,">
             						</div>
 
 									<button class="button margin-top-15" onclick="repeatAdd()">적용</button>

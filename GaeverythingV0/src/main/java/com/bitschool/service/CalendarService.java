@@ -64,7 +64,7 @@ public class CalendarService{
 		List<CalendarDTO> list = dao.selectId(id);
 		List<CalendarFormat> calendar = new ArrayList<CalendarFormat>();
 		CalendarFormat c = null;
-		String[] colorType = {"#37b6bd","#b3c211","#ffb400","#f91941", "#fa5b0f"};
+		String[] colorType = {"#37b6bd","#b3c211","#ffb400","#f91941", "#fa5b0f", "#00a948", "#6441eb"};
 		for(int i=0;i<list.size();i++){
 			if((list.get(i).getRepeatdata())==null){
 				c = new CalendarFormat();
@@ -74,7 +74,7 @@ public class CalendarService{
 				c.setEnd(list.get(i).getEnd());
 				c.setColor(colorType[list.get(i).getDogid()]);
 				c.setSeq(list.get(i).getCalendarseq());
-				if(list.get(i).getDogid()==0){
+				if((list.get(i).getDogid()==0)||(list.get(i).getDogid()==2)){
 					LocationDTO ldto;
 					try {
 						ldto = ldao.selectLocationSeq(list.get(i).getLocationseq());
@@ -97,6 +97,7 @@ public class CalendarService{
 						e.printStackTrace();
 					}
 				}
+				System.out.println(c);
 				calendar.add(c);
 			}else{
 				String repeat = list.get(i).getRepeatdata();
@@ -291,7 +292,7 @@ public class CalendarService{
 			LocationDTO Ldto = ldao.selectLocationSeq(locationSeq);
 			CalendarDTO Cdto = new CalendarDTO();
 			Cdto.setId(email);
-			Cdto.setDogid(1);
+			Cdto.setDogid(0);
 			Cdto.setTitle(Ldto.getTitle());//병원, 카페에 따라 다르게
 			Cdto.setPlace(Ldto.getTitle());
 			Cdto.setStartDate(startDate);
@@ -319,10 +320,10 @@ public class CalendarService{
 		Cdto.setStartDate(startDate);
 		Cdto.setStartTime("10:00");
 		Cdto.setEndDate(startDate);
-		Cdto.setEndTime("00:00");
+		Cdto.setEndTime("12:00");
 		Cdto.setMessage(null);
-		Cdto.setLocationseq(eventNo);
-		flag = Cdao.insert2(Cdto);
+		Cdto.setEventNo(eventNo);
+		flag = Cdao.insert3(Cdto);
 		return flag;
 	}
 }
