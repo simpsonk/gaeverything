@@ -158,7 +158,7 @@ public class HomeController {
 							@RequestParam("like") String like,
 							@RequestParam("no") int no,
 							@RequestParam("email") String email){
-		System.out.println(like);
+//		System.out.println(like);
 		String url = "";
 		int data = 0;
 		ActUserManager manager = new ActUserManager(aService);
@@ -177,7 +177,7 @@ public class HomeController {
 			gService.insertInfo(gDTO);*/
 			
 			if(!flag){
-				System.out.println("insert fail: ReviewLike");
+//				System.out.println("insert fail: ReviewLike");
 			}
 		}else if(like.equals("like-icon liked")){
 			flag = manager.deleteLikeStatus(dto);
@@ -187,7 +187,7 @@ public class HomeController {
 			gService.deleteInfo(gDTO);*/
 			
 			if(!flag){
-				System.out.println("delete fail: ReviewLike");
+//				System.out.println("delete fail: ReviewLike");
 			}
 		}
 		

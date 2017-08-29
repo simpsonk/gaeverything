@@ -74,7 +74,7 @@ public class CalendarService{
 				c.setEnd(list.get(i).getEnd());
 				c.setColor(colorType[list.get(i).getDogid()]);
 				c.setSeq(list.get(i).getCalendarseq());
-				if((list.get(i).getDogid()==0)||(list.get(i).getDogid()==2)){
+				if((list.get(i).getDogid()==0)){
 					LocationDTO ldto;
 					try {
 						ldto = ldao.selectLocationSeq(list.get(i).getLocationseq());
@@ -97,7 +97,6 @@ public class CalendarService{
 						e.printStackTrace();
 					}
 				}
-				System.out.println(c);
 				calendar.add(c);
 			}else{
 				String repeat = list.get(i).getRepeatdata();
@@ -256,7 +255,6 @@ public class CalendarService{
 				int fTime = Integer.parseInt(fTimes[0])+12;
 				resultStart = fTime+":"+fTimes[1];
 				resultEnd = (fTime+2)+":"+fTimes[1];
-				System.out.println(fTimes[0]+"      "+fTimes[1]);
 			}else{
 				String[] fTimes = times[0].split(":");
 				int fTime = Integer.parseInt(fTimes[0]);

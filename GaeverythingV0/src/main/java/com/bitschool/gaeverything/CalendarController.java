@@ -153,7 +153,6 @@ public class CalendarController {
 		//캘린더에 등록
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		boolean flag = service.bookingEvent(eventNo, startDate, eventName, address, member.getEmail());
-		System.out.println("controller"+startDate);
 		if(flag){
 			url = "redirect:/event/detail/view?no="+eventNo;
 		}
@@ -189,7 +188,6 @@ public class CalendarController {
 		//캘린더에 등록
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		boolean flag = service.bookingAddNearby(eventNo, startDate, locationSeq, member.getEmail());
-		System.out.println("controller"+startDate);
 		if(flag){
 			url = "redirect:/event/detail/view?no="+eventNo;
 		}

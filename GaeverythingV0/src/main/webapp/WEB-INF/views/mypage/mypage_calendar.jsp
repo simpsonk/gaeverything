@@ -109,7 +109,11 @@ footer {
 		<div id="titlebar">
 			<div class="row">
 				<div class="col-md-12">
+				<div style="margin: auto;">
+					<div id="openweathermap-widget-13"></div>
+				</div>
 					<h2>Calender</h2>
+					
 					<!-- Breadcrumbs -->
 					<nav id="breadcrumbs">
 						<ul>
@@ -121,13 +125,12 @@ footer {
 				</div>
 			</div>
 		</div>
-
 		<div class="row">
 			
 			<!-- Listings -->
 			<div class="col-lg-12 col-md-12">
 				<div class="dashboard-list-box margin-top-0">
-				<div id="openweathermap-widget-11"></div>
+				
 					<div id='calendar'></div>
 				</div>
 			</div>
@@ -228,16 +231,15 @@ footer {
 			});
 </script>
 
-	<script
-		src='https://openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
+	
 	<script>
 		window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];
 		window.myWidgetParam.push({
-			id : 11,
+			id : 13,
 			cityid : '1835848',
 			appid : '111a89d164c8b2c8d90b5cd3a8aaac54',
 			units : 'metric',
-			containerid : 'openweathermap-widget-11',
+			containerid : 'openweathermap-widget-13',
 		});
 		(function() {
 			var script = document.createElement('script');
