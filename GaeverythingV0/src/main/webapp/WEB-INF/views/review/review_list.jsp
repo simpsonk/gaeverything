@@ -165,10 +165,10 @@
 									<ul class="post-meta">
 										<li>
 											<strong>${board.nickname} </strong>
-											<c:if test="${board.gradename=='beganner'}"><i class='im im-icon-Environmental'></i></c:if>
-											<c:if test="${board.gradename=='gaeneral'}"> <i class='fa fa-trophy'></i></c:if>
-											<c:if test="${board.gradename=='gaexpert'}"> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i></c:if>
-											<c:if test="${board.gradename=='gaenius'}"> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i></c:if>
+											<c:if test="${board.gradename=='beganner'}"><i class='im im-icon-Environmental' style="color: #27AE60"></i></c:if>
+											<c:if test="${board.gradename=='gaeneral'}"> <i class='fa fa-trophy' style="color: #F1C40F"></i></c:if>
+											<c:if test="${board.gradename=='gaexpert'}"> <i class='fa fa-trophy' style="color: #F1C40F"></i> <i class='fa fa-trophy' style="color: #F1C40F"></i></c:if>
+											<c:if test="${board.gradename=='gaenius'}"> <i class='fa fa-trophy' style="color: #F1C40F"></i> <i class='fa fa-trophy' style="color: #F1C40F"></i> <i class='fa fa-trophy' style="color: #F1C40F"></i></c:if>
 										</li>
 										<!--<c:if test="${board.boardCategory=='1'}">
 						<li><a href="#">병원, 뷰티</a></li>

@@ -159,17 +159,17 @@
 					
 								<tr>
 									<td><b>Name</b></td>
-									<td colspan="4"><input name="name" placeholder="Put down your name" value="${mypage.name}" type="text" ></td>
+									<td colspan="4"><input name="name" value="${mypage.name}" type="text" ></td>
 								</tr>
 				
 								<tr>
 									<td><b>Phone</b></td>
-									<td colspan="4"><input name="phone" placeholder="Put down your phone number" value="${mypage.phone}" type="text"></td>
+									<td colspan="4"><input name="phone" value="${mypage.phone}" type="text"></td>
 								</tr>
 								
 								<tr>
 									<td><b>Notes</b></td>
-									<td colspan="4"><textarea name="notes" placeholder="Put down your notes" id="notes" cols="30" rows="10">${mypage.notes}</textarea></td>
+									<td colspan="4"><textarea name="notes" placeholder="Say something about yourself!" id="notes" cols="30" rows="10">${mypage.notes}</textarea></td>
 								</tr>
 								
 							</table>

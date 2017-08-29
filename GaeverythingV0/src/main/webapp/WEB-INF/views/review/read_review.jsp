@@ -337,10 +337,10 @@
 			<div class="about-description">			
 				<div class="writer">
 					<h4>${dto.nickname}</h4>
-					<h5>	<c:if test="${gradeName=='beganner'}"><i class='im im-icon-Environmental'></i></c:if>
-							<c:if test="${gradeName=='gaeneral'}"> <i class='fa fa-trophy'></i></c:if>
-							<c:if test="${gradeName=='gaexpert'}"> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i></c:if>
-							<c:if test="${gradeName=='gaenius'}"> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i></c:if>
+					<h5>	<c:if test="${gradeName=='beganner'}"><i class='im im-icon-Environmental' style="color: #27AE60"></i></c:if>
+							<c:if test="${gradeName=='gaeneral'}"> <i class='fa fa-trophy' style="color: #F1C40F"></i></c:if>
+							<c:if test="${gradeName=='gaexpert'}"> <i class='fa fa-trophy' style="color: #F1C40F"></i> <i class='fa fa-trophy' style="color: #F1C40F"></i></c:if>
+							<c:if test="${gradeName=='gaenius'}"> <i class='fa fa-trophy' style="color: #F1C40F"></i> <i class='fa fa-trophy' style="color: #F1C40F"></i> <i class='fa fa-trophy' style="color: #F1C40F"></i></c:if>
 							${gradeName}</h5> 
 				</div>
 			</div>
@@ -431,10 +431,10 @@
 								<input type = "hidden" name = "groupNo" value = "${cmt.groupNo}">
 							
 								<div class="comment-by" style="height: 70px;padding-bottom: 5px;">${cmt.nicknameCmt} 
-								<c:if test="${cmt.gradename=='beganner'}"><i class='im im-icon-Environmental'></i></c:if>
-								<c:if test="${cmt.gradename=='gaeneral'}"> <i class='fa fa-trophy'></i></c:if>
-								<c:if test="${cmt.gradename=='gaexpert'}"> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i></c:if>
-								<c:if test="${cmt.gradename=='gaenius'}"> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i></c:if>
+								<c:if test="${cmt.gradename=='beganner'}"><i class='im im-icon-Environmental' style="color: #27AE60"></i></c:if>
+								<c:if test="${cmt.gradename=='gaeneral'}"> <i class='fa fa-trophy' style="color: #F1C40F"></i></c:if>
+								<c:if test="${cmt.gradename=='gaexpert'}"> <i class='fa fa-trophy' style="color: #F1C40F"></i> <i class='fa fa-trophy' style="color: #F1C40F"></i></c:if>
+								<c:if test="${cmt.gradename=='gaenius'}"> <i class='fa fa-trophy' style="color: #F1C40F"></i> <i class='fa fa-trophy' style="color: #F1C40F"></i> <i class='fa fa-trophy' style="color: #F1C40F"></i></c:if>
 							
 								<span class="date" id="date" style="font-size: 8px;">등록일 <fmt:formatDate value = "${dto.regiDate}" pattern="YYYY-MM-dd hh:mm:ss"/></span>	
 									
@@ -507,7 +507,6 @@
 					</a>
 				</div>
 				</div>
-				<!--해당하는글은 안뜨도록 추가구현해야함 -->
 				</c:if>
 				</c:forEach>
 			
@@ -542,7 +541,7 @@
 						<!-- Widget -->
 			<div class="widget margin-top-40">
 				<!-- 조회수 높은순으로 보여주기 -->
-				<h3>Popular 3 Posts</h3>
+				<h3>3 Popular Posts</h3>
 				<ul class="widget-tabs">
 				<c:forEach items="${popularList}" var="board" varStatus="status">
 				<c:if test="${status.index<3}">			
@@ -604,10 +603,6 @@
 			</div>
 			<!-- Widget / End-->
 
-
-
-			
-
 			<div class="clearfix"></div>
 			<div class="margin-bottom-40"></div>
 		</div>
@@ -619,10 +614,7 @@
 </div>
 </div>
 		
-		
-		
-		
-		
+	
 		
 <!-- Footer
 ================================================== -->

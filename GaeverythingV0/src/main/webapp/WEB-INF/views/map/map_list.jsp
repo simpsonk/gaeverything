@@ -82,8 +82,8 @@
 						<input id="check-1" type="checkbox" name="check" checked="checked" value="HP8">
 						<label for="check-1">Hospital</label>
 
-						<input id="check-2" type="checkbox" name="check" value="HP8">
-						<label for="check-2">Hotels</label>
+						<!-- <input id="check-2" type="checkbox" name="check" value="HP8">
+						<label for="check-2">Hotels</label> -->
 					</div>
 				</div>
 			</section>		 

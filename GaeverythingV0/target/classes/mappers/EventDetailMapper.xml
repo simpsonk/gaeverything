@@ -67,13 +67,13 @@
 	
 	<select id="countReviews" parameterType="Integer" resultType="Integer">
 		select count(*) from board 
-		where locationSeq = #{eventNo} and boardcategory like 'EVENT'
+		where locationseq = #{eventNo} and boardcategory like 'EVENT'
 	</select>
 	
 
 	<select id="getRatings" parameterType="Integer" resultType="Double">
 		select rating from board 
-		where locationSeq = #{eventNo} and boardcategory like 'EVENT' 
+		where locationseq = #{eventNo} and boardcategory = 'EVENT' 
 	</select> 
 	
 	<!-- 디테일페이지 댓글에서 작성한 별졈 가져오기 -->
@@ -90,7 +90,7 @@
 	
 	<select id="getReviews" parameterType="Integer" resultType="BoardDTO">
 		select * from board 
-		where locationSeq = #{eventNo} and boardcategory = 'EVENT'
+		where locationseq = #{eventNo} and boardcategory = 'EVENT'
 		order by boardno desc
 	</select>	
 		

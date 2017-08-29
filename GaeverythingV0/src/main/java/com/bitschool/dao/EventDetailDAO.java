@@ -137,7 +137,7 @@ public class EventDetailDAO {
 		// 게시판에서 작성한 리뷰 가져오기
 		public List<BoardDTO> getReviews(int eventNo) throws SQLException{
 			List<BoardDTO> dto = null;
-			dto = session.selectList(namespace+".getReviews",eventNo);
+			dto = session.selectList(namespace+".getReviews", eventNo);
 			return dto;
 		}
 		

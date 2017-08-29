@@ -21,8 +21,8 @@
 				<li class="active"><a href="/mypage/viewMypageBookmarks"><i class="sl sl-icon-heart"></i>Bookmarks</a>
 					<ul>
 						<li><a href="/mypage/viewMypageBookmarks?category=1">Reviews <span class="nav-tag green">${member.bookmarkReviewSize}</span></a></li>
-						<li><a href="/mypage/viewMypageBookmarks?category=2">Hospitals <span class="nav-tag yellow">${member.bookmarkMapSize}</span></a></li>
-						<li><a href="/mypage/viewMypageBookmarks?category=3">Events <span class="nav-tag red">${member.bookmarkEventSize}</span></a></li>
+						<li><a href="/mypage/viewMypageBookmarks?category=2">Care <span class="nav-tag yellow">${member.bookmarkMapSize}</span></a></li>
+						<li><a href="/mypage/viewMypageBookmarks?category=3">Event <span class="nav-tag red">${member.bookmarkEventSize}</span></a></li>
 					</ul>	
 				</li>			
 			</ul>	

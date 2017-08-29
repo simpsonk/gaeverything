@@ -163,13 +163,13 @@ function no_login_like(locationSeq){
 		'<div class="comment-content"><div class="arrow-comment"></div>'+
 			'<div class="comment-by">'+reply.nickname+ ' ';
 	    if(reply.gradename=='beganner'){
-	    	itemStr += "<i class='im im-icon-Environmental'></i>";
+	    	itemStr += "<i class='im im-icon-Environmental' style='color: #27AE60'></i>";
 	    }else if(reply.gradename=='gaeneral'){
-	    	itemStr += "<i class='fa fa-trophy'></i>";
+	    	itemStr += "<i class='fa fa-trophy' style='color: #F1C40F'></i>";
 	    }else if(reply.gradename=='gaexpert'){
-	    	itemStr += "<i class='fa fa-trophy'></i><i class='fa fa-trophy'></i>";
+	    	itemStr += "<i class='fa fa-trophy' style='color: #F1C40F'></i><i class='fa fa-trophy' style='color: #F1C40F'></i>";
 	    }else if(reply.gradename=='gaenius'){
-	    	itemStr += "<i class='fa fa-trophy'></i><i class='fa fa-trophy'></i><i class='fa fa-trophy'></i>";
+	    	itemStr += "<i class='fa fa-trophy' style='color: #F1C40F'></i><i class='fa fa-trophy' style='color: #F1C40F'></i><i class='fa fa-trophy' style='color: #F1C40F'></i>";
 	    }
 	    
 	    itemStr+= '<span class="date">'+regi+'</span>'+

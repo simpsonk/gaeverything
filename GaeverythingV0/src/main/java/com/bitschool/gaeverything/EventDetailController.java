@@ -56,7 +56,6 @@ public class EventDetailController {
 		
 		boolean flag = service.commentAdd(dto);
 		
-		
 /*		// ´ñ±Û¾´ÀÌÀÇ point -> +8, myComment ->"T"
 		GradeDTO gDTO = new GradeDTO(dto.getNickname(),"myComment",8);
 		boolean flag2 = gService.insertInfo(gDTO);*/
@@ -75,6 +74,7 @@ public class EventDetailController {
 		ActUserManager manager = new ActUserManager(aService);
 		
 		EventDTO dto = service.selectOne(eventNo);
+		List<BoardDTO> reviewList = service.getReviews(eventNo);
 		List<EventCommentDTO> list = service.commentList(eventNo);
 		/*for(int i=0;i<list.size();i++){
 			String gradename = gService.selectGradeInfo(list.get(i).getNickname()).get(0).getGradename();
@@ -83,9 +83,7 @@ public class EventDetailController {
 		
 		dto = service.getEventActUserResult(manager, dto);
 		List<EventPhotoDTO> photoList = service.selectPhoto(eventNo);
-		List<BoardDTO> reviewList = service.getReviews(eventNo);
 		List<LocationDTO> nList = service.getNearby(dto.getLatitude(), dto.getLongitude()); 	
-		
 		
 		if(isLogin){
 			MemberDTO member = (MemberDTO)session.getAttribute("member");
