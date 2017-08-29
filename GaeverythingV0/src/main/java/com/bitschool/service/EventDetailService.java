@@ -203,36 +203,14 @@ public class EventDetailService {
 		int countReplies = this.countReplies(dto.getEventNo());
 		int countLike = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.EVENT, dto.getEventNo()));		
 		dto.setActUserResult(countReview, temp, countRatings, countReplies, countLike);
-		int totalReview = countReplies + countReview;
-		dto.setTotalReview(totalReview);
+		//int totalReview = countReplies + countReview;
+		//dto.setTotalReview(totalReview);
 		return dto;
 	}
 	
 	public LocationDTO getNearbyActUserResult(ActUserManager manager, LocationDTO dto) {
-		
-		/*int countReview = this.countReviews(dto.getLocationSeq());	
-		double averageRatings = this.getAverageRatings(this.getRatings(dto.getLocationSeq()),this.getReplyRatings(dto.getLocationSeq()));
-		averageRatings=(Double.isNaN(averageRatings))?0:averageRatings;
-		String temp = String.format("%.2f", averageRatings);
-		
-		int countRatings = this.getRatings(dto.getLocationSeq()).size()+this.getReplyRatings(dto.getLocationSeq()).size();
-		int countReplies = this.countReplies(dto.getLocationSeq());
-		int countLike = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.SHOP, dto.getLocationSeq()));*/
-		
 		dto.setAddedResult(dto.getScheduleAdded());
-		
 		return dto;
-		
-		/*int countReview = this.countReviews(dto.getEventNo());	
-		double averageRatings = this.getAverageRatings(this.getRatings(dto.getEventNo()),this.getReplyRatings(dto.getEventNo()));
-		averageRatings=(Double.isNaN(averageRatings))?0:averageRatings;
-		String temp = String.format("%.2f", averageRatings);
-		
-		int countRatings = this.getRatings(dto.getEventNo()).size()+this.getReplyRatings(dto.getEventNo()).size();
-		int countReplies = this.countReplies(dto.getEventNo());
-		int countLike = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.EVENT, dto.getEventNo()));		
-		dto.setActUserResult(countReview, temp, countRatings, countReplies, countLike);
-		return dto;*/
 	}
 
 	public List<EventDTO> getEventActUserResults(ActUserManager manager, List<EventDTO> list) {

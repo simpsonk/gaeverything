@@ -232,9 +232,7 @@ public class LocationDetailService {
 	}
 
 	public LocationDTO getLocActUserResult(ActUserManager manager, LocationDTO dto) {
-		// TODO Auto-generated method stub
 		int countReview = this.countReviews(dto.getLocationSeq());	
-		
 		double averageRatings = this.getAverageRatings(this.getRatings(dto.getLocationSeq()),this.getReplyRatings(dto.getLocationSeq()));
 		averageRatings=(Double.isNaN(averageRatings))?0:averageRatings;
 		String temp = String.format("%.2f", averageRatings);
@@ -242,14 +240,12 @@ public class LocationDetailService {
 		int countRatings = this.getRatings(dto.getLocationSeq()).size()+this.getReplyRatings(dto.getLocationSeq()).size();
 		int countReplies = this.countReplies(dto.getLocationSeq());
 		int countLike = manager.getLikeStatusCount(new ActUserDTO(ActUserManager.SHOP, dto.getLocationSeq()));
-		
 		dto.setActUserResult(countReview, temp, countRatings, countReplies, countLike);
 		
 		return dto;
 	}
 
 	public List<LocationDTO> getLocActUserResults(ActUserManager manager, List<LocationDTO> list) {
-		// TODO Auto-generated method stub
 		for(int i=0;i<list.size();i++){
 			this.getLocActUserResult(manager, list.get(i));
 		}
@@ -257,7 +253,6 @@ public class LocationDetailService {
 	}
 		
 	public List<DetailPhotoDTO> photoList(int seq){
-		// TODO Auto-generated method stub
 		List<DetailPhotoDTO> dto = null;
 		try {
 			dto = dao.photoList(seq);

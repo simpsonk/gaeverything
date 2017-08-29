@@ -156,13 +156,13 @@
 						<c:choose>
 						<c:when test="${list.type=='B'}">
 						<li>
-							<i class="list-box-icon sl sl-icon-heart"></i><b> ${list.nicknameReact}</b> bookmarked your <strong><a href="/review/readPost?boardNo=${list.groupNo}&page=1">${list.title}</a></strong> listing!
+							<i class="list-box-icon sl sl-icon-heart"></i><b> ${list.nicknameReact}</b>님이 <strong><a href="/review/readPost?boardNo=${list.groupNo}&page=1">${list.title}</a></strong>을(를) 북마크했습니다.
 							<a href="/mypage/deleteReaction?reactionSeq=${list.reactionSeq}" class="close-list-item"><i class="fa fa-close"></i></a>
 						</li>
 						</c:when>
 						<c:otherwise>
 						<li>
-							<i class="list-box-icon sl sl-icon-pencil"></i><b>${list.nicknameReact}</b> left a comment on <strong><a href="/review/readPost?boardNo=${list.groupNo}&page=1"">${list.title}</a></strong>
+							<i class="list-box-icon sl sl-icon-pencil"></i><b>${list.nicknameReact}</b>님이 <strong><a href="/review/readPost?boardNo=${list.groupNo}&page=1"">${list.title}</a></strong>에 댓글을 등록했습니다.
 							<a href="/mypage/deleteReaction?reactionSeq=${list.reactionSeq}" class="close-list-item"><i class="fa fa-close"></i></a>
 						</li>
 						</c:otherwise>
@@ -181,10 +181,10 @@
 				<div class="dashboard-list-box invoices with-icons margin-top-20">
 					<!-- 팝오버로 레벨가이드 보여주기 -->
 					 <a href="#" id="guide" title="Level Guide" data-placement="top" data-toggle="popover" data-trigger="hover" 
-					 data-content="<i class='im im-icon-Environmental'></i> beganner : 0-30p<br>
-					 <i class='fa fa-trophy'></i> gaeneral : 31-70p<br>
-					 <i class='fa fa-trophy'></i><i class='fa fa-trophy'></i> gaexpert : 71-120p<br>
-					 <i class='fa fa-trophy'></i><i class='fa fa-trophy'></i><i class='fa fa-trophy'></i> gaenius : 121p ~">
+					 data-content="<i class='im im-icon-Environmental' style='color: #27AE60'></i> beganner : 0 - 30 points<br>
+					 <i class='fa fa-trophy' style='color: #F1C40F'></i> gaeneral : 31 - 70 points<br>
+					 <i class='fa fa-trophy' style='color: #F1C40F'></i><i class='fa fa-trophy' style='color: #F1C40F'></i> gaexpert : 71 - 120 points<br>
+					 <i class='fa fa-trophy' style='color: #F1C40F'></i><i class='fa fa-trophy' style='color: #F1C40F'></i><i class='fa fa-trophy' style='color: #F1C40F'></i> gaenius : 121 points ~">
 
 					<h4 style="background: #37b6bd; color:white">Level</h4>
 					</a><ul>
@@ -194,13 +194,13 @@
 						<li >
 						<i class="list-box-icon sl sl-icon-badge"></i> 
 						<span> 
-							<c:if test="${list.gradename=='beganner'}"><i class='im im-icon-Environmental'></i></c:if>
-							<c:if test="${list.gradename=='gaeneral'}"> <i class='fa fa-trophy'></i></c:if>
-							<c:if test="${list.gradename=='gaexpert'}"> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i></c:if>
-							<c:if test="${list.gradename=='gaenius'}"> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i> <i class='fa fa-trophy'></i></c:if>
-							<strong>${list.gradename} / </strong>
+							<c:if test="${list.gradename=='beganner'}"><i class='im im-icon-Environmental' style='color: #27AE60'></i></c:if>
+							<c:if test="${list.gradename=='gaeneral'}"> <i class='fa fa-trophy' style='color: #F1C40F'></i></c:if>
+							<c:if test="${list.gradename=='gaexpert'}"> <i class='fa fa-trophy' style='color: #F1C40F'></i> <i class='fa fa-trophy'></i></c:if>
+							<c:if test="${list.gradename=='gaenius'}"> <i class='fa fa-trophy' style='color: #F1C40F'></i> <i class='fa fa-trophy' style='color: #F1C40F'></i> <i class='fa fa-trophy' style='color: #F1C40F'></i></c:if>
+							<strong>${list.gradename} </strong>
 						</span>				
-						<span><strong>${list.total}p</strong></span>
+						<span><strong>(${list.total} points)</strong></span>
 						</li>
 					</c:if>		
 					

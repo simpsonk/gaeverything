@@ -61,7 +61,7 @@
 						</div>
 					</div>					
 				</div>
-				<div class="col-fs-12">
+				<!-- <div class="col-fs-12">
 					<div class="panel-dropdown-content checkboxes categories" style="padding-top: 0px; padding-bottom: 0px; padding-left: 0px;">
 						<span style="padding-right: 10px;">Categories : </span>  
 						<input id="check-1" type="checkbox" name="check" checked="checked" value="5 449 776">
@@ -70,7 +70,7 @@
 						<input id="check-2" type="checkbox" name="check">
 						<label for="check-2">Hotels</label>
 					</div>
-				</div>
+				</div> -->
 			</section>		 
  		<!-- Search / End -->
 		
