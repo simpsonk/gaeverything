@@ -51,8 +51,8 @@
 					<h2>${detail.title} <span class="listing-tag"> Hospital </span></h2>
 					<div>
 						<div class="star-rating" data-rating=" ${detail.averageRatings}"  style="margin-left: 20px;">
-							<span style="margin-left: 15px;"><i class="sl sl-icon-note"></i>${detail.countReview}  Reviews</span>
-							<span style="margin-left: 15px;"><i class="sl sl-icon-bubble"></i> ${detail.countReplies} Comments</span>	
+							<span style="margin-left: 15px;"><i class="sl sl-icon-note"></i>${detail.countReview}</span>
+							<span style="margin-left: 15px;"><i class="sl sl-icon-bubble"></i> ${detail.countReplies}</span>	
 						</div>
 					</div>					
 				</div>

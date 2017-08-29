@@ -196,7 +196,7 @@
 						<span> 
 							<c:if test="${list.gradename=='beganner'}"><i class='im im-icon-Environmental' style='color: #27AE60'></i></c:if>
 							<c:if test="${list.gradename=='gaeneral'}"> <i class='fa fa-trophy' style='color: #F1C40F'></i></c:if>
-							<c:if test="${list.gradename=='gaexpert'}"> <i class='fa fa-trophy' style='color: #F1C40F'></i> <i class='fa fa-trophy'></i></c:if>
+							<c:if test="${list.gradename=='gaexpert'}"> <i class='fa fa-trophy' style='color: #F1C40F'></i> <i class='fa fa-trophy' style='color: #F1C40F'></i></c:if>
 							<c:if test="${list.gradename=='gaenius'}"> <i class='fa fa-trophy' style='color: #F1C40F'></i> <i class='fa fa-trophy' style='color: #F1C40F'></i> <i class='fa fa-trophy' style='color: #F1C40F'></i></c:if>
 							<strong>${list.gradename} </strong>
 						</span>				

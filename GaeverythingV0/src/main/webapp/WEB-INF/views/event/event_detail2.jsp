@@ -51,7 +51,7 @@
 					<h2>${dto.eventName} <span class="listing-tag"> Event </span></h2>
 					<div>
 						<div class="star-rating" data-rating="${averageRatings}"  style="margin-left: 20px;">
-							<span style="margin-left: 15px;"><i class="sl sl-icon-note"></i>${reviewList.size()}  Reviews</span>
+							<span style="margin-left: 15px;"><i class="sl sl-icon-note"></i>${reviewList.size()}</span>
 							<span style="margin-left: 15px;"><i class="sl sl-icon-bubble"></i> ${commentlist.size()}</span>	
 						</div>
 					</div>					
