@@ -417,12 +417,22 @@ function addToCal(locationSeq, eventNo, startDate, index){
 	
 	//startDate = startDate.toString();
 	var added = document.getElementById("add-schedule"+index).className;
-	alert('addToCal alert'+startDate.toString());
+	checkBooking(eventNo);
 	var url = "/mypage/calendar/addBookingNearby?added="+added+"&eventNo="+eventNo+"&startDate="+startDate+"&loc="+locationSeq;
-	location.href = url;
+	
 	var id ='#add-schedule'+index; 
 	$(id).toggleClass('liked');
 	$(id).children('.add-schedule').toggleClass('liked');
+	if(isLogin.value!=''){
+		var check = confirm("일정을 캘린더에 등록하시겠습니까?");
+		if(check == true){
+			alert("일정이 등록되었습니다.");
+			location.href = url;
+		}else{
+			alert("등록이 취소되었습니다.");
+			return;
+		}
+	}
 		
 }
 

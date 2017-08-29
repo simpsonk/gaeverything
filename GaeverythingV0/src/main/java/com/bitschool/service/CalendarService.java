@@ -113,6 +113,7 @@ public class CalendarService{
 						String dateS = dateF2.format(date);
 						String[] dateArray = dateS.split("-");
 						int dateInt = Integer.parseInt(dateArray[1]);
+						int dateIntArray = Integer.parseInt(repeatSplit[1]);
 						for (int k = 0; k < 100; k++) {
 								String dateFinal = dateArray[0] + "-" + dateInt;
 								Date date2 = dateF2.parse(dateFinal);
@@ -125,7 +126,7 @@ public class CalendarService{
 								c.setColor(colorType[list.get(i).getDogid()]);
 								c.setSeq(list.get(i).getCalendarseq());
 								calendar.add(c);
-							dateInt += dateForm;
+							dateInt += dateIntArray;
 						}
 					} catch (ParseException ex) {
 						ex.printStackTrace();
@@ -136,10 +137,11 @@ public class CalendarService{
 					try {
 						DateFormat dateF = new SimpleDateFormat("yyyy-MM-dd");
 						Date date = dateF.parse(startB[0]);
-						DateFormat dateF2 = new SimpleDateFormat("yyyy-ww- E");
+						DateFormat dateF2 = new SimpleDateFormat("yyyy-ww-E");
 						String dateS = dateF2.format(date);
 						String[] dateArray = dateS.split("-");
 						int dateInt = Integer.parseInt(dateArray[1]);
+						int dateIntArray = Integer.parseInt(repeatSplit[1]);
 						for (int k = 0; k < 100; k++) {
 							for(int h=2;h<repeatSplit.length;h++){
 								String dateFinal = dateArray[0] + "-" + dateInt + "-" + repeatSplit[h];
@@ -154,7 +156,7 @@ public class CalendarService{
 								c.setSeq(list.get(i).getCalendarseq());
 								calendar.add(c);
 							}
-							dateInt += dateForm;
+							dateInt += dateIntArray;
 						}
 					} catch (ParseException ex) {
 						ex.printStackTrace();

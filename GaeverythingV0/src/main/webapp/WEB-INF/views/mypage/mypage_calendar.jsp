@@ -127,6 +127,7 @@ footer {
 			<!-- Listings -->
 			<div class="col-lg-12 col-md-12">
 				<div class="dashboard-list-box margin-top-0">
+				<div id="openweathermap-widget-11"></div>
 					<div id='calendar'></div>
 				</div>
 			</div>
@@ -226,7 +227,7 @@ footer {
 				    });
 			});
 </script>
-<div id="openweathermap-widget-11"></div>
+
 	<script
 		src='https://openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
 	<script>
