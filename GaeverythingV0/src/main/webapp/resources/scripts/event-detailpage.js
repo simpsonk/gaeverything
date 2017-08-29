@@ -420,7 +420,7 @@ function addToCal(locationSeq, eventNo, startDate, index){
 	checkBooking(eventNo);
 	var url = "/mypage/calendar/addBookingNearby?added="+added+"&eventNo="+eventNo+"&startDate="+startDate+"&loc="+locationSeq;
 	
-	var id ='#add-schedule'+index; 
+	var id ='#add-schedule'; 
 	$(id).toggleClass('liked');
 	$(id).children('.add-schedule').toggleClass('liked');
 	if(isLogin.value!=''){

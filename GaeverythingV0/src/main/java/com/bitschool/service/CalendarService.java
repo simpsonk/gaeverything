@@ -74,7 +74,7 @@ public class CalendarService{
 				c.setEnd(list.get(i).getEnd());
 				c.setColor(colorType[list.get(i).getDogid()]);
 				c.setSeq(list.get(i).getCalendarseq());
-				if((list.get(i).getDogid()==0)||(list.get(i).getDogid()==2)){
+				if((list.get(i).getDogid()==0)){
 					LocationDTO ldto;
 					try {
 						ldto = ldao.selectLocationSeq(list.get(i).getLocationseq());

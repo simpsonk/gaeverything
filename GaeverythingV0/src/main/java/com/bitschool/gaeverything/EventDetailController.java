@@ -190,7 +190,7 @@ public class EventDetailController {
 		ActUserManager manager = new ActUserManager(aService);
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		if(member!=null){
-			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.EVENT);
+			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.Nearby);
 			nearby =manager.checkAddStatus(aDTO, nearby);
 		}
 		HashMap<String, Object> list = new HashMap<String, Object>();
