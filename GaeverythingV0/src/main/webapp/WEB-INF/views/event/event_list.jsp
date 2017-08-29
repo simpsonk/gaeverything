@@ -432,6 +432,9 @@
            '            <div class="desc">' + 
            '                <div class="ellipsis">'+event.address+'</div>' + 
            '                <div class="jibun ellipsis">'+ event.startDate+ '  ~  '+ event.endDate	+ '</div>' + 
+           '				<div class="star-rating" data-rating="'+event.averageRatings+'">'+
+		   '					<div class="rating-counter"  style="font-size: 13px;padding-left: 0px;">'+event.countReview+' reviews '+ '<i class="im im-icon-Heart" style="color: #f91942"></i>'+event.countLike+' <i class="im im-icon-Speach-Bubble" style="color: #f91942"></i>'+event.countReplies+'</div>'+
+		   '						</div>'+
            '                <div><a href="'+event.link+'" target="_blank" class="link">홈페이지</a></div>' + 
            '            </div>' + 
            '        </div>' + 

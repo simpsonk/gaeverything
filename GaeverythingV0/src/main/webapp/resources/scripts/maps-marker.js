@@ -166,7 +166,7 @@
     		content +=					places.radius!=null?'('+places.radius+'km) <br>':'<br>';
     					
     		content +=	'				<div class="star-rating" data-rating="'+places.averageRatings+'">'+
-  						'					<div class="rating-counter"  style="font-size: 13px;padding-left: 0px;">(<i class="im im-icon-Heart"></i>'+places.countLike+'/<i class="im im-icon-Speach-Bubble"></i>'+places.countReplies+'/'+places.countReview+' reviews)'+'</div>'+
+  						'					<div class="rating-counter"  style="font-size: 13px;padding-left: 0px;">'+places.countReview+' reviews '+ '<i class="im im-icon-Heart" style="color: #f91942"></i>'+places.countLike+' <i class="im im-icon-Speach-Bubble" style="color: #f91942"></i>'+places.countReplies+'</div>'+
   						'				</div>'+
     					'				<div><a href="/map/detail/viewDetailPage?locationSeq='+places.locationSeq	+'" target="_blank" class="link">상세정보</a></div>' + 
 				        '            </div>' + 
