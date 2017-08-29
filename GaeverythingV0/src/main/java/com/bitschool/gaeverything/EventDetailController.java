@@ -56,9 +56,9 @@ public class EventDetailController {
 		
 		boolean flag = service.commentAdd(dto);
 		
-/*		// 댓글쓴이의 point -> +8, myComment ->"T"
+		// 댓글쓴이의 point -> +8, myComment ->"T"
 		GradeDTO gDTO = new GradeDTO(dto.getNickname(),"myComment",8);
-		boolean flag2 = gService.insertInfo(gDTO);*/
+		boolean flag2 = gService.insertInfo(gDTO);
 		
 		if(flag){
 			url = "redirect:view?no="+dto.getEventNo();
@@ -76,10 +76,10 @@ public class EventDetailController {
 		EventDTO dto = service.selectOne(eventNo);
 		List<BoardDTO> reviewList = service.getReviews(eventNo);
 		List<EventCommentDTO> list = service.commentList(eventNo);
-		/*for(int i=0;i<list.size();i++){
+		for(int i=0;i<list.size();i++){
 			String gradename = gService.selectGradeInfo(list.get(i).getNickname()).get(0).getGradename();
 			list.get(i).setGradename(gradename);
-		}*/
+		}
 		
 		dto = service.getEventActUserResult(manager, dto);
 		List<EventPhotoDTO> photoList = service.selectPhoto(eventNo);
@@ -146,12 +146,10 @@ public class EventDetailController {
 	public @ResponseBody List<EventCommentDTO> getReviewData(@RequestParam(value="eventNo") int eventNo){
 		List<EventCommentDTO> commentlist = service.commentList(eventNo);	
 		//이벤트댓글에 레벨 셋팅
-		//System.out.println("이벤트 코멘트 수1"+commentlist.size());
 		for(int i=0;i<commentlist.size();i++){
 			String gradename = gService.selectGradeInfo(commentlist.get(i).getNickname()).get(0).getGradename();
 			commentlist.get(i).setGradename(gradename);
 		}
-		//System.out.println("이벤트 코멘트 수2"+commentlist.size());
 		return commentlist;
 	}
 	
@@ -190,7 +188,7 @@ public class EventDetailController {
 		ActUserManager manager = new ActUserManager(aService);
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		if(member!=null){
-			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.EVENT);
+			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.Nearby);
 			nearby =manager.checkAddStatus(aDTO, nearby);
 		}
 		HashMap<String, Object> list = new HashMap<String, Object>();

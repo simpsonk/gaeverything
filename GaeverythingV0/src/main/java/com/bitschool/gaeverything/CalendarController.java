@@ -195,7 +195,7 @@ public class CalendarController {
 		
 		//개인 등록상태 변경
 		ActUserManager manager = new ActUserManager(aService);
-		ActUserDTO dto = new ActUserDTO(member.getEmail(), ActUserManager.SHOP, locationSeq);
+		ActUserDTO dto = new ActUserDTO(member.getEmail(), ActUserManager.Nearby, locationSeq);
 		if(added.equals("add-schedule")){
 			flag = manager.registLikeStatus(dto);
 			if(!flag){
