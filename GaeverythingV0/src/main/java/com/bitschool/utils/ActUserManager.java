@@ -128,7 +128,6 @@ public class ActUserManager {
 				scheduleAdded = "add-schedule liked";
 			}
 			list.get(i).setScheduleAdded(scheduleAdded);
-			System.out.println(list.get(i).getScheduleAdded());
 		}
 		return list;
 	}
