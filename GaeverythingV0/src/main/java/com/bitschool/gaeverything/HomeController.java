@@ -171,21 +171,14 @@ public class HomeController {
 		boolean flag = false;
 		if(like.equals("like-icon")){
 			flag = manager.registLikeStatus(dto);
-			
-			/*//(이벤트리스트에서) 이벤트 북마크 눌렀을 때 북마크누른사람 point -> +3, myBookmark -> "T"
-			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"myBookmark", 3);
-			gService.insertInfo(gDTO);*/
+		
 			
 			if(!flag){
 				System.out.println("insert fail: ReviewLike");
 			}
 		}else if(like.equals("like-icon liked")){
 			flag = manager.deleteLikeStatus(dto);
-			
-			/*//(이벤트리스트에서) 이벤트 북마크 해제 눌렀을 때 북마크누른사람 point -> -3, delete myBookmark
-			GradeDTO gDTO = new GradeDTO(rService.selectNickname(email),"myBookmark", -3);
-			gService.deleteInfo(gDTO);*/
-			
+
 			if(!flag){
 				System.out.println("delete fail: ReviewLike");
 			}
