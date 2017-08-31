@@ -70,15 +70,15 @@
 
 		<div class="row">
 			<ul class="listing-nav">
-					<li><a href="#listing-map" class="">in Map</a></li>
-					<li><a href="#listing-review">in Review</a></li>
+					<li><a href="#listing-care" class="">on Care</a></li>
+					<li><a href="#listing-review">on Review</a></li>
 			</ul>
 
 
 			<!-- Listings --><!-- 맵디테일의 코멘트 -->
 			<div id="listing-map" class="col-lg-12 col-md-12">
 				<div class="dashboard-list-box margin-top-20">
-					<h4 style="background: #37b6bd; color: white;">Comments in Map (${commentList.size()})</h4>
+					<h4 style="background: #37b6bd; color: white;">Comments on Care (${commentList.size()})</h4>
 					<ul>
 						<li>
 							<div class="comments listing-reviews">
@@ -177,7 +177,7 @@
 	 		<!-- Listings --><!-- 리뷰게시판의 코멘트 -->
 			<div id="listing-review" class="col-lg-12 col-md-12">
 				<div class="dashboard-list-box margin-top-20">
-					<h4 style="background: #F91942; color: white;">Comments in Review (${bCommentList.size()})</h4>
+					<h4 style="background: #fa5b0f; color: white;">Comments on Review (${bCommentList.size()})</h4>
 					<ul>
 						<li>
 							<div class="comments listing-reviews">
