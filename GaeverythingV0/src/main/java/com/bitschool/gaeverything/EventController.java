@@ -116,7 +116,7 @@ public class EventController {
 	}
 
 	
-	@RequestMapping(value="/searchEvent", method=RequestMethod.POST)
+	@RequestMapping(value="/searchEvent", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody HashMap<String, Object> searchEvent(@RequestParam("opt") String opt, 
 															 @RequestParam("str") String str,
 															 HttpSession session){
