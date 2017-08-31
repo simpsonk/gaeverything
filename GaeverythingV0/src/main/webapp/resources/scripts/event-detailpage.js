@@ -223,7 +223,7 @@ function getListItem(reply) {
     var regi = new Date(reply.regiDate); 
     regi = regi.getFullYear() + '-' + leadingZeros((regi.getMonth()+1),2) + '-' + leadingZeros(regi.getDate(),2)
     +' '+leadingZeros(regi.getHours(),2)+':'+leadingZeros(regi.getMinutes(),2)+':'+leadingZeros(regi.getSeconds(),2);
-    var itemStr ='	<input type="hidden" id="ratingVal'+reply.commentSeq+'" value="'+reply.rating+'">'+
+    var itemStr ='	<input type="hidden" id="ratingVal'+reply.commentNo+'" value="'+reply.rating+'">'+
 	  	'<li><div class="avatar"><img src="/resources/upload/'+reply.photo+'" alt="" style="width:80px; height:80px; object-fit:cover;"/></div>'+
 	'<div class="comment-content"><div class="arrow-comment"></div>'+
 		'<div class="comment-by">'+reply.nickname+ ' ';
@@ -240,7 +240,7 @@ function getListItem(reply) {
     itemStr+= '<span class="date">'+regi+'</span>'+
 			'<div class="star star-rating" data-rating="'+reply.rating+'"></div>'+
 		'</div>'+
-		'<p id="changeMsg'+reply.commentSeq+'">'+reply.message+'</p></div>';
+		'<p id="changeMsg'+reply.commentNo+'">'+reply.message+'</p></div>';
 		if(nickname==reply.nickname){
 			itemStr +=	'<div class="comment-by" >'+
 						'	<a class="reply" style="margin-top: 20px;" " onclick="go_url(1, '+reply.commentNo+');" return false; ><i class="sl sl-icon-note"></i> Edit</a>'+
