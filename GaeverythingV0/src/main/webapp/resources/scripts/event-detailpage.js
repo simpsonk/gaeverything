@@ -228,7 +228,7 @@ function getListItem(reply) {
 	    if(reply.gradename=='beganner'){
 	    	itemStr += "<i class='im im-icon-Environmental' style='color: #27AE60'></i>";
 	    }else if(reply.gradename=='gaeneral'){
-	    	itemStr += "<i class='fa fa-trophy' style='color: #F1C40F'></rfi>";
+	    	itemStr += "<i class='fa fa-trophy' style='color: #F1C40F'></i>";
 	    }else if(reply.gradename=='gaexpert'){
 	    	itemStr += "<i class='fa fa-trophy' style='color: #F1C40F'></i><i class='fa fa-trophy' style='color: #F1C40F'></i>";
 	    }else if(reply.gradename=='gaenius'){

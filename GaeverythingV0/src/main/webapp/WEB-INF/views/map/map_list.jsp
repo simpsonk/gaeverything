@@ -395,6 +395,7 @@
 	        dataType : 'json',
 	        type:"POST",
 	        success : function(data) {
+	        	//alert(listPage);
 	        	/*id.innerHTML=data+' people bookmarked this place'; */
 	        	if($("select[name=searchOption]").val()==2){
 	        		searchLocation('like', listPage);

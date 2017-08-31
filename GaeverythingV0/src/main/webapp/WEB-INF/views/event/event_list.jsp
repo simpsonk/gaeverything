@@ -200,15 +200,17 @@
 	var eventData = [];
 	var points = [];
 	var overlay = new daum.maps.CustomOverlay();
+	var listPage = 0;
 	
 	//시작 시 
 	$(document).ready(function(){
-		listAll();
+		listAll(listPage);
 	});
 
 	
 	function pageClickEvent(page) {
 		var stringEventData = JSON.stringify(eventData);
+		listPage = page;
 		$.ajax({
 			url 	 : "/event/getPagingData?page="+page,
 			data	 : {"data": stringEventData},
@@ -217,7 +219,7 @@
 			success  : function(data) {
 				//eventList(data);
 				
-				displayEvent(data.pList, data.infoList, data.events, page);
+				displayEvent(data.pList, data.infoList, data.events, listPage);
 				createMarker(data.events);
 
 			},
@@ -227,7 +229,7 @@
 		});
 	}
 	
-	function listAll() {
+	function listAll(listPage) {
 		$.ajax({
 			url		 : "/event/getAllEvents",
 			dataType : "json",
@@ -240,7 +242,7 @@
 				$('#ResultsFound').text(foundResult);
 				//eventList(data);
 				
-				displayEvent(data.pList, data.infoList, data.events, 0);
+				displayEvent(data.pList, data.infoList, data.events, listPage);
 				createMarker(data.events);
 			},
 			error : function(request, status, error) {
@@ -266,7 +268,7 @@
 							alert("이벤트 검색 결과가 없습니다.");
 							createMarker(data.events); //마커같이만듦
 						}
-						displayEvent(data.pList, data.infoList, data.events, 0);
+						displayEvent(data.pList, data.infoList, data.events, listPage);
 						createMarker(data.events); //마커같이만듦
 						var numOfData = data.events.length ;
 						var foundResult = numOfData + ' Results Found';
@@ -289,7 +291,7 @@
 			dataType : 'json',
 			tyoe 	 : 'POST',
 			success  : function(data){
-				listAll();
+				pageClickEvent(listPage);
 			}
 		});
 	}
@@ -299,7 +301,7 @@
 		location.href = "/viewLogin?uri=/event/viewEventList";
 	}
 
-	function displayEvent(pList, infoList, events, page) {
+	function displayEvent(pList, infoList, events, listPage) {
 		closeOverlay();
 		clearMarkers();
 		//좌측 리스트 붙일 태그
