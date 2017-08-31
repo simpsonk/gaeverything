@@ -36,13 +36,14 @@
 <!-- Banner
 ================================================== -->
 <form action="/map/homeSearchResult" method="post">
-<div class="main-search-container" data-background-image="/resources/images/main-search-background-03.jpg">
+<div class="main-search-container" data-background-image="/resources/images/happylogo.png">
 	<div class="main-search-inner">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<h2>Find Nearby Attractions</h2>
-					<h4>Explore top-rated dog cares, events and more!</h4>
+					 <h2></h2>
+					<h4></h4> 
+					
 
 					<div class="main-search-input">
 						<div class="main-search-input-item">
