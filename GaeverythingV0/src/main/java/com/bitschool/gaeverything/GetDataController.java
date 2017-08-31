@@ -217,7 +217,7 @@ public class GetDataController {
 		for(int i=0;i<list.size();i++){
 			flag = service.insertEventData(list.get(i));
 		}
-		System.out.println(flag);
+		//System.out.println(flag);
 		return url;
 	}
 	
@@ -238,16 +238,16 @@ public class GetDataController {
                 response.append(inputLine);
             }
             br.close();
-            System.out.println("response.toString() : "+response.toString());
+            //System.out.println("response.toString() : "+response.toString());
             String data = response.toString();
             String docudata = data.substring(144, data.length()-1);
-            System.out.println("docudata : "+docudata);
+            //System.out.println("docudata : "+docudata);
     		ObjectMapper mapper = new ObjectMapper();  
     		try {
     			list = mapper.readValue(docudata, new TypeReference<List<Location2DTO>>(){});
     			Location2DTO ldto = list.get(0);
-    			System.out.println("list : "+list);
-    			System.out.println("ldto : "+ldto);
+    			//System.out.println("list : "+list);
+    			//System.out.println("ldto : "+ldto);
     		} catch (JsonParseException e) {
     			e.printStackTrace();
     		} catch (JsonMappingException e) {
@@ -259,7 +259,7 @@ public class GetDataController {
         } catch (Exception e) {
             System.out.println(e);
         } 
-        System.out.println();
+        //System.out.println();
         return list;
     }        
 	

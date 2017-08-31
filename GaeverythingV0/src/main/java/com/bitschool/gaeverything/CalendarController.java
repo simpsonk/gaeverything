@@ -201,12 +201,12 @@ public class CalendarController {
 		if(added.equals("add-schedule")){
 			flag = manager.registLikeStatus(dto);
 			if(!flag){
-				System.out.println("insert fail: DetailPageLike");
+				//System.out.println("insert fail: DetailPageLike");
 			}
 		}else if(added.equals("add-schedule liked")){
 			flag = manager.deleteLikeStatus(dto);
 			if(!flag){
-				System.out.println("delete fail: DetailPageLike");
+				//System.out.println("delete fail: DetailPageLike");
 			}
 		}
 		

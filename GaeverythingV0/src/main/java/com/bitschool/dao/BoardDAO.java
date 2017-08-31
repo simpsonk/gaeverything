@@ -241,7 +241,7 @@ public class BoardDAO implements IBoardDAO{
 
 	public String findPhoto(String nickName) throws SQLException {
 		String photo = session.selectOne(nameSpace+".getPhoto", nickName);
-		System.out.println("사진얻음? " + photo);
+		//System.out.println("사진얻음? " + photo);
 		return photo;
 	}
 

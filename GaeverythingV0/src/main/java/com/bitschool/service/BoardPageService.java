@@ -68,7 +68,7 @@ public class BoardPageService implements IPagerService{
 			sb.append("<li><a href='/review/viewReviewList?categoryCode="+categoryCode+"&page="+(pageUnit+11)+"&orderBy="+orderBy+"'><i class='sl sl-icon-arrow-right'></i></a></li>");
 		}
 		sb.append("</ul></nav>");
-		System.out.println("sb.toString(): "+sb.toString());
+		//System.out.println("sb.toString(): "+sb.toString());
 		return sb.toString();
 	}
 	

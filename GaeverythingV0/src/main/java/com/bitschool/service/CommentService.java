@@ -72,7 +72,7 @@ public class CommentService implements ICommentService{
 		try {
 			//댓글 삭제하면 대시보드의 reaction에서도 사라지도록///
 			CommentDTO cDTO = this.getFullCmt(commentNo);
-			System.out.println("cDTO :"+cDTO);
+			//System.out.println("cDTO :"+cDTO);
 			ReactionDTO rdto = new ReactionDTO("C",cDTO.getGroupNo(),cDTO.getNicknameCmt());
 			rdao.deleteReaction(rdto);
 			
