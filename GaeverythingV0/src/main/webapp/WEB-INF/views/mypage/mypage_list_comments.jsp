@@ -70,15 +70,16 @@
 
 		<div class="row">
 			<ul class="listing-nav">
-					<li><a href="#listing-map" class="">in Map</a></li>
-					<li><a href="#listing-review">in Review</a></li>
+					<li><a href="#listing-care" class="">Care & Event</a></li>
+				<!-- 	<li><a href="#listing-event" class="">on Event</a></li> -->
+					<li><a href="#listing-review">Review</a></li>
 			</ul>
 
 
-			<!-- Listings --><!-- 맵디테일의 코멘트 -->
-			<div id="listing-map" class="col-lg-12 col-md-12">
+			<!-- Listings --><!-- 케어디테일의 코멘트 -->
+			<div id="listing-care" class="col-lg-6 col-md-12">
 				<div class="dashboard-list-box margin-top-20">
-					<h4 style="background: #37b6bd; color: white;">Comments in Map (${commentList.size()})</h4>
+					<h4 style="background: #37b6bd; color: white;">Comments on Care (${commentList.size()})</h4>
 					<ul>
 						<li>
 							<div class="comments listing-reviews">
@@ -113,11 +114,48 @@
 				</div>
 			</div>
 
+			<!-- Listings --><!-- 이벤트디테일의 코멘트 -->
+			<div id="listing-event" class="col-lg-6 col-md-12">
+				<div class="dashboard-list-box margin-top-20">
+					<h4 style="background: #F91942; color: white;">Comments on Event (${eCommentList.size()})</h4>
+					<ul>
+						<li>
+							<div class="comments listing-reviews">
+								<ul>
+								<c:choose>
+								<c:when test="${eCommentList.size()==0}">
+								<li>
+								<span>작성한 댓글이 없습니다.</span>
+								</li>
+								</c:when>
+								</c:choose>	
+									<c:forEach var="list" items="${eCommentList}" varStatus="loop"> 
+									<form action="" method="post" id="listOfEventComment${loop.index}">	
+									<li>										
+											<div class="comment-by">Your Comments <div class="comment-by-listing own-comment">on <a href="/event/detail/view?no=${list.eventNo}"><b>${list.eventName}</b></a></div> <span class="date">${list.regiDate}</span>
+												<div class="star-rating" data-rating="${list.rating}"></div>
+											</div>
+											<p>${list.message}</p>
+											<%-- <div class="buttons-to-right">
+											<a onclick="cmt_url2(${list.commentSeq}, ${loop.index},${list.locationSeq});" class="rate-review"><i class="sl sl-icon-note"></i> Edit</a>										
+											<a href="/mypage/removeMyMapCmt?commentSeq=${list.commentSeq}&category=2" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>		
+											</div>	 --%>
+											<input type="hidden" id="commNo" value="${list.commentNo}">												
+									</li>
+									</form>   
+									</c:forEach>
+								</ul>
+							</div>
+						</li>
 
+					</ul>
+				</div>
+			</div>
+			
 	 		<!-- Listings --><!-- 리뷰게시판의 코멘트 -->
 			<div id="listing-review" class="col-lg-12 col-md-12">
 				<div class="dashboard-list-box margin-top-20">
-					<h4 style="background: #F91942; color: white;">Comments in Review (${bCommentList.size()})</h4>
+					<h4 style="background: #fa5b0f; color: white;">Comments on Review (${bCommentList.size()})</h4>
 					<ul>
 						<li>
 							<div class="comments listing-reviews">

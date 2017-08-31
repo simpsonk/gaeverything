@@ -28,8 +28,7 @@ public class EventDetailService {
 	
 	@Inject
 	private BoardDAO bdao;
-	
-	
+		
 	public EventDTO selectOne(int seq){
 		EventDTO dto = null;
 		try {

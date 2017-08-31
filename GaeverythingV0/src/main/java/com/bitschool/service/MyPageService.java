@@ -8,10 +8,12 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.bitschool.dao.BoardDAO;
+import com.bitschool.dao.EventDetailDAO;
 import com.bitschool.dao.MyPageDAO;
 import com.bitschool.dto.BoardDTO;
 import com.bitschool.dto.CommentDTO;
 import com.bitschool.dto.DetailCommentDTO;
+import com.bitschool.dto.EventCommentDTO;
 import com.bitschool.dto.MemberDTO;
 import com.bitschool.dto.MyPageDTO;
 
@@ -23,6 +25,36 @@ public class MyPageService {
 	
 	@Inject
 	private BoardDAO bdao;
+	
+	@Inject
+	private EventDetailDAO edao;
+	
+	// 이벤트넘버로 이벤트이름 가져오기 
+	public String selectEventName(int eventNo){
+		String eventName = null;
+		try {
+			eventName = edao.selectEventName(eventNo);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return eventName;
+	}
+	
+	//내가 쓴 이벤트디테일 댓글 모아보기
+	public List<EventCommentDTO> selectEventComment(String nickname){
+		List<EventCommentDTO> list = null;
+		try {
+			list = edao.selectComment(nickname);
+			for(int i=0;i<list.size();i++){
+				list.get(i).setEventName(this.selectEventName(list.get(i).getEventNo()));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
 	
 	// 내가 리뷰쓴 곳 개수(맵디테일의 댓글 또는 리뷰게시판의 글) 가져오기 (중복X) 
 	public int countLocReviews(String nickname){

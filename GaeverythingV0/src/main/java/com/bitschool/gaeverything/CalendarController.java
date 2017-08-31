@@ -69,6 +69,8 @@ public class CalendarController {
 	public String viewDetailCalendar(HttpSession session, Model model, @RequestParam("seq") int seq){
 		MemberDTO member = (MemberDTO)session.getAttribute("member");
 		String url = "mypage/calendar/detail_calendar";
+		List<PetPageDTO> list = Pservice.readPetsData(member);
+		model.addAttribute("list", list);
 		model.addAttribute("member", member);
 		CalendarDTO dto = service.readCalendar(seq);
 		model.addAttribute("dto",dto);
@@ -199,12 +201,12 @@ public class CalendarController {
 		if(added.equals("add-schedule")){
 			flag = manager.registLikeStatus(dto);
 			if(!flag){
-				System.out.println("insert fail: DetailPageLike");
+				//System.out.println("insert fail: DetailPageLike");
 			}
 		}else if(added.equals("add-schedule liked")){
 			flag = manager.deleteLikeStatus(dto);
 			if(!flag){
-				System.out.println("delete fail: DetailPageLike");
+				//System.out.println("delete fail: DetailPageLike");
 			}
 		}
 		

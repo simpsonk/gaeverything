@@ -3,6 +3,16 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bitschool.event.eventDetail">
+	<!-- 이벤트넘버로 이벤트이름 가져오기 -->
+	<select id="selectEventName" parameterType="Integer" resultType="String">
+		select eventname from event where eventno = #{eventNo} 
+	</select>
+	
+	<!-- 닉네임으로 댓글가져오기 -->
+	<select id="selectComment" parameterType="String" resultType="EventCommentDTO">
+		select * from eventcomment where nickname=#{nickname} 
+		order by commentno desc
+	</select>
 
 	<!-- eventNo로 한 장소의 DTO 받아오기 -->
 	<select id="selectOne" parameterType="Integer" resultType="EventDTO">

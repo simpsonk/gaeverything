@@ -85,14 +85,13 @@
 
 									<label>제목</label> 
 									<input type='text' id='title' size=30px
-										name='title' placeholder="예: 오후 7시에 멕시코 음식점에서 저녁식사" value='${dto.title }'>
+										name='title' placeholder="예: 강아지 목욕시키기" value='${dto.title }'>
 
 									<label>강아지 선택</label> 
-									<select id='dogid' name='dogid'>
-										<option value="1" ${dto.dogid=='1'?'selected="selected"':''}>1번개
-										<option value="2" ${dto.dogid=='2'?'selected="selected"':''}>2번개
-										<option value="3" ${dto.dogid=='3'?'selected="selected"':''}>3번개
-										
+									<select name="dogid" id="dogid">
+										      <c:forEach var="pet" items="${list}" varStatus="i">
+										         <option value="${i.count+1}" ${dto.dogid==i.count+1? 'selected':'' }>${pet.petname}</option>
+										      </c:forEach>
 									</select>
 									 
 									<label>시작시간</label> 
@@ -322,8 +321,6 @@
 			url = "/mypage/calendar/modify";
 		} else if (type == 3) {
 			url = "/mypage/calendar/remove";
-		} else if (type == 1) {
-			url = "/mypage/calendar/regist";
 		}
 		ds.action = url;
 		ds.submit();

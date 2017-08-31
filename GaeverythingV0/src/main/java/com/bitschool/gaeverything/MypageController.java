@@ -343,7 +343,8 @@ public class MypageController {
 		member.setMyReviewSize(reviewList.size());
 		List<DetailCommentDTO> commentList = service.selectMyDetailComments(member.getNickname());
 		List<CommentDTO> bCommentList = service.selectMyBoardComments(member.getNickname());
-		member.setMyCommentSize(commentList.size()+bCommentList.size());
+		List<EventCommentDTO> eCommentList = service.selectEventComment(member.getNickname());
+		member.setMyCommentSize(commentList.size()+bCommentList.size()+eCommentList.size());
 		boolean isLogin = member!=null?true:false;
 		if(!isLogin){
 			url = "login_page";
@@ -352,6 +353,7 @@ public class MypageController {
 			model.addAttribute("reviewList",reviewList);
 			model.addAttribute("commentList",commentList);	
 			model.addAttribute("bCommentList",bCommentList);
+			model.addAttribute("eCommentList",eCommentList);
 		}
 		return url;
 	}
@@ -602,7 +604,8 @@ public class MypageController {
 		member.setMyReviewSize(reviewList.size());
 		List<DetailCommentDTO> commentList = service.selectMyDetailComments(member.getNickname());
 		List<CommentDTO> bCommentList = service.selectMyBoardComments(member.getNickname());
-		member.setMyCommentSize(commentList.size()+bCommentList.size());
+		List<EventCommentDTO> eCommentList = service.selectEventComment(member.getNickname());
+		member.setMyCommentSize(commentList.size()+bCommentList.size()+eCommentList.size());
 		
 		boolean isLogin = member!=null?true:false;
 		if(!isLogin){
@@ -613,6 +616,7 @@ public class MypageController {
 			model.addAttribute("commentList",commentList);	
 			model.addAttribute("bCommentList",bCommentList);
 			model.addAttribute("commentSeq",commentSeq);
+			model.addAttribute("eCommentList",eCommentList);
 		}
 		return url;
 	}
