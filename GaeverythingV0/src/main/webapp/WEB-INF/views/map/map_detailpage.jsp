@@ -134,7 +134,7 @@
 									<a href="/resources/upload/${dp.locationPhoto}" style="display: none" class="mfp-gallery"></a>
 									
 							</c:forEach>
-							<a class="read-more mfp-gallery">Read More <i class=""></i></a>
+							<a class="read-more mfp-gallery">View More <i class=""></i></a>
 					</div>
 					</div>
 					</div>
