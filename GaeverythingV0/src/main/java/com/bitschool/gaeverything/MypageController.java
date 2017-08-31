@@ -112,7 +112,7 @@ public class MypageController {
 		MyPageDTO dto=new MyPageDTO();
         String root_path = req.getSession().getServletContext().getRealPath("/");  
         String attach_path = "resources\\upload\\";
-
+        MemberDTO member = sservice.getMemberInfo(email);
 		try { 
 			dto.setEmail(email);
 			dto.setNotes(notes);
@@ -121,7 +121,16 @@ public class MypageController {
 			if(photos.equals("")){ //새로운 사진 선택 안할 경우
 
 			}else{
+				member.setPhoto(photos);
 				dto.setPhoto(photos); //새로 입력한 포토로 셋팅
+				//List<DetailCommentDTO> cList1 = service.selectMyDetailComments(member.getNickname());
+				List<EventCommentDTO> cList2 = service.selectEventComment(member.getNickname());
+				/*for(int i=0;i<cList1.size();i++){
+					cList1.get(i).setPhoto(photos);
+				}*/
+				for(int i=0;i<cList2.size();i++){
+					cList2.get(i).setPhoto(photos);
+				}
 			}
 			photo.transferTo(new File(root_path+attach_path+photos));
 		} catch (IllegalStateException e1) {
@@ -134,7 +143,7 @@ public class MypageController {
 		boolean flag = false;
 		boolean flag2 = false;
 		boolean flag3 = false;		
-		MemberDTO member = sservice.getMemberInfo(email);
+		
 		if(photos.equals("")){//새로운 사진 선택 안할 경우
 			flag = service.updateData2(dto);
 		}else{//새로 입력한 포토로 셋팅
