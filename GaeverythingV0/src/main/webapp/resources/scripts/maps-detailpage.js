@@ -1,6 +1,7 @@
 
 //photo 등록
 function addDetailPhoto(){
+	
 	var url = "/map/detail/addPhoto";
 	addPhoto.action = url;
 	addPhoto.submit();
