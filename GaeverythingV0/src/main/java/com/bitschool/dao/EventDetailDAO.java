@@ -24,6 +24,21 @@ public class EventDetailDAO {
 	
 	private static String namespace = "com.bitschool.event.eventDetail";
 	
+	// 이벤트넘버로 이벤트이름 가져오기 
+	public String selectEventName(int eventNo) throws SQLException{
+		String eventName = null;
+		eventName = session.selectOne(namespace+".selectEventName",eventNo);
+		return eventName;
+	}
+	
+	
+	//해당닉네임 이벤트디테일 댓글 모아보기
+	public List<EventCommentDTO> selectComment(String nickname) throws SQLException{
+		List<EventCommentDTO> list = null;
+		list = session.selectList(namespace+".selectComment",nickname);
+		return list;
+	}
+	
 	//eventNo로 한 장소의 DTO 받아오기 
 		public EventDTO selectOne(int seq) throws SQLException{
 			// TODO Auto-generated method stub

@@ -11,6 +11,9 @@ public class EventCommentDTO {
 	private double rating;
 	private Timestamp regiDate;
 	private String photo;
+	
+	private String eventName;
+	
 	//레벨보여주기
 	private String gradename;
 	
@@ -61,6 +64,12 @@ public class EventCommentDTO {
 	}
 	public void setGradename(String gradename) {
 		this.gradename = gradename;
+	}
+	public String getEventName() {
+		return eventName;
+	}
+	public void setEventName(String eventName) {
+		this.eventName = eventName;
 	}
 	
 	
