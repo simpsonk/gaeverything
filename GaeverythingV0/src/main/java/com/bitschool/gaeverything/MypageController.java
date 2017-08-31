@@ -150,6 +150,7 @@ public class MypageController {
 			flag = service.updateData(dto);
 			flag2 = service.updateMemData(dto); //memberDTO도 photo셋팅 해주기
 			flag3 = lservice.updatePhoto(member); //맵 디테일페이지에 photo 업데이트
+			flag3 = eservice.updatePhoto(member);
 		}
 		member = sservice.getMemberInfo(email);
 		if(flag){

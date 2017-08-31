@@ -3,6 +3,8 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bitschool.event.eventDetail">
+	
+
 	<!-- 이벤트넘버로 이벤트이름 가져오기 -->
 	<select id="selectEventName" parameterType="Integer" resultType="String">
 		select eventname from event where eventno = #{eventNo} 

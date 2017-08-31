@@ -24,6 +24,7 @@ public class EventDetailDAO {
 	
 	private static String namespace = "com.bitschool.event.eventDetail";
 	
+	
 	// 이벤트넘버로 이벤트이름 가져오기 
 	public String selectEventName(int eventNo) throws SQLException{
 		String eventName = null;
