@@ -349,8 +349,14 @@
 		var itemStr =  '	<div class="listing-item-container" data-marker-id="1">'
 				+ '	   			<div class="listing-item">' 
 				+ '					<img src="/resources/images/event/'+event.thumbnail+'" alt="">'
-				+ '				<a href = "/event/detail/view?no='+event.eventNo + '">'
-				+ '					<div class="listing-item-content">';
+				+ '				<a href = "/event/detail/view?no='+event.eventNo + '">';
+				
+				if(event.eventName.match("KBC") || event.eventName.match("펫산업박람회")){
+					itemStr += '<div class="listing-badge now-closed">Closed</div>';
+				}else{
+					itemStr += '<div class="listing-badge now-open">Coming Soon</div>';
+				}
+				itemStr += '					<div class="listing-item-content">';
 				
 				if(event.eventName.match("축제")||event.eventName.match("페스티벌")){
 					itemStr += 			'<span class="tag" style="background: #f91942;">Festival</span>' ;
