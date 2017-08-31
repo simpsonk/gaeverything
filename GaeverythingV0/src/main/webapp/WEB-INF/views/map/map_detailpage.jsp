@@ -337,7 +337,7 @@
 
 			<!-- Book Now -->
 			<div class="boxed-widget">
-				<h3><i class="fa fa-calendar-check-o "></i> Book a Table</h3>
+				<h3><i class="fa fa-calendar-check-o "></i>Add to Calendar</h3>
 				<div class="row with-forms  margin-top-0">
 					<form method="post" action="" id="booking-calendar">
 						<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
@@ -357,7 +357,7 @@
 				</div>
 				
 				<!-- progress button animation handled via custom.js -->
-				<button class="progress-button button fullwidth margin-top-5" id="bookNow"><span>Book Now</span></button>
+				<button class="progress-button button fullwidth margin-top-5" id="bookNow"><span>Add</span></button>
 			</div>
 			<!-- Book Now / End -->
 
