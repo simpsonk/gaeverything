@@ -174,8 +174,48 @@
 			</div>
 
 
-	 		<!-- Listings --><!-- 리뷰게시판의 코멘트 -->
-			<div id="listing-review" class="col-lg-12 col-md-12">
+	 		<!-- Listings --><!-- 이벤트디테일의 코멘트 -->
+			<div id="listing-event" class="col-lg-6 col-md-12">
+				<div class="dashboard-list-box margin-top-20">
+					<h4 style="background: #F91942; color: white;">Comments on Event (${eCommentList.size()})</h4>
+					<ul>
+						<li>
+							<div class="comments listing-reviews">
+								<ul>
+								<c:choose>
+								<c:when test="${eCommentList.size()==0}">
+								<li>
+								<span>작성한 댓글이 없습니다.</span>
+								</li>
+								</c:when>
+								</c:choose>	
+									<c:forEach var="list" items="${eCommentList}" varStatus="loop"> 
+									<c:if test="${loop.index<2}">	    
+									<li>										
+											<div class="comment-by">Your Comments <div class="comment-by-listing own-comment">on <a href="/event/detail/view?no=${list.eventNo}"><b>${list.eventName}</b></a></div> <span class="date">${list.regiDate}</span>
+												<div class="star-rating" data-rating="${list.rating}"></div>
+											</div>
+											<p>${list.message}</p>
+											<%-- <div class="buttons-to-right">
+											<a onclick="cmt_url2(${list.commentSeq}, ${loop.index},${list.locationSeq});" class="rate-review"><i class="sl sl-icon-note"></i> Edit</a>										
+											<a href="/mypage/removeMyMapCmt?commentSeq=${list.commentSeq}&category=2" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>		
+											</div>	 --%>
+											<input type="hidden" id="commNo" value="${list.commentNo}">												
+									</li>
+									</c:if>
+									</c:forEach>
+									<li>						
+											<a href="/mypage/viewMypageList?category=2" class="read-more">Read More <i class="fa fa-angle-right"></i></a>		
+									</li>	
+								</ul>
+							</div>
+						</li>
+
+					</ul>
+				</div>
+			</div>
+			<!-- Listings --><!-- 리뷰게시판의 코멘트 -->
+			<div class="col-lg-6 col-md-12">
 				<div class="dashboard-list-box margin-top-20">
 					<h4 style="background: #fa5b0f; color: white;">Comments on Review (${bCommentList.size()})</h4>
 					<ul>
@@ -189,21 +229,19 @@
 								</li>
 								</c:when>
 								</c:choose>	
-									<c:forEach var="list" items="${bCommentList}" varStatus="loop">									        								
-									<form action="" method="post" id="listOfComment${loop.index}">
-									<li>																					
+									<c:forEach var="list" items="${bCommentList}" varStatus="status">									    
+									<c:if test="${status.index<2}">	       								
+									<li>										
 											<div class="comment-by">Your Comments <div class="comment-by-listing own-comment">on <a href="/review/readPost?boardNo=${list.groupNo}&page=1"><b>${list.title}</b></a></div> <span class="date">${list.regiDate}</span>
 											</div>
-											<p>${list.commentBody}</p>
-											<div class="buttons-to-right">
-											<a class="rate-review" onclick="cmt_url(1, ${loop.index},1);"><i class="sl sl-icon-note"></i> Edit</a>										
-											<a href="/mypage/removeMyBoardCmt?commentNo=${list.commentNo}&category=2" class="rate-review"><i class="sl sl-icon-close"></i> Delete</a>						
-											</div>
-											<input type="hidden" name="commentNo" value ="${list.commentNo}">
-											<input type="hidden" name="groupNo" value ="${list.groupNo}">
+											<p>${list.commentBody}</p>			
 									</li>
-									</form>
+									</c:if>
 									</c:forEach>
+									<li>						
+											<a href="/mypage/viewMypageList?category=2" class="read-more">Read More <i class="fa fa-angle-right"></i></a>		
+									</li>				
+									
 								</ul>
 							</div>
 						</li>
