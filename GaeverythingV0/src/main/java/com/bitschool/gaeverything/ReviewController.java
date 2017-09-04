@@ -430,6 +430,9 @@ public class ReviewController {
 			GradeDTO gDTO2 = new GradeDTO(nickname,"myBookmark", 3);
 			gService.insertInfo(gDTO2);
 			
+			//board 테이블에 countLike 1 증가 시키기
+			service.updateCountLike(boardNo);
+		
 			if(!flag){
 				System.out.println("insert fail: ReviewLike");
 			}
@@ -445,6 +448,9 @@ public class ReviewController {
 			//북마크 해제 눌렀을 때 북마크누른사람 point -> -3, delete myBookmark 
 			GradeDTO gDTO2 = new GradeDTO(nickname,"myBookmark", -3);			
 			gService.deleteInfo(gDTO2);
+			
+			//board 테이블에 countLike 1 감소 시키기
+			service.updateCountLike2(boardNo);
 			
 			if(!flag){
 				System.out.println("delete fail: ReviewLike");

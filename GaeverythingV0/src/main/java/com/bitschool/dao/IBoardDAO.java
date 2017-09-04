@@ -45,5 +45,7 @@ public interface IBoardDAO {
 	public String selectNickname(int boardNo) throws SQLException;
 	public String findPhoto(String nickName) throws SQLException;
 
+	public boolean updateCountLike(int boardNo) throws SQLException;
+	public boolean updateCountLike2(int boardNo) throws SQLException;
 
 }

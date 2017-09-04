@@ -25,5 +25,6 @@ public interface IBoardService {
 	public MyPageDTO getWriter(String email);
 	public List<BoardDTO> highReadcountReviews(BoardDTO board);
 	public String selectNickname(int boardNo);
-
+	public boolean updateCountLike(int boardNo);
+	public boolean updateCountLike2(int boardNo);
 }

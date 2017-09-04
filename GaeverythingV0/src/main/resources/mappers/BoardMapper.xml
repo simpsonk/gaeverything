@@ -16,6 +16,16 @@
 		select * from board order by regiDate desc 
 	</select>
 	
+	<update id="updateCountLike" parameterType="Integer">
+		update board set countlike = countlike + 1 
+		where boardno = #{boardNo}
+	</update>
+	
+	<update id="updateCountLike2" parameterType="Integer">
+		update board set countlike = countlike - 1 
+		where boardno = #{boardNo}
+	</update>
+	
 <!-- 	<select id="perPage" parameterType="PageDTO" resultType="BoardDTO">
 		select * from 
 			(select rownum as num, temp.* from

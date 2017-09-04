@@ -23,6 +23,26 @@ public class BoardDAO implements IBoardDAO{
 	private static String nameSpace = "com.bitschool.Board.BoardMapper";
 	
 	@Override
+	public boolean updateCountLike(int boardNo) throws SQLException {
+		boolean flag = false;
+		int aCnt = session.update(nameSpace+".updateCountLike",boardNo);
+		if(aCnt>0){
+			flag = true;
+		}
+		return flag;
+	}
+	
+	@Override
+	public boolean updateCountLike2(int boardNo) throws SQLException {
+		boolean flag = false;
+		int aCnt = session.update(nameSpace+".updateCountLike2",boardNo);
+		if(aCnt>0){
+			flag = true;
+		}
+		return flag;
+	}
+	
+	@Override
 	public boolean addNewPost(BoardDTO dto) throws SQLException {
 		boolean flag = false;
 		int affected = session.insert(nameSpace+".add", dto);
@@ -244,6 +264,8 @@ public class BoardDAO implements IBoardDAO{
 		//System.out.println("사진얻음? " + photo);
 		return photo;
 	}
+
+
 
 
 	

@@ -21,6 +21,30 @@ public class BoardService implements IBoardService {
 	private IBoardDAO dao;
 
 	@Override
+	public boolean updateCountLike(int boardNo) {
+		boolean flag = false;
+		try {
+			flag = dao.updateCountLike(boardNo);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return flag;
+	}
+	
+	@Override
+	public boolean updateCountLike2(int boardNo) {
+		boolean flag = false;
+		try {
+			flag = dao.updateCountLike2(boardNo);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return flag;
+	}
+	
+	@Override
 	public boolean insertPost(BoardDTO dto) {
 		boolean flag = false;
 		try {
@@ -202,6 +226,8 @@ public class BoardService implements IBoardService {
 		}
 		return nickname;
 	}
+
+
 
 	
 }
