@@ -62,7 +62,7 @@ public class EventController {
 		ActUserManager manager = new ActUserManager(aService);
 		if(member!=null){
 			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.EVENT);
-			list =manager.checkLikeStatusEvent(aDTO, list);
+			list = manager.checkLikeStatusEvent(aDTO, list);
 		}
 		list = eService.getEventActUserResults(manager, list);
 		HashMap<String, Object> map = pService.makeEventSerachList(0, 6, list);
@@ -73,6 +73,35 @@ public class EventController {
 		data.put("infoList", map.get("infoList"));
 		return data;	
 	}
+	
+	@RequestMapping(value="/searchEvent", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody HashMap<String, Object> searchEvent(@RequestParam("opt") String opt, 
+															 @RequestParam("str") String str,
+															 HttpSession session){
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		List<EventDTO> list = null; 
+		HashMap<String, Object> map = null;
+		ActUserManager manager = new ActUserManager(aService);
+		
+		MemberDTO member = (MemberDTO)session.getAttribute("member");
+		if(member!=null){
+			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.EVENT);
+			list = manager.checkLikeStatusEvent(aDTO, list);
+		}
+		
+		list = service.searchEvent(new EventSearchDTO(opt, str));
+		//Ãß°¡
+		list = eService.getEventActUserResults(manager, list);
+		
+		data.put("events", list);
+		map = pService.makeEventSerachList(0, 6, list);
+		data.put("pList", map.get("pList"));
+		data.put("infoList", map.get("infoList"));
+		
+		
+		return data;
+	}
+	
 	
 	@RequestMapping(value="/detail", method=RequestMethod.GET)
 	public String detail (HttpSession session, Model model, @RequestParam("no") int eventNo){
@@ -116,27 +145,5 @@ public class EventController {
 	}
 
 	
-	@RequestMapping(value="/searchEvent", method = {RequestMethod.GET,RequestMethod.POST})
-	public @ResponseBody HashMap<String, Object> searchEvent(@RequestParam("opt") String opt, 
-															 @RequestParam("str") String str,
-															 HttpSession session){
-		HashMap<String, Object> data = new HashMap<String, Object>();
-		List<EventDTO> list = null; 
-		HashMap<String, Object> map = null;
-		
-		MemberDTO member = (MemberDTO)session.getAttribute("member");
-		if(member!=null){
-			ActUserDTO aDTO = new ActUserDTO(member.getEmail(), ActUserManager.EVENT);
-			list= new ActUserManager(aService).checkLikeStatusEvent(aDTO, list);
-		}
-		
-		list = service.searchEvent(new EventSearchDTO(opt, str));
-		data.put("events", list);
-		map = pService.makeEventSerachList(0, 6, list);
-		data.put("pList", map.get("pList"));
-		data.put("infoList", map.get("infoList"));
-		
-		
-		return data;
-	}
+	
 }
